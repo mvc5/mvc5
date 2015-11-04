@@ -1,0 +1,13 @@
+{
+    "name": "mvc5/mvc5",
+    "description": "An enhanced PHP programming environment with dependency injection, events, and named arguments",
+    "license": "MIT",
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mvc5\\": "./src"
+        }
+    }
+}

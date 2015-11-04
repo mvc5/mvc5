@@ -1,0 +1,37 @@
+sudo: false
+
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7
+  - hhvm
+
+matrix:
+  exclude:
+    - php: hhvm
+  allow_failures:
+    - php: hhvm
+    
+before_script:
+  - composer selfupdate
+  - composer create-project mvc5/application build --stability dev --dev --keep-vcs
+
+after_script:
+  - composer require codeclimate/php-test-reporter
+  - CODECLIMATE_REPO_TOKEN="5e341eef01e66bb0bc0cf50aaa69f38187312897c5801f225871d0a0b40dd03c" vendor/bin/test-reporter --coverage-report build/logs/clover.xml --stdout > build/logs/codeclimate.json
+  - "curl -X POST -d @build/logs/codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover build/logs/coverage.clover
+
+script:
+  - php -d opcache.enable=1 -d opcache.enable_cli=1 build/public/index.php >/dev/null
+  - php -d opcache.enable=0 -d opcache.enable_cli=0 build/public/index.php >/dev/null
+  - php -n build/public/index.php >/dev/null
+  - phpunit --configuration build/phpunit.xml --coverage-clover build/logs/clover.xml
+  - phpunit --configuration build/phpunit.xml --coverage-clover build/logs/coverage.clover
+
+notifications:
+  email: false
