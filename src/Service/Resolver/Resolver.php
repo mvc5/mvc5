@@ -230,7 +230,7 @@ trait Resolver
      * @param array|callable|object|string $config
      * @return callable|null
      */
-    protected function invokable($config)// : callable
+    protected function invokable($config) : callable
     {
         if (is_string($config) && Args::CALL === $config[0]) {
             return function($args = []) use ($config) {
