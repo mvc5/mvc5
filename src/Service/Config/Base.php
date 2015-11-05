@@ -51,6 +51,6 @@ trait Base
      */
     public function param()
     {
-        return $this->get(Configuration::PARAM) ? : Configuration::PARAM;
+        return $this->get(Configuration::PARAM);
     }
 }

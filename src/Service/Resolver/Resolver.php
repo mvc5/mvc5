@@ -113,6 +113,19 @@ trait Resolver
     }
 
     /**
+     * @param callable $callback
+     * @return callable
+     */
+    protected function callback($callback)
+    {
+        if (!is_callable($callback)) {
+            throw new RuntimeException('Invalid callback');
+        }
+
+        return $callback;
+    }
+
+    /**
      * @param ChildService $config
      * @param array $args
      * @return array|callable|object|string
@@ -214,7 +227,7 @@ trait Resolver
 
                 $this->invoke(
                     is_string($method) ? [$service, $method] : $method,
-                    !$args || is_string(key($args)) ? [$param => $service] + $args : $args
+                    $param && (!$args || is_string(key($args))) ? [$param => $service] + $args : $args
                 );
 
                 continue;
@@ -230,22 +243,22 @@ trait Resolver
      * @param array|callable|object|string $config
      * @return callable|null
      */
-    protected function invokable($config) : callable
+    protected function invokable($config)
     {
         if (is_string($config) && Args::CALL === $config[0]) {
-            return function($args = []) use ($config) {
+            return $this->callback(function($args = []) use ($config) {
                 return $this->call(
                     substr($config, 1),
                     !is_array($args) || !is_string(key($args)) ? func_get_args() : $args
                 );
-            };
+            });
         }
 
         if (is_array($config)) {
-            return is_string($config[0]) ? $config : [$this->create($config[0]), $config[1]];
+            return $this->callback(is_string($config[0]) ? $config : [$this->create($config[0]), $config[1]]);
         }
 
-        return $config instanceof Closure ? $config : $this->create($config);
+        return $this->callback($config instanceof Closure ? $config : $this->create($config));
     }
 
     /**
@@ -256,7 +269,7 @@ trait Resolver
      */
     protected function invoke($config, array $args = [], callable $callback = null)
     {
-        return $this->signal($this->args($config), $this->args($args), $callback ?: $this);
+        return $this->signal($this->callback($this->args($config)), $this->args($args), $callback ?: $this);
     }
 
     /**

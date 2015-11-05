@@ -18,12 +18,14 @@ trait Base
     /**
      * @param string $name
      * @param array $calls
+     * @param null|string $param
      */
-    public function __construct($name, array $calls)
+    public function __construct($name, array $calls, $param = ServiceHydrator::ITEM)
     {
         $this->config = [
             Configuration::CALLS => $calls,
-            Configuration::NAME  => $name
+            Configuration::NAME  => $name,
+            Configuration::PARAM => $param
         ];
     }
 }

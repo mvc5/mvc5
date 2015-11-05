@@ -10,4 +10,8 @@ use Mvc5\Service\Config\Configuration;
 interface ServiceHydrator
     extends Configuration
 {
+    /**
+     *
+     */
+    const ITEM = 'item';
 }

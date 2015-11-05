@@ -33,7 +33,7 @@ interface Configuration
     /**
      *
      */
-    const PARAM = 'item';
+    const PARAM = 'param';
 
     /**
      * @return array
