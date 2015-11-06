@@ -6,6 +6,7 @@
 namespace Mvc5\Service\Resolver;
 
 use Closure;
+use InvalidArgumentException;
 use Mvc5\Config\Configuration;
 use Mvc5\Event\Event;
 use Mvc5\Service\Config\Args\Arguments;
@@ -119,7 +120,7 @@ trait Resolver
     protected function callback($callback)
     {
         if (!is_callable($callback)) {
-            throw new RuntimeException('Invalid callback');
+            throw new InvalidArgumentException('Invalid callback');
         }
 
         return $callback;
@@ -246,19 +247,19 @@ trait Resolver
     protected function invokable($config)
     {
         if (is_string($config) && Args::CALL === $config[0]) {
-            return $this->callback(function($args = []) use ($config) {
+            return function($args = []) use ($config) {
                 return $this->call(
                     substr($config, 1),
                     !is_array($args) || !is_string(key($args)) ? func_get_args() : $args
                 );
-            });
+            };
         }
 
         if (is_array($config)) {
             return $this->callback(is_string($config[0]) ? $config : [$this->create($config[0]), $config[1]]);
         }
 
-        return $this->callback($config instanceof Closure ? $config : $this->create($config));
+        return $config instanceof Closure ? $config : $this->callback($this->create($config));
     }
 
     /**
