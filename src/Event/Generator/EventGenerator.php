@@ -35,7 +35,7 @@ trait EventGenerator
 
         foreach($this->queue($event) as $listener) {
 
-            $result = $this->emit($event, $listener, $args, $callback);
+            $result = $this->emit($event, $this->listener($listener), $args, $callback);
 
             if ($event instanceof Event && $event->stopped()) {
                 break;
@@ -52,9 +52,10 @@ trait EventGenerator
     protected abstract function listener($listener);
 
     /**
+     * @param string $name
      * @return Configuration
      */
-    protected abstract function listeners();
+    protected abstract function listeners($name = null);
 
     /**
      * @param Event|string|Traversable $event
@@ -62,8 +63,8 @@ trait EventGenerator
      */
     protected function queue($event)
     {
-        return $event instanceof Traversable ? $this->traverse($event) : $this->traverse(
-            $this->listeners()[is_object($event) ? $event instanceof Event ? $event->event() : get_class($event) : $event]
+        return $event instanceof Traversable ? $event : $this->listeners(
+            is_string($event) ? $event : ($event instanceof Event ? $event->event() : get_class($event))
         );
     }
 
@@ -74,15 +75,4 @@ trait EventGenerator
      * @return mixed
      */
     protected abstract function signal(callable $listener, array $args = [], callable $callback = null);
-
-    /**
-     * @param array|Traversable $iterator
-     * @return \Generator
-     */
-    protected function traverse($iterator)
-    {
-        foreach($iterator as $listener) {
-           yield $this->listener($listener);
-        }
-    }
 }

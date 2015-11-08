@@ -37,11 +37,12 @@ trait ManageEvent
     protected abstract function generate($event, array $args = [], callable $callback = null);
 
     /**
+     * @param string $name
      * @return array|\Traversable
      */
-    protected function listeners()
+    protected function listeners($name = null)
     {
-        return $this->events;
+        return $name ? $this->events[$name] : $this->events;
     }
 
     /**
