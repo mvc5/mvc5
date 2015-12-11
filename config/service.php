@@ -16,7 +16,7 @@ use Mvc5\Plugin\Service;
 return [
     'config'                     => new Config,
     'container'                  => new Mvc5\Config,
-    'controller\dispatch'        => Mvc5\Controller\Dispatch::class,
+    'controller\dispatch'        => [Mvc5\Event::class, 'controller\dispatch'],
     'controller\action'          => new Service(Mvc5\Controller\Action::class),
     'controller\exception'       => new Mvc('controller\exception'),
     'event\model'                => Mvc5\Event::class,

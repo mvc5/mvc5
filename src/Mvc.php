@@ -12,9 +12,4 @@ class Mvc
      *
      */
     use Mvc\Mvc;
-
-    /**
-     *
-     */
-    const EVENT = Arg::MVC;
 }

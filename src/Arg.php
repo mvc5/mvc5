@@ -166,17 +166,7 @@ interface Arg
     /**
      *
      */
-    const MVC = 'mvc';
-
-    /**
-     *
-     */
     const MATCHED = 'matched';
-
-    /**
-     *
-     */
-    const MESSAGE = 'message';
 
     /**
      *

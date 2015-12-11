@@ -12,7 +12,7 @@ class Action
     /**
      *
      */
-    use Dispatcher;
+    use Dispatch;
     use Plugin;
 
     /**

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Mvc;
 
-use Mvc5\Controller\Dispatcher;
+use Mvc5\Controller\Dispatch;
 use Mvc5\Plugin;
 use Throwable;
 
@@ -14,7 +14,7 @@ class Controller
     /**
      *
      */
-    use Dispatcher;
+    use Dispatch;
     use Plugin;
 
     /**
