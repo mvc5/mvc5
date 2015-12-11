@@ -5,22 +5,16 @@
 
 namespace Mvc5\Mvc;
 
-use Mvc5\Event\Event;
+use Mvc5\Arg;
 use Mvc5\Response\Response;
 use Mvc5\Route\Route;
 
-class Mvc
-    implements Dispatch, Event
+trait Mvc
 {
     /**
      *
      */
-    use Base;
-
-    /**
-     *
-     */
-    const EVENT = self::MVC;
+    use Event\Model;
 
     /**
      * @return array
@@ -28,11 +22,11 @@ class Mvc
     protected function args()
     {
         return [
-            Args::EVENT      => $this,
-            Args::RESPONSE   => $this->response(),
-            Args::ROUTE      => $this->route(),
-            Args::MODEL      => $this->model(),
-            Args::CONTROLLER => $this->controller()
+            Arg::EVENT      => $this,
+            Arg::RESPONSE   => $this->response(),
+            Arg::ROUTE      => $this->route(),
+            Arg::MODEL      => $this->model(),
+            Arg::CONTROLLER => $this->controller()
         ];
     }
 
@@ -44,20 +38,20 @@ class Mvc
      */
     public function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
-        $response = $this->signal($callable, $this->args() + $args, $callback);
+        $model = $this->signal($callable, $this->args() + $args, $callback);
 
-        if ($response instanceof Route) {
-            $this->setRoute($response);
-            return $response;
+        if ($model instanceof Route) {
+            $this->setRoute($model);
+            return $model;
         }
 
-        if ($response instanceof Response) {
-            $this->setResponse($response);
-            return $response;
+        if ($model instanceof Response) {
+            $this->setResponse($model);
+            return $model;
         }
 
-        $response && $this->setModel($response);
+        $model && $this->setModel($model);
 
-        return $response;
+        return $model;
     }
 }

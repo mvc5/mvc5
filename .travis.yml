@@ -17,11 +17,11 @@ matrix:
     
 before_script:
   - composer selfupdate
-  - composer create-project mvc5/application build --stability dev --dev --keep-vcs
+  - composer create-project mvc5/mvc5-application build --stability dev --dev --keep-vcs
 
 after_script:
   - composer require codeclimate/php-test-reporter
-  - CODECLIMATE_REPO_TOKEN="5e341eef01e66bb0bc0cf50aaa69f38187312897c5801f225871d0a0b40dd03c" vendor/bin/test-reporter --coverage-report build/logs/clover.xml --stdout > build/logs/codeclimate.json
+  - CODECLIMATE_REPO_TOKEN="91a269c5223b953a05b77fb6ac0c41c308f3caffcdff350af60f804960242991" vendor/bin/test-reporter --coverage-report build/logs/clover.xml --stdout > build/logs/codeclimate.json
   - "curl -X POST -d @build/logs/codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover build/logs/coverage.clover

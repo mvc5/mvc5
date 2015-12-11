@@ -5,18 +5,12 @@
 
 namespace Mvc5\Route\Router;
 
-use Mvc5\Route\Definition\Definition;
-use Mvc5\Route\Manager\ManageRoute;
+use Mvc5\Arg;
+use Mvc5\Route\Definition;
 use Mvc5\Route\Route;
 
-class Router
-    implements MatchRoute
+trait Router
 {
-    /**
-     *
-     */
-    use ManageRoute;
-
     /**
      * @var array|Definition
      */
@@ -34,11 +28,17 @@ class Router
      * @param array|Definition $definition
      * @return Definition
      */
-    protected function create($definition)
+    protected function routeDefinition($definition)
     {
-        return $definition instanceof Definition && !empty($definition[Definition::REGEX])
+        return $definition instanceof Definition && isset($definition[Arg::REGEX])
             ? $definition : $this->definition($definition);
     }
+
+    /**
+     * @param array|Definition $definition
+     * @return Definition
+     */
+    protected abstract function definition($definition);
 
     /**
      * @param Route $route
@@ -49,7 +49,7 @@ class Router
     {
         $route = $this->match($definition, $route);
 
-        $route && !$route->name() && $route->set(Route::NAME, $definition->name());
+        $route && !$route->name() && $route->set(Arg::NAME, $definition->name());
 
         if (!$route || $route->matched()) {
             return $route;
@@ -58,9 +58,9 @@ class Router
         $parent = $route->name();
 
         foreach($definition->children() as $name => $definition) {
-            $route->set(Route::NAME, $this->name() === $parent ? $name : $parent . '/' . $name);
+            $route->set(Arg::NAME, $this->name() === $parent ? $name : $parent . Arg::SEPARATOR . $name);
 
-            if ($match = $this->dispatch(clone $route, $this->create($definition))) {
+            if ($match = $this->dispatch(clone $route, $this->routeDefinition($definition))) {
                 return $match;
             }
         }
@@ -69,11 +69,18 @@ class Router
     }
 
     /**
+     * @param Definition $definition
+     * @param Route $route
+     * @return Route
+     */
+    protected abstract function match($definition, $route);
+
+    /**
      * @return string
      */
     protected function name()
     {
-        return $this->definition[Definition::NAME];
+        return $this->definition[Arg::NAME];
     }
 
     /**
@@ -82,6 +89,6 @@ class Router
      */
     public function __invoke(Route $route)
     {
-        return $this->dispatch(clone $route, $this->create($this->definition));
+        return $this->dispatch(clone $route, $this->routeDefinition($this->definition));
     }
 }

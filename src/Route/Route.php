@@ -11,51 +11,6 @@ interface Route
     extends Configuration
 {
     /**
-     *
-     */
-    const CONTROLLER = 'controller';
-
-    /**
-     *
-     */
-    const HOSTNAME = 'hostname';
-
-    /**
-     *
-     */
-    const LENGTH = 'length';
-
-    /**
-     *
-     */
-    const MATCHED = 'matched';
-
-    /**
-     *
-     */
-    const METHOD = 'method';
-
-    /**
-     *
-     */
-    const NAME = 'name';
-
-    /**
-     *
-     */
-    const PARAMS = 'params';
-
-    /**
-     *
-     */
-    const PATH = 'path';
-
-    /**
-     *
-     */
-    const SCHEME = 'scheme';
-
-    /**
      * @return array|callable|null|object|string
      */
     function controller();

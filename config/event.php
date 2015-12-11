@@ -4,48 +4,57 @@
  */
 
 return [
-    'Controller\Dispatch' => [
-        'Controller\Dispatcher'
+    'controller\dispatch' => [
+        'controller\action'
     ],
-    'Controller\Exception' => [
-        'Controller\Exception\Controller'
+    'controller\exception' => [
+        'exception\status',
+        'exception\controller'
     ],
-    'Exception\View' => [
-        'Exception\Renderer'
+    'mvc' => [
+        'mvc\route',
+        'mvc\controller',
+        'mvc\layout',
+        'mvc\view',
+        'mvc\response'
     ],
-    'Mvc' => [
-        'Mvc\Route',
-        'Mvc\Controller',
-        'Mvc\Layout',
-        'Mvc\View',
-        'Mvc\Response'
+    'response\dispatch' => [
+        'response\send'
     ],
-    'Response\Dispatch' => [
-        'Response\Sender'
+    'response\exception' => [
+        'exception\status',
+        'exception\controller',
+        'exception\view',
     ],
-    'Response\Exception' => [
-        'Response\Exception\Dispatch',
-        'Response\Exception\Renderer'
+    'route\dispatch' => [
+        'route\filter',
+        'router',
+        'route\error'
     ],
-    'Route\Match' => [
-        'Route\Match\Scheme',
-        'Route\Match\Hostname',
-        'Route\Match\Path',
-        'Route\Match\Wildcard',
-        'Route\Match\Method'
+    'route\error\dispatch' => [
+        'route\error\status',
+        'route\error\controller'
     ],
-    'Route\Dispatch' => [
-        'Route\Filter',
-        'Router',
-        'Route\Error'
+    'route\exception' => [
+        'exception\status',
+        'exception\route',
     ],
-    'Route\Exception' => [
-        'Route\Exception\Controller'
+    'route\match' => [
+        'route\match\scheme',
+        'route\match\hostname',
+        'route\match\path',
+        'route\match\wildcard',
+        'route\match\method'
     ],
-    'Service\Provider' => [
-        'Service\DefaultResolver'
+    'service\resolver' => [
+        'resolver\exception'
     ],
-    'View\Render' => [
-        'View\Renderer'
+    'view\exception' => [
+        'exception\status',
+        'exception\controller',
+        'exception\view',
+    ],
+    'view\render' => [
+        'view\renderer'
     ],
 ];

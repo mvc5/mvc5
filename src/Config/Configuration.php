@@ -5,10 +5,8 @@
 
 namespace Mvc5\Config;
 
-use ArrayAccess as ArrayConfig;
-
 interface Configuration
-    extends ArrayConfig
+    extends \ArrayAccess, \Countable, \Iterator
 {
     /**
      * @param string $name
@@ -31,7 +29,7 @@ interface Configuration
     /**
      * @param string $name
      * @param mixed $config
-     * @return void
+     * @return mixed
      */
     function set($name, $config);
 }

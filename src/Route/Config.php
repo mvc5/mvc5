@@ -6,10 +6,10 @@
 namespace Mvc5\Route;
 
 class Config
-    implements Route
+    implements \Countable, \Iterator, Route
 {
     /**
      *
      */
-    use Base;
+    use Config\Route;
 }
