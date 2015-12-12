@@ -17,11 +17,6 @@ trait Config
     /**
      * @var array|\ArrayAccess
      */
-    protected $config = [];
-
-    /**
-     * @var array|\ArrayAccess
-     */
     protected $container = [];
 
     /**
