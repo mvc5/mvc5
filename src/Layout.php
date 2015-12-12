@@ -6,10 +6,10 @@
 namespace Mvc5;
 
 class Layout
-    implements Model\Layout
+    implements Model\ViewLayout
 {
     /**
      *
      */
-    use Model\Plugin;
+    use Model\Layout\Plugin;
 }

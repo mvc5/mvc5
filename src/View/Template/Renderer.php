@@ -6,6 +6,7 @@
 namespace Mvc5\View\Template;
 
 use Closure;
+use Mvc5\Model\Template;
 use Mvc5\Model\ViewModel;
 use Mvc5\Plugin;
 use RuntimeException;
@@ -29,40 +30,38 @@ class Renderer
     }
 
     /**
-     * @param mixed|ViewModel $model
+     * @param mixed|Template|ViewModel $model
      * @return string
      */
     public function __invoke($model)
     {
-        if (!$model instanceof ViewModel) {
+        if (!$model instanceof Template) {
             return $model;
         }
 
-        /** @var ViewModel $model */
-
         foreach($model as $k => $v) {
-            $v instanceof ViewModel && $model->set($k, $this($v));
+            $v instanceof Template && $model->set($k, $this($v));
         }
 
-        ($template = $this->template($model->path()))
+        ($template = $this->template($model->template()))
             && $model->template($template);
 
-        if (!$model->path()) {
-            throw new RuntimeException('View model path not found: ' . get_class($model));
+        if (!$model->template()) {
+            throw new RuntimeException('Model template not found: ' . get_class($model));
         }
 
-        !$model->service() && $model->service($this->service());
+        $model instanceof ViewModel && !$model->service() && $model->service($this->service());
 
         $render = Closure::bind(function() {
             /** @var ViewModel $this */
 
-            extract($this->assigned());
+            extract($this->vars());
 
             ob_start();
 
             try {
 
-                include $this->path();
+                include $this->template();
 
                 return ob_get_clean();
 

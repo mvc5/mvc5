@@ -6,14 +6,14 @@
 namespace Mvc5\Mvc;
 
 use Mvc5\Model\Layout as LayoutModel;
-use Mvc5\Model\ViewModel;
+use Mvc5\Model\Template as ViewModel;
 
 class Layout
 {
     /**
      * @param LayoutModel $layout
      * @param $model
-     * @return null|ViewModel|LayoutModel
+     * @return null|ViewModel|Layout
      */
     public function __invoke(LayoutModel $layout, $model = null)
     {
@@ -21,7 +21,7 @@ class Layout
             return $model;
         }
 
-        $layout->child($model);
+        $layout->model($model);
 
         return $layout;
     }
