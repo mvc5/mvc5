@@ -181,7 +181,7 @@ trait Resolver
      */
     protected function event($event)
     {
-        return $event instanceof Event ? $event : ($this->create($event) ?? $event);
+        return $event instanceof Event ? $event : $this->create($event) ?? $event;
     }
 
     /**
