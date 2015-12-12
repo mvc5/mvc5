@@ -40,7 +40,7 @@ trait Plugin
     }
 
     /**
-     * @return Plugin|string
+     * @return string
      */
     public function name()
     {
