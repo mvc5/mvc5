@@ -24,16 +24,6 @@ class Dispatch
     const EVENT = Arg::SERVICE_RESOLVER;
 
     /**
-     * @return array
-     */
-    protected function args()
-    {
-        return [
-            Arg::EVENT => $this
-        ];
-    }
-
-    /**
      * @param callable $callable
      * @param array $args
      * @param callable $callback
