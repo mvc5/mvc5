@@ -9,6 +9,9 @@ use Mvc5\Plugin as Base;
 
 trait Plugin
 {
+    /**
+     *
+     */
     use Base;
 
     /**
