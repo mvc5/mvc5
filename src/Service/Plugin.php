@@ -24,17 +24,6 @@ trait Plugin
     }
 
     /**
-     * @param array|callable|null|object|string $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|null|object
-     */
-    protected function create($config, array $args = [], callable $callback = null)
-    {
-        return $this->service->create($config, $args, $callback);
-    }
-
-    /**
      * @param array|callable|object|string $config
      * @return callable|null
      */

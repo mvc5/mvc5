@@ -35,6 +35,6 @@ class Service
      */
     public function __invoke($name)
     {
-        return !isset($this->events[$name]) ? null : $this->create(Arg::EVENT_MODEL, [Arg::EVENT => $name]);
+        return !isset($this->events[$name]) ? null : $this->plugin(Arg::EVENT_MODEL, [Arg::EVENT => $name]);
     }
 }

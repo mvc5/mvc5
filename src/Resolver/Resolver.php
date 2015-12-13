@@ -74,7 +74,7 @@ trait Resolver
                 $callback($config[0]) : $this->make($config[0], $args, $callback);
         }
 
-        return $this->compose($this->create(array_shift($config), $args, $callback), $config, $args, $callback);
+        return $this->compose($this->plugin(array_shift($config), $args, $callback), $config, $args, $callback);
     }
 
     /**
@@ -138,8 +138,8 @@ trait Resolver
     protected function compose($service, array $config, array $args = [], callable $callback = null)
     {
         foreach($config as $name) {
-            $service = $service instanceof ServiceManager ? $service->create($name, $args, $callback) : (
-                $service instanceof ServiceContainer ? $this->create($service[$name], $args, $callback) :
+            $service = $service instanceof ServiceManager ? $service->plugin($name, $args, $callback) : (
+                $service instanceof ServiceContainer ? $this->plugin($service[$name], $args, $callback) :
                     $this->resolve($service[$name], $args)
             );
         }
@@ -148,40 +148,12 @@ trait Resolver
     }
 
     /**
-     * @param array|callable|Plugin|null|object|string $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|null|object
-     */
-    public function create($config, array $args = [], callable $callback = null)
-    {
-        if (!$config) {
-            return $config;
-        }
-
-        if (is_string($config)) {
-            return $this->create($this->configured($config), $args, $callback ?? $this) ??
-                $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
-        }
-
-        if (is_array($config)) {
-            return $this->create(array_shift($config), $args + $config, $callback);
-        }
-
-        if ($config instanceof Closure) {
-            return $this->invoke($config, $args, $callback ?? $this);
-        }
-
-        return $this->resolve($config, $args);
-    }
-
-    /**
      * @param array|Event|string $event
      * @return Event
      */
     protected function event($event)
     {
-        return $event instanceof Event ? $event : $this->create($event) ?? $event;
+        return $event instanceof Event ? $event : $this->plugin($event) ?? $event;
     }
 
     /**
@@ -212,7 +184,7 @@ trait Resolver
      */
     public function get($name)
     {
-        return $this->shared($name) ?? $this->initialize($name);
+        return $this->shared($name) ?? $this->plugin($name);
     }
 
     /**
@@ -277,10 +249,10 @@ trait Resolver
         }
 
         if (is_array($config)) {
-            return is_string($config[0]) ? $config : [$this->create($config[0]), $config[1]];
+            return is_string($config[0]) ? $config : [$this->plugin($config[0]), $config[1]];
         }
 
-        return $config instanceof Closure ? $config : $this->create($config);
+        return $config instanceof Closure ? $config : $this->plugin($config);
     }
 
     /**
@@ -327,7 +299,7 @@ trait Resolver
             }
 
             if ($hint = $param->getClass()) {
-                $matched[] = $this->create($hint->name);
+                $matched[] = $this->plugin($hint->name);
                 continue;
             }
 
@@ -392,14 +364,32 @@ trait Resolver
     }
 
     /**
-     * @param string $name
+     * @param string $config
      * @param array $args
      * @param callable|null $callback
      * @return array|callable|null|object|string
      */
-    public function plugin($name, array $args = [], callable $callback = null)
+    public function plugin($config, array $args = [], callable $callback = null)
     {
-        return $this->resolve($this->alias($name), $args) ?? $this->create($name, $args, $callback ?? function(){});
+        if (!$config) {
+            return $config;
+        }
+
+        if (is_string($config)) {
+            return $this->resolve($this->alias($config), $args) ??
+                $this->plugin($this->configured($config), $args, $callback ?? $this) ??
+                    $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
+        }
+
+        if (is_array($config)) {
+            return $this->plugin(array_shift($config), $args + $config, $callback);
+        }
+
+        if ($config instanceof Closure) {
+            return $this->invoke($config, $args, $callback ?? $this);
+        }
+
+        return $this->resolve($config, $args);
     }
 
     /**
@@ -417,7 +407,7 @@ trait Resolver
         !$args && $args = $config->args();
 
         if ($parent && !$parent instanceof Plugin) {
-            return $this->hydrate($config, $this->create($this->solve($parent), $args));
+            return $this->hydrate($config, $this->plugin($this->solve($parent), $args));
         }
 
         if (!$parent || $name == $parent->name()) {
@@ -531,6 +521,6 @@ trait Resolver
      */
     public function __invoke($name, array $args = [], callable $callback = null)
     {
-        return $this->plugin($name, $args, $callback);
+        return $this->plugin($name, $args, $callback ?? function(){});
     }
 }

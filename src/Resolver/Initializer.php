@@ -15,14 +15,6 @@ trait Initializer
     protected $pending = [];
 
     /**
-     * @param array|callable|null|object|string $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|null|object
-     */
-    protected abstract function create($config, array $args = [], callable $callback = null);
-
-    /**
      * @param string $name
      * @param callable $callback
      * @param array $args
@@ -38,7 +30,7 @@ trait Initializer
     protected function initialize($name, $config = null)
     {
         return $this->initializing($name) ?:
-            $this->initialized($name, $config ? $this->create($config) : $this->plugin($name));
+            $this->initialized($name, $this->plugin($config ?? $name));
     }
 
     /**
