@@ -36,7 +36,7 @@ class Renderer
     public function __invoke($model)
     {
         if (!$model instanceof Template) {
-            return $model;
+            return null;
         }
 
         foreach($model as $k => $v) {
