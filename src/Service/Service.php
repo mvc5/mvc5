@@ -17,12 +17,6 @@ interface Service
     function call($config, array $args = [], callable $callback = null);
 
     /**
-     * @param array|callable|object|string $config
-     * @return callable|null
-     */
-    function invokable($config) : callable;
-
-    /**
      * @param string $name
      * @return mixed
      */

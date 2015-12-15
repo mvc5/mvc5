@@ -8,10 +8,8 @@ namespace Mvc5\Plugin;
 class Invokable
     implements Gem\Invokable
 {
-    /**
-     * @var array|callable|object|Plugin|string
-     */
-    protected $config;
+    use Config\Args;
+    use Config\Config;
 
     /**
      * @param array|callable|object|string $config
@@ -21,21 +19,5 @@ class Invokable
     {
         $this->args   = $args;
         $this->config = $config;
-    }
-
-    /**
-     * @return array
-     */
-    public function args()
-    {
-        return $this->args;
-    }
-
-    /**
-     * @return array|callable|object|Plugin|string
-     */
-    public function config()
-    {
-        return $this->config;
     }
 }

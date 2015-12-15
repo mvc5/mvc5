@@ -9,14 +9,10 @@ class Invoke
     implements Gem\Invoke
 {
     /**
-     * @var array
+     *
      */
-    protected $args = [];
-
-    /**
-     * @var string|array
-     */
-    protected $config;
+    use Config\Args;
+    use Config\Config;
 
     /**
      * @param string|array $config
@@ -26,21 +22,5 @@ class Invoke
     {
         $this->args   = $args;
         $this->config = $config;
-    }
-
-    /**
-     * @return array
-     */
-    public function args()
-    {
-        return $this->args;
-    }
-
-    /**
-     * @return string|array
-     */
-    public function config()
-    {
-        return $this->config;
     }
 }

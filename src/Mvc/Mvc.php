@@ -6,8 +6,8 @@
 namespace Mvc5\Mvc;
 
 use Mvc5\Arg;
-use Mvc5\Response\Response;
-use Mvc5\Route\Route;
+use Mvc5\Response\Response as Mvc5Response;
+use Mvc5\Route\Route as Mvc5Route;
 
 trait Mvc
 {
@@ -21,13 +21,13 @@ trait Mvc
      */
     protected function args()
     {
-        return [
+        return array_filter([
             Arg::EVENT      => $this,
             Arg::RESPONSE   => $this->response(),
             Arg::ROUTE      => $this->route(),
             Arg::MODEL      => $this->model(),
             Arg::CONTROLLER => $this->controller()
-        ];
+        ]);
     }
 
     /**
@@ -40,18 +40,16 @@ trait Mvc
     {
         $model = $this->signal($callable, $this->args() + $args, $callback);
 
-        if ($model instanceof Route) {
-            $this->setRoute($model);
+        if ($model instanceof Mvc5Route) {
+            $this->route($model);
             return $model;
         }
 
-        if ($model instanceof Response) {
-            $this->setResponse($model);
+        if ($model instanceof Mvc5Response) {
+            $this->stop();
             return $model;
         }
 
-        $model && $this->setModel($model);
-
-        return $model;
+        return $this->model($model);
     }
 }

@@ -8,13 +8,8 @@ namespace Mvc5\Plugin;
 use Mvc5\Arg;
 
 class Service
-    implements Gem\Plugin
+    extends Plugin
 {
-    /**
-     *
-     */
-    use Config\Plugin;
-
     /**
      * @param string $name
      * @param array $args
@@ -22,10 +17,6 @@ class Service
      */
     public function __construct($name, array $args = [], array $calls = [])
     {
-        $this->config = [
-            Arg::ARGS  => $args,
-            Arg::CALLS => $calls + [Arg::SERVICE => new Link],
-            Arg::NAME  => $name
-        ];
+        parent::__construct($name, $args, $calls + [Arg::SERVICE => new Link]);
     }
 }

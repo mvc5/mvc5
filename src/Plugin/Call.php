@@ -9,14 +9,10 @@ class Call
     implements Gem\Call
 {
     /**
-     * @var array
+     *
      */
-    protected $args;
-
-    /**
-     * @var string
-     */
-    protected $config;
+    use Config\Args;
+    use Config\Config;
 
     /**
      * @param $config
@@ -26,21 +22,5 @@ class Call
     {
         $this->args   = $args;
         $this->config = $config;
-    }
-
-    /**
-     * @return array
-     */
-    public function args()
-    {
-        return $this->args;
-    }
-
-    /**
-     * @return string
-     */
-    public function config()
-    {
-        return $this->config;
     }
 }

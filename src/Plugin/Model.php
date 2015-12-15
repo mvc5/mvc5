@@ -9,13 +9,8 @@ use Mvc5\Arg;
 use Mvc5\Model as Mvc5Model;
 
 class Model
-    implements Gem\Plugin
+    extends Plugin
 {
-    /**
-     *
-     */
-    use Config\Plugin;
-
     /**
      * @param $template
      * @param array $args
@@ -23,10 +18,6 @@ class Model
      */
     public function __construct($template, array $args = [], array $calls = [])
     {
-        $this->config = [
-            Arg::ARGS  => [Arg::TEMPLATE => $template, Arg::CONFIG => $args],
-            Arg::CALLS => $calls,
-            Arg::NAME  => Mvc5Model::class
-        ];
+        parent::__construct(Mvc5Model::class, [Arg::TEMPLATE => $template, Arg::CONFIG => $args], $calls);
     }
 }

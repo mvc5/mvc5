@@ -9,9 +9,9 @@ class Filter
     implements Gem\Filter
 {
     /**
-     * @var Plugin|string
+     *
      */
-    protected $config;
+    use Config\Config;
 
     /**
      * @var string|array
@@ -20,20 +20,12 @@ class Filter
 
     /**
      * @param $config
-     * @param $filter
+     * @param array|\Traversable $filter
      */
-    public function __construct($config, $filter = null)
+    public function __construct($config, $filter = [])
     {
         $this->config = $config;
-        $this->filter = (array) $filter;
-    }
-
-    /**
-     * @return Plugin|string
-     */
-    public function config()
-    {
-        return $this->config;
+        $this->filter = $filter;
     }
 
     /**

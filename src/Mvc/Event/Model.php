@@ -6,7 +6,6 @@
 namespace Mvc5\Mvc\Event;
 
 use Mvc5\Arg;
-use Mvc5\Config\Configuration;
 use Mvc5\Event\Signal;
 use Mvc5\Response\Response;
 use Mvc5\Route\Route;
@@ -19,15 +18,15 @@ trait Model
     use Signal;
 
     /**
-     * @var Configuration
+     * @var array|\ArrayAccess
      */
     protected $config;
 
     /**
-     * @param string $event
-     * @param Configuration $config
+     * @param $event
+     * @param array|\ArrayAccess $config
      */
-    public function __construct($event, Configuration $config)
+    public function __construct($event, $config)
     {
         $this->config = $config;
         $this->event  = $event;
@@ -42,53 +41,34 @@ trait Model
     }
 
     /**
+     * @param $model
      * @return array|callable|null|object|string
      */
-    protected function model()
+    protected function model($model = null)
     {
+        if (null !== $model) {
+            $this->response()->setContent($model);
+            return $model;
+        }
+
         return $this->response()->content();
     }
 
     /**
+     * @param Response $response
      * @return Response
      */
-    protected function response()
+    protected function response(Response $response = null)
     {
-        return $this->config->get(Arg::RESPONSE);
-    }
-
-    /**
-     * @return Route
-     */
-    protected function route()
-    {
-        return $this->config->get(Arg::ROUTE);
-    }
-
-    /**
-     * @param $model
-     * @return void
-     */
-    protected function setModel($model)
-    {
-        $this->response()->setContent($model);
-    }
-
-    /**
-     * @param Response $response
-     * @return void
-     */
-    protected function setResponse(Response $response)
-    {
-        $this->config->set(Arg::RESPONSE, $response);
+        return null !== $response ? $this->config[Arg::RESPONSE] = $response : $this->config[Arg::RESPONSE];
     }
 
     /**
      * @param Route $route
-     * @return void
+     * @return Route
      */
-    protected function setRoute(Route $route)
+    protected function route(Route $route = null)
     {
-        $this->config->set(Arg::ROUTE, $route);
+        return null !== $route ? $this->config[Arg::ROUTE] = $route : $this->config[Arg::ROUTE];
     }
 }

@@ -9,14 +9,10 @@ class Dependency
     implements Gem\Dependency
 {
     /**
-     * @var string
+     *
      */
-    protected $name;
-
-    /**
-     * @var
-     */
-    protected $config;
+    use Config\Config;
+    use Config\Name;
 
     /**
      * @param $name
@@ -26,21 +22,5 @@ class Dependency
     {
         $this->config = $config;
         $this->name   = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function config()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @return string
-     */
-    public function name()
-    {
-        return $this->name;
     }
 }

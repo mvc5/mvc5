@@ -70,11 +70,11 @@ trait Resolver
     protected function build(array $config, array $args = [], callable $callback = null)
     {
         if (!isset($config[1])) {
-            return $callback && !class_exists($config[0]) ?
-                $callback($config[0]) : $this->make($config[0], $args, $callback);
+            return $callback && !class_exists($config[0]) ? $callback($config[0]) :
+                $this->make($config[0], $args);
         }
 
-        return $this->compose($this->plugin(array_shift($config), $args, $callback), $config, $args, $callback);
+        return $this->compose($this->plugin(array_shift($config), $args), $config, $args, $callback);
     }
 
     /**
@@ -87,7 +87,7 @@ trait Resolver
     public function call($config, array $args = [], callable $callback = null)
     {
         if (!is_string($config)) {
-            return $config instanceof Event ? $this->trigger($config, $args, $callback) :
+            return $config instanceof Event ? $this->generate($config, $args, $callback ?? $this) :
                 $this->invoke($config, $args, $callback);
         }
 
@@ -108,7 +108,7 @@ trait Resolver
         });
 
         if ($plugin instanceof Event) {
-            return $this->trigger($plugin, $args, $callback);
+            return $this->generate($plugin, $args, $callback ?? $this);
         }
 
         foreach($config as $name) {
@@ -145,15 +145,6 @@ trait Resolver
         }
 
         return $service;
-    }
-
-    /**
-     * @param array|Event|string $event
-     * @return Event
-     */
-    protected function event($event)
-    {
-        return $event instanceof Event ? $event : $this->plugin($event) ?? $event;
     }
 
     /**
@@ -237,22 +228,9 @@ trait Resolver
      * @param array|callable|object|string $config
      * @return callable|null
      */
-    public function invokable($config) : callable
+    protected function invokable($config) : callable
     {
-        if (is_string($config)) {
-            return Arg::CALL !== $config[0] ? $this->plugin($config) : function($args = []) use ($config) {
-                return $this->call(
-                    substr($config, 1),
-                    !is_array($args) || !is_string(key($args)) ? func_get_args() : $args
-                );
-            };
-        }
-
-        if (is_array($config)) {
-            return is_string($config[0]) ? $config : [$this->plugin($config[0]), $config[1]];
-        }
-
-        return $config instanceof Closure ? $config : $this->plugin($config);
+        return $this->listener(is_string($config) ? $this->plugin($config) : $this->args($config));
     }
 
     /**
@@ -263,16 +241,26 @@ trait Resolver
      */
     protected function invoke($config, array $args = [], callable $callback = null)
     {
-        return $this->signal($this->args($config), $this->args($args), $callback ?: $this);
+        return $this->signal($this->args($config), $this->args($args), $callback ?? $this);
+    }
+
+    /**
+     * @param array|callable|object|string $config
+     * @return callable|null
+     */
+    protected function listener($config)
+    {
+        return !$config instanceof Event ? $config : (
+            function(array $args = []) use ($config) { return $this->call($config, $args); }
+        );
     }
 
     /**
      * @param string $name
      * @param array $args
-     * @param callable $callback
      * @return callable|object
      */
-    protected function make($name, array $args = [], callable $callback = null)
+    protected function make($name, array $args = [])
     {
         $class = new ReflectionClass($name);
 
@@ -298,12 +286,12 @@ trait Resolver
                 continue;
             }
 
-            if ($hint = $param->getClass()) {
-                $matched[] = $this->plugin($hint->name);
+            if (null !== ($hint = $param->getClass()) && null !== $match = $this($hint->name)) {
+                $matched[] = $match;
                 continue;
             }
 
-            if ($callback && null !== $match = $callback($param->name)) {
+            if (null !== $match = $this($param->name)) {
                 $matched[] = $match;
                 continue;
             }
@@ -377,7 +365,7 @@ trait Resolver
 
         if (is_string($config)) {
             return $this->resolve($this->alias($config), $args) ??
-                $this->plugin($this->configured($config), $args, $callback ?? $this) ??
+                $this->plugin($this->configured($config), $args) ??
                     $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
         }
 
@@ -386,7 +374,7 @@ trait Resolver
         }
 
         if ($config instanceof Closure) {
-            return $this->invoke($config, $args, $callback ?? $this);
+            return $this->invoke($config, $args, $callback);
         }
 
         return $this->resolve($config, $args);
@@ -445,9 +433,7 @@ trait Resolver
         }
 
         if ($config instanceof Dependency) {
-            return !$config->config() ? $this->get($config->name()) : (
-                $this->shared($config->name()) ?? $this->initialize($config->name(), $config->config())
-            );
+            return $this->shared($config->name()) ?? $this->initialize($config->name(), $config->config());
         }
 
         if ($config instanceof Param) {
@@ -480,7 +466,7 @@ trait Resolver
 
         if ($config instanceof Invoke) {
             return function(array $args = []) use ($config) {
-                return $this->call($config->config(), $args + $config->args());
+                return $this->call($this->solve($config->config()), $args + $this->args($config->args()));
             };
         }
 
@@ -510,7 +496,9 @@ trait Resolver
      */
     public function trigger($event, array $args = [], callable $callback = null)
     {
-        return $this->generate($this->event($event), $args, $callback ?? $this);
+        return $this->generate(
+            $event instanceof Event ? $event : $this->plugin($event) ?? $event, $args, $callback ?? $this
+        );
     }
 
     /**

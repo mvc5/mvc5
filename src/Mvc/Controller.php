@@ -5,7 +5,7 @@
 
 namespace Mvc5\Mvc;
 
-use Mvc5\Controller\Dispatch;
+use Mvc5\Controller\Action;
 use Mvc5\Plugin;
 use Throwable;
 
@@ -14,7 +14,7 @@ class Controller
     /**
      *
      */
-    use Dispatch;
+    use Action;
     use Plugin;
 
     /**
@@ -26,7 +26,7 @@ class Controller
     {
         try {
 
-            return $this->dispatch($this->controller($controller), $args);
+            return $this->action($controller, $args);
 
         } catch (Throwable $exception) {
 

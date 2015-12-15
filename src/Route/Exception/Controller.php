@@ -6,7 +6,6 @@
 namespace Mvc5\Route\Exception;
 
 use Mvc5\Arg;
-use Mvc5\Route\Exception;
 
 class Controller
 {
@@ -24,12 +23,12 @@ class Controller
     }
 
     /**
-     * @param Exception $route
+     * @param $route
      * @return mixed
      */
-    public function __invoke(Exception $route)
+    public function __invoke($route)
     {
-        $this->model[Arg::EXCEPTION] = $route->exception();
+        $this->model[Arg::EXCEPTION] = $route[Arg::EXCEPTION];
 
         return $this->model;
     }

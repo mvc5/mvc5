@@ -24,15 +24,6 @@ trait Plugin
     }
 
     /**
-     * @param array|callable|object|string $config
-     * @return callable|null
-     */
-    protected function invokable($config) : callable
-    {
-        return $this->service->invokable($config);
-    }
-
-    /**
      * @param string $name
      * @return mixed
      */

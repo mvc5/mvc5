@@ -40,16 +40,6 @@ interface Arg
     /**
      *
      */
-    const CONTROLLER_DISPATCH = 'controller\dispatch';
-
-    /**
-     *
-     */
-    const CALL = '@';
-
-    /**
-     *
-     */
     const CALLS = 'calls';
 
     /**
@@ -71,11 +61,6 @@ interface Arg
      *
      */
     const CONSTRAINTS = 'constraints';
-
-    /**
-     *
-     */
-    const CONTROLLER_ACTION = 'controller\action';
 
     /**
      *
@@ -221,6 +206,11 @@ interface Arg
     /**
      *
      */
+    const REQUEST = 'request';
+
+    /**
+     *
+     */
     const SEPARATOR = '/';
 
     /**
@@ -316,6 +306,11 @@ interface Arg
      *
      */
     const VIEW_EXCEPTION = 'view\exception';
+
+    /**
+     *
+     */
+    const WEB = 'web';
 
     /**
      *

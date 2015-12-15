@@ -43,8 +43,8 @@ trait Model
      */
     public function vars(array $config = null)
     {
-        return null === $config ? $this->config
-            : $this->config = $config + $this->config + array_filter([Arg::TEMPLATE_MODEL => $this->template()]);
+        return null === $config ? $this->config :
+            $this->config = $config + $this->config + array_filter([Arg::TEMPLATE_MODEL => $this->template()]);
     }
 
     /**

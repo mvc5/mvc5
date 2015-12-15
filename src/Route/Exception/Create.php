@@ -6,34 +6,42 @@
 namespace Mvc5\Route\Exception;
 
 use Mvc5\Arg;
-use Mvc5\Route\Exception;
+use Mvc5\Route\Route;
 use Throwable;
 
 class Create
 {
     /**
-     * @var Exception
+     * @var
      */
-    protected $route;
+    protected $controller;
 
     /**
-     * @param Exception $route
+     * @var
      */
-    public function __construct(Exception $route)
+    protected $name;
+
+    /**
+     * @param $name
+     * @param $controller
+     */
+    public function __construct($name, $controller)
     {
-        $this->route = $route;
+        $this->controller = $controller;
+        $this->name       = $name;
     }
 
     /**
+     * @param Route $route
      * @param Throwable $exception
-     * @param $route
-     * @return Exception
+     * @return Route
      */
-    public function __invoke(Throwable $exception, $route)
+    public function __invoke(Route $route, Throwable $exception)
     {
-        $this->route->set(Arg::EXCEPTION, $exception);
-        $this->route->set(Arg::ROUTE, $route);
+        $route[Arg::CONTROLLER] = $this->controller;
+        $route[Arg::EXCEPTION]  = $exception;
+        $route[Arg::NAME]       = $this->name;
 
-        return $this->route;
+        return $route;
     }
 }

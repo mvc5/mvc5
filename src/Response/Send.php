@@ -9,7 +9,6 @@ class Send
 {
     /**
      * @param Response $response
-     * @return mixed
      */
     public function __invoke(Response $response)
     {

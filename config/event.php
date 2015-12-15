@@ -4,12 +4,11 @@
  */
 
 return [
-    'controller\dispatch' => [
-        'controller\action'
-    ],
     'controller\exception' => [
         'exception\status',
-        'exception\controller'
+        'exception\controller',
+        'exception\view',
+        'exception\response'
     ],
     'mvc' => [
         'mvc\route',
@@ -18,26 +17,42 @@ return [
         'mvc\view',
         'mvc\response'
     ],
-    'response\dispatch' => [
-        'response\send'
-    ],
     'response\exception' => [
         'exception\status',
         'exception\controller',
         'exception\view',
+        'exception\response',
+        'response\send'
+    ],
+    'response\send' => [
+        'response\send\send'
     ],
     'route\dispatch' => [
         'route\filter',
         'router',
         'route\error'
     ],
-    'route\error\dispatch' => [
-        'route\error\status',
-        'route\error\controller'
+    'route\error' => [
+         /**
+          * The Mvc event uses a shared response object. However, a new response object can be configured, rendered and
+          * returned. Returning the response object will halt the Mvc event.
+          */
+        'error\status',
+        'error\route',
+        //'error\controller',
+        //'error\view',
+        //'error\response'
     ],
     'route\exception' => [
+         /**
+          * Returns a route object that specifies the controller to use within the Mvc event. A new response object
+          * can be configured, rendered and returned to halt the Mvc event.
+          */
         'exception\status',
         'exception\route',
+        //'exception\controller',
+        //'exception\view',
+        //'exception\response'
     ],
     'route\match' => [
         'route\match\scheme',
@@ -53,8 +68,13 @@ return [
         'exception\status',
         'exception\controller',
         'exception\view',
+        'exception\response'
     ],
     'view\render' => [
         'view\renderer'
     ],
+    'web' => [
+        'mvc',
+        'response\send'
+    ]
 ];
