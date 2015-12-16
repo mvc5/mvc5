@@ -222,7 +222,9 @@ trait Resolver
      */
     protected function invokable($config) : callable
     {
-        return $this->listener(is_string($config) ? $this->plugin($config) : $this->args($config));
+        return $this->listener(
+            is_string($config) ? $this->plugin($config, [], function($name) { return $name; }) : $this->args($config)
+        );
     }
 
     /**
