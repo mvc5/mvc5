@@ -222,9 +222,16 @@ trait Resolver
      */
     protected function invokable($config) : callable
     {
-        return $this->listener(
-            is_string($config) ? $this->plugin($config, [], function($name) { return $name; }) : $this->args($config)
-        );
+        if (is_string($config)) {
+            return Arg::CALL === $config[0] ? substr($config, 1) :
+                $this->listener($this->plugin($config, [], function($name) { return $name; }));
+        }
+
+        if (is_array($config)) {
+            return is_string($config[0]) ? $config : [$this->plugin($config[0]), $config[1]];
+        }
+
+        return $config instanceof Closure ? $config : $this->listener($this->plugin($config));
     }
 
     /**

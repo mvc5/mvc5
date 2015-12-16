@@ -20,6 +20,11 @@ interface Arg
     /**
      *
      */
+    const CALL = '@';
+
+    /**
+     *
+     */
     const CONFIG = 'config';
 
     /**

@@ -28,11 +28,7 @@ trait Signal
         $method   = '__invoke';
         $params   = [];
 
-        if (is_array($config)) {
-            list($config, $method) = $config;
-        }
-
-        if (is_string($config) && !class_exists($config)) {
+        if (is_string($config)) {
             $static = explode('::', $config);
             if (isset($static[1])) {
                 list($config, $method) = $static;
@@ -41,6 +37,8 @@ trait Signal
                 $function = $config;
             }
         }
+
+        is_array($config) && list($config, $method) = $config;
 
         !$function && $params = (new ReflectionMethod($config, $method))->getParameters();
 
