@@ -7,8 +7,8 @@ return [
     'controller\exception' => [
         'exception\status',
         'exception\controller',
-        'exception\view',
-        'exception\response'
+        //'exception\view',
+        //'exception\response'
     ],
     'mvc' => [
         'mvc\route',
@@ -24,30 +24,20 @@ return [
         'exception\response',
         'response\send'
     ],
-    'response\send' => [
-        'response\send\send'
-    ],
     'route\dispatch' => [
         'route\filter',
         'router',
         'route\error'
     ],
     'route\error' => [
-         /**
-          * The Mvc event uses a shared response object. However, a new response object can be configured, rendered and
-          * returned. Returning the response object will halt the Mvc event.
-          */
         'error\status',
         'error\route',
+        // halt mvc event or new response object
         //'error\controller',
         //'error\view',
         //'error\response'
     ],
     'route\exception' => [
-         /**
-          * Returns a route object that specifies the controller to use within the Mvc event. A new response object
-          * can be configured, rendered and returned to halt the Mvc event.
-          */
         'exception\status',
         'exception\route',
         //'exception\controller',
@@ -68,7 +58,7 @@ return [
         'exception\status',
         'exception\controller',
         'exception\view',
-        'exception\response'
+        //'exception\response'
     ],
     'view\render' => [
         'view\renderer'
