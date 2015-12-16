@@ -92,19 +92,11 @@ trait Resolver
         }
 
         $config = explode(Arg::CALL_SEPARATOR, $config);
-        $plugin = array_shift($config);
+        $name   = array_shift($config);
         $method = array_pop($config);
 
-        $plugin = $this->plugin($plugin, [], function($plugin) {
-            if (is_callable($plugin)) {
-                return $plugin;
-            }
-
-            if ($service = $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $plugin])) {
-                return $service;
-            }
-
-            throw new RuntimeException('Plugin is not callable: ' . $plugin);
+        $plugin = $this->plugin($name, [], function($name) {
+            return is_callable($name) ? $name : $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $name]);
         });
 
         if ($plugin instanceof Event) {
