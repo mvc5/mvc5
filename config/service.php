@@ -33,6 +33,7 @@ return [
     'exception\view'             => 'view\render',
     'factory'                    => new Service(null),
     'layout'                     => [Mvc5\Layout::class, 'layout'],
+    'manager'                    => new Plugin(null),
     'mvc'                        => new Plugin(Mvc5\Mvc::class, ['mvc', new Link], [new Dependency('route')]),
     'mvc\controller'             => new Service(Mvc5\Mvc\Controller::class),
     'mvc\layout'                 => Mvc5\Mvc\Layout::class,
