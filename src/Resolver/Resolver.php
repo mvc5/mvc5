@@ -69,12 +69,7 @@ trait Resolver
      */
     protected function build(array $config, array $args = [], callable $callback = null)
     {
-        if (!isset($config[1])) {
-            return $callback && !class_exists($config[0]) ? $callback($config[0]) :
-                $this->make($config[0], $args);
-        }
-
-        return $this->compose($this->plugin(array_shift($config), $args), $config, $args, $callback);
+        return $this->compose($this->create(array_shift($config), $args, $callback), $config, $args, $callback);
     }
 
     /**
@@ -121,22 +116,35 @@ trait Resolver
     }
 
     /**
-     * @param mixed $service
+     * @param $plugin
      * @param array $config
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    protected function compose($service, array $config, array $args = [], callable $callback = null)
+    protected function compose($plugin, array $config = [], array $args = [], callable $callback = null)
     {
         foreach($config as $name) {
-            $service = $service instanceof ServiceManager ? $service->plugin($name, $args, $callback) : (
-                $service instanceof ServiceContainer ? $this->plugin($service[$name], $args, $callback) :
-                    $this->resolve($service[$name], $args)
+            $plugin = $plugin instanceof ServiceManager ? $plugin->plugin($name, $args, $callback) : (
+                $plugin instanceof ServiceContainer ? $this->plugin($plugin[$name], $args, $callback) :
+                    $this->resolve($plugin[$name], $args)
             );
         }
 
-        return $service;
+        return $plugin;
+    }
+
+    /**
+     * @param $name
+     * @param array $args
+     * @param callable $callback
+     * @return callable|object
+     */
+    protected function create($name, array $args = [], callable $callback = null)
+    {
+        return $this->plugin($this->configured($name), $args) ?? (
+            $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args)
+        );
     }
 
     /**
@@ -366,8 +374,7 @@ trait Resolver
 
         if (is_string($config)) {
             return $this->resolve($this->alias($config), $args) ??
-                $this->plugin($this->configured($config), $args) ??
-                    $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
+                $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
         }
 
         if (is_array($config)) {
