@@ -15,6 +15,11 @@ interface Arg
     /**
      *
      */
+    const ALIASES = 'aliases';
+
+    /**
+     *
+     */
     const ARGS = 'args';
 
     /**
