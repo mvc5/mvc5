@@ -91,7 +91,10 @@ trait Resolver
         $method = array_pop($config);
 
         $plugin = $this->plugin($name, [], function($name) {
-            return is_callable($name) ? $name : $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $name]);
+            return $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $name]) ?? (
+                is_callable($plugin = Arg::CALL === $name[0] ? substr($name, 1) : $name) ? $plugin :
+                    $this->signal(new Exception, [Arg::PLUGIN => $name])
+            );
         });
 
         if ($plugin instanceof Event) {
@@ -231,8 +234,7 @@ trait Resolver
     protected function invokable($config) : callable
     {
         if (is_string($config)) {
-            return Arg::CALL === $config[0] ? substr($config, 1) :
-                $this->listener($this->plugin($config, [], function($name) { return $name; }));
+            return function($args = []) use($config) { return $this->call($config, $args); };
         }
 
         if (is_array($config)) {
