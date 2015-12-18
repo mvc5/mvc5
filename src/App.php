@@ -11,7 +11,6 @@ class App
     /**
      *
      */
-    use Event\Generator;
     use Resolver\Resolver;
 
     /**

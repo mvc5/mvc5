@@ -54,7 +54,8 @@ trait Signal
             }
 
             if ($param->isOptional()) {
-                $matched[] = $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null;
+                $param->isDefaultValueAvailable() &&
+                    $matched[] = $param->getDefaultValue();
                 continue;
             }
 

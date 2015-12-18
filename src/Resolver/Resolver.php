@@ -8,6 +8,7 @@ namespace Mvc5\Resolver;
 use Closure;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
+use Mvc5\Event\Generator;
 use Mvc5\Plugin\Gem\Args;
 use Mvc5\Plugin\Gem\Call;
 use Mvc5\Plugin\Gem\Calls;
@@ -26,7 +27,6 @@ use Mvc5\Resolvable;
 use Mvc5\Service\Config as Container;
 use Mvc5\Service\Container as ServiceContainer;
 use Mvc5\Service\Manager as ServiceManager;
-use Mvc5\Signal;
 use ReflectionClass;
 use RuntimeException;
 
@@ -37,8 +37,8 @@ trait Resolver
      */
     use Alias;
     use Container;
+    use Generator;
     use Initializer;
-    use Signal;
 
     /**
      * @param $args
@@ -91,8 +91,8 @@ trait Resolver
         $method = array_pop($config);
 
         $plugin = $this->plugin($name, [], function($name) {
-            return $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $name]) ?? (
-                is_callable($plugin = Arg::CALL === $name[0] ? substr($name, 1) : $name) ? $plugin :
+            return is_callable($plugin = Arg::CALL === $name[0] ? substr($name, 1) : $name) ? $plugin : (
+                $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $name]) ??
                     $this->signal(new Exception, [Arg::PLUGIN => $name])
             );
         });
@@ -163,14 +163,6 @@ trait Resolver
 
         return $arg;
     }
-
-    /**
-     * @param array|object|string|\Traversable $event
-     * @param array $args
-     * @param callable $callback
-     * @return mixed|null
-     */
-    protected abstract function generate($event, array $args = [], callable $callback = null);
 
     /**
      * @param string $name
@@ -506,9 +498,7 @@ trait Resolver
      */
     public function trigger($event, array $args = [], callable $callback = null)
     {
-        return $this->generate(
-            $event instanceof Event ? $event : $this($event) ?? $event, $args, $callback ?? $this
-        );
+        return $this->generate($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback ?? $this);
     }
 
     /**

@@ -5,10 +5,16 @@
 
 namespace Mvc5\Event;
 
+use Mvc5\Signal;
 use Traversable;
 
 trait Generator
 {
+    /**
+     *
+     */
+    use Signal;
+
     /**
      * @var array|Traversable
      */
@@ -23,7 +29,7 @@ trait Generator
      */
     protected function emit($event, callable $listener, array $args = [], callable $callback = null)
     {
-        return is_callable($event) ? $event($listener, $args, $callback) : $this->invoke($listener, $args, $callback);
+        return is_callable($event) ? $event($listener, $args, $callback) : $this->signal($listener, $args, $callback);
     }
 
     /**
@@ -62,14 +68,6 @@ trait Generator
      * @return callable|null
      */
     protected abstract function invokable($config) : callable;
-
-    /**
-     * @param array|callable|object|string $config
-     * @param array $args
-     * @param callable $callback
-     * @return array|callable|object|string
-     */
-    protected abstract function invoke($config, array $args = [], callable $callback = null);
 
     /**
      * @param string $name
