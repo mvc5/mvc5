@@ -507,7 +507,7 @@ trait Resolver
     public function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->generate(
-            $event instanceof Event ? $event : $this->plugin($event) ?? $event, $args, $callback ?? $this
+            $event instanceof Event ? $event : $this($event) ?? $event, $args, $callback ?? $this
         );
     }
 
