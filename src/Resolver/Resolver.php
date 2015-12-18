@@ -23,6 +23,7 @@ use Mvc5\Plugin\Gem\Link;
 use Mvc5\Plugin\Gem\Param;
 use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
+use Mvc5\Plugin\Plug as Mvc5Plug;
 use Mvc5\Resolvable;
 use Mvc5\Service\Config as Container;
 use Mvc5\Service\Container as ServiceContainer;
@@ -82,7 +83,7 @@ trait Resolver
     public function call($config, array $args = [], callable $callback = null)
     {
         if (!is_string($config)) {
-            return $config instanceof Event ? $this->generate($config, $this->args($args), $callback ?? $this) :
+            return $config instanceof Event ? $this->generate($config, $args, $callback ?? $this) :
                 $this->invoke($config, $args, $callback);
         }
 
@@ -98,7 +99,7 @@ trait Resolver
         });
 
         if ($plugin instanceof Event) {
-            return $this->generate($plugin, $this->args($args), $callback ?? $this);
+            return $this->generate($plugin, $args, $callback ?? $this);
         }
 
         foreach($config as $name) {
@@ -145,7 +146,7 @@ trait Resolver
      */
     protected function create($name, array $args = [], callable $callback = null)
     {
-        return $this->plugin($this->configured($name), $args) ?? (
+        return $this($this->configured($name), $args) ?? (
             $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args)
         );
     }
@@ -444,7 +445,7 @@ trait Resolver
         }
 
         if ($config instanceof Call) {
-            return $this->call($config->config(), $args + $config->args());
+            return $this->call($config->config(), $args + $this->args($config->args()));
         }
 
         if ($config instanceof Args) {
@@ -479,7 +480,7 @@ trait Resolver
             };
         }
 
-        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => $config]);
+        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => new Mvc5Plug($config)]);
     }
 
     /**
@@ -500,7 +501,7 @@ trait Resolver
     public function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->generate(
-            $event instanceof Event ? $event : $this($event) ?? $event, $this->args($args), $callback ?? $this
+            $event instanceof Event ? $event : $this($event) ?? $event, $args, $callback ?? $this
         );
     }
 
