@@ -29,7 +29,7 @@ trait Initializer
      */
     protected function initialize($name, $config = null)
     {
-        return $this->initializing($name) ?:
+        return $this->initializing($name) ??
             $this->initialized($name, $this->plugin($config ?? $name));
     }
 
@@ -59,7 +59,7 @@ trait Initializer
 
         $this->pending[$name] = true;
 
-        return false;
+        return null;
     }
 
     /**
