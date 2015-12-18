@@ -82,7 +82,7 @@ trait Resolver
     public function call($config, array $args = [], callable $callback = null)
     {
         if (!is_string($config)) {
-            return $config instanceof Event ? $this->generate($config, $args, $callback ?? $this) :
+            return $config instanceof Event ? $this->generate($config, $this->args($args), $callback ?? $this) :
                 $this->invoke($config, $args, $callback);
         }
 
@@ -98,7 +98,7 @@ trait Resolver
         });
 
         if ($plugin instanceof Event) {
-            return $this->generate($plugin, $args, $callback ?? $this);
+            return $this->generate($plugin, $this->args($args), $callback ?? $this);
         }
 
         foreach($config as $name) {
@@ -499,7 +499,9 @@ trait Resolver
      */
     public function trigger($event, array $args = [], callable $callback = null)
     {
-        return $this->generate($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback ?? $this);
+        return $this->generate(
+            $event instanceof Event ? $event : $this($event) ?? $event, $this->args($args), $callback ?? $this
+        );
     }
 
     /**
