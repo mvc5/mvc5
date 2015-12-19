@@ -92,7 +92,7 @@ trait Resolver
         $method = array_pop($config);
 
         $plugin = $this->plugin($name, [], function($name) {
-            return is_callable($plugin = Arg::CALL === $name[0] ? substr($name, 1) : $name) ? $plugin : (
+            return Arg::CALL === $name[0] ? substr($name, 1) : (
                 $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $name]) ??
                     $this->signal(new Exception, [Arg::PLUGIN => $name])
             );
@@ -208,7 +208,7 @@ trait Resolver
 
                 $this->invoke(
                     is_string($method) ? [$service, $method] : $method,
-                    $param && (!$args || is_string(key($args))) ? [$param => $service] + $args : $args
+                    ($param && (!$args || is_string(key($args))) ? [$param => $service] : []) + $this->args($args)
                 );
 
                 continue;
@@ -245,7 +245,7 @@ trait Resolver
      */
     protected function invoke($config, array $args = [], callable $callback = null)
     {
-        return $this->signal($this->args($config), $this->args($args), $callback ?? $this);
+        return $this->signal($config, $args, $callback ?? $this);
     }
 
     /**
@@ -314,19 +314,17 @@ trait Resolver
      */
     protected function merge(Plugin $parent, Plugin $config)
     {
-        !$parent->name() && $parent->set(Arg::NAME, $this->resolve($config->name()));
+        !$parent->name() &&
+            $parent[Arg::NAME] = $this->resolve($config->name());
 
-        $config->args() && $parent->set(
-            Arg::ARGS,
-            is_string(key($config->args())) ? $config->args() + $parent->args() : $config->args()
-        );
+        $config->args() &&
+            $parent[Arg::ARGS] = is_string(key($config->args())) ? $config->args() + $parent->args() : $config->args();
 
-        $config->calls() && $parent->set(
-            Arg::CALLS,
-            $config->merge() ? array_merge($parent->calls(), $config->calls()) : $config->calls()
-        );
+        $config->calls() &&
+            $parent[Arg::CALLS] = $config->merge() ? array_merge($parent->calls(), $config->calls()) : $config->calls();
 
-        $config->param() && $parent->set(Arg::PARAM, $config->param());
+        $config->param() &&
+            $parent[Arg::PARAM] = $config->param();
 
         return $parent;
     }
@@ -412,9 +410,10 @@ trait Resolver
     /**
      * @param $config
      * @param array $args
+     * @param callable $callback
      * @return array|callable|Plugin|null|object|Resolvable|string
      */
-    protected function resolve($config, array $args = [])
+    protected function resolvable($config, array $args = [], callable $callback = null)
     {
         if (!$config instanceof Resolvable) {
             return $config;
@@ -480,7 +479,26 @@ trait Resolver
             };
         }
 
-        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => new Mvc5Plug($config)]);
+        return $callback ? $callback($config) : $this->resolver($config);
+    }
+
+    /**
+     * @param $config
+     * @param array $args
+     * @return array|callable|Plugin|null|object|Resolvable|string
+     */
+    protected function resolve($config, array $args = [])
+    {
+        return $this->resolvable($config, $args);
+    }
+
+    /**
+     * @param $config
+     * @return callable|mixed|null|object
+     */
+    protected function resolver($config)
+    {
+        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => $config]);
     }
 
     /**
