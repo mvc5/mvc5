@@ -11,6 +11,7 @@ class Exception
 {
     /**
      * @param $plugin
+     * @throws RuntimeException
      */
     public function __invoke($plugin)
     {

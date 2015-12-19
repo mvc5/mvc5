@@ -29,8 +29,7 @@ trait Initializer
      */
     protected function initialize($name, $config = null)
     {
-        return $this->initializing($name) ??
-            $this->initialized($name, $this->plugin($config ?? $name));
+        return $this->initializing($name) ?? $this->initialized($name, $this->plugin($config ?? $name));
     }
 
     /**
@@ -61,13 +60,6 @@ trait Initializer
 
         return null;
     }
-
-    /**
-     * @param $config
-     * @param array $args
-     * @return array|callable|null|object|string
-     */
-    protected abstract function resolve($config, array $args = []);
 
     /**
      * @param string $name
