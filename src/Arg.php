@@ -100,11 +100,6 @@ interface Arg
     /**
      *
      */
-    const EVENT_MODEL = 'event\model';
-
-    /**
-     *
-     */
     const EXCEPTION = 'exception';
 
     /**
@@ -227,11 +222,6 @@ interface Arg
      *
      */
     const SERVICE_RESOLVER = 'service\resolver';
-
-    /**
-     *
-     */
-    const SERVICE_LOCATOR = 'service\locator';
 
     /**
      *

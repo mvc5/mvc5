@@ -7,8 +7,8 @@ namespace Mvc5\Resolver;
 
 use Closure;
 use Mvc5\Arg;
+use Mvc5\Event as Mvc5Event;
 use Mvc5\Event\Event;
-use Mvc5\Event\Generator;
 use Mvc5\Plugin\Gem\Args;
 use Mvc5\Plugin\Gem\Call;
 use Mvc5\Plugin\Gem\Calls;
@@ -81,31 +81,32 @@ trait Resolver
      */
     public function call($config, array $args = [], callable $callback = null)
     {
-        if (!is_string($config)) {
-            return $config instanceof Event ? $this->generate($config, $args, $callback ?? $this) :
-                $this->invoke($config, $args, $callback);
+        if (is_string($config)) {
+            return $this->relay(explode(Arg::CALL_SEPARATOR, $config), $args, $callback);
         }
 
-        $config = explode(Arg::CALL_SEPARATOR, $config);
-        $name   = array_shift($config);
-        $method = array_pop($config);
-
-        $plugin = $this->plugin($name, [], function($name) {
-            return Arg::CALL === $name[0] ? substr($name, 1) : (
-                $this->call(Arg::SERVICE_LOCATOR, [Arg::NAME => $name]) ??
-                    $this->signal(new Exception, [Arg::PLUGIN => $name])
-            );
-        });
-
-        if ($plugin instanceof Event) {
-            return $this->generate($plugin, $args, $callback ?? $this);
+        if ($config instanceof Event) {
+            return $this->event($config, $args, $callback);
         }
 
-        foreach($config as $name) {
-            $plugin = $this->invoke([$plugin, $name], $args, $callback);
+        return $this->invoke($config, $args, $callback);
+    }
+
+    /**
+     * @param array|callable|object|string $config
+     * @return callable|null
+     */
+    protected function callable($config) : callable
+    {
+        if (is_string($config)) {
+            return function($args = []) use($config) { return $this->call($config, $args); };
         }
 
-        return $this->invoke($method ? [$plugin, $method] : $plugin, $args, $callback);
+        if (is_array($config)) {
+            return is_string($config[0]) ? $config : [$this->resolve($config[0]), $config[1]];
+        }
+
+        return $config instanceof Closure ? $config : $this->listener($this->resolve($config));
     }
 
     /**
@@ -148,6 +149,17 @@ trait Resolver
         return $this($this->configured($name), $args) ?? (
             $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args)
         );
+    }
+
+    /**
+     * @param array|object|string|\Traversable $event
+     * @param array $args
+     * @param callable $callback
+     * @return mixed|null
+     */
+    protected function event($event, array $args = [], callable $callback = null)
+    {
+        return $this->generate($event, $args, $callback ?? $this);
     }
 
     /**
@@ -220,20 +232,14 @@ trait Resolver
     }
 
     /**
-     * @param array|callable|object|string $config
+     * @param array|callable|object|string $name
      * @return callable|null
      */
-    protected function invokable($config) : callable
+    protected function invokable($name)
     {
-        if (is_string($config)) {
-            return function($args = []) use($config) { return $this->call($config, $args); };
-        }
-
-        if (is_array($config)) {
-            return is_string($config[0]) ? $config : [$this->plugin($config[0]), $config[1]];
-        }
-
-        return $config instanceof Closure ? $config : $this->listener($this->plugin($config));
+        return $this->listener($this->plugin($name, [], function($name) {
+            return Arg::CALL === $name[0] ? substr($name, 1) : new Mvc5Event($name);
+        }));
     }
 
     /**
@@ -248,14 +254,15 @@ trait Resolver
     }
 
     /**
-     * @param array|callable|object|string $config
+     * @param array|callable|object|string $plugin
+     * @param callable $callback
      * @return callable|null
      */
-    protected function listener($config)
+    protected function listener($plugin, callable $callback = null)
     {
-        return !$config instanceof Event ? $config : (
-            function(array $args = []) use ($config) { return $this->call($config, $args); }
-        );
+        return !$plugin instanceof Event ? $plugin : function(array $args = []) use ($plugin, $callback) {
+            return $this->event($plugin, $args, $callback);
+        };
     }
 
     /**
@@ -407,10 +414,35 @@ trait Resolver
     }
 
     /**
+     * @param array $config
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|object|string
+     */
+    protected function relay(array $config = [], array $args = [], callable $callback = null)
+    {
+        return $this->repeat($this->invokable(array_shift($config)), $config, $args, $callback);
+    }
+
+    /**
+     * @param $plugin
+     * @param array $config
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|object|string
+     */
+    protected function repeat($plugin, array $config = [], array $args = [], callable $callback = null)
+    {
+        return !$config ? $this->invoke($plugin, $args, $callback) :
+            $this->repeat([$plugin, array_shift($config)], $config, $args, $callback);
+    }
+
+    /**
      * @param $config
      * @param array $args
      * @param callable $callback
      * @return array|callable|Plugin|null|object|Resolvable|string
+     * @throws RuntimeException
      */
     protected function resolvable($config, array $args = [], callable $callback = null)
     {
@@ -485,6 +517,7 @@ trait Resolver
      * @param $config
      * @param array $args
      * @return array|callable|Plugin|null|object|Resolvable|string
+     * @throws RuntimeException
      */
     protected function resolve($config, array $args = [])
     {
@@ -517,9 +550,7 @@ trait Resolver
      */
     public function trigger($event, array $args = [], callable $callback = null)
     {
-        return $this->generate(
-            $event instanceof Event ? $event : $this($event) ?? $event, $args, $callback ?? $this
-        );
+        return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
     }
 
     /**

@@ -16,11 +16,6 @@ trait Generator
     use Signal;
 
     /**
-     * @var array|Traversable
-     */
-    protected $events = [];
-
-    /**
      * @param callable|Event|string $event
      * @param callable $listener
      * @param array $args
@@ -30,15 +25,6 @@ trait Generator
     protected function emit($event, callable $listener, array $args = [], callable $callback = null)
     {
         return is_callable($event) ? $event($listener, $args, $callback) : $this->signal($listener, $args, $callback);
-    }
-
-    /**
-     * @param array|\ArrayAccess|null|Traversable $config
-     * @return array|\ArrayAccess|null|Traversable
-     */
-    public function events($config = null)
-    {
-        return null !== $config ? $this->events = $config : $this->events;
     }
 
     /**
@@ -53,7 +39,7 @@ trait Generator
 
         foreach($this->queue($event) as $listener) {
 
-            $result = $this->emit($event, $this->invokable($listener), $args, $callback);
+            $result = $this->emit($event, $this->callable($listener), $args, $callback);
 
             if ($event instanceof Event && $event->stopped()) {
                 break;
@@ -67,16 +53,13 @@ trait Generator
      * @param array|callable|object|string $config
      * @return callable|null
      */
-    protected abstract function invokable($config) : callable;
+    protected abstract function callable($config) : callable;
 
     /**
      * @param string $name
      * @return array|Traversable|null
      */
-    protected function listeners($name)
-    {
-        return $this->events[$name] ?? null;
-    }
+    protected abstract function listeners($name);
 
     /**
      * @param array|Event|string|Traversable $event
