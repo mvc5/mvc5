@@ -23,6 +23,7 @@ return [
     'error\route'                => [Mvc5\Route\Error\Create::class, 'error', 'error\controller'],
     'error\status'               => ['response\status', 404],
     'error\view'                 => 'view\render',
+    'event\model'                => Mvc5\Event::class,
     'exception\controller'       => [Mvc5\Controller\Exception::class, new Plugin('exception\model')],
     'exception\model'            => ['layout', 'error/exception'],
     'exception\response'         => 'response\controller',

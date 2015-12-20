@@ -7,7 +7,6 @@ namespace Mvc5\Resolver;
 
 use Closure;
 use Mvc5\Arg;
-use Mvc5\Event as Mvc5Event;
 use Mvc5\Event\Event;
 use Mvc5\Plugin\Gem\Args;
 use Mvc5\Plugin\Gem\Call;
@@ -23,11 +22,11 @@ use Mvc5\Plugin\Gem\Link;
 use Mvc5\Plugin\Gem\Param;
 use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
-use Mvc5\Resolvable;
 use Mvc5\Service\Config as Container;
 use Mvc5\Service\Container as ServiceContainer;
 use Mvc5\Service\Manager as ServiceManager;
 use ReflectionClass;
+use Mvc5\Resolvable;
 use RuntimeException;
 
 trait Resolver
@@ -35,7 +34,6 @@ trait Resolver
     /**
      *
      */
-    use Alias;
     use Container;
     use Generator;
     use Initializer;
@@ -65,11 +63,12 @@ trait Resolver
      * @param array $config
      * @param array $args
      * @param callable $callback
+     * @param bool $plugin
      * @return callable|object
      */
-    protected function build(array $config, array $args = [], callable $callback = null)
+    protected function build(array $config, array $args = [], callable $callback = null, $plugin = false)
     {
-        return $this->compose($this->create(array_shift($config), $args, $callback), $config, $args, $callback);
+        return $this->combine(array_shift($config), $config, $args, $callback, $plugin);
     }
 
     /**
@@ -77,12 +76,12 @@ trait Resolver
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     public function call($config, array $args = [], callable $callback = null)
     {
         if (is_string($config)) {
-            return $this->relay(explode(Arg::CALL_SEPARATOR, $config), $args, $callback);
+            return $this->transmit(explode(Arg::CALL_SEPARATOR, $config), $args, $callback);
         }
 
         if ($config instanceof Event) {
@@ -120,6 +119,21 @@ trait Resolver
     }
 
     /**
+     * @param $name
+     * @param array $config
+     * @param array $args
+     * @param callable $callback
+     * @param bool $plugin
+     * @return callable|object
+     */
+    protected function combine($name, array $config, array $args = [], callable $callback = null, $plugin = false)
+    {
+        return $this->compose(
+            $this->create($name, $args, $callback, $plugin || $config), $config, $args, $callback
+        );
+    }
+
+    /**
      * @param $plugin
      * @param array $config
      * @param array $args
@@ -142,24 +156,14 @@ trait Resolver
      * @param $name
      * @param array $args
      * @param callable $callback
+     * @param bool $plugin
      * @return callable|object
      */
-    protected function create($name, array $args = [], callable $callback = null)
+    protected function create($name, array $args = [], callable $callback = null, $plugin = true)
     {
-        return $this($this->configured($name), $args) ?? (
+        return ($plugin ? $this($this->configured($name), $args) : null) ?? (
             $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args)
         );
-    }
-
-    /**
-     * @param array|object|string|\Traversable $event
-     * @param array $args
-     * @param callable $callback
-     * @return mixed|null
-     */
-    protected function event($event, array $args = [], callable $callback = null)
-    {
-        return $this->generate($event, $args, $callback ?? $this);
     }
 
     /**
@@ -237,8 +241,8 @@ trait Resolver
      */
     protected function invokable($name)
     {
-        return $this->listener($this->plugin($name, [], function($name) {
-            return Arg::CALL === $name[0] ? substr($name, 1) : new Mvc5Event($name);
+        return Arg::CALL === $name[0] ? substr($name, 1) : $this->listener($this->plugin($name, [], function($name) {
+            return $this->create(Arg::EVENT_MODEL, [Arg::EVENT => $name]);
         }));
     }
 
@@ -251,18 +255,6 @@ trait Resolver
     protected function invoke($config, array $args = [], callable $callback = null)
     {
         return $this->signal($config, $args, $callback ?? $this);
-    }
-
-    /**
-     * @param array|callable|object|string $plugin
-     * @param callable $callback
-     * @return callable|null
-     */
-    protected function listener($plugin, callable $callback = null)
-    {
-        return !$plugin instanceof Event ? $plugin : function(array $args = []) use ($plugin, $callback) {
-            return $this->event($plugin, $args, $callback);
-        };
     }
 
     /**
@@ -293,7 +285,7 @@ trait Resolver
 
             if ($param->isOptional()) {
                 $param->isDefaultValueAvailable() &&
-                    $matched[] = $param->getDefaultValue();
+                $matched[] = $param->getDefaultValue();
                 continue;
             }
 
@@ -373,8 +365,7 @@ trait Resolver
         }
 
         if (is_string($config)) {
-            return $this->resolve($this->alias($config), $args) ??
-                $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
+            return $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback, true);
         }
 
         if (is_array($config)) {
@@ -402,26 +393,21 @@ trait Resolver
 
         !$args && $args = $config->args();
 
-        if ($parent && !$parent instanceof Plugin) {
-            return $this->hydrate($config, $this->plugin($this->solve($parent), $args));
-        }
-
-        if (!$parent || $name == $parent->name()) {
+        if (!$parent) {
             return $this->hydrate($config, $this->build(explode(Arg::SERVICE_SEPARATOR, $name), $args));
         }
 
-        return $this->provide($this->merge(clone $parent, $config), $args);
-    }
+        if (!$parent instanceof Plugin) {
+            return $this->hydrate(
+                $config, $name === $parent ? $this->make($name, $args) : $this->plugin($this->solve($parent), $args)
+            );
+        }
 
-    /**
-     * @param array $config
-     * @param array $args
-     * @param callable|null $callback
-     * @return array|callable|object|string
-     */
-    protected function relay(array $config = [], array $args = [], callable $callback = null)
-    {
-        return $this->repeat($this->invokable(array_shift($config)), $config, $args, $callback);
+        if ($name == $parent->name()) {
+            return $this->hydrate($config, $this->make($name, $args));
+        }
+
+        return $this->provide($this->merge(clone $parent, $config), $args);
     }
 
     /**
@@ -431,10 +417,10 @@ trait Resolver
      * @param callable|null $callback
      * @return array|callable|object|string
      */
-    protected function repeat($plugin, array $config = [], array $args = [], callable $callback = null)
+    protected function relay($plugin, array $config = [], array $args = [], callable $callback = null)
     {
         return !$config ? $this->invoke($plugin, $args, $callback) :
-            $this->repeat([$plugin, array_shift($config)], $config, $args, $callback);
+            $this->relay([$plugin, array_shift($config)], $config, $args, $callback);
     }
 
     /**
@@ -540,6 +526,17 @@ trait Resolver
     protected function solve($config)
     {
         return $config instanceof Resolvable ? $this->solve($this->resolve($config)) : $config;
+    }
+
+    /**
+     * @param array $config
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|object|string
+     */
+    protected function transmit(array $config = [], array $args = [], callable $callback = null)
+    {
+        return $this->relay($this->invokable(array_shift($config)), $config, $args, $callback);
     }
 
     /**

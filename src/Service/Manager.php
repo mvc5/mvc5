@@ -10,12 +10,6 @@ interface Manager
 {
     /**
      * @param array|\ArrayAccess|null $config
-     * @return array|\ArrayAccess
-     */
-    function aliases($config = null);
-
-    /**
-     * @param array|\ArrayAccess|null $config
      * @return array|\ArrayAccess|null
      */
     function config($config = null);

@@ -24,7 +24,6 @@ class Manager
         $this->config = [
             Arg::CALLS => $calls + [
                     Arg::CONFIG   => new Config,
-                    Arg::ALIASES  => new Param(Arg::ALIAS),
                     Arg::SERVICES => new Param(Arg::SERVICES),
                     Arg::EVENTS   => new Param(Arg::EVENTS)
             ],

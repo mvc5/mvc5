@@ -20,9 +20,6 @@ class App
     {
         $config && $this->config = $config;
 
-        isset($config[Arg::ALIAS])
-            && $this->alias = $config[Arg::ALIAS];
-
         isset($config[Arg::SERVICES][Arg::CONTAINER])
             && $this->container = $config[Arg::SERVICES][Arg::CONTAINER];
 

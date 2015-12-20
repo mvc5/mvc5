@@ -10,16 +10,6 @@ interface Arg
     /**
      *
      */
-    const ALIAS = 'alias';
-
-    /**
-     *
-     */
-    const ALIASES = 'aliases';
-
-    /**
-     *
-     */
     const ARGS = 'args';
 
     /**
@@ -91,6 +81,11 @@ interface Arg
      *
      */
     const EVENT = 'event';
+
+    /**
+     *
+     */
+    const EVENT_MODEL = 'event\model';
 
     /**
      *
