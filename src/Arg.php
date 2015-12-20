@@ -140,6 +140,11 @@ interface Arg
     /**
      *
      */
+    const MAX_RECURSION = 100;
+
+    /**
+     *
+     */
     const MERGE = 'merge';
 
     /**

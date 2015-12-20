@@ -109,6 +109,17 @@ trait Resolver
     }
 
     /**
+     * @param $name
+     * @param array $args
+     * @param callable|null $callback
+     * @return callable|object
+     */
+    protected function callback($name, array $args = [], callable $callback = null)
+    {
+        return $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args);
+    }
+
+    /**
      * @param Child $config
      * @param array $args
      * @return array|callable|object|string
@@ -161,9 +172,8 @@ trait Resolver
      */
     protected function create($name, array $args = [], callable $callback = null, $plugin = true)
     {
-        return ($plugin ? $this($this->configured($name), $args) : null) ?? (
-            $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args)
-        );
+        return ($plugin ? $this->unique($name, $this->configured($name), $args, $callback) : null) ??
+            $this->callback($name, $args, $callback);
     }
 
     /**
@@ -398,7 +408,9 @@ trait Resolver
         }
 
         if (!$parent instanceof Plugin) {
-            return $this->hydrate($config, $this->plugin($this->solve($parent), $args));
+            return $this->hydrate(
+                $config, $name === $parent ? $this->make($name, $args) : $this->plugin($this->solve($parent), $args)
+            );
         }
 
         if ($name == $parent->name()) {
@@ -519,11 +531,15 @@ trait Resolver
 
     /**
      * @param $config
+     * @param int $c
      * @return mixed
      */
-    protected function solve($config)
+    protected function solve($config, $c = 0)
     {
-        return $config instanceof Resolvable ? $this->solve($this->resolve($config)) : $config;
+        return !$config instanceof Resolvable ? $config : (
+            $c < Arg::MAX_RECURSION ?
+                $this->solve($this->resolve($config), ++$c) : $this->signal(new Exception, [Arg::PLUGIN => $config])
+        );
     }
 
     /**
@@ -546,6 +562,18 @@ trait Resolver
     public function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
+    }
+
+    /**
+     * @param $name
+     * @param $config
+     * @param array $args
+     * @param callable $callback
+     * @return callable|object
+     */
+    protected function unique($name, $config, array $args = [], callable $callback = null)
+    {
+        return $name === $config ? $this->callback($name, $args, $callback) : $this($config, $args);
     }
 
     /**
