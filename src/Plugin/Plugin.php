@@ -19,13 +19,15 @@ class Plugin
      * @param string $name
      * @param array $args
      * @param array $calls
+     * @param string $param
      */
-    public function __construct($name, array $args = [], array $calls = [])
+    public function __construct($name, array $args = [], array $calls = [], $param = Arg::ITEM)
     {
         $this->config = [
             Arg::ARGS  => $args,
             Arg::CALLS => $calls,
-            Arg::NAME  => $name
+            Arg::NAME  => $name,
+            Arg::PARAM => $param
         ];
     }
 }
