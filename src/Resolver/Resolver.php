@@ -398,9 +398,7 @@ trait Resolver
         }
 
         if (!$parent instanceof Plugin) {
-            return $this->hydrate(
-                $config, $name === $parent ? $this->make($name, $args) : $this->plugin($this->solve($parent), $args)
-            );
+            return $this->hydrate($config, $this->plugin($this->solve($parent), $args));
         }
 
         if ($name == $parent->name()) {
