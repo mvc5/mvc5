@@ -25,8 +25,8 @@ use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Service\Config as Container;
 use Mvc5\Service\Container as ServiceContainer;
 use Mvc5\Service\Manager as ServiceManager;
-use ReflectionClass;
 use Mvc5\Resolvable;
+use ReflectionClass;
 use RuntimeException;
 
 trait Resolver
