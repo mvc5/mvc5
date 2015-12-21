@@ -24,9 +24,6 @@ use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Resolvable;
 use Mvc5\Service\Config as Container;
-use Mvc5\Service\Container as ServiceContainer;
-use Mvc5\Service\Manager as ServiceManager;
-use ReflectionClass;
 use RuntimeException;
 
 trait Resolver
@@ -34,6 +31,7 @@ trait Resolver
     /**
      *
      */
+    use Build;
     use Container;
     use Generator;
     use Initializer;
@@ -57,17 +55,6 @@ trait Resolver
         }
 
         return $args;
-    }
-
-    /**
-     * @param array $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|object
-     */
-    protected function build(array $config, array $args = [], callable $callback = null)
-    {
-        return $this->compose($this->create(array_shift($config), $args, $callback), $config, $args, $callback);
     }
 
     /**
@@ -108,17 +95,6 @@ trait Resolver
     }
 
     /**
-     * @param $name
-     * @param array $args
-     * @param callable|null $callback
-     * @return callable|object
-     */
-    protected function callback($name, array $args = [], callable $callback = null)
-    {
-        return $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args);
-    }
-
-    /**
      * @param Child $config
      * @param array $args
      * @return array|callable|object|string
@@ -126,64 +102,6 @@ trait Resolver
     protected function child(Child $config, array $args = [])
     {
         return $this->provide($this->merge(clone $this->parent($config->parent()), $config), $args);
-    }
-
-    /**
-     * @param array $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|object
-     */
-    protected function combine(array $config, array $args = [], callable $callback = null)
-    {
-        return $this->compose(
-            $this->first(array_shift($config), $config, $args, $callback), $config, $args, $callback
-        );
-    }
-
-    /**
-     * @param $plugin
-     * @param array $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|object
-     */
-    protected function compose($plugin, array $config = [], array $args = [], callable $callback = null)
-    {
-        return !$config ? $plugin : $this->compose(
-            $this->composite($plugin, array_shift($config), $args, $callback), $config, $args, $callback
-        );
-    }
-
-    /**
-     * @param $plugin
-     * @param $name
-     * @param array $args
-     * @param callable|null $callback
-     * @return array|callable|Plugin|Resolvable|null|object|string
-     */
-    protected function composite($plugin, $name, array $args = [], callable $callback = null)
-    {
-        if ($plugin instanceof ServiceManager) {
-            return $plugin->plugin($name, $args, $callback);
-        }
-
-        if ($plugin instanceof ServiceContainer) {
-            return $this->plugin($plugin[$name], $args, $callback);
-        }
-
-        return $this->resolve($plugin[$name], $args);
-    }
-
-    /**
-     * @param $name
-     * @param array $args
-     * @param callable $callback
-     * @return callable|object
-     */
-    protected function create($name, array $args = [], callable $callback = null)
-    {
-        return $this->unique($name, $this->configured($name), $args, $callback);
     }
 
     /**
@@ -198,18 +116,6 @@ trait Resolver
         }
 
         return $arg;
-    }
-
-    /**
-     * @param $name
-     * @param array $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|object
-     */
-    protected function first($name, array $config, array $args = [], callable $callback = null)
-    {
-        return !$config ? $this->callback($name, $args, $callback) : $this->create($name, $args, $callback);
     }
 
     /**
@@ -287,54 +193,6 @@ trait Resolver
     protected function invoke($config, array $args = [], callable $callback = null)
     {
         return $this->signal($config, $args, $callback ?? $this);
-    }
-
-    /**
-     * @param string $name
-     * @param array $args
-     * @return callable|object
-     */
-    protected function make($name, array $args = [])
-    {
-        $class = new ReflectionClass($name);
-
-        if (!$class->hasMethod('__construct')) {
-            return $class->newInstanceWithoutConstructor();
-        }
-
-        if ($args && !is_string(key($args))) {
-            return $class->newInstanceArgs($this->args($args));
-        }
-
-        $matched = [];
-        $params  = $class->getConstructor()->getParameters();
-
-        foreach($params as $param) {
-            if (isset($args[$param->name])) {
-                $matched[] = $this->resolve($args[$param->name]);
-                continue;
-            }
-
-            if ($param->isOptional()) {
-                $param->isDefaultValueAvailable() &&
-                $matched[] = $param->getDefaultValue();
-                continue;
-            }
-
-            if (null !== ($hint = $param->getClass()) && null !== $match = $this($hint->name)) {
-                $matched[] = $match;
-                continue;
-            }
-
-            if (null !== $match = $this($param->name)) {
-                $matched[] = $match;
-                continue;
-            }
-
-            throw new RuntimeException('Missing required parameter $' . $param->name . ' for ' . $name);
-        }
-
-        return $class->newInstanceArgs($params ? $matched : $this->args($args));
     }
 
     /**
@@ -584,18 +442,6 @@ trait Resolver
     public function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
-    }
-
-    /**
-     * @param $name
-     * @param $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|object
-     */
-    protected function unique($name, $config, array $args = [], callable $callback = null)
-    {
-        return ($name !== $config ? $this($config, $args) : null) ?? $this->callback($name, $args, $callback);
     }
 
     /**
