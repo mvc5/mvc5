@@ -5,7 +5,7 @@
 
 namespace Mvc5\Event;
 
-use Mvc5\Signal;
+use Mvc5\Signal as _Signal;
 use Traversable;
 
 trait Generator
@@ -13,7 +13,7 @@ trait Generator
     /**
      *
      */
-    use Signal;
+    use _Signal;
 
     /**
      * @param callable|Event|string $event
