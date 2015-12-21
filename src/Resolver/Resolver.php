@@ -446,6 +446,16 @@ trait Resolver
 
     /**
      * @param string $name
+     * @param array $args
+     * @return mixed
+     */
+    public function __call($name, array $args = [])
+    {
+        return $this->call($name, $args);
+    }
+
+    /**
+     * @param string $name
      * @param callable $callback
      * @param array $args
      * @return array|callable|null|object|string
