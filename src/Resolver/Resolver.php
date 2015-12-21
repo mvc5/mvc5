@@ -63,12 +63,11 @@ trait Resolver
      * @param array $config
      * @param array $args
      * @param callable $callback
-     * @param bool $plugin
      * @return callable|object
      */
-    protected function build(array $config, array $args = [], callable $callback = null, $plugin = false)
+    protected function build(array $config, array $args = [], callable $callback = null)
     {
-        return $this->combine(array_shift($config), $config, $args, $callback, $plugin);
+        return $this->compose($this->create(array_shift($config), $args, $callback), $config, $args, $callback);
     }
 
     /**
@@ -130,17 +129,15 @@ trait Resolver
     }
 
     /**
-     * @param $name
      * @param array $config
      * @param array $args
      * @param callable $callback
-     * @param bool $plugin
      * @return callable|object
      */
-    protected function combine($name, array $config, array $args = [], callable $callback = null, $plugin = false)
+    protected function combine(array $config, array $args = [], callable $callback = null)
     {
         return $this->compose(
-            $this->create($name, $args, $callback, $plugin || $config), $config, $args, $callback
+            $this->first(array_shift($config), $config, $args, $callback), $config, $args, $callback
         );
     }
 
@@ -153,27 +150,40 @@ trait Resolver
      */
     protected function compose($plugin, array $config = [], array $args = [], callable $callback = null)
     {
-        foreach($config as $name) {
-            $plugin = $plugin instanceof ServiceManager ? $plugin->plugin($name, $args, $callback) : (
-                $plugin instanceof ServiceContainer ? $this->plugin($plugin[$name], $args, $callback) :
-                    $this->resolve($plugin[$name], $args)
-            );
+        return !$config ? $plugin : $this->compose(
+            $this->composite($plugin, array_shift($config), $args, $callback), $config, $args, $callback
+        );
+    }
+
+    /**
+     * @param $plugin
+     * @param $name
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|Plugin|Resolvable|null|object|string
+     */
+    protected function composite($plugin, $name, array $args = [], callable $callback = null)
+    {
+        if ($plugin instanceof ServiceManager) {
+            return $plugin->plugin($name, $args, $callback);
         }
 
-        return $plugin;
+        if ($plugin instanceof ServiceContainer) {
+            return $this->plugin($plugin[$name], $args, $callback);
+        }
+
+        return $this->resolve($plugin[$name], $args);
     }
 
     /**
      * @param $name
      * @param array $args
      * @param callable $callback
-     * @param bool $plugin
      * @return callable|object
      */
-    protected function create($name, array $args = [], callable $callback = null, $plugin = true)
+    protected function create($name, array $args = [], callable $callback = null)
     {
-        return ($plugin ? $this->unique($name, $this->configured($name), $args, $callback) : null) ??
-            $this->callback($name, $args, $callback);
+        return $this->unique($name, $this->configured($name), $args, $callback);
     }
 
     /**
@@ -188,6 +198,18 @@ trait Resolver
         }
 
         return $arg;
+    }
+
+    /**
+     * @param $name
+     * @param array $config
+     * @param array $args
+     * @param callable $callback
+     * @return callable|object
+     */
+    protected function first($name, array $config, array $args = [], callable $callback = null)
+    {
+        return !$config ? $this->callback($name, $args, $callback) : $this->create($name, $args, $callback);
     }
 
     /**
@@ -375,7 +397,7 @@ trait Resolver
         }
 
         if (is_string($config)) {
-            return $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback, true);
+            return $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
         }
 
         if (is_array($config)) {
@@ -404,7 +426,7 @@ trait Resolver
         !$args && $args = $config->args();
 
         if (!$parent) {
-            return $this->hydrate($config, $this->build(explode(Arg::SERVICE_SEPARATOR, $name), $args));
+            return $this->hydrate($config, $this->combine(explode(Arg::SERVICE_SEPARATOR, $name), $args));
         }
 
         if (!$parent instanceof Plugin) {
@@ -573,7 +595,7 @@ trait Resolver
      */
     protected function unique($name, $config, array $args = [], callable $callback = null)
     {
-        return $name === $config ? $this->callback($name, $args, $callback) : $this($config, $args);
+        return ($name !== $config ? $this($config, $args) : null) ?? $this->callback($name, $args, $callback);
     }
 
     /**
