@@ -309,8 +309,15 @@ trait Resolver
      */
     protected function relay($plugin, array $config = [], array $args = [], callable $callback = null)
     {
-        return !$config ? $this->invoke($plugin, $args, $callback) :
-            $this->relay([$plugin, array_shift($config)], $config, $args, $callback);
+        if (!$config) {
+            return $this->invoke($plugin, $args, $callback);
+        }
+
+        foreach($config as $name) {
+            $plugin = $this->invoke([$plugin, $name], $args, $callback);
+        }
+
+        return $plugin;
     }
 
     /**
@@ -442,16 +449,6 @@ trait Resolver
     public function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
-    }
-
-    /**
-     * @param string $name
-     * @param array $args
-     * @return mixed
-     */
-    public function __call($name, array $args = [])
-    {
-        return $this->call($name, $args);
     }
 
     /**
