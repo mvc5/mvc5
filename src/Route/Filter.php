@@ -14,6 +14,6 @@ class Filter
      */
     public function __invoke(Route $route)
     {
-        $route->set(Arg::PATH, urldecode($route->path()) ?: Arg::SEPARATOR);
+        $route[Arg::PATH] = urldecode($route->path()) ?: Arg::SEPARATOR;
     }
 }

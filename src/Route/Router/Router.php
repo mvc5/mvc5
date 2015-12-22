@@ -49,7 +49,7 @@ trait Router
     {
         $route = $this->match($definition, $route);
 
-        $route && !$route->name() && $route->set(Arg::NAME, $definition->name());
+        $route && !$route->name() && $route[Arg::NAME] = $definition->name();
 
         if (!$route || $route->matched()) {
             return $route;
@@ -58,7 +58,7 @@ trait Router
         $parent = $route->name();
 
         foreach($definition->children() as $name => $definition) {
-            $route->set(Arg::NAME, $this->name() === $parent ? $name : $parent . Arg::SEPARATOR . $name);
+            $route[Arg::NAME] = $this->name() === $parent ? $name : $parent . Arg::SEPARATOR . $name;
 
             if ($match = $this->dispatch(clone $route, $this->routeDefinition($definition))) {
                 return $match;

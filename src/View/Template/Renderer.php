@@ -40,7 +40,7 @@ class Renderer
         }
 
         foreach($model as $k => $v) {
-            $v instanceof Template && $model->set($k, $this($v));
+            $v instanceof Template && $model[$k] = $this($v);
         }
 
         ($template = $this->template($model->template()))

@@ -38,10 +38,10 @@ class Path
             return null;
         }
 
-        $route->set(Arg::CONTROLLER, $definition->controller());
-        $route->set(Arg::LENGTH,     $route->length() + strlen($matches[0]));
-        $route->set(Arg::MATCHED,    $route->length() == strlen($route->path()));
-        $route->set(Arg::PARAMS,     $this->params($definition->paramMap(), $matches) + $definition->defaults() + $route->params());
+        $route[Arg::CONTROLLER] = $definition->controller();
+        $route[Arg::LENGTH]     = $route->length() + strlen($matches[0]);
+        $route[Arg::MATCHED]    = $route->length() == strlen($route->path());
+        $route[Arg::PARAMS]     = $this->params($definition->paramMap(), $matches) + $definition->defaults() + $route->params();
 
         return $route;
     }
