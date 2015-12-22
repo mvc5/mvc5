@@ -8,7 +8,7 @@ namespace Mvc5\Plugin\Config;
 trait Config
 {
     /**
-     * @var array
+     * @var mixed
      */
     protected $config;
 
@@ -21,7 +21,7 @@ trait Config
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     public function config()
     {

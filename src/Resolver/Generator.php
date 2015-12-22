@@ -17,7 +17,7 @@ trait Generator
     use Base;
 
     /**
-     * @var array|\Traversable
+     * @var array|\ArrayAccess|\Traversable
      */
     protected $events = [];
 
@@ -42,7 +42,7 @@ trait Generator
     }
 
     /**
-     * @param array|callable|object|string $plugin
+     * @param $plugin
      * @param callable $callback
      * @return callable|null
      */

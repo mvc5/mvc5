@@ -9,7 +9,7 @@ interface Layout
     extends Template
 {
     /**
-     * @param null|string $model
+     * @param null|string|Template $model
      * @return null|string
      */
     function model($model = null);

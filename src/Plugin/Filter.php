@@ -14,22 +14,22 @@ class Filter
     use Config\Config;
 
     /**
-     * @var string|array
+     * @var array
      */
     protected $filter;
 
     /**
      * @param $config
-     * @param array|\Traversable $filter
+     * @param array $filter
      */
-    public function __construct($config, $filter = [])
+    public function __construct($config, array $filter = [])
     {
         $this->config = $config;
         $this->filter = $filter;
     }
 
     /**
-     * @return string|array
+     * @return array
      */
     public function filter()
     {

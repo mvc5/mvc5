@@ -62,7 +62,7 @@ trait Generator
     protected abstract function listeners($name);
 
     /**
-     * @param array|Event|string|Traversable $event
+     * @param array|Event|object|string|Traversable $event
      * @return array|Traversable
      */
     protected function queue($event)

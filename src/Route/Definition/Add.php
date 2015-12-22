@@ -21,7 +21,7 @@ class Add
      * @param array|Definition $definition
      * @param array $path
      * @param bool $start
-     * @return Definition
+     * @return array|Definition
      * @throws RuntimeException
      */
     public function __invoke(Definition $parent, $definition, array $path, $start = false)

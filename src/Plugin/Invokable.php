@@ -12,7 +12,7 @@ class Invokable
     use Config\Config;
 
     /**
-     * @param array|callable|object|string $config
+     * @param $config
      * @param array $args
      */
     public function __construct($config, array $args = [])
