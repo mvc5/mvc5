@@ -20,16 +20,16 @@ class Filter
 
     /**
      * @param $config
-     * @param array $filter
+     * @param array|\Traversable $filter
      */
-    public function __construct($config, array $filter = [])
+    public function __construct($config, $filter = [])
     {
         $this->config = $config;
         $this->filter = $filter;
     }
 
     /**
-     * @return array
+     * @return array|\Traversable
      */
     public function filter()
     {

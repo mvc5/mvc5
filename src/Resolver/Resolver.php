@@ -114,17 +114,17 @@ trait Resolver
     }
 
     /**
-     * @param array|callable|null|object|string $arg
-     * @param array $filters
+     * @param array|callable|null|object|string $value
+     * @param array|\Traversable $filters
      * @return mixed
      */
-    protected function filter($arg, array $filters)
+    protected function filter($value, $filters = [])
     {
         foreach($filters as $filter) {
-            $arg = $filter($arg);
+            $value = $filter($value);
         }
 
-        return $arg;
+        return $value;
     }
 
     /**
@@ -382,7 +382,7 @@ trait Resolver
         }
 
         if ($config instanceof Filter) {
-            return $this->filter($this->resolve($config->config()), $config->filter());
+            return $this->filter($this->resolve($config->config()), $this->resolve($config->filter()));
         }
 
         if ($config instanceof Plug) {
