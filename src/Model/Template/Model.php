@@ -34,7 +34,7 @@ trait Model
      */
     public function template($path = null)
     {
-        return null === $path ? $this->get(Arg::TEMPLATE_MODEL) : $this->set(Arg::TEMPLATE_MODEL, $path);
+        return null === $path ? $this[Arg::TEMPLATE_MODEL] : $this[Arg::TEMPLATE_MODEL] = $path;
     }
 
     /**
@@ -53,7 +53,7 @@ trait Model
      */
     public function __get($name)
     {
-        return $this->get($name);
+        return $this->offsetGet($name);
     }
 
     /**
@@ -62,7 +62,7 @@ trait Model
      */
     public function __isset($name)
     {
-        return $this->has($name);
+        return $this->offsetExists($name);
     }
 
     /**
@@ -72,7 +72,7 @@ trait Model
      */
     public function __set($name, $value)
     {
-        $this->set($name, $value);
+        return $this->offsetSet($name, $value);
     }
 
     /**
@@ -81,6 +81,6 @@ trait Model
      */
     public function __unset($name)
     {
-        $this->remove($name);
+        $this->offsetUnset($name);
     }
 }

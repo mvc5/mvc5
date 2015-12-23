@@ -19,6 +19,6 @@ trait Child
      */
     public function parent()
     {
-        return $this->get(Arg::PARENT);
+        return $this[Arg::PARENT];
     }
 }

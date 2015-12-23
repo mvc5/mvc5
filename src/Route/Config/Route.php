@@ -20,7 +20,7 @@ trait Route
      */
     public function controller()
     {
-        return $this->get(Arg::CONTROLLER);
+        return $this[Arg::CONTROLLER];
     }
 
     /**
@@ -28,7 +28,7 @@ trait Route
      */
     public function hostname()
     {
-        return $this->get(Arg::HOSTNAME);
+        return $this[Arg::HOSTNAME];
     }
 
     /**
@@ -36,7 +36,7 @@ trait Route
      */
     public function length()
     {
-        return $this->get(Arg::LENGTH) ?: 0;
+        return $this[Arg::LENGTH] ?? 0;
     }
 
     /**
@@ -44,7 +44,7 @@ trait Route
      */
     public function matched()
     {
-        return $this->get(Arg::MATCHED) ?: false;
+        return $this[Arg::MATCHED] ?? false;
     }
 
     /**
@@ -52,7 +52,7 @@ trait Route
      */
     public function method()
     {
-        return $this->get(Arg::METHOD);
+        return $this[Arg::METHOD];
     }
 
     /**
@@ -60,7 +60,7 @@ trait Route
      */
     public function name()
     {
-        return $this->get(Arg::NAME);
+        return $this[Arg::NAME];
     }
 
     /**
@@ -68,7 +68,7 @@ trait Route
      */
     public function params()
     {
-        return $this->get(Arg::PARAMS) ?: [];
+        return $this[Arg::PARAMS] ?? [];
     }
 
     /**
@@ -76,7 +76,7 @@ trait Route
      */
     public function path()
     {
-        return $this->get(Arg::PATH);
+        return $this[Arg::PATH];
     }
 
     /**
@@ -84,6 +84,6 @@ trait Route
      */
     public function scheme()
     {
-        return $this->get(Arg::SCHEME);
+        return $this[Arg::SCHEME];
     }
 }

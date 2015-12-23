@@ -20,7 +20,7 @@ trait Layout
      */
     public function model($model = null)
     {
-        return null === $model ? $this->get(Arg::CHILD_MODEL) : $this->set(Arg::CHILD_MODEL, $model);
+        return null === $model ? $this[Arg::CHILD_MODEL] : $this[Arg::CHILD_MODEL] = $model;
     }
 
     /**

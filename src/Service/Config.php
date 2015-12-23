@@ -65,7 +65,7 @@ trait Config
      * @param string $name
      * @return object|null
      */
-    public function get($name)
+    public function offsetGet($name)
     {
         return $this->shared($name);
     }
@@ -74,7 +74,7 @@ trait Config
      * @param string $name
      * @return bool
      */
-    public function has($name)
+    public function offsetExists($name)
     {
         return isset($this->container[$name]);
     }
@@ -83,7 +83,7 @@ trait Config
      * @param string $name
      * @return void
      */
-    public function remove($name)
+    public function offsetUnset($name)
     {
         unset($this->container[$name]);
     }
@@ -111,7 +111,7 @@ trait Config
      * @param mixed $config
      * @return mixed
      */
-    public function set($name, $config)
+    public function offsetSet($name, $config)
     {
         return $this->container[$name] = $config;
     }

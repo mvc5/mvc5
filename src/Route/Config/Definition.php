@@ -39,7 +39,7 @@ trait Definition
      */
     public function children()
     {
-        return $this->get(Arg::CHILDREN) ?: [];
+        return $this[Arg::CHILDREN] ?? [];
     }
 
     /**
@@ -47,7 +47,7 @@ trait Definition
      */
     public function className()
     {
-        return $this->get(Arg::CLASS_NAME);
+        return $this[Arg::CLASS_NAME];
     }
 
     /**
@@ -55,7 +55,7 @@ trait Definition
      */
     public function constraints()
     {
-        return $this->get(Arg::CONSTRAINTS) ?: [];
+        return $this[Arg::CONSTRAINTS] ?? [];
     }
 
     /**
@@ -63,7 +63,7 @@ trait Definition
      */
     public function controller()
     {
-        return $this->get(Arg::CONTROLLER);
+        return $this[Arg::CONTROLLER];
     }
 
     /**
@@ -71,7 +71,7 @@ trait Definition
      */
     public function defaults()
     {
-        return $this->get(Arg::DEFAULTS) ?: [];
+        return $this[Arg::DEFAULTS] ?? [];
     }
 
     /**
@@ -79,7 +79,7 @@ trait Definition
      */
     public function hostname()
     {
-        return $this->get(Arg::HOSTNAME) ?: null;
+        return $this[Arg::HOSTNAME] ?? null;
     }
 
     /**
@@ -87,7 +87,7 @@ trait Definition
      */
     public function name()
     {
-        return $this->get(Arg::NAME);
+        return $this[Arg::NAME];
     }
 
     /**
@@ -95,7 +95,7 @@ trait Definition
      */
     public function method()
     {
-        return $this->get(Arg::METHOD) ?: null;
+        return $this[Arg::METHOD] ?? null;
     }
 
     /**
@@ -103,7 +103,7 @@ trait Definition
      */
     public function paramMap()
     {
-        return $this->get(Arg::PARAM_MAP) ?: [];
+        return $this[Arg::PARAM_MAP] ?? [];
     }
 
     /**
@@ -111,7 +111,7 @@ trait Definition
      */
     public function regex()
     {
-        return $this->get(Arg::REGEX);
+        return $this[Arg::REGEX];
     }
 
     /**
@@ -119,7 +119,7 @@ trait Definition
      */
     public function route()
     {
-        return $this->get(Arg::ROUTE);
+        return $this[Arg::ROUTE];
     }
 
     /**
@@ -127,7 +127,7 @@ trait Definition
      */
     public function scheme()
     {
-        return $this->get(Arg::SCHEME);
+        return $this[Arg::SCHEME];
     }
 
     /**
@@ -135,7 +135,7 @@ trait Definition
      */
     public function tokens()
     {
-        return $this->get(Arg::TOKENS) ?: [];
+        return $this[Arg::TOKENS] ?? [];
     }
 
     /**
@@ -143,6 +143,6 @@ trait Definition
      */
     public function wildcard()
     {
-        return $this->get(Arg::WILDCARD) ?: false;
+        return $this[Arg::WILDCARD] ?? false;
     }
 }
