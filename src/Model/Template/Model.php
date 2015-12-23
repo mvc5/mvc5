@@ -53,7 +53,7 @@ trait Model
      */
     public function __get($name)
     {
-        return $this->offsetGet($name);
+        return $this->get($name);
     }
 
     /**
@@ -62,7 +62,7 @@ trait Model
      */
     public function __isset($name)
     {
-        return $this->offsetExists($name);
+        return $this->has($name);
     }
 
     /**
@@ -72,7 +72,7 @@ trait Model
      */
     public function __set($name, $value)
     {
-        return $this->offsetSet($name, $value);
+        return $this->set($name, $value);
     }
 
     /**
@@ -81,6 +81,6 @@ trait Model
      */
     public function __unset($name)
     {
-        $this->offsetUnset($name);
+        $this->remove($name);
     }
 }

@@ -8,99 +8,63 @@ namespace Mvc5\Config;
 trait ArrayAccess
 {
     /**
-     * @var array
-     */
-    protected $config = [];
-
-    /**
-     * @param array $config
-     */
-    public function __construct(array $config = [])
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->config);
-    }
-
-    /**
+     * @param string $name
      * @return mixed
      */
-    public function current()
-    {
-        return current($this->config);
-    }
+    public abstract function get($name);
 
     /**
-     * @return mixed
-     */
-    public function key()
-    {
-        return key($this->config);
-    }
-
-    /**
-     *
-     */
-    public function next()
-    {
-        next($this->config);
-    }
-
-    /**
-     *
-     */
-    public function rewind()
-    {
-        reset($this->config);
-    }
-
-    /**
-     * @param mixed $name
+     * @param string $name
      * @return bool
      */
-    public function offsetExists($name)
+    public abstract function has($name);
+
+    /**
+     * @param mixed $config
+     * @return bool
+     */
+    public function offsetExists($config)
     {
-        return isset($this->config[$name]);
+        return $this->has($config);
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $config
      * @return mixed
      */
-    public function offsetGet($name)
+    public function offsetGet($config)
     {
-        return $this->config[$name] ?? null;
+        return $this->get($config);
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $config
      * @param mixed $value
      * @return mixed $value
      */
-    public function offsetSet($name, $value)
+    public function offsetSet($config, $value)
     {
-        return $this->config[$name] = $value;
+        return $this->set($config, $value);
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $config
      */
-    public function offsetUnset($name)
+    public function offsetUnset($config)
     {
-        unset($this->config[$name]);
+        $this->remove($config);
     }
 
     /**
-     * @return bool
+     * @param string $name
+     * @return void
      */
-    public function valid()
-    {
-        return null !== $this->key();
-    }
+    public abstract function remove($name);
+
+    /**
+     * @param string $name
+     * @param mixed $config
+     * @return mixed $config
+     */
+    public abstract function set($name, $config);
 }

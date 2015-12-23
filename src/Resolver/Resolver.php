@@ -105,6 +105,15 @@ trait Resolver
     }
 
     /**
+     * @param string $name
+     * @return mixed
+     */
+    public function get($name)
+    {
+        return $this->shared($name) ?? $this->plugin($name);
+    }
+
+    /**
      * @param array|callable|null|object|string $arg
      * @param array $filters
      * @return mixed
@@ -206,15 +215,6 @@ trait Resolver
             $parent[Arg::PARAM] = $config->param();
 
         return $parent;
-    }
-
-    /**
-     * @param string $name
-     * @return mixed
-     */
-    public function offsetGet($name)
-    {
-        return $this->shared($name) ?? $this->plugin($name);
     }
 
     /**

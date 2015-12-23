@@ -13,12 +13,41 @@ trait Config
     use ArrayAccess;
 
     /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
+     * @param array $config
+     */
+    public function __construct(array $config = [])
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->config);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function current()
+    {
+        return current($this->config);
+    }
+
+    /**
      * @param string $name
      * @return mixed
      */
     public function get($name)
     {
-        return $this->offsetGet($name);
+        return $this->config[$name] ?? null;
     }
 
     /**
@@ -27,7 +56,23 @@ trait Config
      */
     public function has($name)
     {
-        return $this->offsetExists($name);
+        return isset($this->config[$name]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function key()
+    {
+        return key($this->config);
+    }
+
+    /**
+     *
+     */
+    public function next()
+    {
+        next($this->config);
     }
 
     /**
@@ -36,16 +81,32 @@ trait Config
      */
     public function remove($name)
     {
-        $this->offsetUnset($name);
+        unset($this->config[$name]);
+    }
+
+    /**
+     *
+     */
+    public function rewind()
+    {
+        reset($this->config);
     }
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param mixed $config
      * @return mixed $config
      */
-    public function set($name, $value)
+    public function set($name, $config)
     {
-        return $this->offsetSet($name, $value);
+        return $this->config[$name] = $config;
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
+        return null !== $this->key();
     }
 }
