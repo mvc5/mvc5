@@ -8,6 +8,9 @@ namespace Mvc5\Plugin;
 class Invokable
     implements Gem\Invokable
 {
+    /**
+     *
+     */
     use Config\Args;
     use Config\Config;
 

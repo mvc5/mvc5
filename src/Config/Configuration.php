@@ -28,8 +28,8 @@ interface Configuration
 
     /**
      * @param string $name
-     * @param mixed $config
+     * @param mixed $value
      * @return mixed
      */
-    function set($name, $config);
+    function set($name, $value);
 }
