@@ -31,7 +31,7 @@ trait Definition
      */
     public function child($name)
     {
-        return $this->config[Arg::CHILDREN][$name] ?? null;
+        return $this[Arg::CHILDREN][$name] ?? null;
     }
 
     /**
