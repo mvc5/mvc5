@@ -309,15 +309,23 @@ trait Resolver
      */
     protected function relay($plugin, array $config = [], array $args = [], callable $callback = null)
     {
-        if (!$config) {
-            return $this->invoke($plugin, $args, $callback);
-        }
+        return !$config ? $this->invoke($plugin, $args, $callback) :
+            $this->repeat($plugin, array_shift($config), $config, $args, $callback);
+    }
 
-        foreach($config as $name) {
-            $plugin = $this->invoke([$plugin, $name], $args, $callback);
-        }
-
-        return $plugin;
+    /**
+     * @param $plugin
+     * @param $name
+     * @param array $config
+     * @param array $args
+     * @param callable|null $callback
+     * @return array|callable|object|string
+     */
+    protected function repeat($plugin, $name, array $config = [], array $args = [], callable $callback = null)
+    {
+        return !$config ? $this->invoke([$plugin, $name], $args, $callback) : $this->repeat(
+            $this->invoke([$plugin, $name], $args, $callback), array_shift($config), $config, $args, $callback
+        );
     }
 
     /**
