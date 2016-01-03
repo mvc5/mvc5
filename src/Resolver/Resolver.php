@@ -366,7 +366,7 @@ trait Resolver
         }
 
         if ($config instanceof Call) {
-            return $this->call($config->config(), $args + $this->args($config->args()));
+            return $this->call($this->resolve($config->config()), $args + $this->args($config->args()));
         }
 
         if ($config instanceof Args) {
@@ -390,14 +390,22 @@ trait Resolver
         }
 
         if ($config instanceof Invoke) {
-            return function(array $args = []) use ($config) {
-                return $this->call($this->solve($config->config()), $args + $this->args($config->args()));
+            return function($args = []) use ($config) {
+                return $this->call(
+                    $this->solve($config->config()),
+                    (!is_array($args) || !is_string(key($args)) ? func_get_args() : $args) + $this->args($config->args())
+                );
             };
         }
 
         if ($config instanceof Invokable) {
-            return function(array $args = []) use ($config) {
-                return $this->solve($this->resolve($config->config(), $args + $config->args()));
+            return function($args = []) use ($config) {
+                return $this->solve(
+                    $this->resolve(
+                        $config->config(),
+                        (!is_array($args) || !is_string(key($args)) ? func_get_args() : $args) + $this->args($config->args())
+                    )
+                );
             };
         }
 
