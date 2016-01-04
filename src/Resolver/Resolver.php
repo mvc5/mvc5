@@ -84,7 +84,9 @@ trait Resolver
     protected function callable($config) : callable
     {
         if (is_string($config)) {
-            return function($args = []) use($config) { return $this->call($config, $args); };
+            return function(...$args) use($config) {
+                return $this->call($config, $this->variadic($args));
+            };
         }
 
         if (is_array($config)) {
@@ -122,12 +124,25 @@ trait Resolver
      */
     protected function filter($value, $filters = [], array $args = [], $param = null)
     {
+        $result = $value;
+
         foreach($filters as $filter) {
-            $value = $param ? $this->invoke($this->callable($filter), [$param => $value] + $args) :
-                $this->invoke($filter, array_merge([$value], $args));
+            $value = $this->invoke(
+                $this->callable($filter), $param ? [$param => $result] + $args : array_merge([$result], $args)
+            );
+
+            if (false === $value) {
+                return $result;
+            }
+
+            if (null === $value) {
+                return null;
+            }
+
+            $result = $value;
         }
 
-        return $value;
+        return $result;
     }
 
     /**
@@ -405,26 +420,18 @@ trait Resolver
         }
 
         if ($config instanceof Invoke) {
-            return function($args = []) use ($config) {
+            return function(...$args) use ($config) {
                 return $this->call(
-                    $this->solve($config->config()),
-                    array_merge(
-                        !is_array($args) || !is_string(key($args)) ? func_get_args() : $args,
-                        $this->args($config->args())
-                    )
+                    $this->solve($config->config()), array_merge($this->variadic($args), $this->args($config->args()))
                 );
             };
         }
 
         if ($config instanceof Invokable) {
-            return function($args = []) use ($config) {
+            return function(...$args) use ($config) {
                 return $this->solve(
                     $this->resolve(
-                        $config->config(),
-                        array_merge(
-                            !is_array($args) || !is_string(key($args)) ? func_get_args() : $args,
-                            $this->args($config->args())
-                        )
+                        $config->config(), array_merge($this->variadic($args), $this->args($config->args()))
                     )
                 );
             };
@@ -486,6 +493,15 @@ trait Resolver
     public function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
+    }
+
+    /**
+     * @param array $args
+     * @return array
+     */
+    protected function variadic(array $args)
+    {
+        return $args[0][Arg::VARIADIC] ?? $args;
     }
 
     /**
