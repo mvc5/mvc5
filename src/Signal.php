@@ -49,7 +49,7 @@ trait Signal
             }
 
             if (Arg::ARGS === $param->name) {
-                $matched[] = $param->isVariadic() ? [Arg::VARIADIC => $args] : $args;
+                $matched[] = $param->isVariadic() ? new Plugin\SignalArgs($args) : $args;
                 continue;
             }
 

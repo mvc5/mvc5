@@ -13,6 +13,14 @@ trait Args
     protected $args;
 
     /**
+     * @param $args
+     */
+    public function __construct($args)
+    {
+        $this->args = $args;
+    }
+
+    /**
      * @return array
      */
     public function args()

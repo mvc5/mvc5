@@ -22,6 +22,7 @@ use Mvc5\Plugin\Gem\Link;
 use Mvc5\Plugin\Gem\Param;
 use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
+use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Resolvable;
 use Mvc5\Service\Config as Container;
 use RuntimeException;
@@ -501,7 +502,7 @@ trait Resolver
      */
     protected function variadic(array $args)
     {
-        return $args[0][Arg::VARIADIC] ?? $args;
+        return $args[0] instanceof SignalArgs ? $args[0]->args() : $args;
     }
 
     /**
