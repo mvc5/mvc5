@@ -11,6 +11,7 @@ class Filter
     /**
      *
      */
+    use Config\Args;
     use Config\Config;
 
     /**
@@ -19,13 +20,22 @@ class Filter
     protected $filter;
 
     /**
+     * @var string
+     */
+    protected $param;
+
+    /**
      * @param $config
      * @param array|\Traversable $filter
+     * @param array $args
+     * @param string $param
      */
-    public function __construct($config, $filter = [])
+    public function __construct($config, $filter = [], array $args = [], $param = null)
     {
+        $this->args   = $args;
         $this->config = $config;
         $this->filter = $filter;
+        $this->param  = $param;
     }
 
     /**
@@ -34,5 +44,13 @@ class Filter
     public function filter()
     {
         return $this->filter;
+    }
+
+    /**
+     * @return string
+     */
+    public function param()
+    {
+        return $this->param;
     }
 }

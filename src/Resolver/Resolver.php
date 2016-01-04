@@ -116,15 +116,30 @@ trait Resolver
     /**
      * @param array|callable|null|object|string $value
      * @param array|\Traversable $filters
+     * @param array $args
+     * @param $param
      * @return mixed
      */
-    protected function filter($value, $filters = [])
+    protected function filter($value, $filters = [], array $args = [], $param = null)
     {
         foreach($filters as $filter) {
-            $value = $filter($value);
+            $value = $param ? $this->invoke($this->callable($filter), [$param => $value] + $args) :
+                $this->invoke($filter, array_merge([$value], $args));
         }
 
         return $value;
+    }
+
+    /**
+     * @param Filter $config
+     * @param array $args
+     * @return mixed
+     */
+    protected function filterable(Filter $config, array $args = [])
+    {
+        return $this->filter(
+            $this->resolve($config->config()), $this->args($config->filter()), $args, $config->param()
+        );
     }
 
     /**
@@ -382,7 +397,7 @@ trait Resolver
         }
 
         if ($config instanceof Filter) {
-            return $this->filter($this->resolve($config->config()), $this->resolve($config->filter()));
+            return $this->filterable($config, array_merge($args, $this->args($config->args())));
         }
 
         if ($config instanceof Plug) {
@@ -393,7 +408,10 @@ trait Resolver
             return function($args = []) use ($config) {
                 return $this->call(
                     $this->solve($config->config()),
-                    (!is_array($args) || !is_string(key($args)) ? func_get_args() : $args) + $this->args($config->args())
+                    array_merge(
+                        !is_array($args) || !is_string(key($args)) ? func_get_args() : $args,
+                        $this->args($config->args())
+                    )
                 );
             };
         }
@@ -403,7 +421,10 @@ trait Resolver
                 return $this->solve(
                     $this->resolve(
                         $config->config(),
-                        (!is_array($args) || !is_string(key($args)) ? func_get_args() : $args) + $this->args($config->args())
+                        array_merge(
+                            !is_array($args) || !is_string(key($args)) ? func_get_args() : $args,
+                            $this->args($config->args())
+                        )
                     )
                 );
             };

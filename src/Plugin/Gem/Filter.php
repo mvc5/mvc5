@@ -11,6 +11,11 @@ interface Filter
     extends Resolvable
 {
     /**
+     * @return array
+     */
+    function args();
+
+    /**
      * @return Plugin|string
      */
     function config();
@@ -19,4 +24,9 @@ interface Filter
      * @return string|array
      */
     function filter();
+
+    /**
+     * @return string
+     */
+    function param();
 }
