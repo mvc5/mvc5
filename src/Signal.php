@@ -49,7 +49,7 @@ trait Signal
             }
 
             if (Arg::ARGS === $param->name) {
-                $matched[] = $args;
+                $matched[] = $param->isVariadic() ? [Arg::VARIADIC => $args] : $args;
                 continue;
             }
 

@@ -300,6 +300,11 @@ interface Arg
     /**
      *
      */
+    const VARIADIC = '__args';
+
+    /**
+     *
+     */
     const VIEW_RENDER = 'view\render';
 
     /**
