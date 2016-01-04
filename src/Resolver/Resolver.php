@@ -154,7 +154,7 @@ trait Resolver
     protected function filterable(Filter $config, array $args = [])
     {
         return $this->filter(
-            $this->resolve($config->config()), $this->args($config->filter()), $args, $config->param()
+            $this->resolve($config->config()), $this->resolve($config->filter()), $args, $config->param()
         );
     }
 
@@ -397,7 +397,7 @@ trait Resolver
         }
 
         if ($config instanceof Call) {
-            return $this->call($this->resolve($config->config()), $args + $this->args($config->args()));
+            return $this->call($this->resolve($config->config()), array_merge($args, $this->args($config->args())));
         }
 
         if ($config instanceof Args) {
@@ -502,7 +502,7 @@ trait Resolver
      */
     protected function variadic(array $args)
     {
-        return $args[0] instanceof SignalArgs ? $args[0]->args() : $args;
+        return $args && $args[0] instanceof SignalArgs ? $args[0]->args() : $args;
     }
 
     /**
