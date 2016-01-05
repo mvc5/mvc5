@@ -59,6 +59,18 @@ trait Resolver
     }
 
     /**
+     * @param array $child
+     * @param array $parent
+     * @return array
+     */
+    protected function arguments(array $child, array $parent)
+    {
+        return !$parent ? $child : (
+            !$child ? $parent : (is_string(key($child)) ? $child + $parent : array_merge($child, $parent))
+        );
+    }
+
+    /**
      * @param array|callable|object|string $config
      * @param array $args
      * @param callable $callback
@@ -397,7 +409,9 @@ trait Resolver
         }
 
         if ($config instanceof Call) {
-            return $this->call($this->resolve($config->config()), array_merge($args, $this->args($config->args())));
+            return $this->call(
+                $this->resolve($config->config()), $this->arguments($args, $this->args($config->args()))
+            );
         }
 
         if ($config instanceof Args) {
@@ -413,7 +427,7 @@ trait Resolver
         }
 
         if ($config instanceof Filter) {
-            return $this->filterable($config, array_merge($args, $this->args($config->args())));
+            return $this->filterable($config, $this->arguments($args, $this->args($config->args())));
         }
 
         if ($config instanceof Plug) {
@@ -423,7 +437,8 @@ trait Resolver
         if ($config instanceof Invoke) {
             return function(...$args) use ($config) {
                 return $this->call(
-                    $this->solve($config->config()), array_merge($this->variadic($args), $this->args($config->args()))
+                    $this->solve($config->config()),
+                    $this->arguments($this->variadic($args), $this->args($config->args()))
                 );
             };
         }
@@ -432,7 +447,7 @@ trait Resolver
             return function(...$args) use ($config) {
                 return $this->solve(
                     $this->resolve(
-                        $config->config(), array_merge($this->variadic($args), $this->args($config->args()))
+                        $config->config(), $this->arguments($this->variadic($args), $this->args($config->args()))
                     )
                 );
             };
