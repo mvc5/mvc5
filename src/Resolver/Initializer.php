@@ -41,7 +41,7 @@ trait Initializer
     {
         $this->pending[$name] = false;
 
-        null !== $service && $service && $this->set($name, $service);
+        null !== $service && $this->set($name, $service);
 
         return $service;
     }
