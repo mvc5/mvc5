@@ -24,7 +24,7 @@ class Renderer
     /**
      * @param $templates
      */
-    public function __construct($templates)
+    public function __construct($templates = [])
     {
         $this->templates = $templates;
     }
@@ -71,9 +71,8 @@ class Renderer
 
                 throw $exception;
             }
-
-
         },
+            $model,
             $model
         );
 
