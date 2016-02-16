@@ -15,6 +15,7 @@ use Mvc5\Plugin\Gem\Child;
 use Mvc5\Plugin\Gem\Config;
 use Mvc5\Plugin\Gem\Dependency;
 use Mvc5\Plugin\Gem\Factory;
+use Mvc5\Plugin\Gem\FileInclude;
 use Mvc5\Plugin\Gem\Filter;
 use Mvc5\Plugin\Gem\Invokable;
 use Mvc5\Plugin\Gem\Invoke;
@@ -451,6 +452,16 @@ trait Resolver
                     )
                 );
             };
+        }
+
+        if ($config instanceof FileInclude) {
+            $include = new class() {
+                function __invoke($file) {
+                    return include $file;
+                }
+            };
+
+            return $include($this->solve($config->config()));
         }
 
         return $callback ? $callback($config) : $this->resolver($config);
