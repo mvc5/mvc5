@@ -400,11 +400,12 @@ trait Resolver
 
     /**
      * @param $config
+     * @param array $args
      * @return callable|mixed|null|object
      */
-    protected function resolver($config)
+    protected function resolver($config, array $args = [])
     {
-        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => $config]);
+        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => $config, Arg::PARAMS => $args]);
     }
 
     /**
@@ -492,7 +493,7 @@ trait Resolver
             return $include($this->resolve($config->config()));
         }
 
-        return $callback ? $callback($config) : $this->resolver($config);
+        return $callback ? $callback($config, $args) : $this->resolver($config, $args);
     }
 
     /**
