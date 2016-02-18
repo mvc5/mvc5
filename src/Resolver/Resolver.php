@@ -320,7 +320,7 @@ trait Resolver
      */
     protected function provide(Plugin $config, array $args = [])
     {
-        $name   = $this->solve($config->name());
+        $name   = $this->resolve($config->name());
         $parent = $this->configured($name);
 
         $args && is_string(key($args)) && $config->args() && $args += $config->args();
@@ -333,7 +333,7 @@ trait Resolver
 
         if (!$parent instanceof Plugin) {
             return $this->hydrate(
-                $config, $name === $parent ? $this->make($name, $args) : $this->plugin($this->solve($parent), $args)
+                $config, $name === $parent ? $this->make($name, $args) : $this->plugin($this->resolve($parent), $args)
             );
         }
 
@@ -376,15 +376,45 @@ trait Resolver
      * @param $config
      * @param array $args
      * @param callable $callback
+     * @param int $c
      * @return array|callable|Plugin|null|object|Resolvable|string
-     * @throws RuntimeException
      */
-    protected function resolvable($config, array $args = [], callable $callback = null)
+    protected function resolvable($config, array $args = [], callable $callback = null, $c = 0)
     {
-        if (!$config instanceof Resolvable) {
-            return $config;
-        }
+        return !$config instanceof Resolvable ? $config : (
+            $c > Arg::MAX_RECURSION ? $this->signal(new Exception, [$config]) :
+                $this->resolvable($this->solve($config, $args, $callback), $args, $callback, ++$c)
+        );
+    }
 
+    /**
+     * @param $config
+     * @param array $args
+     * @param callable $callback
+     * @return array|callable|Plugin|null|object|Resolvable|string
+     */
+    protected function resolve($config, array $args = [], callable $callback = null)
+    {
+        return $this->resolvable($config, $args, $callback);
+    }
+
+    /**
+     * @param $config
+     * @return callable|mixed|null|object
+     */
+    protected function resolver($config)
+    {
+        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => $config]);
+    }
+
+    /**
+     * @param $config
+     * @param array $args
+     * @param callable $callback
+     * @return mixed|callable
+     */
+    protected function solve($config, array $args = [], callable $callback = null)
+    {
         if ($config instanceof Factory) {
             return $this->invoke($this->child($config, $args));
         }
@@ -438,7 +468,7 @@ trait Resolver
         if ($config instanceof Invoke) {
             return function(...$args) use ($config) {
                 return $this->call(
-                    $this->solve($config->config()),
+                    $this->resolve($config->config()),
                     $this->arguments($this->variadic($args), $this->args($config->args()))
                 );
             };
@@ -446,10 +476,8 @@ trait Resolver
 
         if ($config instanceof Invokable) {
             return function(...$args) use ($config) {
-                return $this->solve(
-                    $this->resolve(
-                        $config->config(), $this->arguments($this->variadic($args), $this->args($config->args()))
-                    )
+                return $this->resolve(
+                    $config->config(), $this->arguments($this->variadic($args), $this->args($config->args()))
                 );
             };
         }
@@ -461,43 +489,10 @@ trait Resolver
                 }
             };
 
-            return $include($this->solve($config->config()));
+            return $include($this->resolve($config->config()));
         }
 
         return $callback ? $callback($config) : $this->resolver($config);
-    }
-
-    /**
-     * @param $config
-     * @param array $args
-     * @return array|callable|Plugin|null|object|Resolvable|string
-     * @throws RuntimeException
-     */
-    protected function resolve($config, array $args = [])
-    {
-        return $this->resolvable($config, $args);
-    }
-
-    /**
-     * @param $config
-     * @return callable|mixed|null|object
-     */
-    protected function resolver($config)
-    {
-        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => $config]);
-    }
-
-    /**
-     * @param $config
-     * @param int $c
-     * @return mixed
-     */
-    protected function solve($config, $c = 0)
-    {
-        return !$config instanceof Resolvable ? $config : (
-            $c < Arg::MAX_RECURSION ?
-                $this->solve($this->resolve($config), ++$c) : $this->signal(new Exception, [Arg::PLUGIN => $config])
-        );
     }
 
     /**
