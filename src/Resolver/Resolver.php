@@ -462,7 +462,7 @@ trait Resolver
         }
 
         if ($config instanceof Plug) {
-            return is_string($config->name()) ? $this->configured($config->name()) : $config->name();
+            return $this->configured($config->name());
         }
 
         if ($config instanceof Invoke) {
