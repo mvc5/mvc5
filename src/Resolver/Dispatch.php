@@ -31,7 +31,7 @@ class Dispatch
      */
     public function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
-        $result = $this->signal($callable, $this->args() + $args, $callback);
+        $result = $this->signal($callable, is_string(key($args)) ? $this->args() + $args : $args, $callback);
 
         !$result instanceof Resolvable && $this->stop();
 

@@ -6,7 +6,6 @@
 namespace Mvc5\Resolver;
 
 use Mvc5\Arg;
-use Mvc5\Event\Event;
 use Mvc5\Event\Generator as Base;
 
 trait Generator
@@ -46,12 +45,7 @@ trait Generator
      * @param callable $callback
      * @return callable|null
      */
-    protected function listener($plugin, callable $callback = null)
-    {
-        return !$plugin instanceof Event ? $plugin : function(array $args = []) use ($plugin, $callback) {
-            return $this->event($plugin, $args, $callback);
-        };
-    }
+    protected abstract function listener($plugin, callable $callback = null);
 
     /**
      * @param string $name

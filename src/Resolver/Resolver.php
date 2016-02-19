@@ -240,6 +240,18 @@ trait Resolver
     }
 
     /**
+     * @param $plugin
+     * @param callable $callback
+     * @return callable|null
+     */
+    protected function listener($plugin, callable $callback = null)
+    {
+        return !$plugin instanceof Event ? $plugin : function(...$args) use ($plugin, $callback) {
+            return $this->event($plugin, $this->variadic($args), $callback);
+        };
+    }
+
+    /**
      * @param Plugin $parent
      * @param Plugin $config
      * @return Plugin
@@ -405,7 +417,7 @@ trait Resolver
      */
     protected function resolver($config, array $args = [])
     {
-        return $this->call(Arg::SERVICE_RESOLVER, [Arg::PLUGIN => $config, Arg::PARAMS => $args]);
+        return $this->call(Arg::SERVICE_RESOLVER, [$config, $args]);
     }
 
     /**
