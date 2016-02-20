@@ -33,7 +33,7 @@ class Dispatch
     {
         $result = $this->signal($callable, is_string(key($args)) ? $this->args() + $args : $args, $callback);
 
-        !$result instanceof Resolvable && $this->stop();
+        null !== $result && !$result instanceof Resolvable && $this->stop();
 
         return $result;
     }
