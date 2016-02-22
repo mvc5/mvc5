@@ -16,6 +16,12 @@ trait Generator
     use _Signal;
 
     /**
+     * @param array|callable|object|string $config
+     * @return callable|null
+     */
+    protected abstract function callable($config) : callable;
+
+    /**
      * @param callable|Event|string $event
      * @param callable $listener
      * @param array $args
@@ -48,12 +54,6 @@ trait Generator
 
         return $result;
     }
-
-    /**
-     * @param array|callable|object|string $config
-     * @return callable|null
-     */
-    protected abstract function callable($config) : callable;
 
     /**
      * @param string $name
