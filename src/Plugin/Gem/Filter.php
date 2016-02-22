@@ -5,10 +5,8 @@
 
 namespace Mvc5\Plugin\Gem;
 
-use Mvc5\Resolvable;
-
 interface Filter
-    extends Resolvable
+    extends Gem
 {
     /**
      * @return array

@@ -6,10 +6,9 @@
 namespace Mvc5\Plugin\Gem;
 
 use Mvc5\Config\Configuration;
-use Mvc5\Resolvable;
 
 interface Plugin
-    extends Configuration, Resolvable
+    extends Configuration, Gem
 {
     /**
      * @return array

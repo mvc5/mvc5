@@ -5,10 +5,8 @@
 
 namespace Mvc5\Plugin\Gem;
 
-use Mvc5\Resolvable;
-
 interface Param
-    extends Resolvable
+    extends Gem
 {
     /**
      * @return string

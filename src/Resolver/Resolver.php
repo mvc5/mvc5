@@ -17,6 +17,7 @@ use Mvc5\Plugin\Gem\Dependency;
 use Mvc5\Plugin\Gem\Factory;
 use Mvc5\Plugin\Gem\FileInclude;
 use Mvc5\Plugin\Gem\Filter;
+use Mvc5\Plugin\Gem\Gem;
 use Mvc5\Plugin\Gem\Invokable;
 use Mvc5\Plugin\Gem\Invoke;
 use Mvc5\Plugin\Gem\Link;
@@ -121,15 +122,6 @@ trait Resolver
     }
 
     /**
-     * @param string $name
-     * @return mixed
-     */
-    public function get($name)
-    {
-        return $this->shared($name) ?? $this->plugin($name);
-    }
-
-    /**
      * @param array|callable|null|object|string $value
      * @param array|\Traversable $filters
      * @param array $args
@@ -169,6 +161,102 @@ trait Resolver
         return $this->filter(
             $this->resolve($config->config()), $this->resolve($config->filter()), $args, $config->param()
         );
+    }
+
+    /**
+     * @param $config
+     * @param array $args
+     * @return mixed|callable
+     */
+    protected function gem($config, array $args = [])
+    {
+        if ($config instanceof Factory) {
+            return $this->invoke($this->child($config, $args));
+        }
+
+        if ($config instanceof Calls) {
+            return $this->hydrate($config, $this->resolve($config->name(), $args));
+        }
+
+        if ($config instanceof Child) {
+            return $this->child($config, $args);
+        }
+
+        if ($config instanceof Plugin) {
+            return $this->provide($config, $args);
+        }
+
+        if ($config instanceof Dependency) {
+            return $this->shared($config->name()) ?? $this->initialize($config->name(), $config->config());
+        }
+
+        if ($config instanceof Param) {
+            return $this->resolve($this->param($config->name()), $args);
+        }
+
+        if ($config instanceof Call) {
+            return $this->call(
+                $this->resolve($config->config()), $this->arguments($args, $this->args($config->args()))
+            );
+        }
+
+        if ($config instanceof Args) {
+            return $this->args($config->config());
+        }
+
+        if ($config instanceof Config) {
+            return $this->config();
+        }
+
+        if ($config instanceof Link) {
+            return $this;
+        }
+
+        if ($config instanceof Filter) {
+            return $this->filterable($config, $this->arguments($args, $this->args($config->args())));
+        }
+
+        if ($config instanceof Plug) {
+            return $this->configured($config->name());
+        }
+
+        if ($config instanceof Invoke) {
+            return function(...$args) use ($config) {
+                return $this->call(
+                    $this->resolve($config->config()),
+                    $this->arguments($this->variadic($args), $this->args($config->args()))
+                );
+            };
+        }
+
+        if ($config instanceof Invokable) {
+            return function(...$args) use ($config) {
+                return $this->resolve(
+                    $config->config(), $this->arguments($this->variadic($args), $this->args($config->args()))
+                );
+            };
+        }
+
+        if ($config instanceof FileInclude) {
+            $include = new class() {
+                function __invoke($file) {
+                    return include $file;
+                }
+            };
+
+            return $include($this->resolve($config->config()));
+        }
+
+        return $this->signal(new Exception, [$config]);
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function get($name)
+    {
+        return $this->shared($name) ?? $this->plugin($name);
     }
 
     /**
@@ -402,12 +490,11 @@ trait Resolver
     /**
      * @param $config
      * @param array $args
-     * @param callable $callback
      * @return array|callable|Plugin|null|object|Resolvable|string
      */
-    protected function resolve($config, array $args = [], callable $callback = null)
+    protected function resolve($config, array $args = [])
     {
-        return $this->resolvable($config, $args, $callback);
+        return $this->resolvable($config, $args);
     }
 
     /**
@@ -428,84 +515,9 @@ trait Resolver
      */
     protected function solve($config, array $args = [], callable $callback = null)
     {
-        if ($config instanceof Factory) {
-            return $this->invoke($this->child($config, $args));
-        }
-
-        if ($config instanceof Calls) {
-            return $this->hydrate($config, $this->resolve($config->name(), $args));
-        }
-
-        if ($config instanceof Child) {
-            return $this->child($config, $args);
-        }
-
-        if ($config instanceof Plugin) {
-            return $this->provide($config, $args);
-        }
-
-        if ($config instanceof Dependency) {
-            return $this->shared($config->name()) ?? $this->initialize($config->name(), $config->config());
-        }
-
-        if ($config instanceof Param) {
-            return $this->resolve($this->param($config->name()), $args);
-        }
-
-        if ($config instanceof Call) {
-            return $this->call(
-                $this->resolve($config->config()), $this->arguments($args, $this->args($config->args()))
-            );
-        }
-
-        if ($config instanceof Args) {
-            return $this->args($config->config());
-        }
-
-        if ($config instanceof Config) {
-            return $this->config();
-        }
-
-        if ($config instanceof Link) {
-            return $this;
-        }
-
-        if ($config instanceof Filter) {
-            return $this->filterable($config, $this->arguments($args, $this->args($config->args())));
-        }
-
-        if ($config instanceof Plug) {
-            return $this->configured($config->name());
-        }
-
-        if ($config instanceof Invoke) {
-            return function(...$args) use ($config) {
-                return $this->call(
-                    $this->resolve($config->config()),
-                    $this->arguments($this->variadic($args), $this->args($config->args()))
-                );
-            };
-        }
-
-        if ($config instanceof Invokable) {
-            return function(...$args) use ($config) {
-                return $this->resolve(
-                    $config->config(), $this->arguments($this->variadic($args), $this->args($config->args()))
-                );
-            };
-        }
-
-        if ($config instanceof FileInclude) {
-            $include = new class() {
-                function __invoke($file) {
-                    return include $file;
-                }
-            };
-
-            return $include($this->resolve($config->config()));
-        }
-
-        return $callback ? $callback($config, $args) : $this->resolver($config, $args);
+        return $config instanceof Gem ? $this->gem($config, $args) : (
+            $callback ? $callback($config, $args) : $this->resolver($config, $args)
+        );
     }
 
     /**
