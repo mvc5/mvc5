@@ -13,6 +13,7 @@ use Mvc5\Plugin\Gem\Call;
 use Mvc5\Plugin\Gem\Calls;
 use Mvc5\Plugin\Gem\Child;
 use Mvc5\Plugin\Gem\Config;
+use Mvc5\Plugin\Gem\Copy;
 use Mvc5\Plugin\Gem\Dependency;
 use Mvc5\Plugin\Gem\Factory;
 use Mvc5\Plugin\Gem\FileInclude;
@@ -245,6 +246,10 @@ trait Resolver
             };
 
             return $include($this->resolve($config->config()));
+        }
+
+        if ($config instanceof Copy) {
+            return clone $this->resolve($config->config(), $args);
         }
 
         return $this->signal(new Exception, [$config]);
