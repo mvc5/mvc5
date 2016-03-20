@@ -5,7 +5,6 @@
 
 namespace Mvc5\Url;
 
-use Mvc5\Arg;
 use Mvc5\Route\Route;
 use Mvc5\Signal;
 
@@ -51,7 +50,7 @@ class Plugin
      */
     protected function url($name, array $args = [])
     {
-        return $this->signal($this->generator(), [Arg::NAME => $name] + $args);
+        return $this->signal($this->generator(), [$name, $args]);
     }
 
     /**
