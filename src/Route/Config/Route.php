@@ -64,6 +64,15 @@ trait Route
     }
 
     /**
+     * @param $name
+     * @return mixed
+     */
+    public function param($name)
+    {
+        return $this[Arg::PARAMS][$name] ?? null;
+    }
+
+    /**
      * @return array
      */
     public function params()

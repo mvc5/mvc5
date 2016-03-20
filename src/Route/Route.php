@@ -41,6 +41,12 @@ interface Route
     function name();
 
     /**
+     * @param $name
+     * @return mixed
+     */
+    function param($name);
+
+    /**
      * @return array
      */
     function params();
