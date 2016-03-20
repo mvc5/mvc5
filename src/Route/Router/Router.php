@@ -28,16 +28,6 @@ trait Router
      * @param array|Definition $definition
      * @return Definition
      */
-    protected function routeDefinition($definition)
-    {
-        return $definition instanceof Definition && isset($definition[Arg::REGEX])
-            ? $definition : $this->definition($definition);
-    }
-
-    /**
-     * @param array|Definition $definition
-     * @return Definition
-     */
     protected abstract function definition($definition);
 
     /**
@@ -81,6 +71,16 @@ trait Router
     protected function name()
     {
         return $this->definition[Arg::NAME];
+    }
+
+    /**
+     * @param array|Definition $definition
+     * @return Definition
+     */
+    protected function routeDefinition($definition)
+    {
+        return $definition instanceof Definition && isset($definition[Arg::REGEX])
+            ? $definition : $this->definition($definition);
     }
 
     /**
