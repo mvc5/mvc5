@@ -40,13 +40,13 @@ trait Mvc
     {
         $model = $this->signal($callable, $this->args() + $args, $callback);
 
-        if ($model instanceof Mvc5Route) {
-            $this->route($model);
+        if ($model instanceof Mvc5Response) {
+            $this->stop();
             return $model;
         }
 
-        if ($model instanceof Mvc5Response) {
-            $this->stop();
+        if ($model instanceof Mvc5Route) {
+            $this->route($model);
             return $model;
         }
 
