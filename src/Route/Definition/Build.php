@@ -76,6 +76,15 @@ trait Build
             return new $definition[Arg::CLASS_NAME]($definition);
         }
 
+        return $this->createDefault($definition);
+    }
+
+    /**
+     * @param array $definition
+     * @return string
+     */
+    protected function createDefault(array $definition = [])
+    {
         return new Config($definition);
     }
 
