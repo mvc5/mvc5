@@ -39,9 +39,13 @@ trait Router
     {
         $route = $this->match($definition, $route);
 
-        $route && !$route->name() && $route[Arg::NAME] = $definition->name();
+        if (!$route instanceof Route) {
+            return $route;
+        }
 
-        if (!$route || $route->matched()) {
+        !$route->name() && $route[Arg::NAME] = $definition->name();
+
+        if ($route->matched()) {
             return $route;
         }
 

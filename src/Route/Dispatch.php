@@ -8,6 +8,7 @@ namespace Mvc5\Route;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\Signal;
+use Mvc5\Response\Response;
 
 class Dispatch
     implements Event
@@ -32,7 +33,7 @@ class Dispatch
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        $result instanceof Route && $this->stop();
+        ($result instanceof Route || $result instanceof Response) && $this->stop();
 
         return $result;
     }
