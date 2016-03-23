@@ -59,6 +59,13 @@ trait Generator
     }
 
     /**
+     * @param $config
+     * @param array $args
+     * @return array|callable|null|object|string
+     */
+    protected abstract function resolve($config, array $args = []);
+
+    /**
      * @param Event|object|string $event
      * @param array $args
      * @return array|\Traversable|null
@@ -67,11 +74,4 @@ trait Generator
     {
         return $this->resolve($this->listeners($this->eventName($event)), $args);
     }
-
-    /**
-     * @param $config
-     * @param array $args
-     * @return array|callable|null|object|string
-     */
-    protected abstract function resolve($config, array $args = []);
 }
