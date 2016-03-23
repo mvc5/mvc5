@@ -5,7 +5,7 @@
 
 namespace Mvc5\Resolver;
 
-use Mvc5\Arg;
+use Mvc5\Event\Event;
 use Mvc5\Event\Generator as Base;
 
 trait Generator
@@ -16,7 +16,7 @@ trait Generator
     use Base;
 
     /**
-     * @var array|\ArrayAccess|\Traversable
+     * @var array|\ArrayAccess
      */
     protected $events = [];
 
@@ -32,8 +32,17 @@ trait Generator
     }
 
     /**
-     * @param array|\ArrayAccess|null|\Traversable $config
-     * @return array|\ArrayAccess|null|\Traversable
+     * @param $event
+     * @return string
+     */
+    protected function eventName($event)
+    {
+        return is_string($event) ? $event : ($event instanceof Event ? $event->event() : get_class($event));
+    }
+
+    /**
+     * @param array|\ArrayAccess|null $config
+     * @return array|\ArrayAccess|null
      */
     public function events($config = null)
     {
@@ -41,18 +50,28 @@ trait Generator
     }
 
     /**
-     * @param $plugin
-     * @param callable $callback
-     * @return callable|null
-     */
-    protected abstract function listener($plugin, callable $callback = null);
-
-    /**
      * @param string $name
      * @return array|\Traversable|null
      */
     protected function listeners($name)
     {
-        return $this->events[$name] ?? $this->signal(new Exception, [Arg::PLUGIN => $name]);
+        return $this->events[$name] ?? $this->signal(new Exception, [$name]);
     }
+
+    /**
+     * @param Event|object|string $event
+     * @param array $args
+     * @return array|\Traversable|null
+     */
+    protected function traversable($event, array $args = [])
+    {
+        return $this->resolve($this->listeners($this->eventName($event)), $args);
+    }
+
+    /**
+     * @param $config
+     * @param array $args
+     * @return array|callable|null|object|string
+     */
+    protected abstract function resolve($config, array $args = []);
 }

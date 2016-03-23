@@ -43,7 +43,7 @@ trait Generator
     {
         $result = null;
 
-        foreach($this->queue($event) as $listener) {
+        foreach($this->queue($event, $args) as $listener) {
 
             $result = $this->emit($event, $this->callable($listener), $args, $callback);
 
@@ -56,19 +56,19 @@ trait Generator
     }
 
     /**
-     * @param string $name
-     * @return array|Traversable|null
-     */
-    protected abstract function listeners($name);
-
-    /**
      * @param array|Event|object|string|Traversable $event
+     * @param array $args
      * @return array|Traversable
      */
-    protected function queue($event)
+    protected function queue($event, array $args = [])
     {
-        return is_array($event) || $event instanceof Traversable ? $event : $this->listeners(
-            is_string($event) ? $event : ($event instanceof Event ? $event->event() : get_class($event))
-        );
+        return is_array($event) || $event instanceof Traversable ? $event : $this->traversable($event, $args);
     }
+
+    /**
+     * @param Event|object|string $event
+     * @param array $args
+     * @return array|Traversable|null
+     */
+    protected abstract function traversable($event, array $args = []);
 }
