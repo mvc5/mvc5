@@ -216,16 +216,6 @@ interface Arg
     /**
      *
      */
-    const SEPARATOR = '/';
-
-    /**
-     *
-     */
-    const SERVICE_RESOLVER = 'service\resolver';
-
-    /**
-     *
-     */
     const RESPONSE = 'response';
 
     /**
@@ -271,7 +261,17 @@ interface Arg
     /**
      *
      */
+    const SEPARATOR = '/';
+
+    /**
+     *
+     */
     const SERVICE = 'service';
+
+    /**
+     *
+     */
+    const SERVICE_RESOLVER = 'service\resolver';
 
     /**
      *
