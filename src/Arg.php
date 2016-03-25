@@ -15,6 +15,11 @@ interface Arg
     /**
      *
      */
+    const ALLOW = 'allow';
+
+    /**
+     *
+     */
     const CALL = '@';
 
     /**
@@ -165,6 +170,11 @@ interface Arg
     /**
      *
      */
+    const MATCHED = 'matched';
+
+    /**
+     *
+     */
     const MAX_RECURSION = 100;
 
     /**
@@ -182,11 +192,6 @@ interface Arg
      *
      */
     const MODEL = 'model';
-
-    /**
-     *
-     */
-    const MATCHED = 'matched';
 
     /**
      *

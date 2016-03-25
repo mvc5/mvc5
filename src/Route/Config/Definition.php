@@ -26,6 +26,14 @@ trait Definition
     }
 
     /**
+     * @return array
+     */
+    public function allow()
+    {
+        return $this[Arg::ALLOW] ?? [];
+    }
+
+    /**
      * @param string $name
      * @return self
      */
@@ -91,14 +99,6 @@ trait Definition
     }
 
     /**
-     * @return null|string|string[]
-     */
-    public function method()
-    {
-        return $this[Arg::METHOD] ?? null;
-    }
-
-    /**
      * @return array
      */
     public function paramMap()
@@ -112,6 +112,23 @@ trait Definition
     public function regex()
     {
         return $this[Arg::REGEX];
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function method($name)
+    {
+        return $this[Arg::METHOD][$name] ?? null;
+    }
+
+    /**
+     * @return array
+     */
+    public function methods()
+    {
+        return $this[Arg::METHOD] ?? [];
     }
 
     /**

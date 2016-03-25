@@ -18,6 +18,11 @@ interface Definition
     function add($name, $definition);
 
     /**
+     * @return string
+     */
+    function allow();
+
+    /**
      * @param string $name
      * @return self
      */
@@ -56,11 +61,6 @@ interface Definition
     /**
      * @return string
      */
-    function method();
-
-    /**
-     * @return string
-     */
     function name();
 
     /**
@@ -72,6 +72,17 @@ interface Definition
      * @return string
      */
     function regex();
+
+    /**
+     * @param $name
+     * @return array
+     */
+    function method($name);
+
+    /**
+     * @return array
+     */
+    function methods();
 
     /**
      * @return string
