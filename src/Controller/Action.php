@@ -6,6 +6,8 @@
 namespace Mvc5\Controller;
 
 use Mvc5\Arg;
+use Mvc5\Response\Error;
+use Mvc5\Response\Response;
 use Throwable;
 
 trait Action
@@ -28,6 +30,16 @@ trait Action
      * @throws \RuntimeException
      */
     protected abstract function call($config, array $args = [], callable $callback = null);
+
+    /**
+     * @param Error $error
+     * @param $response
+     * @return mixed
+     */
+    protected function error(Error $error, Response $response)
+    {
+        return $this->call(Arg::CONTROLLER_ERROR, [Arg::ERROR => $error, Arg::RESPONSE => $response]);
+    }
 
     /**
      * @param Throwable $exception

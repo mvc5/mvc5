@@ -28,4 +28,9 @@ interface Response
      * @return void
      */
     function setStatus($status);
+
+    /**
+     * @return int
+     */
+    function status();
 }

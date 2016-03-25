@@ -20,6 +20,11 @@ interface Arg
     /**
      *
      */
+    const CODE = 'code';
+
+    /**
+     *
+     */
     const CONFIG = 'config';
 
     /**
@@ -65,6 +70,11 @@ interface Arg
     /**
      *
      */
+    const CONTROLLER_ERROR = 'controller\error';
+
+    /**
+     *
+     */
     const CONTROLLER_EXCEPTION = 'controller\exception';
 
     /**
@@ -76,6 +86,21 @@ interface Arg
      *
      */
     const DEFINITION = 'definition';
+
+    /**
+     *
+     */
+    const DESCRIPTION = 'description';
+
+    /**
+     *
+     */
+    const ERROR = 'error';
+
+    /**
+     *
+     */
+    const ERRORS = 'errors';
 
     /**
      *
@@ -146,6 +171,11 @@ interface Arg
      *
      */
     const MERGE = 'merge';
+
+    /**
+     *
+     */
+    const MESSAGE = 'message';
 
     /**
      *
@@ -282,6 +312,12 @@ interface Arg
      *
      */
     const SERVICES = 'services';
+
+    /**
+     *
+     */
+    const STATUS = 'status';
+
     /**
      *
      */

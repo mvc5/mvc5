@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Error;
 
 use Mvc5\Arg;
+use Mvc5\Response\Error;
 use Mvc5\Route\Route;
 
 class Create
@@ -31,12 +32,14 @@ class Create
     }
 
     /**
-     * @param array|\ArrayAccess|Route $route
-     * @return array|\ArrayAccess|Route
+     * @param Route $route
+     * @param Error $error
+     * @return Route
      */
-    public function __invoke($route)
+    public function __invoke(Route $route, Error $error)
     {
         $route[Arg::CONTROLLER] = $this->controller;
+        $route[Arg::ERROR]      = $error;
         $route[Arg::NAME]       = $this->name;
 
         return $route;

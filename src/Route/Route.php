@@ -6,6 +6,7 @@
 namespace Mvc5\Route;
 
 use Mvc5\Config\Configuration;
+use Mvc5\Response\Error;
 
 interface Route
     extends Configuration
@@ -14,6 +15,11 @@ interface Route
      * @return array|callable|null|object|string
      */
     function controller();
+
+    /**
+     * @return Error
+     */
+    function error();
 
     /**
      * @return string|string[]

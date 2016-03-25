@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Route\Definition;
+use Mvc5\Response\Error\MethodNotAllowed;
 use Mvc5\Route\Route;
 
 class Method
@@ -17,6 +18,7 @@ class Method
      */
     public function __invoke(Route $route, Definition $definition)
     {
-        return !$definition->method() || in_array($route->method(), (array) $definition->method()) ? $route : null;
+        return !$definition->method() || in_array($route->method(), (array) $definition->method())
+            ? $route : new MethodNotAllowed;
     }
 }

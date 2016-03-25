@@ -7,6 +7,7 @@ namespace Mvc5\Route\Config;
 
 use Mvc5\Arg;
 use Mvc5\Config\Config;
+use Mvc5\Response\Error;
 
 trait Route
 {
@@ -21,6 +22,14 @@ trait Route
     public function controller()
     {
         return $this[Arg::CONTROLLER];
+    }
+
+    /**
+     * @return Error
+     */
+    public function error()
+    {
+        return $this[Arg::ERROR];
     }
 
     /**

@@ -10,9 +10,14 @@ return [
         //'exception\view',
         //'exception\response'
     ],
+    'controller\error' => [
+        'error\status',
+        'error\controller'
+    ],
     'mvc' => [
         'mvc\route',
         'mvc\controller',
+        'mvc\error',
         'mvc\layout',
         'mvc\view',
         'mvc\response'
@@ -30,6 +35,7 @@ return [
         'route\error'
     ],
     'route\error' => [
+        'error\handler',
         'error\status',
         'error\route',
         // halt mvc event or new response object

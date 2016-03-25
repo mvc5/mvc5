@@ -5,9 +5,8 @@
 
 use Mvc5\Plugin\Config;
 use Mvc5\Plugin\Dependency;
-use Mvc5\Plugin\Invokable;
+use Mvc5\Plugin\Hydrator;
 use Mvc5\Plugin\Link;
-use Mvc5\Plugin\Model;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Response;
@@ -17,11 +16,12 @@ return [
     'config'                     => new Config,
     'container'                  => new Mvc5\Config,
     'controller\exception'       => new Response('controller\exception'),
-    'error\controller'           => new Invokable(new Plugin('error\model')),
-    'error\model'                => new Model('error/404', ['message' => 'A 404 error occurred']),
+    'error\handler'              => Mvc5\Route\Error\Handler::class,
+    'error\controller'           => new Hydrator(Mvc5\Route\Error\Controller::class, ['setModel' => new Plugin('error\model')]),
+    'error\model'                => [Mvc5\Route\Error\Model::class, 'error/error'],
     'error\response'             => 'response\controller',
     'error\route'                => [Mvc5\Route\Error\Create::class, 'error', 'error\controller'],
-    'error\status'               => ['response\status', 404],
+    'error\status'               => Mvc5\Route\Error\Status::class,
     'error\view'                 => 'view\render',
     'event\model'                => Mvc5\Event::class,
     'exception\controller'       => [Mvc5\Controller\Exception::class, new Plugin('exception\model')],
@@ -36,6 +36,7 @@ return [
     'manager'                    => new Plugin(null),
     'mvc'                        => new Plugin(Mvc5\Mvc::class, ['mvc', new Link], [new Dependency('route')]),
     'mvc\controller'             => new Service(Mvc5\Mvc\Controller::class),
+    'mvc\error'                  => new Service(Mvc5\Mvc\Error::class),
     'mvc\layout'                 => Mvc5\Mvc\Layout::class,
     'mvc\response'               => Mvc5\Mvc\Response::class,
     'mvc\route'                  => new Service(Mvc5\Mvc\Route::class),
