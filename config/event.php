@@ -53,9 +53,9 @@ return [
     'route\match' => [
         'route\match\scheme',
         'route\match\hostname',
-        'route\match\allow',
-        'route\match\path',
         'route\match\method',
+        'route\match\path',
+        'route\match\action',
         'route\match\wildcard'
     ],
     'service\resolver' => [

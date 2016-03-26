@@ -18,9 +18,15 @@ interface Definition
     function add($name, $definition);
 
     /**
-     * @return string
+     * @param $name
+     * @return mixed
      */
-    function allow();
+    function action($name);
+
+    /**
+     * @return string[]
+     */
+    function actions();
 
     /**
      * @param string $name
@@ -59,6 +65,11 @@ interface Definition
     function hostname();
 
     /**
+     * @return null|string|string[]
+     */
+    function method();
+
+    /**
      * @return string
      */
     function name();
@@ -72,17 +83,6 @@ interface Definition
      * @return string
      */
     function regex();
-
-    /**
-     * @param $name
-     * @return array
-     */
-    function method($name);
-
-    /**
-     * @return array
-     */
-    function methods();
 
     /**
      * @return string

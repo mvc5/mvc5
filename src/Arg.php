@@ -15,7 +15,7 @@ interface Arg
     /**
      *
      */
-    const ALLOW = 'allow';
+    const ACTION = 'action';
 
     /**
      *

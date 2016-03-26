@@ -5,11 +5,11 @@
 
 namespace Mvc5\Route\Match;
 
+use Mvc5\Arg;
 use Mvc5\Route\Definition;
-use Mvc5\Response\Error\MethodNotAllowed;
 use Mvc5\Route\Route;
 
-class Allow
+class Action
 {
     /**
      * @param Route $route
@@ -18,7 +18,13 @@ class Allow
      */
     public function __invoke(Route $route, Definition $definition)
     {
-        return !$definition->allow() || in_array($route->method(), (array) $definition->allow())
-            ? $route : new MethodNotAllowed;
+        if (!$definition->actions()) {
+            return $route;
+        }
+
+        ($controller = $definition->action($route->method())) &&
+            $route[Arg::CONTROLLER] = $controller;
+
+        return $route;
     }
 }

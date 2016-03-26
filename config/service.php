@@ -55,7 +55,7 @@ return [
     'route\exception'            => new Response('route\exception'),
     'route\filter'               => Mvc5\Route\Filter::class,
     'route\match'                => Mvc5\Route\Match::class,
-    'route\match\allow'          => Mvc5\Route\Match\Allow::class,
+    'route\match\action'         => Mvc5\Route\Match\Action::class,
     'route\match\hostname'       => Mvc5\Route\Match\Hostname::class,
     'route\match\path'           => Mvc5\Route\Match\Path::class,
     'route\match\method'         => Mvc5\Route\Match\Method::class,
