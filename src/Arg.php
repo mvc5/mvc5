@@ -10,42 +10,17 @@ interface Arg
     /**
      *
      */
-    const ARGS = 'args';
-
-    /**
-     *
-     */
     const ACTION = 'action';
 
     /**
      *
      */
+    const ARGS = 'args';
+
+    /**
+     *
+     */
     const CALL = '@';
-
-    /**
-     *
-     */
-    const CODE = 'code';
-
-    /**
-     *
-     */
-    const CONFIG = 'config';
-
-    /**
-     *
-     */
-    const CONTAINER = 'container';
-
-    /**
-     *
-     */
-    const CHILD_MODEL = '__child';
-
-    /**
-     *
-     */
-    const CONTROLLER = 'controller';
 
     /**
      *
@@ -65,12 +40,37 @@ interface Arg
     /**
      *
      */
+    const CHILD_MODEL = '__child';
+
+    /**
+     *
+     */
     const CLASS_NAME = 'class';
 
     /**
      *
      */
+    const CODE = 'code';
+
+    /**
+     *
+     */
+    const CONFIG = 'config';
+
+    /**
+     *
+     */
     const CONSTRAINTS = 'constraints';
+
+    /**
+     *
+     */
+    const CONTAINER = 'container';
+
+    /**
+     *
+     */
+    const CONTROLLER = 'controller';
 
     /**
      *
@@ -115,12 +115,12 @@ interface Arg
     /**
      *
      */
-    const EVENT_MODEL = 'event\model';
+    const EVENTS = 'events';
 
     /**
      *
      */
-    const EVENTS = 'events';
+    const EVENT_MODEL = 'event\model';
 
     /**
      *
@@ -189,14 +189,14 @@ interface Arg
 
     /**
      *
-     *
      */
-    const MODEL = 'model';
+    const METHOD = 'method';
 
     /**
      *
+     *
      */
-    const METHOD = 'method';
+    const MODEL = 'model';
 
     /**
      *
@@ -211,12 +211,12 @@ interface Arg
     /**
      *
      */
-    const PARAM_MAP = 'paramMap';
+    const PARAMS = 'params';
 
     /**
      *
      */
-    const PARAMS = 'params';
+    const PARAM_MAP = 'paramMap';
 
     /**
      *
@@ -271,17 +271,17 @@ interface Arg
     /**
      *
      */
-    const ROUTE_GENERATOR = 'route\generator';
-
-    /**
-     *
-     */
     const ROUTE_DISPATCH = 'route\dispatch';
 
     /**
      *
      */
     const ROUTE_EXCEPTION = 'route\exception';
+
+    /**
+     *
+     */
+    const ROUTE_GENERATOR = 'route\generator';
 
     /**
      *
@@ -306,17 +306,17 @@ interface Arg
     /**
      *
      */
+    const SERVICES = 'services';
+
+    /**
+     *
+     */
     const SERVICE_RESOLVER = 'service\resolver';
 
     /**
      *
      */
     const SERVICE_SEPARATOR = '->';
-
-    /**
-     *
-     */
-    const SERVICES = 'services';
 
     /**
      *
@@ -341,12 +341,12 @@ interface Arg
     /**
      *
      */
-    const VIEW_RENDER = 'view\render';
+    const VIEW_EXCEPTION = 'view\exception';
 
     /**
      *
      */
-    const VIEW_EXCEPTION = 'view\exception';
+    const VIEW_RENDER = 'view\render';
 
     /**
      *
