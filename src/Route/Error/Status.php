@@ -13,10 +13,10 @@ class Status
     /**
      * @param Response $response
      * @param Error $error
-     * @return mixed
+     * @return Response
      */
     public function __invoke(Response $response, Error $error)
     {
-        $response->setStatus($error->status());
+        return $response->setStatus($error->status());
     }
 }

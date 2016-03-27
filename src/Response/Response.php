@@ -19,13 +19,13 @@ interface Response
 
     /**
      * @param  mixed $content
-     * @return void
+     * @return self
      */
     function setContent($content);
 
     /**
      * @param int $status
-     * @return void
+     * @return self
      */
     function setStatus($status);
 

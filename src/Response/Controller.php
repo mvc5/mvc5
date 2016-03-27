@@ -10,12 +10,10 @@ class Controller
     /**
      * @param Response $response
      * @param $model
-     * @return mixed
+     * @return Response
      */
     public function __invoke(Response $response, $model)
     {
-        $response->setContent($model);
-
-        return $response;
+        return $response->setContent($model);
     }
 }

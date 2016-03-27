@@ -26,6 +26,6 @@ class Status
      */
     public function __invoke(Response $response)
     {
-        $response->setStatus($this->status);
+        return $response->setStatus($this->status);
     }
 }
