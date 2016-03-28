@@ -1,6 +1,7 @@
 {
     "name": "mvc5/mvc5",
     "description": "A PHP 7 programming environment with named arguments.",
+    "keywords": ["config", "dependency injection", "event", "plugin", "route", "router", "view"],
     "homepage": "https://github.com/mvc5/mvc5",
     "license": "MIT",
     "require": {
