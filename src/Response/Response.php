@@ -24,10 +24,11 @@ interface Response
     function setContent($content);
 
     /**
-     * @param int $status
+     * @param int $code
+     * @param string $text
      * @return self
      */
-    function setStatus($status);
+    function setStatus($code, $text = '');
 
     /**
      * @return int
