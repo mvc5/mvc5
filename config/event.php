@@ -40,6 +40,7 @@ return [
         'error\route',
         // halt mvc event or new response object
         //'error\controller',
+        //'error\layout',
         //'error\view',
         //'error\response'
     ],

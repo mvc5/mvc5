@@ -18,6 +18,7 @@ return [
     'controller\exception'       => new Response('controller\exception'),
     'error\handler'              => Mvc5\Route\Error\Handler::class,
     'error\controller'           => new Hydrator(Mvc5\Route\Error\Controller::class, ['setModel' => new Plugin('error\model')]),
+    'error\layout'               => Mvc5\View\Template\Layout::class,
     'error\model'                => [Mvc5\Route\Error\Model::class, 'error/error'],
     'error\response'             => 'response\controller',
     'error\route'                => [Mvc5\Route\Error\Create::class, 'error', 'error\controller'],
