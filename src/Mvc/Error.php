@@ -22,7 +22,7 @@ class Error
      * @param $model
      * @return mixed
      */
-    public function __invoke($model, $response)
+    public function __invoke($response, $model = null)
     {
         return $model instanceof ResponseError ? $this->error($model, $response) : $model;
     }
