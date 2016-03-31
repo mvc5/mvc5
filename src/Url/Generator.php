@@ -73,10 +73,6 @@ class Generator
 
         $definition = $definition ? $this->url($definition->child($name[0])) : $this->url($this->config($name[0]));
 
-        if (!$definition) {
-            throw new RuntimeException('Route definition not found: ' . $name[0]);
-        }
-
         array_shift($name);
 
         $url = $this->compile($definition->tokens(), $args, $definition->defaults());
