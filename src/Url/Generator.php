@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Route\Definition;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
-use RuntimeException;
 
 class Generator
 {
@@ -27,7 +26,7 @@ class Generator
     /**
      * @param array|Definition $definition
      */
-    public function __construct($definition)
+    public function __construct($definition = [])
     {
         $this->definition = $definition;
     }
@@ -65,7 +64,6 @@ class Generator
      * @param array $args
      * @param Definition $definition
      * @return string|void
-     * @throws RuntimeException
      */
     protected function generate($name, array $args = [], Definition $definition = null)
     {
@@ -80,7 +78,11 @@ class Generator
         $name && $url .= $this->generate($name, $args, $definition);
 
         if ($args && $definition->wildcard()) {
-            foreach(array_diff_key($args, $definition->constraints()) as $key => $value) {
+            $params = array_diff_key($args, $definition->constraints());
+
+            $params && $url = rtrim($url, Arg::SEPARATOR);
+
+            foreach($params as $key => $value) {
                 null !== $value && $url .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
             }
         }
