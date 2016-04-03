@@ -42,6 +42,8 @@ class Middleware
      */
     public function __invoke(Request\Request $request, Response\Response $response)
     {
-        return $this->call(current($this->stack), [$request, $response, $this->next()]);
+        return $this->call(
+            current($this->stack) ?: new Exception('Empty call stack'), [$request, $response, $this->next()]
+        );
     }
 }
