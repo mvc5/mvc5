@@ -63,6 +63,11 @@ interface Route
     function path();
 
     /**
+     * @return int|null|string
+     */
+    function port();
+
+    /**
      * @return string|string[]
      */
     function scheme();

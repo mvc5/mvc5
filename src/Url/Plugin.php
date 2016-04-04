@@ -5,6 +5,7 @@
 
 namespace Mvc5\Url;
 
+use Mvc5\Arg;
 use Mvc5\Route\Route;
 use Mvc5\Signal;
 
@@ -44,22 +45,56 @@ class Plugin
     }
 
     /**
-     * @param string $name
-     * @param array $args
+     * @param null|string $name
      * @return string
      */
-    protected function url($name, array $args = [])
+    protected function name($name = null)
     {
-        return $this->signal($this->generator(), [$name, $args]);
+        return $name ?? $this->route->name();
+    }
+
+    /**
+     * @param array $options
+     * @return array
+     */
+    protected function options(array $options = [])
+    {
+        return $options + [
+            Arg::HOSTNAME => $this->route->hostname(),
+            Arg::PORT     => $this->route->port(),
+            Arg::SCHEME   => $this->route->scheme()
+        ];
     }
 
     /**
      * @param null|string $name
      * @param array $args
+     * @return array
+     */
+    protected function params($name = null, array $args = [])
+    {
+        return $name ? $args : $args + $this->route->params();
+    }
+
+    /**
+     * @param string $name
+     * @param array $args
+     * @param array $options
      * @return string
      */
-    public function __invoke($name = null, array $args = [])
+    protected function url($name, array $args = [], array $options = [])
     {
-        return $this->url($name ?? $this->route->name(), $name ? $args : $args + $this->route->params());
+        return $this->signal($this->generator(), [$name, $args, $options]);
+    }
+
+    /**
+     * @param null $name
+     * @param array $args
+     * @param array $options
+     * @return string
+     */
+    public function __invoke($name = null, array $args = [], array $options = [])
+    {
+        return $this->url($this->name($name), $this->params($name, $args), $this->options($options));
     }
 }

@@ -98,6 +98,14 @@ trait Route
     }
 
     /**
+     * @return int|null|string
+     */
+    public function port()
+    {
+        return $this[Arg::PORT];
+    }
+
+    /**
      * @return string|string[]
      */
     public function scheme()

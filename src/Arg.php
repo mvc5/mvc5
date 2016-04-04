@@ -35,6 +35,11 @@ interface Arg
     /**
      *
      */
+    const CANONICAL = 'canonical';
+
+    /**
+     *
+     */
     const CHILDREN = 'children';
 
     /**
@@ -145,6 +150,11 @@ interface Arg
     /**
      *
      */
+    const FRAGMENT = 'fragment';
+
+    /**
+     *
+     */
     const HOSTNAME = 'hostname';
 
     /**
@@ -236,7 +246,17 @@ interface Arg
     /**
      *
      */
+    const PORT = 'port';
+
+    /**
+     *
+     */
     const PROPERTY = '$';
+
+    /**
+     *
+     */
+    const QUERY = 'query';
 
     /**
      *

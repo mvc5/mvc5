@@ -80,6 +80,11 @@ interface Definition
     function paramMap();
 
     /**
+     * @return int|null|string
+     */
+    function port();
+
+    /**
      * @return string
      */
     function regex();

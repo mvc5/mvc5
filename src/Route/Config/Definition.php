@@ -124,6 +124,14 @@ trait Definition
     }
 
     /**
+     * @return int|null|string
+     */
+    public function port()
+    {
+        return $this[Arg::PORT];
+    }
+
+    /**
      * @return string
      */
     public function regex()
