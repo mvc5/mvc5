@@ -57,7 +57,7 @@ trait Assemble
         $scheme = $scheme ? (!$port && !$canonical && $scheme === $options[Arg::SCHEME] ? '' : $scheme) :
             ($canonical || $port ? $options[Arg::SCHEME] : '');
 
-        $host = $host ? (!$scheme && $host === $options[Arg::HOSTNAME] ? '' : $host) :
+        $host = $host ? (!$scheme && !$canonical && $host === $options[Arg::HOSTNAME] ? '' : $host) :
             ($canonical || $scheme ? $options[Arg::HOSTNAME] : '');
 
         return ($scheme ? $scheme . ':' : '') . ($host ? '//' . $host : '') . ($port ? ':' . $port : '') . $path;
