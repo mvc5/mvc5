@@ -297,7 +297,7 @@ trait Resolver
                 }
 
                 $this->invoke(
-                    is_string($method) ? [$service, $method] : $this->resolve($method),
+                    is_string($method) ? [$service, $method] : $this->callable($method),
                     ($param && (!$args || is_string(key($args))) ? [$param => $service] : []) + $this->args($args)
                 );
 
