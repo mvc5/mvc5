@@ -189,7 +189,8 @@ trait Build
      */
     protected function unique($name, $config, array $args = [], callable $callback = null)
     {
-        return ($name !== $config ? $this($config, $args) : null) ?? $this->callback($name, $args, $callback);
+        return $config && $name !== $config ?
+            $this->plugin($config, $args, $callback) : $this->callback($name, $args, $callback);
     }
 
     /**

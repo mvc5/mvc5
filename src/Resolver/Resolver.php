@@ -321,9 +321,9 @@ trait Resolver
      */
     protected function invokable($name)
     {
-        return Arg::CALL === $name[0] ? substr($name, 1) : $this->listener($this->plugin($name, [], function($name) {
-            return $this->create(Arg::EVENT_MODEL, [Arg::EVENT => $name]);
-        }));
+        return Arg::CALL === $name[0] ? substr($name, 1) : $this->listener(
+            $this->plugin($name, [], $this->provider() ?: $this) ?: $this->create(Arg::EVENT_MODEL, [Arg::EVENT => $name])
+        );
     }
 
     /**
