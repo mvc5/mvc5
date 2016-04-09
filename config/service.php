@@ -35,6 +35,7 @@ return [
     'factory'                    => new Service(null),
     'layout'                     => [Mvc5\Layout::class, 'layout'],
     'manager'                    => new Plugin(null),
+    'middleware'                 => new Service(Mvc5\Middleware::class, [new Param('middleware')]),
     'mvc'                        => new Plugin(Mvc5\Mvc::class, ['mvc', new Link], [new Dependency('route')]),
     'mvc\controller'             => new Service(Mvc5\Mvc\Controller::class),
     'mvc\error'                  => new Service(Mvc5\Mvc\Error::class),
