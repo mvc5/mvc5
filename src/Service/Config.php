@@ -6,6 +6,7 @@
 namespace Mvc5\Service;
 
 use Mvc5\Config\Config as Base;
+use Mvc5\Config\Configuration;
 
 trait Config
 {
@@ -15,7 +16,7 @@ trait Config
     use Base;
 
     /**
-     * @var array|\ArrayAccess
+     * @var array|Configuration
      */
     protected $container = [];
 
@@ -25,8 +26,8 @@ trait Config
     protected $services = [];
 
     /**
-     * @param array|\ArrayAccess|null $config
-     * @return array|\ArrayAccess|null
+     * @param array|Configuration|null $config
+     * @return array|Configuration|null
      */
     public function config($config = null)
     {
@@ -53,12 +54,28 @@ trait Config
     }
 
     /**
-     * @param array|\ArrayAccess $config
-     * @return array|\ArrayAccess
+     * @param array|Configuration $config
+     * @return array|Configuration
      */
     public function container($config = null)
     {
         return null !== $config ? $this->container = $config : $this->container;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->container);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function current()
+    {
+        return is_array($this->container) ? current($this->container) : $this->container->current();
     }
 
     /**
@@ -80,12 +97,36 @@ trait Config
     }
 
     /**
+     * @return mixed
+     */
+    public function key()
+    {
+        return is_array($this->container) ? key($this->container) : $this->container->key();
+    }
+
+    /**
+     *
+     */
+    public function next()
+    {
+        is_array($this->container) ? next($this->container) : $this->container->next();
+    }
+
+    /**
      * @param string $name
      * @return void
      */
     public function remove($name)
     {
         unset($this->container[$name]);
+    }
+
+    /**
+     *
+     */
+    public function rewind()
+    {
+        is_array($this->container) ? reset($this->container) : $this->container->rewind();
     }
 
     /**
@@ -114,5 +155,13 @@ trait Config
     public function set($name, $config)
     {
         return $this->container[$name] = $config;
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid()
+    {
+        return is_array($this->container) ? null !== $this->key() : $this->container->valid();
     }
 }
