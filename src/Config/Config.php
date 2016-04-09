@@ -13,14 +13,14 @@ trait Config
     use ArrayAccess;
 
     /**
-     * @var array
+     * @var array|Configuration
      */
     protected $config = [];
 
     /**
      * @param array $config
      */
-    public function __construct(array $config = [])
+    public function __construct($config = [])
     {
         $this->config = $config;
     }
@@ -38,7 +38,7 @@ trait Config
      */
     public function current()
     {
-        return current($this->config);
+        return is_array($this->config) ? current($this->config) : $this->config->current();
     }
 
     /**
@@ -64,7 +64,7 @@ trait Config
      */
     public function key()
     {
-        return key($this->config);
+        return is_array($this->config) ? key($this->config) : $this->config->key();
     }
 
     /**
@@ -72,7 +72,7 @@ trait Config
      */
     public function next()
     {
-        next($this->config);
+        is_array($this->config) ? next($this->config) : $this->config->next();
     }
 
     /**
@@ -89,7 +89,7 @@ trait Config
      */
     public function rewind()
     {
-        reset($this->config);
+        is_array($this->config) ? reset($this->config) : $this->config->rewind();
     }
 
     /**
@@ -107,6 +107,6 @@ trait Config
      */
     public function valid()
     {
-        return null !== $this->key();
+        return is_array($this->config) ? null !== $this->key() : $this->config->valid();
     }
 }
