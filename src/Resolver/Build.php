@@ -194,9 +194,8 @@ trait Build
 
     /**
      * @param string $name
-     * @param callable $callback
      * @param array $args
      * @return array|callable|null|object|string
      */
-    public abstract function __invoke($name, array $args = [], callable $callback = null);
+    public abstract function __invoke($name, array $args = []);
 }
