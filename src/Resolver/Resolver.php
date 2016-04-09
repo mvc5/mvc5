@@ -266,7 +266,7 @@ trait Resolver
      */
     public function get($name)
     {
-        return $this->shared($name) ?? $this->plugin($name);
+        return $this->shared($name) ?? $this($name);
     }
 
     /**
