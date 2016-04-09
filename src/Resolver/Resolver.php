@@ -42,6 +42,39 @@ trait Resolver
     use Initializer;
 
     /**
+     * @var callable
+     */
+    protected $provider;
+
+    /**
+     * @var object
+     */
+    protected $scope;
+
+    /**
+     * @param array|\ArrayAccess $config
+     * @param callable $provider
+     * @param object $scope
+     */
+    public function __construct($config = null, callable $provider = null, $scope = null)
+    {
+        $config && $this->config = $config;
+
+        isset($config[Arg::SERVICES][Arg::CONTAINER])
+            && $this->container = $config[Arg::SERVICES][Arg::CONTAINER];
+
+        isset($config[Arg::EVENTS])
+            && $this->events = $config[Arg::EVENTS];
+
+        isset($config[Arg::SERVICES])
+            && $this->services = $config[Arg::SERVICES];
+
+        $provider && $this->provider = $this->resolve($provider);
+
+        $scope && $this->scope = $scope === true ? $this : $this->resolve($scope);
+    }
+
+    /**
      * @param $args
      * @return array|callable|null|object|string
      */
@@ -416,7 +449,7 @@ trait Resolver
         }
 
         if ($config instanceof Closure) {
-            return $this->invoke($config, $args, $callback);
+            return $this->invoke($this->scoped($config), $args, $callback);
         }
 
         return $this->resolve($config, $args);
@@ -451,6 +484,14 @@ trait Resolver
         }
 
         return $this->provide($this->merge(clone $parent, $config), $args);
+    }
+
+    /**
+     * @return callable
+     */
+    protected function provider()
+    {
+        return $this->provider;
     }
 
     /**
@@ -513,7 +554,7 @@ trait Resolver
      */
     protected function resolver($config, array $args = [])
     {
-        return $this->call(Arg::SERVICE_RESOLVER, [$config, $args]);
+        return $this->call($this->provider() ?: Arg::SERVICE_RESOLVER, [$config, $args]);
     }
 
     /**
@@ -527,6 +568,24 @@ trait Resolver
         return $config instanceof Gem ? $this->gem($config, $args) : (
             $callback ? $callback($config, $args) : $this->resolver($config, $args)
         );
+    }
+
+    /**
+     * @param object $scope
+     * @return object
+     */
+    protected function scope($scope = null)
+    {
+        return null !== $scope ? $this->scope = $scope : $this->scope;
+    }
+
+    /**
+     * @param Closure $callback
+     * @return Closure
+     */
+    protected function scoped(Closure $callback)
+    {
+        return $this->scope ? Closure::bind($callback, $this->scope, $this->scope) : $callback;
     }
 
     /**
@@ -567,6 +626,6 @@ trait Resolver
      */
     public function __invoke($name, array $args = [])
     {
-        return $this->plugin($name, $args, function(){});
+        return $this->plugin($name, $args, $this->provider() ?? function(){});
     }
 }

@@ -16,10 +16,12 @@ class Web
 
     /**
      * @param array|\ArrayAccess|Config\Configuration $config
+     * @param callable|Resolvable $provider
+     * @param bool|object|Resolvable $scope
      */
-    public function __construct($config = null)
+    public function __construct($config = null, $provider = null, $scope = null)
     {
-        $this->app = new App($config);
+        $this->app = new App($config, $provider, $scope);
     }
 
     /**
