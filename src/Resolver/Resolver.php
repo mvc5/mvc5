@@ -26,6 +26,7 @@ use Mvc5\Plugin\Gem\Param;
 use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Plugin\Gem\SignalArgs;
+use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
 use Mvc5\Service\Config as Container;
 use RuntimeException;
@@ -250,6 +251,10 @@ trait Resolver
 
         if ($config instanceof Copy) {
             return clone $this->resolve($config->config(), $args);
+        }
+
+        if ($config instanceof Value) {
+            return $config->config();
         }
 
         return $this->signal(new Exception, [$config]);
