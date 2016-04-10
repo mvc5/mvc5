@@ -25,6 +25,7 @@ use Mvc5\Plugin\Gem\Link;
 use Mvc5\Plugin\Gem\Param;
 use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
+use Mvc5\Plugin\Gem\Provide;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
@@ -290,6 +291,12 @@ trait Resolver
             return $config->config();
         }
 
+        if ($config instanceof Provide) {
+            return $this->signal(
+                $this->provider(), [$config->config(), $this->arguments($args, $this->args($config->args()))]
+            );
+        }
+
         return $this->signal(new Exception, [$config]);
     }
 
@@ -355,7 +362,7 @@ trait Resolver
     protected function invokable($name)
     {
         return Arg::CALL === $name[0] ? substr($name, 1) : $this->listener(
-            $this->plugin($name, [], $this->provider() ?: $this) ?: $this->create(Arg::EVENT_MODEL, [Arg::EVENT => $name])
+            $this->plugin($name, [], $this) ?: $this->create(Arg::EVENT_MODEL, [Arg::EVENT => $name])
         );
     }
 
@@ -449,7 +456,7 @@ trait Resolver
         }
 
         if ($config instanceof Closure) {
-            return $this->invoke($this->scoped($config), $args, $callback);
+            return $this->invoke($this->scoped($config), $this->args($args));
         }
 
         return $this->resolve($config, $args);
@@ -465,9 +472,9 @@ trait Resolver
         $name   = $this->resolve($config->name());
         $parent = $this->configured($name);
 
-        $args && is_string(key($args)) && $config->args() && $args += $config->args();
+        $args && is_string(key($args)) && $config->args() && $args += $this->args($config->args());
 
-        !$args && $args = $config->args();
+        !$args && $args = $this->args($config->args());
 
         if (!$parent) {
             return $this->hydrate($config, $this->combine(explode(Arg::SERVICE_SEPARATOR, $name), $args));
