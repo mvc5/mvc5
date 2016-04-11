@@ -13,12 +13,6 @@ use RuntimeException;
 trait Build
 {
     /**
-     * @param $args
-     * @return array|callable|null|object|string
-     */
-    protected abstract function args($args);
-
-    /**
      * @param array $config
      * @param array $args
      * @param callable $callback
@@ -48,9 +42,7 @@ trait Build
      */
     protected function combine(array $config, array $args = [], callable $callback = null)
     {
-        return $this->compose(
-            $this->first(array_shift($config), $config, $args, $callback), $config, $args, $callback
-        );
+        return $this->compose($this->first(array_shift($config), $config, $args, $callback), $config, $args, $callback);
     }
 
     /**
@@ -130,7 +122,7 @@ trait Build
         }
 
         if ($args && !is_string(key($args))) {
-            return $class->newInstanceArgs($this->args($args));
+            return $class->newInstanceArgs($args);
         }
 
         $matched = [];
@@ -138,7 +130,7 @@ trait Build
 
         foreach($params as $param) {
             if (isset($args[$param->name])) {
-                $matched[] = $this->resolve($args[$param->name]);
+                $matched[] = $args[$param->name];
                 continue;
             }
 
@@ -161,7 +153,7 @@ trait Build
             throw new RuntimeException('Missing required parameter $' . $param->name . ' for ' . $name);
         }
 
-        return $class->newInstanceArgs($params ? $matched : $this->args($args));
+        return $class->newInstanceArgs($params ? $matched : $args);
     }
 
     /**

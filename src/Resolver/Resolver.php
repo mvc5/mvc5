@@ -447,11 +447,11 @@ trait Resolver
         }
 
         if (is_array($config)) {
-            return $this->plugin(array_shift($config), $this->arguments($args, $config), $callback);
+            return $this->plugin(array_shift($config), $this->vars($args, $config), $callback);
         }
 
         if ($config instanceof Closure) {
-            return $this->invoke($this->scoped($config), $this->args($args));
+            return $this->invoke($this->scoped($config), $args);
         }
 
         return $this->resolve($config, $args);
