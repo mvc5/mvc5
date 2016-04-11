@@ -288,7 +288,7 @@ trait Resolver
 
         if ($config instanceof Provide) {
             return $this->signal(
-                $this->provider(), [$config->config(), $this->vars($args, $config->args())]
+                $this->provider() ?: new Exception, [$config->config(), $this->vars($args, $config->args())]
             );
         }
 
