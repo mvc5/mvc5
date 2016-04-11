@@ -207,7 +207,7 @@ trait Resolver
     protected function gem($config, array $args = [])
     {
         if ($config instanceof Factory) {
-            return $this->invoke($this->child($config, $args));
+            return $this->invoke($this->child($config, $this->vars($args, $config->args())));
         }
 
         if ($config instanceof Calls) {
@@ -215,11 +215,11 @@ trait Resolver
         }
 
         if ($config instanceof Child) {
-            return $this->child($config, $args);
+            return $this->child($config, $this->vars($args, $config->args()));
         }
 
         if ($config instanceof Plugin) {
-            return $this->provide($config, $args);
+            return $this->provide($config, $this->vars($args, $config->args()));
         }
 
         if ($config instanceof Dependency) {
@@ -447,7 +447,7 @@ trait Resolver
         }
 
         if (is_array($config)) {
-            return $this->plugin(array_shift($config), $args + $config, $callback);
+            return $this->plugin(array_shift($config), $this->arguments($args, $config), $callback);
         }
 
         if ($config instanceof Closure) {
@@ -466,10 +466,6 @@ trait Resolver
     {
         $name   = $this->resolve($config->name());
         $parent = $this->configured($name);
-
-        $args && is_string(key($args)) && $config->args() && $args += $this->args($config->args());
-
-        !$args && $args = $this->args($config->args());
 
         if (!$parent) {
             return $this->hydrate($config, $this->combine(explode(Arg::SERVICE_SEPARATOR, $name), $args));
