@@ -231,9 +231,7 @@ trait Resolver
         }
 
         if ($config instanceof Call) {
-            return $this->call(
-                $this->resolve($config->config()), $this->arguments($args, $this->args($config->args()))
-            );
+            return $this->call($this->resolve($config->config()), $this->vars($args, $config->args()));
         }
 
         if ($config instanceof Args) {
@@ -249,7 +247,7 @@ trait Resolver
         }
 
         if ($config instanceof Filter) {
-            return $this->filterable($config, $this->arguments($args, $this->args($config->args())));
+            return $this->filterable($config, $this->vars($args, $config->args()));
         }
 
         if ($config instanceof Plug) {
@@ -259,17 +257,14 @@ trait Resolver
         if ($config instanceof Invoke) {
             return function(...$args) use ($config) {
                 return $this->call(
-                    $this->resolve($config->config()),
-                    $this->arguments($this->variadic($args), $this->args($config->args()))
+                    $this->resolve($config->config()), $this->vars($this->variadic($args), $config->args())
                 );
             };
         }
 
         if ($config instanceof Invokable) {
             return function(...$args) use ($config) {
-                return $this->resolve(
-                    $config->config(), $this->arguments($this->variadic($args), $this->args($config->args()))
-                );
+                return $this->resolve($config->config(), $this->vars($this->variadic($args), $config->args()));
             };
         }
 
@@ -293,7 +288,7 @@ trait Resolver
 
         if ($config instanceof Provide) {
             return $this->signal(
-                $this->provider(), [$config->config(), $this->arguments($args, $this->args($config->args()))]
+                $this->provider(), [$config->config(), $this->vars($args, $config->args())]
             );
         }
 
@@ -624,6 +619,16 @@ trait Resolver
     protected function variadic(array $args)
     {
         return $args && $args[0] instanceof SignalArgs ? $args[0]->args() : $args;
+    }
+
+    /**
+     * @param array $child
+     * @param array $parent
+     * @return array
+     */
+    protected function vars(array $child = [], array $parent = [])
+    {
+        return $this->arguments($child, $this->args($parent));
     }
 
     /**
