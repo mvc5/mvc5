@@ -18,21 +18,22 @@ class Provider
      */
     public function __construct($config, ...$args)
     {
-        parent::__construct($this->provider(), [new Link, $config, new Args($args)]);
+        parent::__construct([$this, 'provider'], [new Link, $config, new Args($args)]);
     }
 
     /**
-     * @return \Closure
+     * @param _Service $service
+     * @param $config
+     * @param array $args
+     * @return callable|null|object
      */
-    protected function provider()
+    public function provider(_Service $service, $config, array $args = [])
     {
-        return function(_Service $service, $config, array $args = []) {
-            $plugin = $service->plugin($config, $args);
+        $plugin = $service->plugin($config, $args);
 
-            $args && $args[0] instanceof Scope &&
-                $args[0]->scope($plugin);
+        $args && $args[0] instanceof Scope &&
+            $args[0]->scope($plugin);
 
-            return $plugin;
-        };
+        return $plugin;
     }
 }
