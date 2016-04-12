@@ -109,4 +109,13 @@ trait Config
     {
         return is_array($this->config) ? null !== $this->key() : $this->config->valid();
     }
+
+    /**
+     *
+     */
+    public function __clone()
+    {
+        is_object($this->config) &&
+            $this->config = clone $this->config;
+    }
 }
