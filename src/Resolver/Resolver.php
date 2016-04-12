@@ -386,12 +386,13 @@ trait Resolver
     /**
      * @param Plugin $parent
      * @param Plugin $config
+     * @param null|string $name
      * @return Plugin
      */
-    protected function merge(Plugin $parent, Plugin $config)
+    protected function merge(Plugin $parent, Plugin $config, $name = null)
     {
         !$parent->name() &&
-            $parent[Arg::NAME] = $this->resolve($config->name());
+            $parent[Arg::NAME] = $name ?? $this->resolve($config->name());
 
         $config->args() &&
             $parent[Arg::ARGS] = is_string(key($config->args())) ? $config->args() + $parent->args() : $config->args();
@@ -447,7 +448,7 @@ trait Resolver
         }
 
         if (is_array($config)) {
-            return $this->plugin(array_shift($config), $this->vars($args, $config), $callback);
+            return $this->plugin(array_shift($config), $args + $this->args($config), $callback);
         }
 
         if ($config instanceof Closure) {
@@ -485,7 +486,7 @@ trait Resolver
             return $this->hydrate($config, $this->make($name, $args));
         }
 
-        return $this->provide($this->merge(clone $parent, $config), $args);
+        return $this->provide($this->merge(clone $parent, $config, $name), $args);
     }
 
     /**
