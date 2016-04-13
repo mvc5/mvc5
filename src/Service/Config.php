@@ -164,4 +164,19 @@ trait Config
     {
         return is_array($this->container) ? null !== $this->key() : $this->container->valid();
     }
+
+    /**
+     *
+     */
+    public function __clone()
+    {
+        is_object($this->config) &&
+            $this->config = clone $this->config;
+
+        is_object($this->config) &&
+            $this->container = clone $this->container;
+
+        is_object($this->config) &&
+            $this->services = clone $this->services;
+    }
 }

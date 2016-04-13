@@ -72,7 +72,7 @@ trait Resolver
 
         $provider && $this->provider = $this->resolve($provider);
 
-        $scope && $this->scope = $scope === true ? $this : $this->resolve($scope);
+        $scope && $this->scope = $this->resolve($scope);
     }
 
     /**
@@ -106,6 +106,16 @@ trait Resolver
         return !$parent ? $child : (
             !$child ? $parent : (is_string(key($child)) ? $child + $parent : array_merge($child, $parent))
         );
+    }
+
+    /**
+     * @param Closure $callback
+     * @param $scope
+     * @return Closure
+     */
+    protected function bind(Closure $callback, $scope)
+    {
+        return Closure::bind($callback, $scope, $scope);
     }
 
     /**
@@ -596,7 +606,7 @@ trait Resolver
      */
     protected function scoped(Closure $callback)
     {
-        return $this->scope ? Closure::bind($callback, $this->scope, $this->scope) : $callback;
+        return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope) : $callback;
     }
 
     /**
@@ -638,6 +648,27 @@ trait Resolver
     protected function vars(array $child = [], array $parent = [])
     {
         return $this->arguments($child, $this->args($parent));
+    }
+
+    /**
+     *
+     */
+    public function __clone()
+    {
+        is_object($this->config) &&
+            $this->config = clone $this->config;
+
+        is_object($this->config) &&
+            $this->container = clone $this->container;
+
+        is_object($this->events) &&
+            $this->events = clone $this->events;
+
+        is_object($this->config) &&
+            $this->services = clone $this->services;
+
+        is_object($this->scope) &&
+            $this->scope = clone $this->scope;
     }
 
     /**

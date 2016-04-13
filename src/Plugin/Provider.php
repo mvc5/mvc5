@@ -32,7 +32,7 @@ class Provider
         $plugin = $service->plugin($config, $args);
 
         $args && $args[0] instanceof Scope &&
-            $args[0]->scope($plugin);
+            $args[0]->scope(true);
 
         return $plugin;
     }
