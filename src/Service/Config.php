@@ -26,7 +26,7 @@ trait Config
     protected $services = [];
 
     /**
-     * @param array|\ArrayAccess|Configuration|null $config
+     * @param array|Configuration|null $config
      * @return array|Configuration|null
      */
     public function config($config = null)
