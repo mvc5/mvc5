@@ -158,6 +158,15 @@ trait Resolver
     }
 
     /**
+     * @param $name
+     * @return callable|mixed|object
+     */
+    protected function fallback($name)
+    {
+        return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?: $this->signal(new Exception, [$name]);
+    }
+
+    /**
      * @param array|callable|null|object|string $value
      * @param array|\Traversable $filters
      * @param array $args
@@ -356,9 +365,8 @@ trait Resolver
      */
     protected function invokable($name)
     {
-        return Arg::CALL === $name[0] ? substr($name, 1) : $this->listener(
-            $this->plugin($name, [], $this) ?: $this->create(Arg::EVENT_MODEL, [Arg::EVENT => $name])
-        );
+        return Arg::CALL === $name[0] ? substr($name, 1) :
+            $this->listener($this->plugin($name, [], $this) ?: $this->fallback($name));
     }
 
     /**
