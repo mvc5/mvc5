@@ -658,13 +658,13 @@ trait Resolver
         is_object($this->config) &&
             $this->config = clone $this->config;
 
-        is_object($this->config) &&
+        is_object($this->container) &&
             $this->container = clone $this->container;
 
         is_object($this->events) &&
             $this->events = clone $this->events;
 
-        is_object($this->config) &&
+        is_object($this->services) &&
             $this->services = clone $this->services;
 
         is_object($this->scope) &&

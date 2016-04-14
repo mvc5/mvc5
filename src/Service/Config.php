@@ -173,10 +173,10 @@ trait Config
         is_object($this->config) &&
             $this->config = clone $this->config;
 
-        is_object($this->config) &&
+        is_object($this->container) &&
             $this->container = clone $this->container;
 
-        is_object($this->config) &&
+        is_object($this->services) &&
             $this->services = clone $this->services;
     }
 }
