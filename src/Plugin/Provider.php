@@ -6,34 +6,46 @@
 namespace Mvc5\Plugin;
 
 use Mvc5\Config\Configuration;
-use Mvc5\Plugins as _Plugins;
 use Mvc5\Resolvable;
 use Mvc5\Service\Service as _Service;
+use Mvc5\Service\Scope;
 
+/**
+ * Creates an object with a Plugins container and sets the object as the scope of the anonymous functions. If the
+ * object is cloned, it will need a clone method to workaround the recursion problem.
+ */
 class Provider
     extends Call
 {
     /**
-     * Creates an object with a Plugins container and sets the object as the scope of the anonymous functions. If the
-     * object is cloned, it will need a clone method to workaround the recursion problem.
      *
+     */
+    const PLUGINS_CLASS = 'Mvc5\Plugins';
+
+    /**
      * @param string $name
      * @param array|Configuration|Resolvable $config
+     * @param ...array $args
      */
-    public function __construct($name, $config = [])
+    public function __construct($name, $config = [], ...$args)
     {
-        parent::__construct([$this, 'provider'], [new Link, new Plugin(_Plugins::class, [$config, new Link]), $name]);
+        parent::__construct(
+            [$this, 'provider'], [new Link, new Plugin(static::PLUGINS_CLASS, [$config, new Link]), $name, new Args($args)]
+        );
     }
 
     /**
      * @param _Service $service
-     * @param _Plugins $plugins
+     * @param Scope $plugins
      * @param string $name
+     * @param array $args
      * @return callable|null|object
      */
-    public function provider(_Service $service, _Plugins $plugins, $name)
+    public function provider(_Service $service, Scope $plugins, $name, array $args = [])
     {
-        $plugin = $service->plugin($name, [$plugins]);
+        array_unshift($args, $plugins);
+
+        $plugin = $service->plugin($name, $args);
 
         $plugins->scope($plugin);
 
