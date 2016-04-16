@@ -17,8 +17,12 @@ class Plugins
      * @param $scope
      * @param array $calls
      */
-    public function __construct($services = [], $provider = null, $scope = null, array $calls = [])
+    public function __construct($services = [], $provider = true, $scope = true, array $calls = [])
     {
-        parent::__construct(_Plugins::class, [new Args([Arg::SERVICES => $services]), $provider, $scope], $calls);
+        parent::__construct(
+            _Plugins::class,
+            [new Args([Arg::SERVICES => $services]), $provider === true ? new Link : $provider, $scope],
+            $calls
+        );
     }
 }

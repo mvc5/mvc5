@@ -61,8 +61,8 @@ trait Resolver
     {
         $config && $this->config = $config;
 
-        isset($config[Arg::SERVICES][Arg::CONTAINER])
-            && $this->container = $config[Arg::SERVICES][Arg::CONTAINER];
+        isset($config[Arg::CONTAINER])
+            && $this->container = $config[Arg::CONTAINER];
 
         isset($config[Arg::EVENTS])
             && $this->events = $config[Arg::EVENTS];
@@ -658,14 +658,29 @@ trait Resolver
         is_object($this->config) &&
             $this->config = clone $this->config;
 
-        is_object($this->container) &&
+        if (is_object($this->container)) {
             $this->container = clone $this->container;
 
-        is_object($this->events) &&
+            if (isset($this->config[Arg::CONTAINER])) {
+                $this->config[Arg::CONTAINER] = $this->container;
+            }
+        }
+
+        if (is_object($this->events)) {
             $this->events = clone $this->events;
 
-        is_object($this->services) &&
+            if (isset($this->config[Arg::EVENTS])) {
+                $this->config[Arg::EVENTS] = $this->events;
+            }
+        }
+
+        if (is_object($this->services)) {
             $this->services = clone $this->services;
+
+            if (isset($this->config[Arg::SERVICES])) {
+                $this->config[Arg::SERVICES] = $this->services;
+            }
+        }
 
         is_object($this->scope) &&
             $this->scope = clone $this->scope;

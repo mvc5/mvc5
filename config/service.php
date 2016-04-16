@@ -14,7 +14,6 @@ use Mvc5\Plugin\Service;
 
 return [
     'config'                     => new Config,
-    'container'                  => new Mvc5\Config,
     'controller\exception'       => new Response('controller\exception'),
     'error\handler'              => Mvc5\Route\Error\Handler::class,
     'error\controller'           => new Hydrator(Mvc5\Route\Error\Controller::class, ['setModel' => new Plugin('error\model')]),
