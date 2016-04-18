@@ -31,6 +31,11 @@ trait Scope
 
         $scope = $this->config->scope();
 
+        if (!$scope instanceof self) {
+            $this->config = clone $this->config;
+            return;
+        }
+
         $this->config->scope(false);
 
         $clone = clone $this->config;
