@@ -29,7 +29,7 @@ use Mvc5\Plugin\Gem\Provide;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
-use Mvc5\Service\Config as Container;
+use Mvc5\Service\Config\Container;
 use RuntimeException;
 
 trait Resolver

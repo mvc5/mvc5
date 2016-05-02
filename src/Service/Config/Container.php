@@ -3,12 +3,12 @@
  *
  */
 
-namespace Mvc5\Service;
+namespace Mvc5\Service\Config;
 
 use Mvc5\Config\Config as Base;
 use Mvc5\Config\Configuration;
 
-trait Config
+trait Container
 {
     /**
      *
@@ -178,5 +178,11 @@ trait Config
 
         is_object($this->services) &&
             $this->services = clone $this->services;
+
+        if (is_array($this->container)) {
+            foreach($this->container as $key => $value) {
+                is_object($value) && ($this->container[$key] = clone $value);
+            }
+        }
     }
 }
