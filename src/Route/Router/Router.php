@@ -19,7 +19,7 @@ trait Router
     /**
      * @param array|Definition $definition
      */
-    public function __construct($definition)
+    function __construct($definition)
     {
         $this->definition = $definition;
     }
@@ -91,7 +91,7 @@ trait Router
      * @param Route $route
      * @return Route
      */
-    public function __invoke(Route $route)
+    function __invoke(Route $route)
     {
         return $this->dispatch(clone $route, $this->routeDefinition($this->definition));
     }

@@ -19,7 +19,7 @@ trait Route
     /**
      * @return array|callable|null|object|string
      */
-    public function controller()
+    function controller()
     {
         return $this[Arg::CONTROLLER];
     }
@@ -27,7 +27,7 @@ trait Route
     /**
      * @return Error
      */
-    public function error()
+    function error()
     {
         return $this[Arg::ERROR];
     }
@@ -35,7 +35,7 @@ trait Route
     /**
      * @return string|string[]
      */
-    public function hostname()
+    function hostname()
     {
         return $this[Arg::HOSTNAME];
     }
@@ -43,7 +43,7 @@ trait Route
     /**
      * @return int
      */
-    public function length()
+    function length()
     {
         return $this[Arg::LENGTH] ?? 0;
     }
@@ -51,7 +51,7 @@ trait Route
     /**
      * @return bool
      */
-    public function matched()
+    function matched()
     {
         return $this[Arg::MATCHED] ?? false;
     }
@@ -59,7 +59,7 @@ trait Route
     /**
      * @return string|string[]
      */
-    public function method()
+    function method()
     {
         return $this[Arg::METHOD];
     }
@@ -67,7 +67,7 @@ trait Route
     /**
      * @return string
      */
-    public function name()
+    function name()
     {
         return $this[Arg::NAME];
     }
@@ -76,7 +76,7 @@ trait Route
      * @param $name
      * @return mixed
      */
-    public function param($name)
+    function param($name)
     {
         return $this[Arg::PARAMS][$name] ?? null;
     }
@@ -84,7 +84,7 @@ trait Route
     /**
      * @return array
      */
-    public function params()
+    function params()
     {
         return $this[Arg::PARAMS] ?? [];
     }
@@ -92,7 +92,7 @@ trait Route
     /**
      * @return string
      */
-    public function path()
+    function path()
     {
         return $this[Arg::PATH];
     }
@@ -100,7 +100,7 @@ trait Route
     /**
      * @return int|null|string
      */
-    public function port()
+    function port()
     {
         return $this[Arg::PORT];
     }
@@ -108,7 +108,7 @@ trait Route
     /**
      * @return string|string[]
      */
-    public function scheme()
+    function scheme()
     {
         return $this[Arg::SCHEME];
     }

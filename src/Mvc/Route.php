@@ -21,7 +21,7 @@ class Route
      * @param mixed $route
      * @return mixed
      */
-    public function __invoke($route)
+    function __invoke($route)
     {
         try {
 

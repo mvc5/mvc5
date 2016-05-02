@@ -16,7 +16,7 @@ class Method
      * @param Definition $definition
      * @return Route
      */
-    public function __invoke(Route $route, Definition $definition)
+    function __invoke(Route $route, Definition $definition)
     {
         return !$definition->method() || in_array($route->method(), (array) $definition->method())
             ? $route : new MethodNotAllowed;

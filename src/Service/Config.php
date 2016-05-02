@@ -29,7 +29,7 @@ trait Config
      * @param array|Configuration|null $config
      * @return array|Configuration|null
      */
-    public function config($config = null)
+    function config($config = null)
     {
         return null !== $config ? $this->config = $config : $this->config;
     }
@@ -39,7 +39,7 @@ trait Config
      * @param mixed $config
      * @return void
      */
-    public function configure($name, $config)
+    function configure($name, $config)
     {
         $this->services[$name] = $config;
     }
@@ -48,7 +48,7 @@ trait Config
      * @param string $name
      * @return array|callable|null|object|string
      */
-    public function configured($name)
+    function configured($name)
     {
         return $this->services[$name] ?? null;
     }
@@ -57,7 +57,7 @@ trait Config
      * @param array|Configuration $config
      * @return array|Configuration
      */
-    public function container($config = null)
+    function container($config = null)
     {
         return null !== $config ? $this->container = $config : $this->container;
     }
@@ -65,7 +65,7 @@ trait Config
     /**
      * @return int
      */
-    public function count()
+    function count()
     {
         return count($this->container);
     }
@@ -73,7 +73,7 @@ trait Config
     /**
      * @return mixed
      */
-    public function current()
+    function current()
     {
         return is_array($this->container) ? current($this->container) : $this->container->current();
     }
@@ -82,7 +82,7 @@ trait Config
      * @param string $name
      * @return object|null
      */
-    public function get($name)
+    function get($name)
     {
         return $this->shared($name);
     }
@@ -91,7 +91,7 @@ trait Config
      * @param string $name
      * @return bool
      */
-    public function has($name)
+    function has($name)
     {
         return isset($this->container[$name]);
     }
@@ -99,7 +99,7 @@ trait Config
     /**
      * @return mixed
      */
-    public function key()
+    function key()
     {
         return is_array($this->container) ? key($this->container) : $this->container->key();
     }
@@ -107,7 +107,7 @@ trait Config
     /**
      *
      */
-    public function next()
+    function next()
     {
         is_array($this->container) ? next($this->container) : $this->container->next();
     }
@@ -116,7 +116,7 @@ trait Config
      * @param string $name
      * @return void
      */
-    public function remove($name)
+    function remove($name)
     {
         unset($this->container[$name]);
     }
@@ -124,7 +124,7 @@ trait Config
     /**
      *
      */
-    public function rewind()
+    function rewind()
     {
         is_array($this->container) ? reset($this->container) : $this->container->rewind();
     }
@@ -142,7 +142,7 @@ trait Config
      * @param array|\ArrayAccess $config
      * @return array|\ArrayAccess
      */
-    public function services($config = null)
+    function services($config = null)
     {
         return null !== $config ? $this->services = $config : $this->services;
     }
@@ -152,7 +152,7 @@ trait Config
      * @param mixed $config
      * @return mixed
      */
-    public function set($name, $config)
+    function set($name, $config)
     {
         return $this->container[$name] = $config;
     }
@@ -160,7 +160,7 @@ trait Config
     /**
      * @return bool
      */
-    public function valid()
+    function valid()
     {
         return is_array($this->container) ? null !== $this->key() : $this->container->valid();
     }
@@ -168,7 +168,7 @@ trait Config
     /**
      *
      */
-    public function __clone()
+    function __clone()
     {
         is_object($this->config) &&
             $this->config = clone $this->config;

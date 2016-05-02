@@ -11,7 +11,7 @@ class Response
      * @param $response
      * @return mixed
      */
-    public function __invoke($response)
+    function __invoke($response)
     {
         return $response;
     }

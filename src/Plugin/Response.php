@@ -15,7 +15,7 @@ class Response
      * @param array $args
      * @param array $calls
      */
-    public function __construct($event, array $args = [], array $calls = [])
+    function __construct($event, array $args = [], array $calls = [])
     {
         parent::__construct(Arg::RESPONSE_DISPATCH, [Arg::EVENT => $event] + $args, $calls);
     }

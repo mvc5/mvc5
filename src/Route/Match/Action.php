@@ -16,7 +16,7 @@ class Action
      * @param Definition $definition
      * @return Route
      */
-    public function __invoke(Route $route, Definition $definition)
+    function __invoke(Route $route, Definition $definition)
     {
         if (!$definition->actions()) {
             return $route;

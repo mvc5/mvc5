@@ -18,7 +18,7 @@ class Factory
     /**
      * @param string $name
      */
-    public function __construct($name)
+    function __construct($name)
     {
         $this->config = [
             Arg::NAME   => $name,

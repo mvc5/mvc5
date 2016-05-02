@@ -16,7 +16,7 @@ class Hostname
      * @param Definition $definition
      * @return Route
      */
-    public function __invoke(Route $route, Definition $definition)
+    function __invoke(Route $route, Definition $definition)
     {
         return !$definition->hostname() || in_array($route->hostname(), (array) $definition->hostname())
             ? $route : new BadRequest;

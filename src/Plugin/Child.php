@@ -20,7 +20,7 @@ class Child
      * @param string $parent
      * @param array $args
      */
-    public function __construct($name, $parent, array $args = [])
+    function __construct($name, $parent, array $args = [])
     {
         $this->config = [
             Arg::ARGS   => $args,

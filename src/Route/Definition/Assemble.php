@@ -37,7 +37,7 @@ trait Assemble
      * @param array|\ArrayAccess $options
      * @return string
      */
-    public function assemble($scheme, $host, $port, $path, $options)
+    function assemble($scheme, $host, $port, $path, $options)
     {
         $path = strtr(rawurlencode($path), static::$allowedPathChars);
 

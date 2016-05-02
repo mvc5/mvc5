@@ -57,7 +57,7 @@ trait Resolver
      * @param callable $provider
      * @param object $scope
      */
-    public function __construct($config = null, callable $provider = null, $scope = null)
+    function __construct($config = null, callable $provider = null, $scope = null)
     {
         $config && $this->config = $config;
 
@@ -125,7 +125,7 @@ trait Resolver
      * @return callable|mixed|null|object
      * @throws \RuntimeException
      */
-    public function call($config, array $args = [], callable $callback = null)
+    function call($config, array $args = [], callable $callback = null)
     {
         if (is_string($config)) {
             return $this->transmit(explode(Arg::CALL_SEPARATOR, $config), $args, $callback);
@@ -318,7 +318,7 @@ trait Resolver
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    function get($name)
     {
         return $this->shared($name) ?? $this($name);
     }
@@ -428,7 +428,7 @@ trait Resolver
      * @param string $name
      * @return mixed
      */
-    public function param($name)
+    function param($name)
     {
         $name  = explode(Arg::CALL_SEPARATOR, $name);
         $value = $this->config()[array_shift($name)];
@@ -455,7 +455,7 @@ trait Resolver
      * @param callable|null $callback
      * @return array|callable|null|object|string
      */
-    public function plugin($config, array $args = [], callable $callback = null)
+    function plugin($config, array $args = [], callable $callback = null)
     {
         if (!$config) {
             return $config;
@@ -626,7 +626,7 @@ trait Resolver
      * @param callable $callback
      * @return mixed|null
      */
-    public function trigger($event, array $args = [], callable $callback = null)
+    function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
     }
@@ -653,7 +653,7 @@ trait Resolver
     /**
      *
      */
-    public function __clone()
+    function __clone()
     {
         is_object($this->config) &&
             $this->config = clone $this->config;
@@ -691,7 +691,7 @@ trait Resolver
      * @param array $args
      * @return array|callable|null|object|string
      */
-    public function __invoke($name, array $args = [])
+    function __invoke($name, array $args = [])
     {
         return $this->plugin($name, $args, $this->provider() ?? function(){});
     }

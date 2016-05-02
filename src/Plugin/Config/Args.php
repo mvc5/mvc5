@@ -15,7 +15,7 @@ trait Args
     /**
      * @param $args
      */
-    public function __construct($args)
+    function __construct($args)
     {
         $this->args = $args;
     }
@@ -23,7 +23,7 @@ trait Args
     /**
      * @return array
      */
-    public function args()
+    function args()
     {
         return $this->args;
     }

@@ -11,7 +11,7 @@ class Exception
     /**
      * @throws Exception
      */
-    public function __invoke()
+    function __invoke()
     {
         throw $this;
     }

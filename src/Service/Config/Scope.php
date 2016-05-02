@@ -18,7 +18,7 @@ trait Scope
     /**
      *
      */
-    public function __clone()
+    function __clone()
     {
         if (!is_object($this->config)) {
             return;

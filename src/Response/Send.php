@@ -10,7 +10,7 @@ class Send
     /**
      * @param Response $response
      */
-    public function __invoke(Response $response)
+    function __invoke(Response $response)
     {
         $response->send();
     }

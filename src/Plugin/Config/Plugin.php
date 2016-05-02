@@ -18,7 +18,7 @@ trait Plugin
     /**
      * @return array
      */
-    public function args()
+    function args()
     {
         return $this[Arg::ARGS] ? : [];
     }
@@ -26,7 +26,7 @@ trait Plugin
     /**
      * @return array
      */
-    public function calls()
+    function calls()
     {
         return $this[Arg::CALLS] ? : [];
     }
@@ -34,7 +34,7 @@ trait Plugin
     /**
      * @return bool
      */
-    public function merge()
+    function merge()
     {
         return $this[Arg::MERGE] ? : false;
     }
@@ -42,7 +42,7 @@ trait Plugin
     /**
      * @return string
      */
-    public function name()
+    function name()
     {
         return $this[Arg::NAME];
     }
@@ -50,7 +50,7 @@ trait Plugin
     /**
      * @return string
      */
-    public function param()
+    function param()
     {
         return $this[Arg::PARAM];
     }

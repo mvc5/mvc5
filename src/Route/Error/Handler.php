@@ -14,7 +14,7 @@ class Handler
      * @param Error $error
      * @return mixed
      */
-    public function __invoke(Error $error = null)
+    function __invoke(Error $error = null)
     {
         return $error ?? new NotFound;
     }

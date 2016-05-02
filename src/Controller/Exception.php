@@ -18,7 +18,7 @@ class Exception
     /**
      * @param $model
      */
-    public function __construct($model)
+    function __construct($model)
     {
         $this->model = $model;
     }
@@ -27,7 +27,7 @@ class Exception
      * @param Throwable $exception
      * @return mixed
      */
-    public function __invoke(Throwable $exception)
+    function __invoke(Throwable $exception)
     {
         $this->model[Arg::EXCEPTION] = $exception;
 

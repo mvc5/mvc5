@@ -38,7 +38,7 @@ class Generator
      * @param array|Definition $definition
      * @param array $options
      */
-    public function __construct($definition = [], array $options = [])
+    function __construct($definition = [], array $options = [])
     {
         $this->definition = $definition;
 
@@ -154,7 +154,7 @@ class Generator
      * @param array $options
      * @return string
      */
-    public function __invoke($name = null, array $args = [], array $options = [])
+    function __invoke($name = null, array $args = [], array $options = [])
     {
         return rtrim($this->generate($this->name($name), $args, $options), Arg::SEPARATOR) ?: Arg::SEPARATOR;
     }

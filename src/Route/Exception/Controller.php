@@ -17,7 +17,7 @@ class Controller
     /**
      * @param $model
      */
-    public function __construct($model)
+    function __construct($model)
     {
         $this->model = $model;
     }
@@ -26,7 +26,7 @@ class Controller
      * @param $route
      * @return mixed
      */
-    public function __invoke($route)
+    function __invoke($route)
     {
         $this->model[Arg::EXCEPTION] = $route[Arg::EXCEPTION];
 

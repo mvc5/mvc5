@@ -24,7 +24,7 @@ class Add
      * @return array|Definition
      * @throws RuntimeException
      */
-    public function __invoke(Definition $parent, $definition, array $path, $start = false)
+    function __invoke(Definition $parent, $definition, array $path, $start = false)
     {
         if ($root = $parent->child($path[0])) {
             return $this($root, $definition, array_slice($path, 1));

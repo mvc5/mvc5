@@ -36,7 +36,7 @@ trait Mvc
      * @param callable $callback
      * @return mixed
      */
-    public function __invoke(callable $callable, array $args = [], callable $callback = null)
+    function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
         $model = $this->signal($callable, $this->args() + $args, $callback);
 

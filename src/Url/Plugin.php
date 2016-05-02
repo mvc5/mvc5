@@ -30,7 +30,7 @@ class Plugin
      * @param Route $route
      * @param callable $generator
      */
-    public function __construct(Route $route, callable $generator)
+    function __construct(Route $route, callable $generator)
     {
         $this->generator = $generator;
         $this->route     = $route;
@@ -93,7 +93,7 @@ class Plugin
      * @param array $options
      * @return string
      */
-    public function __invoke($name = null, array $args = [], array $options = [])
+    function __invoke($name = null, array $args = [], array $options = [])
     {
         return $this->url($this->name($name), $this->params($name, $args), $this->options($options));
     }

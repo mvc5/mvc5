@@ -20,7 +20,7 @@ class Middleware
     /**
      * @param array $stack
      */
-    public function __construct(array $stack = [])
+    function __construct(array $stack = [])
     {
         $this->stack = $stack;
     }
@@ -40,7 +40,7 @@ class Middleware
      * @param Response\Response $response
      * @return callable|mixed|null|object|Response\Response
      */
-    public function __invoke(Request\Request $request, Response\Response $response)
+    function __invoke(Request\Request $request, Response\Response $response)
     {
         return $this->call(
             current($this->stack) ?: new Exception('Empty call stack'), [$request, $response, $this->next()]

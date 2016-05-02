@@ -94,7 +94,7 @@ trait Build
      * @param string $name
      * @return array|callable|null|object|string
      */
-    public abstract function configured($name);
+    abstract function configured($name);
 
     /**
      * @param $name
@@ -162,7 +162,7 @@ trait Build
      * @param callable|null $callback
      * @return array|callable|null|object|string
      */
-    public abstract function plugin($config, array $args = [], callable $callback = null);
+    abstract function plugin($config, array $args = [], callable $callback = null);
 
     /**
      * @param $config
@@ -190,5 +190,5 @@ trait Build
      * @param array $args
      * @return array|callable|null|object|string
      */
-    public abstract function __invoke($name, array $args = []);
+    abstract function __invoke($name, array $args = []);
 }

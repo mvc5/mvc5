@@ -20,7 +20,7 @@ trait Definition
      * @param array|Definition $definition
      * @return void
      */
-    public function add($name, $definition)
+    function add($name, $definition)
     {
         $this->config[Arg::CHILDREN][$name] = $definition;
     }
@@ -29,7 +29,7 @@ trait Definition
      * @param $name
      * @return mixed
      */
-    public function action($name)
+    function action($name)
     {
         return $this[Arg::ACTION][$name] ?? null;
     }
@@ -37,7 +37,7 @@ trait Definition
     /**
      * @return array
      */
-    public function actions()
+    function actions()
     {
         return $this[Arg::ACTION] ?? [];
     }
@@ -46,7 +46,7 @@ trait Definition
      * @param string $name
      * @return self
      */
-    public function child($name)
+    function child($name)
     {
         return $this[Arg::CHILDREN][$name] ?? null;
     }
@@ -54,7 +54,7 @@ trait Definition
     /**
      * @return self[]
      */
-    public function children()
+    function children()
     {
         return $this[Arg::CHILDREN] ?? [];
     }
@@ -62,7 +62,7 @@ trait Definition
     /**
      * @return null|string
      */
-    public function className()
+    function className()
     {
         return $this[Arg::CLASS_NAME];
     }
@@ -70,7 +70,7 @@ trait Definition
     /**
      * @return array
      */
-    public function constraints()
+    function constraints()
     {
         return $this[Arg::CONSTRAINTS] ?? [];
     }
@@ -78,7 +78,7 @@ trait Definition
     /**
      * @return array|callable|object|string
      */
-    public function controller()
+    function controller()
     {
         return $this[Arg::CONTROLLER];
     }
@@ -86,7 +86,7 @@ trait Definition
     /**
      * @return array
      */
-    public function defaults()
+    function defaults()
     {
         return $this[Arg::DEFAULTS] ?? [];
     }
@@ -94,7 +94,7 @@ trait Definition
     /**
      * @return null|string|string[]
      */
-    public function hostname()
+    function hostname()
     {
         return $this[Arg::HOSTNAME] ?? null;
     }
@@ -102,7 +102,7 @@ trait Definition
     /**
      * @return array
      */
-    public function method()
+    function method()
     {
         return $this[Arg::METHOD] ?? null;
     }
@@ -110,7 +110,7 @@ trait Definition
     /**
      * @return string
      */
-    public function name()
+    function name()
     {
         return $this[Arg::NAME];
     }
@@ -118,7 +118,7 @@ trait Definition
     /**
      * @return array
      */
-    public function paramMap()
+    function paramMap()
     {
         return $this[Arg::PARAM_MAP] ?? [];
     }
@@ -126,7 +126,7 @@ trait Definition
     /**
      * @return int|null|string
      */
-    public function port()
+    function port()
     {
         return $this[Arg::PORT];
     }
@@ -134,7 +134,7 @@ trait Definition
     /**
      * @return string
      */
-    public function regex()
+    function regex()
     {
         return $this[Arg::REGEX];
     }
@@ -142,7 +142,7 @@ trait Definition
     /**
      * @return string
      */
-    public function route()
+    function route()
     {
         return $this[Arg::ROUTE];
     }
@@ -150,7 +150,7 @@ trait Definition
     /**
      * @return null|string|string[]
      */
-    public function scheme()
+    function scheme()
     {
         return $this[Arg::SCHEME];
     }
@@ -158,7 +158,7 @@ trait Definition
     /**
      * @return array
      */
-    public function tokens()
+    function tokens()
     {
         return $this[Arg::TOKENS] ?? [];
     }
@@ -166,7 +166,7 @@ trait Definition
     /**
      * @return bool
      */
-    public function wildcard()
+    function wildcard()
     {
         return $this[Arg::WILDCARD] ?? false;
     }

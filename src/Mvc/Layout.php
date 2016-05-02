@@ -15,7 +15,7 @@ class Layout
      * @param $model
      * @return null|ViewModel|Layout
      */
-    public function __invoke(LayoutModel $layout, $model = null)
+    function __invoke(LayoutModel $layout, $model = null)
     {
         if (!$model || !$model instanceof ViewModel || $model instanceof LayoutModel) {
             return $model;

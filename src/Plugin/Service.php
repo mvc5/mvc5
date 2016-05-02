@@ -15,7 +15,7 @@ class Service
      * @param array $args
      * @param array $calls
      */
-    public function __construct($name, array $args = [], array $calls = [])
+    function __construct($name, array $args = [], array $calls = [])
     {
         parent::__construct($name, $args, $calls + [Arg::SERVICE => new Link]);
     }

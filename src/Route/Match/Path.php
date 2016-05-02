@@ -32,7 +32,7 @@ class Path
      * @param Definition $definition
      * @return Route
      */
-    public function __invoke(Route $route, Definition $definition)
+    function __invoke(Route $route, Definition $definition)
     {
         if (!preg_match('(\G' . $definition->regex() . ')', $route->path(), $matches, null, $route->length())) {
             return null;

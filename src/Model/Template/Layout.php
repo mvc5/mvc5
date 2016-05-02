@@ -18,7 +18,7 @@ trait Layout
      * @param null|string $model
      * @return null|string
      */
-    public function model($model = null)
+    function model($model = null)
     {
         return null === $model ? $this[Arg::CHILD_MODEL] : $this[Arg::CHILD_MODEL] = $model;
     }
@@ -27,7 +27,7 @@ trait Layout
      * @param array|null $config
      * @return array|null
      */
-    public function vars(array $config = null)
+    function vars(array $config = null)
     {
         return null === $config ? $this->config : $this->config = $config + $this->config + array_filter([
                 Arg::CHILD_MODEL    => $this->model(),

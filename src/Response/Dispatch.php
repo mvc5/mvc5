@@ -42,7 +42,7 @@ class Dispatch
      * @param $event
      * @param Response $response
      */
-    public function __construct($event, Response $response = null)
+    function __construct($event, Response $response = null)
     {
         $this->event    = $event;
         $this->response = $response;
@@ -68,7 +68,7 @@ class Dispatch
      * @param callable $callback
      * @return mixed
      */
-    public function __invoke(callable $callable, array $args = [], callable $callback = null)
+    function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
         $response = $this->signal($callable, $this->args() + $args, $callback);
 

@@ -27,7 +27,7 @@ class Provider
      * @param array|Configuration|Resolvable $config
      * @param ...array $args
      */
-    public function __construct($name, $config = [], ...$args)
+    function __construct($name, $config = [], ...$args)
     {
         parent::__construct(
             [$this, 'provider'], [new Link, new Plugin(static::PLUGINS_CLASS, [$config, new Link]), $name, new Args($args)]
@@ -41,7 +41,7 @@ class Provider
      * @param array $args
      * @return callable|null|object
      */
-    public function provider(_Service $service, Scope $plugins, $name, array $args = [])
+    function provider(_Service $service, Scope $plugins, $name, array $args = [])
     {
         array_unshift($args, $plugins);
 

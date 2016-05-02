@@ -20,7 +20,7 @@ trait Model
     /**
      * @return string
      */
-    public function event()
+    function event()
     {
         return $this->event ?? (defined('static::EVENT') ? constant('static::EVENT') : static::class);
     }
@@ -28,7 +28,7 @@ trait Model
     /**
      *
      */
-    public function stop()
+    function stop()
     {
         $this->stopped = true;
     }
@@ -36,7 +36,7 @@ trait Model
     /**
      * @return bool
      */
-    public function stopped()
+    function stopped()
     {
         return $this->stopped;
     }

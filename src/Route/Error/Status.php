@@ -15,7 +15,7 @@ class Status
      * @param Error $error
      * @return Response
      */
-    public function __invoke(Response $response, Error $error)
+    function __invoke(Response $response, Error $error)
     {
         return $response->setStatus($error->status());
     }

@@ -15,7 +15,7 @@ trait Name
     /**
      * @param string $name
      */
-    public function __construct($name)
+    function __construct($name)
     {
         $this->name = $name;
     }
@@ -23,7 +23,7 @@ trait Name
     /**
      * @return string
      */
-    public function name()
+    function name()
     {
         return $this->name;
     }

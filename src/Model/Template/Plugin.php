@@ -19,7 +19,7 @@ trait Plugin
      * @param array $args
      * @return mixed
      */
-    public function __call($name, array $args = [])
+    function __call($name, array $args = [])
     {
         return $this->call($name, $args);
     }

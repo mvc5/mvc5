@@ -25,7 +25,7 @@ class Model
     /**
      * @return int
      */
-    public function code()
+    function code()
     {
         return $this[Arg::ERROR][Arg::CODE];
     }
@@ -33,7 +33,7 @@ class Model
     /**
      * @return array
      */
-    public function errors()
+    function errors()
     {
         return $this[Arg::ERROR][Arg::ERRORS];
     }
@@ -41,7 +41,7 @@ class Model
     /**
      * @return string
      */
-    public function message()
+    function message()
     {
         return $this[Arg::ERROR][Arg::MESSAGE];
     }

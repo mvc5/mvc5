@@ -21,7 +21,7 @@ class View
      * @param $model
      * @return mixed
      */
-    public function __invoke($model = null)
+    function __invoke($model = null)
     {
         if (!$model) {
             return $model;

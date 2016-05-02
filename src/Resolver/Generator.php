@@ -44,7 +44,7 @@ trait Generator
      * @param array|\ArrayAccess|null $config
      * @return array|\ArrayAccess|null
      */
-    public function events($config = null)
+    function events($config = null)
     {
         return null !== $config ? $this->events = $config : $this->events;
     }

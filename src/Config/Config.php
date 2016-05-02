@@ -20,7 +20,7 @@ trait Config
     /**
      * @param array $config
      */
-    public function __construct($config = [])
+    function __construct($config = [])
     {
         $this->config = $config;
     }
@@ -28,7 +28,7 @@ trait Config
     /**
      * @return int
      */
-    public function count()
+    function count()
     {
         return count($this->config);
     }
@@ -36,7 +36,7 @@ trait Config
     /**
      * @return mixed
      */
-    public function current()
+    function current()
     {
         return is_array($this->config) ? current($this->config) : $this->config->current();
     }
@@ -45,7 +45,7 @@ trait Config
      * @param string $name
      * @return mixed
      */
-    public function get($name)
+    function get($name)
     {
         return $this->config[$name] ?? null;
     }
@@ -54,7 +54,7 @@ trait Config
      * @param string $name
      * @return bool
      */
-    public function has($name)
+    function has($name)
     {
         return isset($this->config[$name]);
     }
@@ -62,7 +62,7 @@ trait Config
     /**
      * @return mixed
      */
-    public function key()
+    function key()
     {
         return is_array($this->config) ? key($this->config) : $this->config->key();
     }
@@ -70,7 +70,7 @@ trait Config
     /**
      *
      */
-    public function next()
+    function next()
     {
         is_array($this->config) ? next($this->config) : $this->config->next();
     }
@@ -79,7 +79,7 @@ trait Config
      * @param string $name
      * @return void
      */
-    public function remove($name)
+    function remove($name)
     {
         unset($this->config[$name]);
     }
@@ -87,7 +87,7 @@ trait Config
     /**
      *
      */
-    public function rewind()
+    function rewind()
     {
         is_array($this->config) ? reset($this->config) : $this->config->rewind();
     }
@@ -97,7 +97,7 @@ trait Config
      * @param mixed $config
      * @return mixed $config
      */
-    public function set($name, $config)
+    function set($name, $config)
     {
         return $this->config[$name] = $config;
     }
@@ -105,7 +105,7 @@ trait Config
     /**
      * @return bool
      */
-    public function valid()
+    function valid()
     {
         return is_array($this->config) ? null !== $this->key() : $this->config->valid();
     }
@@ -113,7 +113,7 @@ trait Config
     /**
      *
      */
-    public function __clone()
+    function __clone()
     {
         is_object($this->config) &&
             $this->config = clone $this->config;

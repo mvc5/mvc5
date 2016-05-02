@@ -16,7 +16,7 @@ trait Plugin
      * @param Service\Manager|Service\Service|null $service
      * @return Service\Manager|Service\Service|null
      */
-    public function service(Service\Service $service = null)
+    function service(Service\Service $service = null)
     {
         return null !== $service ? $this->service = $service : $this->service;
     }

@@ -19,7 +19,7 @@ class Web
      * @param callable|Resolvable $provider
      * @param bool|object|Resolvable $scope
      */
-    public function __construct($config = null, $provider = null, $scope = null)
+    function __construct($config = null, $provider = null, $scope = null)
     {
         $this->app = new App($config, $provider, $scope);
     }
@@ -27,7 +27,7 @@ class Web
     /**
      * @return callable|mixed|null|object
      */
-    public function __invoke()
+    function __invoke()
     {
         try {
 

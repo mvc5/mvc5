@@ -17,7 +17,7 @@ trait Child
     /**
      * @return string
      */
-    public function parent()
+    function parent()
     {
         return $this[Arg::PARENT];
     }

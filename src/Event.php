@@ -23,7 +23,7 @@ class Event
      * @param string|null $event
      * @param mixed $model
      */
-    public function __construct($event = null, $model = null)
+    function __construct($event = null, $model = null)
     {
         $this->event = $event;
         $this->model = $model;
@@ -46,7 +46,7 @@ class Event
      * @param callable $callback
      * @return mixed
      */
-    public function __invoke(callable $callable, array $args = [], callable $callback = null)
+    function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
         $model = $this->signal($callable, !$args || !is_string(key($args)) ? $args : $this->args() + $args, $callback);
 

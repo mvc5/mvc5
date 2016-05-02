@@ -25,7 +25,7 @@ class Create
      * @param $name
      * @param $controller
      */
-    public function __construct($name, $controller)
+    function __construct($name, $controller)
     {
         $this->controller = $controller;
         $this->name       = $name;
@@ -36,7 +36,7 @@ class Create
      * @param Throwable $exception
      * @return Route
      */
-    public function __invoke(Route $route, Throwable $exception)
+    function __invoke(Route $route, Throwable $exception)
     {
         $route[Arg::CONTROLLER] = $this->controller;
         $route[Arg::EXCEPTION]  = $exception;

@@ -19,7 +19,7 @@ class MethodNotAllowed
     /**
      * @param array $config
      */
-    public function __construct(array $config = [])
+    function __construct(array $config = [])
     {
         $this->config = $config + [
                 Arg::DESCRIPTION => 'Unsupported resource request method',

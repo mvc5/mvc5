@@ -18,7 +18,7 @@ class Invoke
      * @param string|array $config
      * @param array $args
      */
-    public function __construct($config, array $args = [])
+    function __construct($config, array $args = [])
     {
         $this->args   = $args;
         $this->config = $config;

@@ -24,7 +24,7 @@ class Renderer
     /**
      * @param $templates
      */
-    public function __construct($templates = [])
+    function __construct($templates = [])
     {
         $this->templates = $templates;
     }
@@ -33,7 +33,7 @@ class Renderer
      * @param mixed|Template|ViewModel $model
      * @return string
      */
-    public function __invoke($model)
+    function __invoke($model)
     {
         if (!$model instanceof Template) {
             return null;

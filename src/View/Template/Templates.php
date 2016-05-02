@@ -25,7 +25,7 @@ trait Templates
      * @param array|\ArrayAccess|null $config
      * @return array|\ArrayAccess|null
      */
-    public function templates($config = null)
+    function templates($config = null)
     {
         return null !== $config ? $this->templates = $config : $this->templates;
     }

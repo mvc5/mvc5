@@ -22,7 +22,7 @@ class Controller
      * @param array $args
      * @return mixed
      */
-    public function __invoke($controller, array $args = [])
+    function __invoke($controller, array $args = [])
     {
         try {
 

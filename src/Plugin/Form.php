@@ -13,7 +13,7 @@ class Form
     /**
      * @param string $name
      */
-    public function __construct($name)
+    function __construct($name)
     {
         parent::__construct($name, Arg::FORM);
     }

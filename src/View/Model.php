@@ -19,7 +19,7 @@ trait Model
      * @param ViewModel $model
      * @return void
      */
-    public function setModel(ViewModel $model)
+    function setModel(ViewModel $model)
     {
         $this->model = $model;
     }
@@ -28,7 +28,7 @@ trait Model
      * @param array $vars
      * @return ViewModel
      */
-    public function model(array $vars = [])
+    function model(array $vars = [])
     {
         !$this->model && $this->model = new Mvc5Model;
 
@@ -42,7 +42,7 @@ trait Model
      * @param array $vars
      * @return ViewModel
      */
-    public function view($template = null, array $vars = [])
+    function view($template = null, array $vars = [])
     {
         $this->model($vars);
 

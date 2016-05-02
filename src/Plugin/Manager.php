@@ -19,7 +19,7 @@ class Manager
      * @param string $name
      * @param array $calls
      */
-    public function __construct($name, array $calls = [])
+    function __construct($name, array $calls = [])
     {
         $this->config = [
             Arg::CALLS => $calls + [

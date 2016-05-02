@@ -20,7 +20,7 @@ class Controller
      * @param array $args
      * @param array $calls
      */
-    public function __construct($name, array $args = [], array $calls = [])
+    function __construct($name, array $args = [], array $calls = [])
     {
         $this->config = [
             Arg::ARGS   => $args,

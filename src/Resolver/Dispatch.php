@@ -29,7 +29,7 @@ class Dispatch
      * @param callable $callback
      * @return mixed
      */
-    public function __invoke(callable $callable, array $args = [], callable $callback = null)
+    function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
         $result = $this->signal($callable, is_string(key($args)) ? $this->args() + $args : $args, $callback);
 

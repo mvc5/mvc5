@@ -15,7 +15,7 @@ trait Config
     /**
      * @param $config
      */
-    public function __construct($config)
+    function __construct($config)
     {
         $this->config = $config;
     }
@@ -23,7 +23,7 @@ trait Config
     /**
      * @return mixed
      */
-    public function config()
+    function config()
     {
         return $this->config;
     }

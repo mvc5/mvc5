@@ -19,7 +19,7 @@ trait Hydrator
      * @param array $calls
      * @param null|string $param
      */
-    public function __construct($name, array $calls, $param = Arg::ITEM)
+    function __construct($name, array $calls, $param = Arg::ITEM)
     {
         $this->config = [
             Arg::CALLS => $calls,

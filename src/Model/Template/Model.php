@@ -19,7 +19,7 @@ trait Model
      * @param $template
      * @param array $config
      */
-    public function __construct($template = null, array $config = [])
+    function __construct($template = null, array $config = [])
     {
         $this->config = $config + array_filter([
                 Arg::TEMPLATE_MODEL => $template ?? (
@@ -32,7 +32,7 @@ trait Model
      * @param null|string $path
      * @return null|string
      */
-    public function template($path = null)
+    function template($path = null)
     {
         return null === $path ? $this[Arg::TEMPLATE_MODEL] : $this[Arg::TEMPLATE_MODEL] = $path;
     }
@@ -41,7 +41,7 @@ trait Model
      * @param array|null $config
      * @return array|null
      */
-    public function vars(array $config = null)
+    function vars(array $config = null)
     {
         return null === $config ? $this->config :
             $this->config = $config + $this->config + array_filter([Arg::TEMPLATE_MODEL => $this->template()]);
@@ -51,7 +51,7 @@ trait Model
      * @param $name
      * @return mixed
      */
-    public function __get($name)
+    function __get($name)
     {
         return $this->get($name);
     }
@@ -60,7 +60,7 @@ trait Model
      * @param $name
      * @return bool
      */
-    public function __isset($name)
+    function __isset($name)
     {
         return $this->has($name);
     }
@@ -70,7 +70,7 @@ trait Model
      * @param $value
      * @return mixed
      */
-    public function __set($name, $value)
+    function __set($name, $value)
     {
         return $this->set($name, $value);
     }
@@ -79,7 +79,7 @@ trait Model
      * @param $name
      * @return mixed
      */
-    public function __unset($name)
+    function __unset($name)
     {
         $this->remove($name);
     }

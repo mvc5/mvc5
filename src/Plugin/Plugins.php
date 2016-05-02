@@ -17,7 +17,7 @@ class Plugins
      * @param $scope
      * @param array $calls
      */
-    public function __construct($services = [], $provider = true, $scope = true, array $calls = [])
+    function __construct($services = [], $provider = true, $scope = true, array $calls = [])
     {
         parent::__construct(
             _Plugins::class,

@@ -26,7 +26,7 @@ trait Model
      * @param $event
      * @param array|\ArrayAccess $config
      */
-    public function __construct($event, $config)
+    function __construct($event, $config)
     {
         $this->config = $config;
         $this->event  = $event;

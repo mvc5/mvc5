@@ -19,7 +19,7 @@ class BadRequest
     /**
      * @param array $config
      */
-    public function __construct(array $config = [])
+    function __construct(array $config = [])
     {
         $this->config = $config + [
                 Arg::DESCRIPTION => 'The server could not understand the request',

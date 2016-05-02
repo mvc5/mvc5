@@ -20,7 +20,7 @@ class Generator
     /**
      * @param null|string $class
      */
-    public function __construct($class = null)
+    function __construct($class = null)
     {
         $class && $this->class = $class;
     }
@@ -40,7 +40,7 @@ class Generator
      * @param bool $recursive
      * @return Definition
      */
-    public function __invoke($definition, $compile = true, $recursive = false)
+    function __invoke($definition, $compile = true, $recursive = false)
     {
         return $this->build($definition, $compile, $recursive);
     }

@@ -15,7 +15,7 @@ class Layout
      * @param mixed|Template $model
      * @return TemplateLayout
      */
-    public function __invoke(TemplateLayout $layout, $model)
+    function __invoke(TemplateLayout $layout, $model)
     {
         $layout->model($model);
 

@@ -19,7 +19,7 @@ class App
      * @param $scope
      * @param array $calls
      */
-    public function __construct($config = [], $provider = true, $scope = true, array $calls = [])
+    function __construct($config = [], $provider = true, $scope = true, array $calls = [])
     {
         parent::__construct(static::APP_CLASS, [$config, $provider === true ? new Link : $provider, $scope], $calls);
     }

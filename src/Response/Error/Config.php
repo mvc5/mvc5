@@ -18,7 +18,7 @@ trait Config
     /**
      * @return int
      */
-    public function code()
+    function code()
     {
         return $this[Arg::CODE];
     }
@@ -26,7 +26,7 @@ trait Config
     /**
      * @return string
      */
-    public function description()
+    function description()
     {
         return $this[Arg::DESCRIPTION];
     }
@@ -34,7 +34,7 @@ trait Config
     /**
      * @return array
      */
-    public function errors()
+    function errors()
     {
         return $this[Arg::ERRORS];
     }
@@ -42,7 +42,7 @@ trait Config
     /**
      * @return string
      */
-    public function message()
+    function message()
     {
         return $this[Arg::MESSAGE];
     }
@@ -50,7 +50,7 @@ trait Config
     /**
      * @return int
      */
-    public function status()
+    function status()
     {
         return $this[Arg::STATUS];
     }

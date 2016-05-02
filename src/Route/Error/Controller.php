@@ -22,7 +22,7 @@ class Controller
      * @param Error $error
      * @return mixed
      */
-    public function __invoke(Route $route, Error $error = null)
+    function __invoke(Route $route, Error $error = null)
     {
         return $this->model([Arg::ERROR => $error ?? $route->error()]);
     }

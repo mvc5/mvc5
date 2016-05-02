@@ -30,7 +30,7 @@ class Filter
      * @param array $args
      * @param string $param
      */
-    public function __construct($config, $filter = [], array $args = [], $param = null)
+    function __construct($config, $filter = [], array $args = [], $param = null)
     {
         $this->args   = $args;
         $this->config = $config;
@@ -41,7 +41,7 @@ class Filter
     /**
      * @return array|\Traversable
      */
-    public function filter()
+    function filter()
     {
         return $this->filter;
     }
@@ -49,7 +49,7 @@ class Filter
     /**
      * @return string
      */
-    public function param()
+    function param()
     {
         return $this->param;
     }

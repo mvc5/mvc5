@@ -12,7 +12,7 @@ class Controller
      * @param $model
      * @return Response
      */
-    public function __invoke(Response $response, $model)
+    function __invoke(Response $response, $model)
     {
         return $response->setContent($model);
     }

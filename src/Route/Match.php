@@ -36,7 +36,7 @@ class Match
      * @param Definition $definition
      * @param Route $route
      */
-    public function __construct(Definition $definition, Route $route)
+    function __construct(Definition $definition, Route $route)
     {
         $this->definition = $definition;
         $this->route      = $route;
@@ -60,7 +60,7 @@ class Match
      * @param callable $callback
      * @return mixed
      */
-    public function __invoke(callable $callable, array $args = [], callable $callback = null)
+    function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 

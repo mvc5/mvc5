@@ -32,7 +32,7 @@ trait Signal
      * @param callable $callback
      * @return mixed
      */
-    public function __invoke(callable $callable, array $args = [], callable $callback = null)
+    function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
         return $this->signal($callable, !$args || !is_string(key($args)) ? $args : $this->args() + $args, $callback);
     }

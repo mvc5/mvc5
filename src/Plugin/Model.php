@@ -16,7 +16,7 @@ class Model
      * @param array $args
      * @param array $calls
      */
-    public function __construct($template, array $args = [], array $calls = [])
+    function __construct($template, array $args = [], array $calls = [])
     {
         parent::__construct(Mvc5Model::class, [Arg::TEMPLATE => $template, Arg::CONFIG => $args], $calls);
     }
