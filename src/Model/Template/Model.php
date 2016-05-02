@@ -7,6 +7,7 @@ namespace Mvc5\Model\Template;
 
 use Mvc5\Arg;
 use Mvc5\Config\Config;
+use Mvc5\Config\PropertyAccess;
 
 trait Model
 {
@@ -14,6 +15,7 @@ trait Model
      *
      */
     use Config;
+    use PropertyAccess;
 
     /**
      * @param $template
@@ -45,42 +47,5 @@ trait Model
     {
         return null === $config ? $this->config :
             $this->config = $config + $this->config + array_filter([Arg::TEMPLATE_MODEL => $this->template()]);
-    }
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    function __get($name)
-    {
-        return $this->get($name);
-    }
-
-    /**
-     * @param $name
-     * @return bool
-     */
-    function __isset($name)
-    {
-        return $this->has($name);
-    }
-
-    /**
-     * @param $name
-     * @param $value
-     * @return mixed
-     */
-    function __set($name, $value)
-    {
-        return $this->set($name, $value);
-    }
-
-    /**
-     * @param $name
-     * @return mixed
-     */
-    function __unset($name)
-    {
-        $this->remove($name);
     }
 }
