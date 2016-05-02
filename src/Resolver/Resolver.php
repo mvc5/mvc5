@@ -595,7 +595,7 @@ trait Resolver
      * @param object $scope
      * @return object
      */
-    protected function scope($scope = null)
+    function scope($scope = null)
     {
         return null !== $scope ? $this->scope = $scope : $this->scope;
     }
@@ -663,6 +663,10 @@ trait Resolver
 
             if (isset($this->config[Arg::CONTAINER])) {
                 $this->config[Arg::CONTAINER] = $this->container;
+            }
+        } else {
+            foreach($this->container as $key => $value) {
+                is_object($value) && ($this->container[$key] = clone $value);
             }
         }
 

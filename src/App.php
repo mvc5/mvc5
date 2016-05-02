@@ -6,7 +6,7 @@
 namespace Mvc5;
 
 class App
-    implements Service\Manager
+    implements Service\Manager, Service\Scope
 {
     /**
      *

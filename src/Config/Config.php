@@ -5,6 +5,8 @@
 
 namespace Mvc5\Config;
 
+use Mvc5\Service\Scope;
+
 trait Config
 {
     /**
@@ -115,7 +117,36 @@ trait Config
      */
     function __clone()
     {
-        is_object($this->config) &&
+        if (!is_object($this->config)) {
+            goto values;
+        }
+
+        if (!$this->config instanceof Scope) {
             $this->config = clone $this->config;
+            goto values;
+        }
+
+        $scope = $this->config->scope();
+
+        if (!$scope instanceof self) {
+            $this->config = clone $this->config;
+            goto values;
+        }
+
+        $this->config->scope(false);
+
+        $clone = clone $this->config;
+        $clone->scope($this);
+
+        $this->config->scope($scope);
+
+        $this->config = $clone;
+
+        values:
+
+        foreach($this->config as $key => $value) {
+            is_object($value) &&
+                ($this->config[$key] = clone $value);
+        }
     }
 }
