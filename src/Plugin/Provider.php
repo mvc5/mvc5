@@ -20,7 +20,7 @@ class Provider
     /**
      *
      */
-    const PLUGINS_CLASS = 'Mvc5\Plugins';
+    const APP_CLASS = 'Mvc5\App';
 
     /**
      * @param string $name
@@ -29,9 +29,17 @@ class Provider
      */
     function __construct($name, $config = [], ...$args)
     {
-        parent::__construct(
-            [$this, 'provider'], [new Link, new Plugin(static::PLUGINS_CLASS, [$config, new Link]), $name, new Args($args)]
-        );
+        parent::__construct([$this, 'provider'], [new Link, $this->plugins($config), $name, new Args($args)]);
+    }
+
+    /**
+     * @param $config
+     * @return Plugin|Plugins
+     */
+    protected function plugins($config)
+    {
+        return $config instanceof Plugins || $config instanceof Plugin || $config instanceof Plug  ? $config :
+            new Plugin(static::APP_CLASS, [$config, new Link]);
     }
 
     /**
