@@ -6,6 +6,7 @@
 namespace Mvc5\Response\Error;
 
 use Mvc5\Arg;
+use Mvc5\Response\Config\Error as Config;
 use Mvc5\Response\Error;
 
 class BadRequest

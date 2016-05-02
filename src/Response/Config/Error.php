@@ -3,17 +3,17 @@
  *
  */
 
-namespace Mvc5\Response\Error;
+namespace Mvc5\Response\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config as Base;
+use Mvc5\Config\Config;
 
-trait Config
+trait Error
 {
     /**
      *
      */
-    use Base;
+    use Config;
 
     /**
      * @return int

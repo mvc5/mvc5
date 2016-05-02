@@ -6,7 +6,7 @@
 namespace Mvc5\Url;
 
 use Mvc5\Arg;
-use Mvc5\Route\Route;
+use Mvc5\Request\Request;
 use Mvc5\Signal;
 
 class Plugin
@@ -22,18 +22,28 @@ class Plugin
     protected $generator;
 
     /**
-     * @var Route
+     * @var Request
      */
-    protected $route;
+    protected $request;
 
     /**
-     * @param Route $route
+     * @param Request $request
      * @param callable $generator
      */
-    function __construct(Route $route, callable $generator)
+    function __construct(Request $request, callable $generator)
     {
         $this->generator = $generator;
-        $this->route     = $route;
+        $this->request   = $request;
+    }
+
+    /**
+     * @param null|string $name
+     * @param array $args
+     * @return array
+     */
+    protected function args($name = null, array $args = [])
+    {
+        return $name ? $args : $args + $this->request->args();
     }
 
     /**
@@ -50,7 +60,7 @@ class Plugin
      */
     protected function name($name = null)
     {
-        return $name ?? $this->route->name();
+        return $name ?? $this->request->name();
     }
 
     /**
@@ -60,20 +70,10 @@ class Plugin
     protected function options(array $options = [])
     {
         return $options + [
-            Arg::HOSTNAME => $this->route->hostname(),
-            Arg::PORT     => $this->route->port(),
-            Arg::SCHEME   => $this->route->scheme()
+            Arg::HOST   => $this->request->host(),
+            Arg::PORT   => $this->request->port(),
+            Arg::SCHEME => $this->request->scheme()
         ];
-    }
-
-    /**
-     * @param null|string $name
-     * @param array $args
-     * @return array
-     */
-    protected function params($name = null, array $args = [])
-    {
-        return $name ? $args : $args + $this->route->params();
     }
 
     /**
@@ -95,6 +95,6 @@ class Plugin
      */
     function __invoke($name = null, array $args = [], array $options = [])
     {
-        return $this->url($this->name($name), $this->params($name, $args), $this->options($options));
+        return $this->url($this->name($name), $this->args($name, $args), $this->options($options));
     }
 }

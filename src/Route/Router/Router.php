@@ -6,55 +6,71 @@
 namespace Mvc5\Route\Router;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition;
+use Mvc5\Request\Request;
 use Mvc5\Route\Route;
+use Mvc5\Route\Request as RouteRequest;
+use Mvc5\Route\Request\Config;
+use Mvc5\Signal;
 
 trait Router
 {
     /**
-     * @var array|Definition
+     *
      */
-    protected $definition;
+    use Signal;
 
     /**
-     * @param array|Definition $definition
+     * @var string
      */
-    function __construct($definition)
+    protected $request = Config::class;
+
+    /**
+     * @var array|Route
+     */
+    protected $route;
+
+    /**
+     * @param array|Route $route
+     * @param string $request
+     */
+    function __construct($route, $request = null)
     {
-        $this->definition = $definition;
+        $this->route = $route;
+
+        $request && $this->request = $request;
     }
 
     /**
-     * @param array|Definition $definition
-     * @return Definition
-     */
-    protected abstract function definition($definition);
-
-    /**
-     * @param Route $route
-     * @param Definition $definition
+     * @param array|Route $route
      * @return Route
      */
-    protected function dispatch(Route $route, Definition $definition)
+    protected abstract function definition($route);
+
+    /**
+     * @param RouteRequest $request
+     * @param Route $route
+     * @return Request
+     */
+    protected function dispatch(RouteRequest $request, Route $route)
     {
-        $route = $this->match($definition, $route);
+        $request = $this->match($route, $request);
 
-        if (!$route instanceof Route) {
-            return $route;
+        if (!$request instanceof RouteRequest) {
+            return $request;
         }
 
-        !$route->name() && $route[Arg::NAME] = $definition->name();
+        !$request->name() && $request[Arg::NAME] = $route->name();
 
-        if ($route->matched()) {
-            return $route;
+        if ($request->matched()) {
+            return $request->request();
         }
 
-        $parent = $route->name();
+        $parent = $request->name();
 
-        foreach($definition->children() as $name => $definition) {
-            $route[Arg::NAME] = $this->name() === $parent ? $name : $parent . Arg::SEPARATOR . $name;
+        foreach($route->children() as $name => $route) {
+            $request[Arg::NAME] = $this->name() === $parent ? $name : $parent . Arg::SEPARATOR . $name;
 
-            if ($match = $this->dispatch(clone $route, $this->routeDefinition($definition))) {
+            if ($match = $this->dispatch(clone $request, $this->routeDefinition($route))) {
                 return $match;
             }
         }
@@ -63,36 +79,36 @@ trait Router
     }
 
     /**
-     * @param Definition $definition
      * @param Route $route
-     * @return Route
+     * @param RouteRequest $request
+     * @return RouteRequest
      */
-    protected abstract function match($definition, $route);
+    protected abstract function match($route, $request);
 
     /**
      * @return string
      */
     protected function name()
     {
-        return $this->definition[Arg::NAME];
+        return $this->route[Arg::NAME];
     }
 
     /**
-     * @param array|Definition $definition
-     * @return Definition
-     */
-    protected function routeDefinition($definition)
-    {
-        return $definition instanceof Definition && isset($definition[Arg::REGEX])
-            ? $definition : $this->definition($definition);
-    }
-
-    /**
-     * @param Route $route
+     * @param array|Route $route
      * @return Route
      */
-    function __invoke(Route $route)
+    protected function routeDefinition($route)
     {
-        return $this->dispatch(clone $route, $this->routeDefinition($this->definition));
+        return $route instanceof Route && isset($route[Arg::REGEX])
+            ? $route : $this->definition($route);
+    }
+
+    /**
+     * @param Request $request
+     * @return Request
+     */
+    function __invoke(Request $request)
+    {
+        return $this->dispatch(new $this->request(clone $request), $this->routeDefinition($this->route));
     }
 }

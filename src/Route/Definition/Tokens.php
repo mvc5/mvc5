@@ -45,7 +45,7 @@ trait Tokens
                 }
 
                 $tokens[] = [
-                    'parameter',
+                    'param',
                     $matches['name'],
                     $matches['delimiters'] ?? null
                 ];

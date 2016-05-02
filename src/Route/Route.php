@@ -6,38 +6,71 @@
 namespace Mvc5\Route;
 
 use Mvc5\Config\Configuration;
-use Mvc5\Response\Error;
 
 interface Route
     extends Configuration
 {
     /**
-     * @return array|callable|null|object|string
+     * @param $name
+     * @param array|Route $route
+     * @return void
+     */
+    function add($name, $route);
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    function action($name);
+
+    /**
+     * @return string[]
+     */
+    function actions();
+
+    /**
+     * @param string $name
+     * @return self
+     */
+    function child($name);
+
+    /**
+     * @return self[]
+     */
+    function children();
+
+    /**
+     * @return null|string
+     */
+    function className();
+
+    /**
+     * @return array
+     */
+    function constraints();
+
+    /**
+     * @return array|callable|object|string
      */
     function controller();
 
     /**
-     * @return Error
+     * @return array
      */
-    function error();
+    function defaults();
 
     /**
-     * @return string|string[]
+     * @return null|string|string[]
      */
-    function hostname();
+    function host();
 
     /**
-     * @return int
+     * @return array
      */
-    function length();
+    function map();
 
     /**
-     * @return bool
-     */
-    function matched();
-
-    /**
-     * @return string|string[]
+     * @return null|string|string[]
      */
     function method();
 
@@ -47,28 +80,32 @@ interface Route
     function name();
 
     /**
-     * @param $name
-     * @return mixed
-     */
-    function param($name);
-
-    /**
-     * @return array
-     */
-    function params();
-
-    /**
-     * @return string
-     */
-    function path();
-
-    /**
      * @return int|null|string
      */
     function port();
 
     /**
-     * @return string|string[]
+     * @return string
+     */
+    function regex();
+
+    /**
+     * @return string
+     */
+    function route();
+
+    /**
+     * @return null|string|string[]
      */
     function scheme();
+
+    /**
+     * @return array
+     */
+    function tokens();
+
+    /**
+     * @return bool
+     */
+    function wildcard();
 }

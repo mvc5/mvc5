@@ -18,18 +18,18 @@ class Route
     use Dispatcher;
 
     /**
-     * @param mixed $route
+     * @param mixed $request
      * @return mixed
      */
-    function __invoke($route)
+    function __invoke($request)
     {
         try {
 
-            return $this->route($route);
+            return $this->route($request);
 
         } catch (Throwable $exception) {
 
-            return $this->exception($exception, $route);
+            return $this->exception($exception, $request);
 
         }
     }

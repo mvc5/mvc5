@@ -19,42 +19,42 @@ trait Dispatcher
     protected abstract function call($name, array $args = [], callable $callback = null);
 
     /**
-     * @param array|Definition $definition
-     * @return Definition
+     * @param array|Route $route
+     * @return Route
      */
-    protected function definition($definition)
+    protected function definition($route)
     {
-        return $this->call(Arg::ROUTE_GENERATOR, [Arg::DEFINITION => $definition]);
+        return $this->call(Arg::ROUTE_GENERATOR, [Arg::ROUTE => $route]);
     }
 
     /**
      * @param Throwable $exception
-     * @param $route
+     * @param $request
      * @return mixed
      */
-    protected function exception(Throwable $exception, $route)
+    protected function exception(Throwable $exception, $request)
     {
-        return $this->call(Arg::ROUTE_EXCEPTION, [Arg::EXCEPTION => $exception, Arg::ROUTE => $route]);
+        return $this->call(Arg::ROUTE_EXCEPTION, [Arg::EXCEPTION => $exception, Arg::REQUEST => $request]);
     }
 
     /**
-     * @param $definition
      * @param $route
-     * @return Route
+     * @param $request
+     * @return Request
      */
-    protected function match($definition, $route)
+    protected function match($route, $request)
     {
-        return $this->trigger([Arg::ROUTE_MATCH, Arg::DEFINITION => $definition, Arg::ROUTE => $route]);
+        return $this->trigger([Arg::ROUTE_MATCH, Arg::ROUTE => $route, Arg::REQUEST => $request]);
     }
 
     /**
-     * @param $route
+     * @param $request
      * @param array $args
-     * @return Route
+     * @return Request
      */
-    protected function route($route, array $args = [])
+    protected function route($request, array $args = [])
     {
-        return $this->call(Arg::ROUTE_DISPATCH, [Arg::ROUTE => $route] + $args);
+        return $this->call(Arg::ROUTE_DISPATCH, [Arg::REQUEST => $request] + $args);
     }
 
     /**

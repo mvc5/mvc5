@@ -6,7 +6,7 @@
 namespace Mvc5\Url;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition;
+use Mvc5\Route\Route;
 use Mvc5\Route\Definition\Assemble;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
@@ -21,47 +21,47 @@ class Generator
     use Compile;
 
     /**
-     * @var array|Definition
+     * @var array|Route
      */
-    protected $definition;
+    protected $route;
 
     /**
      * @var array
      */
     protected $options = [
-        Arg::HOSTNAME => null,
-        Arg::PORT     => null,
-        Arg::SCHEME   => null
+        Arg::HOST   => null,
+        Arg::PORT   => null,
+        Arg::SCHEME => null
     ];
 
     /**
-     * @param array|Definition $definition
+     * @param array|Route $route
      * @param array $options
      */
-    function __construct($definition = [], array $options = [])
+    function __construct($route = [], array $options = [])
     {
-        $this->definition = $definition;
+        $this->route = $route;
 
         $options && $this->options = $options + $this->options;
     }
 
     /**
-     * @param Definition $parent
+     * @param Route $parent
      * @param $name
-     * @return Definition
+     * @return Route
      */
-    protected function child(Definition $parent, $name)
+    protected function child(Route $parent, $name)
     {
         return $this->merge($parent, clone $this->url($parent->child($name)));
     }
 
     /**
      * @param $name
-     * @return array|Definition
+     * @return array|Route
      */
     protected function config($name)
     {
-        return $name === $this->definition[Arg::NAME] ? $this->definition : $this->definition->child($name);
+        return $name === $this->route[Arg::NAME] ? $this->route : $this->route->child($name);
     }
 
     /**
@@ -69,25 +69,25 @@ class Generator
      * @param array $args
      * @param array $options
      * @param string $path
-     * @param Definition $parent
+     * @param Route $parent
      * @return string|void
      */
-    protected function generate($name, array $args = [], array $options = [], $path = '', Definition $parent = null)
+    protected function generate($name, array $args = [], array $options = [], $path = '', Route $parent = null)
     {
         $name = is_array($name) ? $name : explode(Arg::SEPARATOR, $name);
 
-        $definition = $parent ? $this->child($parent, $name[0]) : $this->url($this->config($name[0]));
+        $route = $parent ? $this->child($parent, $name[0]) : $this->url($this->config($name[0]));
 
-        $path .= $this->compile($definition->tokens(), $args, $definition->defaults());
+        $path .= $this->compile($route->tokens(), $args, $route->defaults());
 
         array_shift($name);
 
         if ($name) {
-            return $this->generate($name, $args, $options, $path, $definition);
+            return $this->generate($name, $args, $options, $path, $route);
         }
 
-        if ($args && $definition->wildcard()) {
-            $params = array_diff_key($args, $definition->constraints());
+        if ($args && $route->wildcard()) {
+            $params = array_diff_key($args, $route->constraints());
 
             $params && $path = rtrim($path, Arg::SEPARATOR);
 
@@ -96,23 +96,21 @@ class Generator
             }
         }
 
-        return $this->assemble(
-            $definition->scheme(), $definition->hostname(), $definition->port(), $path, $this->options($options)
-        );
+        return $this->assemble($route->scheme(), $route->host(), $route->port(), $path, $this->options($options));
     }
 
     /**
-     * @param Definition $parent
-     * @param Definition $child
-     * @return Definition
+     * @param Route $parent
+     * @param Route $child
+     * @return Route
      */
-    protected function merge(Definition $parent, Definition $child)
+    protected function merge(Route $parent, Route $child)
     {
         !$child->scheme() && $parent->scheme()
             && $child[Arg::SCHEME] = $parent->scheme();
 
-        !$child->hostname() && $parent->hostname()
-            && $child[Arg::HOSTNAME] = $parent->hostname();
+        !$child->host() && $parent->host()
+            && $child[Arg::HOST] = $parent->host();
 
         !$child->port() && $parent->port()
             && $child[Arg::PORT] = $parent->port();
@@ -126,7 +124,7 @@ class Generator
      */
     protected function name($name)
     {
-        return $name === $this->definition[Arg::NAME] ? $name : $this->definition[Arg::NAME] . Arg::SEPARATOR . $name;
+        return $name === $this->route[Arg::NAME] ? $name : $this->route[Arg::NAME] . Arg::SEPARATOR . $name;
     }
 
     /**
@@ -139,13 +137,12 @@ class Generator
     }
 
     /**
-     * @param array|Definition $definition
-     * @return Definition|null
+     * @param array|Route $route
+     * @return Route|null
      */
-    protected function url($definition)
+    protected function url($route)
     {
-        return $definition instanceof Definition && isset($definition[Arg::REGEX]) ? $definition
-            : $this->build($definition, false);
+        return $route instanceof Route && isset($route[Arg::REGEX]) ? $route : $this->build($route, false);
     }
 
     /**

@@ -3,11 +3,10 @@
  *
  */
 
-namespace Mvc5\Route\Error;
+namespace Mvc5\Request\Error;
 
 use Mvc5\Arg;
 use Mvc5\Model\Plugin;
-use Mvc5\Route\Error;
 
 class Model
     implements ViewModel

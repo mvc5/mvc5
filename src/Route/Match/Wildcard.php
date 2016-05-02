@@ -6,37 +6,34 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition;
 use Mvc5\Route\Route;
+use Mvc5\Route\Request;
 
 class Wildcard
 {
    /**
+     * @param Request $request
      * @param Route $route
-     * @param Definition $definition
-     * @return Route
+     * @return Request
      */
-    function __invoke(Route $route, Definition $definition)
+    function __invoke(Request $request, Route $route)
     {
-        if (!$definition->wildcard()) {
-            return $route;
+        if (!$route->wildcard()) {
+            return $request;
         }
 
-        $params = $route->params();
-
-        $parts  = explode(Arg::SEPARATOR, trim(substr($route->path(), $route->length()), Arg::SEPARATOR));
+        $parts = explode(Arg::SEPARATOR, trim(substr($request->path(), $request->length()), Arg::SEPARATOR));
 
         for($i = 0, $n = count($parts); $i < $n; $i += 2) {
-            if (!isset($parts[$i + 1]) || isset($params[$parts[$i]])) {
+            if (!isset($parts[$i + 1])) {
                 continue;
             }
 
-            $params[$parts[$i]] = $parts[$i + 1];
+            $request->attr($parts[$i], $parts[$i + 1]);
         }
 
-        $route[Arg::PARAMS]  = $params;
-        $route[Arg::MATCHED] = true;
+        $request[Arg::MATCHED] = true;
 
-        return $route;
+        return $request;
     }
 }

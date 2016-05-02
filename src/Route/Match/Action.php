@@ -6,25 +6,25 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition;
 use Mvc5\Route\Route;
+use Mvc5\Route\Request;
 
 class Action
 {
     /**
+     * @param Request $request
      * @param Route $route
-     * @param Definition $definition
-     * @return Route
+     * @return Request
      */
-    function __invoke(Route $route, Definition $definition)
+    function __invoke(Request $request, Route $route)
     {
-        if (!$definition->actions()) {
-            return $route;
+        if (!$route->actions()) {
+            return $request;
         }
 
-        ($controller = $definition->action($route->method())) &&
-            $route[Arg::CONTROLLER] = $controller;
+        ($controller = $route->action($request->method())) &&
+            $request[Arg::CONTROLLER] = $controller;
 
-        return $route;
+        return $request;
     }
 }

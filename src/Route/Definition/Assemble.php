@@ -37,7 +37,7 @@ trait Assemble
      * @param array|\ArrayAccess $options
      * @return string
      */
-    function assemble($scheme, $host, $port, $path, $options)
+    protected function assemble($scheme, $host, $port, $path, $options)
     {
         $path = strtr(rawurlencode($path), static::$allowedPathChars);
 
@@ -57,8 +57,8 @@ trait Assemble
         $scheme = $scheme ? (!$port && !$canonical && $scheme === $options[Arg::SCHEME] ? '' : $scheme) :
             ($canonical || $port ? $options[Arg::SCHEME] : '');
 
-        $host = $host ? (!$scheme && !$canonical && $host === $options[Arg::HOSTNAME] ? '' : $host) :
-            ($canonical || $scheme ? $options[Arg::HOSTNAME] : '');
+        $host = $host ? (!$scheme && !$canonical && $host === $options[Arg::HOST] ? '' : $host) :
+            ($canonical || $scheme ? $options[Arg::HOST] : '');
 
         return ($scheme ? $scheme . ':' : '') . ($host ? '//' . $host : '') . ($port ? ':' . $port : '') . $path;
     }

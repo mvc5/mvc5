@@ -21,7 +21,7 @@ trait Params
         $map   = [];
 
         foreach($tokens as $token) {
-            'parameter' == $token[Dash::TYPE] && $map['param' . $index++] = $token[Dash::NAME];
+            'param' == $token[Dash::TYPE] && $map['param' . $index++] = $token[Dash::NAME];
         }
 
         return $map;

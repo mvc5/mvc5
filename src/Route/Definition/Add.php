@@ -6,7 +6,7 @@
 namespace Mvc5\Route\Definition;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition;
+use Mvc5\Route\Route;
 use RuntimeException;
 
 class Add
@@ -17,35 +17,35 @@ class Add
     use Build;
 
     /**
-     * @param Definition $parent
-     * @param array|Definition $definition
+     * @param Route $parent
+     * @param array|Route $route
      * @param array $path
      * @param bool $start
-     * @return array|Definition
+     * @return array|Route
      * @throws RuntimeException
      */
-    function __invoke(Definition $parent, $definition, array $path, $start = false)
+    function __invoke(Route $parent, $route, array $path, $start = false)
     {
         if ($root = $parent->child($path[0])) {
-            return $this($root, $definition, array_slice($path, 1));
+            return $this($root, $route, array_slice($path, 1));
         }
 
         if (isset($path[1])) {
-            throw new RuntimeException('Parent definition not found: ' . $definition[Arg::NAME]);
+            throw new RuntimeException('Parent route not found: ' . $route[Arg::NAME]);
         }
 
-        $definition[Arg::NAME] = $path[0];
+        $route[Arg::NAME] = $path[0];
 
-        $start && empty($definition[Arg::ROUTE]) && isset($definition[Arg::NAME])
-            && $definition[Arg::ROUTE] = $definition[Arg::NAME];
+        $start && empty($route[Arg::ROUTE]) && isset($route[Arg::NAME])
+            && $route[Arg::ROUTE] = $route[Arg::NAME];
 
-        !$start && empty($definition[Arg::ROUTE])
-            && $definition[Arg::ROUTE] = Arg::SEPARATOR . $path[0];
+        !$start && empty($route[Arg::ROUTE])
+            && $route[Arg::ROUTE] = Arg::SEPARATOR . $path[0];
 
-        $definition = $this->definition($definition);
+        $route = $this->definition($route);
 
-        $parent->add($path[0], $definition);
+        $parent->add($path[0], $route);
 
-        return $definition;
+        return $route;
     }
 }

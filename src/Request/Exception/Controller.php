@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Route\Exception;
+namespace Mvc5\Request\Exception;
 
 use Mvc5\Arg;
 
@@ -23,12 +23,12 @@ class Controller
     }
 
     /**
-     * @param $route
+     * @param array|\ArrayAccess $request
      * @return mixed
      */
-    function __invoke($route)
+    function __invoke($request)
     {
-        $this->model[Arg::EXCEPTION] = $route[Arg::EXCEPTION];
+        $this->model[Arg::EXCEPTION] = $request[Arg::EXCEPTION];
 
         return $this->model;
     }

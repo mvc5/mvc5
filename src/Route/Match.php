@@ -23,23 +23,23 @@ class Match
     const EVENT = Arg::ROUTE_MATCH;
 
     /**
-     * @var Definition
-     */
-    protected $definition;
-
-    /**
      * @var Route
      */
     protected $route;
 
-    /***
-     * @param Definition $definition
-     * @param Route $route
+    /**
+     * @var Request
      */
-    function __construct(Definition $definition, Route $route)
+    protected $request;
+
+    /***
+     * @param Route $route
+     * @param Request $request
+     */
+    function __construct(Route $route, Request $request)
     {
-        $this->definition = $definition;
-        $this->route      = $route;
+        $this->route   = $route;
+        $this->request = $request;
     }
 
     /**
@@ -48,9 +48,9 @@ class Match
     protected function args()
     {
         return [
-            Arg::EVENT      => $this,
-            Arg::DEFINITION => $this->definition,
-            Arg::ROUTE      => $this->route
+            Arg::EVENT   => $this,
+            Arg::ROUTE   => $this->route,
+            Arg::REQUEST => $this->request
         ];
     }
 
@@ -64,11 +64,11 @@ class Match
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        if (!$result instanceof Route) {
+        if (!$result instanceof Request) {
             $this->stop();
             return $result;
         }
 
-        return $this->route = $result;
+        return $this->request = $result;
     }
 }

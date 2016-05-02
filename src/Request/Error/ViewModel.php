@@ -3,10 +3,9 @@
  *
  */
 
-namespace Mvc5\Route\Error;
+namespace Mvc5\Request\Error;
 
 use Mvc5\Model\ViewModel as Base;
-use Mvc5\Route\Error;
 
 interface ViewModel
     extends Base

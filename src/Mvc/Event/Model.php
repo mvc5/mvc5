@@ -7,8 +7,8 @@ namespace Mvc5\Mvc\Event;
 
 use Mvc5\Arg;
 use Mvc5\Event\Signal;
-use Mvc5\Response\Response;
-use Mvc5\Route\Route;
+use Mvc5\Http\Response;
+use Mvc5\Http\Request;
 
 trait Model
 {
@@ -21,6 +21,11 @@ trait Model
      * @var array|\ArrayAccess
      */
     protected $config;
+
+    /**
+     * @var mixed
+     */
+    protected $model;
 
     /**
      * @param $event
@@ -37,7 +42,7 @@ trait Model
      */
     protected function controller()
     {
-        return $this->route()->controller();
+        return $this->config[Arg::REQUEST][Arg::CONTROLLER];
     }
 
     /**
@@ -46,12 +51,17 @@ trait Model
      */
     protected function model($model = null)
     {
-        if (null !== $model) {
-            $this->response()->setContent($model);
-            return $model;
-        }
+        return func_num_args() ? $this->config[Arg::RESPONSE][Arg::BODY] = $model
+            : $this->config[Arg::RESPONSE][Arg::BODY];
+    }
 
-        return $this->response()->content();
+    /**
+     * @param Request $request
+     * @return Request
+     */
+    protected function request(Request $request = null)
+    {
+        return null !== $request ? $this->config[Arg::REQUEST] = $request : $this->config[Arg::REQUEST];
     }
 
     /**
@@ -61,14 +71,5 @@ trait Model
     protected function response(Response $response = null)
     {
         return null !== $response ? $this->config[Arg::RESPONSE] = $response : $this->config[Arg::RESPONSE];
-    }
-
-    /**
-     * @param Route $route
-     * @return Route
-     */
-    protected function route(Route $route = null)
-    {
-        return null !== $route ? $this->config[Arg::ROUTE] = $route : $this->config[Arg::ROUTE];
     }
 }

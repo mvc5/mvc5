@@ -15,7 +15,7 @@ class Generator
     /**
      * @var string
      */
-    protected $class = Definition\Config::class;
+    protected $class = Config::class;
 
     /**
      * @param null|string $class
@@ -26,22 +26,22 @@ class Generator
     }
 
     /**
-     * @param array $definition
+     * @param array $route
      * @return string
      */
-    protected function createDefault(array $definition = [])
+    protected function createDefault(array $route = [])
     {
-        return new $this->class($definition);
+        return new $this->class($route);
     }
 
     /**
-     * @param array|Definition $definition
+     * @param array|Route $route
      * @param bool $compile
      * @param bool $recursive
-     * @return Definition
+     * @return Route
      */
-    function __invoke($definition, $compile = true, $recursive = false)
+    function __invoke($route, $compile = true, $recursive = false)
     {
-        return $this->build($definition, $compile, $recursive);
+        return $this->build($route, $compile, $recursive);
     }
 }

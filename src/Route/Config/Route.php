@@ -6,18 +6,77 @@
 namespace Mvc5\Route\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
-use Mvc5\Response\Error;
+use Mvc5\Config\Config as Base;
 
 trait Route
 {
     /**
      *
      */
-    use Config;
+    use Base;
 
     /**
-     * @return array|callable|null|object|string
+     * @param $name
+     * @param array|Route $route
+     * @return void
+     */
+    function add($name, $route)
+    {
+        $this->config[Arg::CHILDREN][$name] = $route;
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    function action($name)
+    {
+        return $this[Arg::ACTION][$name] ?? null;
+    }
+
+    /**
+     * @return array
+     */
+    function actions()
+    {
+        return $this[Arg::ACTION] ?? [];
+    }
+
+    /**
+     * @param string $name
+     * @return self
+     */
+    function child($name)
+    {
+        return $this[Arg::CHILDREN][$name] ?? null;
+    }
+
+    /**
+     * @return self[]
+     */
+    function children()
+    {
+        return $this[Arg::CHILDREN] ?? [];
+    }
+
+    /**
+     * @return null|string
+     */
+    function className()
+    {
+        return $this[Arg::CLASS_NAME];
+    }
+
+    /**
+     * @return array
+     */
+    function constraints()
+    {
+        return $this[Arg::CONSTRAINTS] ?? [];
+    }
+
+    /**
+     * @return array|callable|object|string
      */
     function controller()
     {
@@ -25,43 +84,35 @@ trait Route
     }
 
     /**
-     * @return Error
+     * @return array
      */
-    function error()
+    function defaults()
     {
-        return $this[Arg::ERROR];
+        return $this[Arg::DEFAULTS] ?? [];
     }
 
     /**
-     * @return string|string[]
+     * @return null|string|string[]
      */
-    function hostname()
+    function host()
     {
-        return $this[Arg::HOSTNAME];
+        return $this[Arg::HOST] ?? null;
     }
 
     /**
-     * @return int
+     * @return array
      */
-    function length()
+    function map()
     {
-        return $this[Arg::LENGTH] ?? 0;
+        return $this[Arg::MAP] ?? [];
     }
 
     /**
-     * @return bool
-     */
-    function matched()
-    {
-        return $this[Arg::MATCHED] ?? false;
-    }
-
-    /**
-     * @return string|string[]
+     * @return array
      */
     function method()
     {
-        return $this[Arg::METHOD];
+        return $this[Arg::METHOD] ?? null;
     }
 
     /**
@@ -73,31 +124,6 @@ trait Route
     }
 
     /**
-     * @param $name
-     * @return mixed
-     */
-    function param($name)
-    {
-        return $this[Arg::PARAMS][$name] ?? null;
-    }
-
-    /**
-     * @return array
-     */
-    function params()
-    {
-        return $this[Arg::PARAMS] ?? [];
-    }
-
-    /**
-     * @return string
-     */
-    function path()
-    {
-        return $this[Arg::PATH];
-    }
-
-    /**
      * @return int|null|string
      */
     function port()
@@ -106,10 +132,42 @@ trait Route
     }
 
     /**
-     * @return string|string[]
+     * @return string
+     */
+    function regex()
+    {
+        return $this[Arg::REGEX];
+    }
+
+    /**
+     * @return string
+     */
+    function route()
+    {
+        return $this[Arg::ROUTE];
+    }
+
+    /**
+     * @return null|string|string[]
      */
     function scheme()
     {
         return $this[Arg::SCHEME];
+    }
+
+    /**
+     * @return array
+     */
+    function tokens()
+    {
+        return $this[Arg::TOKENS] ?? [];
+    }
+
+    /**
+     * @return bool
+     */
+    function wildcard()
+    {
+        return $this[Arg::WILDCARD] ?? false;
     }
 }

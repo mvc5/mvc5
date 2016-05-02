@@ -3,11 +3,9 @@
  *
  */
 
-namespace Mvc5\Route\Exception;
+namespace Mvc5\Request\Error;
 
 use Mvc5\Arg;
-use Mvc5\Route\Route;
-use Throwable;
 
 class Create
 {
@@ -32,16 +30,16 @@ class Create
     }
 
     /**
-     * @param Route $route
-     * @param Throwable $exception
-     * @return Route
+     * @param array|\ArrayAccess $request
+     * @param $error
+     * @return array|\ArrayAccess
      */
-    function __invoke(Route $route, Throwable $exception)
+    function __invoke($request, $error)
     {
-        $route[Arg::CONTROLLER] = $this->controller;
-        $route[Arg::EXCEPTION]  = $exception;
-        $route[Arg::NAME]       = $this->name;
+        $request[Arg::CONTROLLER] = $this->controller;
+        $request[Arg::ERROR]      = $error;
+        $request[Arg::NAME]       = $this->name;
 
-        return $route;
+        return $request;
     }
 }

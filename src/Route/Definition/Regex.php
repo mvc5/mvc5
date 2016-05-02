@@ -31,7 +31,7 @@ trait Regex
                 continue;
             }
 
-            if ('parameter' === $token[Dash::TYPE]) {
+            if ('param' === $token[Dash::TYPE]) {
                 $groupName = '?P<param' . $groupIndex++ . '>';
 
                 if (isset($constraints[$token[Dash::NAME]])) {

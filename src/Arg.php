@@ -20,6 +20,11 @@ interface Arg
     /**
      *
      */
+    const BODY = 'body';
+
+    /**
+     *
+     */
     const CALL = '@';
 
     /**
@@ -55,6 +60,11 @@ interface Arg
     /**
      *
      */
+    const CLIENT_ADDRESS = 'client_address';
+
+    /**
+     *
+     */
     const CODE = 'code';
 
     /**
@@ -75,6 +85,11 @@ interface Arg
     /**
      *
      */
+    const CONTENT_TYPE = 'content_type';
+
+    /**
+     *
+     */
     const CONTROLLER = 'controller';
 
     /**
@@ -90,12 +105,17 @@ interface Arg
     /**
      *
      */
-    const DEFAULTS = 'defaults';
+    const COOKIES = 'cookies';
 
     /**
      *
      */
-    const DEFINITION = 'definition';
+    const DATA = 'data';
+
+    /**
+     *
+     */
+    const DEFAULTS = 'defaults';
 
     /**
      *
@@ -155,7 +175,22 @@ interface Arg
     /**
      *
      */
-    const HOSTNAME = 'hostname';
+    const HEADERS = 'headers';
+
+    /**
+     *
+     */
+    const HOST = 'host';
+
+    /**
+     *
+     */
+    const HTTP_OK = '200';
+
+    /**
+     *
+     */
+    const HTTP_VERSION = '1.1';
 
     /**
      *
@@ -176,6 +211,11 @@ interface Arg
      *
      */
     const MANAGER = 'manager';
+
+    /**
+     *
+     */
+    const MAP = 'map';
 
     /**
      *
@@ -226,12 +266,12 @@ interface Arg
     /**
      *
      */
-    const PARAM_MAP = 'paramMap';
+    const PARENT = 'parent';
 
     /**
      *
      */
-    const PARENT = 'parent';
+    const PASS = 'pass';
 
     /**
      *
@@ -257,6 +297,11 @@ interface Arg
      *
      */
     const QUERY = 'query';
+
+    /**
+     *
+     */
+    const REASON = 'reason';
 
     /**
      *
@@ -321,6 +366,11 @@ interface Arg
     /**
      *
      */
+    const SERVER = 'server';
+
+    /**
+     *
+     */
     const SERVICE = 'service';
 
     /**
@@ -341,7 +391,17 @@ interface Arg
     /**
      *
      */
+    const SESSION = 'session';
+
+    /**
+     *
+     */
     const STATUS = 'status';
+
+    /**
+     *
+     */
+    const STREAM = 'stream';
 
     /**
      *
@@ -357,6 +417,21 @@ interface Arg
      *
      */
     const TOKENS = 'tokens';
+
+    /**
+     *
+     */
+    const URI = 'uri';
+
+    /**
+     *
+     */
+    const USER = 'user';
+
+    /**
+     *
+     */
+    const VERSION = 'version';
 
     /**
      *

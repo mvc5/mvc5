@@ -15,12 +15,12 @@ trait Compile
 {
     /**
      * @param $tokens
-     * @param $args
+     * @param $params
      * @param $defaults
      * @return mixed
      * @throws InvalidArgumentException
      */
-    protected function compile($tokens, $args, $defaults)
+    protected function compile($tokens, $params, $defaults)
     {
         $stack = [];
 
@@ -39,11 +39,11 @@ trait Compile
 
                     break;
 
-                case 'parameter':
+                case 'param':
 
                     $current['skippable'] = true;
 
-                    if (!isset($args[$part[Dash::NAME]])) {
+                    if (!isset($params[$part[Dash::NAME]])) {
 
                         if (!$current['is_optional']) {
                             throw new InvalidArgumentException(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
@@ -54,11 +54,11 @@ trait Compile
 
                     if (!$current['is_optional']
                             || !isset($defaults[$part[Dash::NAME]])
-                                || $defaults[$part[Dash::NAME]] !== $args[$part[Dash::NAME]]) {
+                                || $defaults[$part[Dash::NAME]] !== $params[$part[Dash::NAME]]) {
                         $current['skip'] = false;
                     }
 
-                    $current['path'] .= $args[$part[Dash::NAME]];
+                    $current['path'] .= $params[$part[Dash::NAME]];
 
                     break;
 

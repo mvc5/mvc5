@@ -5,15 +5,19 @@
 
 namespace Mvc5\Response;
 
+use Mvc5\Arg;
+
 class Controller
 {
     /**
-     * @param Response $response
+     * @param array|\ArrayAccess $response
      * @param $model
-     * @return Response
+     * @return array|\ArrayAccess
      */
-    function __invoke(Response $response, $model)
+    function __invoke($response, $model)
     {
-        return $response->setContent($model);
+        $response[Arg::BODY] = $model;
+
+        return $response;
     }
 }

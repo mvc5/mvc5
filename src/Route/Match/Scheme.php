@@ -5,20 +5,20 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Route\Definition;
-use Mvc5\Response\Error\BadRequest;
 use Mvc5\Route\Route;
+use Mvc5\Response\Error\BadRequest;
+use Mvc5\Route\Request;
 
 class Scheme
 {
     /**
+     * @param Request $request
      * @param Route $route
-     * @param Definition $definition
-     * @return Route
+     * @return Request
      */
-    function __invoke(Route $route, Definition $definition)
+    function __invoke(Request $request, Route $route)
     {
-        return !$definition->scheme() || in_array($route->scheme(), (array) $definition->scheme())
-            ? $route : new BadRequest;
+        return !$route->scheme() || in_array($request->scheme(), (array) $route->scheme())
+            ? $request : new BadRequest;
     }
 }

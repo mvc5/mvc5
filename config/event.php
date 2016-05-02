@@ -30,14 +30,13 @@ return [
         'response\send'
     ],
     'route\dispatch' => [
-        'route\filter',
         'router',
         'route\error'
     ],
     'route\error' => [
         'error\handler',
         'error\status',
-        'error\route',
+        'error\request',
         // halt mvc event or new response object
         //'error\controller',
         //'error\layout',
@@ -46,14 +45,14 @@ return [
     ],
     'route\exception' => [
         'exception\status',
-        'exception\route',
+        'exception\request',
         //'exception\controller',
         //'exception\view',
         //'exception\response'
     ],
     'route\match' => [
         'route\match\scheme',
-        'route\match\hostname',
+        'route\match\host',
         'route\match\method',
         'route\match\path',
         'route\match\action',

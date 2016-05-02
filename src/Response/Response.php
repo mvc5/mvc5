@@ -5,33 +5,45 @@
 
 namespace Mvc5\Response;
 
+use Mvc5\Http\Response as HttpResponse;
+
 interface Response
+    extends HttpResponse
 {
     /**
-     * @return callable|mixed|null|string|object
+     * @param $body
+     * @return mixed
      */
-    function content();
+    function body($body = null);
 
     /**
-     * @return void
+     * @param string     $name
+     * @param string     $value
+     * @param int        $expire
+     * @param string     $path
+     * @param string     $domain
+     * @param bool|false $secure
+     * @param bool|false $httponly
+     * @return mixed
      */
-    function send();
+    function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
-     * @param  mixed $content
-     * @return self
+     * @return array
      */
-    function setContent($content);
+    function cookies();
 
     /**
-     * @param int $code
-     * @param string $text
-     * @return self
+     * @param string $name
+     * @param string $value
+     * @param bool $replace
+     * @return string
      */
-    function setStatus($code, $text = '');
+    function header($name, $value, $replace = false);
 
     /**
+     * @param $status
      * @return int
      */
-    function status();
+    function status($status = null);
 }

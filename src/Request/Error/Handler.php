@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Route\Error;
+namespace Mvc5\Request\Error;
 
 use Mvc5\Response\Error;
 use Mvc5\Response\Error\NotFound;
@@ -16,6 +16,6 @@ class Handler
      */
     function __invoke(Error $error = null)
     {
-        return $error ?? new NotFound;
+        return $error ?: new NotFound;
     }
 }

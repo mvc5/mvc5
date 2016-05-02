@@ -6,7 +6,8 @@
 namespace Mvc5\Route\Definition;
 
 use Mvc5\Arg;
-use Mvc5\Route\Definition;
+use Mvc5\Route\Config;
+use Mvc5\Route\Route;
 use RuntimeException;
 
 trait Build
@@ -19,83 +20,83 @@ trait Build
     use Tokens;
 
     /**
-     * @param array|Definition $definition
+     * @param array|Route $route
      * @param bool $compile
      * @param bool $recursive
-     * @return array|Definition
+     * @return array|Route
      */
-    protected function definition($definition, $compile = true, $recursive = false)
+    protected function definition($route, $compile = true, $recursive = false)
     {
-        if (!isset($definition[Arg::ROUTE])) {
+        if (!isset($route[Arg::ROUTE])) {
             throw new RuntimeException('Route not specified');
         }
 
-        !isset($definition[Arg::CONSTRAINTS]) && $definition[Arg::CONSTRAINTS] = [];
+        !isset($route[Arg::CONSTRAINTS]) && $route[Arg::CONSTRAINTS] = [];
 
-        !isset($definition[Arg::TOKENS]) && $definition[Arg::TOKENS]
-            = $this->tokens($definition[Arg::ROUTE]);
+        !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS]
+            = $this->tokens($route[Arg::ROUTE]);
 
-        $compile && !isset($definition[Arg::REGEX]) && $definition[Arg::REGEX]
-            = $this->regex($definition[Arg::TOKENS], $definition[Arg::CONSTRAINTS]);
+        $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX]
+            = $this->regex($route[Arg::TOKENS], $route[Arg::CONSTRAINTS]);
 
-        !isset($definition[Arg::PARAM_MAP]) && $definition[Arg::PARAM_MAP]
-            = $this->params($definition[Arg::TOKENS]);
+        !isset($route[Arg::MAP]) && $route[Arg::MAP]
+            = $this->params($route[Arg::TOKENS]);
 
-        $recursive && isset($definition[Arg::CHILDREN]) && $definition[Arg::CHILDREN]
-            = $this->children($definition[Arg::CHILDREN], $compile, $recursive);
+        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN]
+            = $this->children($route[Arg::CHILDREN], $compile, $recursive);
 
-        return $definition;
+        return $route;
     }
 
     /**
-     * @param array $definitions
+     * @param array $routes
      * @param bool $compile
      * @param bool $recursive
      * @return array
      */
-    protected function children(array $definitions, $compile = true, $recursive = true)
+    protected function children(array $routes, $compile = true, $recursive = true)
     {
-        foreach($definitions as $name => $definition) {
-            $definitions[$name] = $this->build($definition, $compile, $recursive);
+        foreach($routes as $name => $route) {
+            $routes[$name] = $this->build($route, $compile, $recursive);
         }
 
-        return $definitions;
+        return $routes;
     }
 
     /**
-     * @param array|Definition $definition
-     * @return Definition
+     * @param array|Route $route
+     * @return Route
      */
-    protected function create($definition)
+    protected function create($route)
     {
-        if ($definition instanceof Definition) {
-            return $definition;
+        if ($route instanceof Route) {
+            return $route;
         }
 
-        if (isset($definition[Arg::CLASS_NAME])) {
-            return new $definition[Arg::CLASS_NAME]($definition);
+        if (isset($route[Arg::CLASS_NAME])) {
+            return new $route[Arg::CLASS_NAME]($route);
         }
 
-        return $this->createDefault($definition);
+        return $this->createDefault($route);
     }
 
     /**
-     * @param array $definition
+     * @param array $route
      * @return string
      */
-    protected function createDefault(array $definition = [])
+    protected function createDefault(array $route = [])
     {
-        return new Config($definition);
+        return new Config($route);
     }
 
     /**
-     * @param array|Definition $definition
+     * @param array|Route $route
      * @param bool $compile
      * @param bool $recursive
-     * @return Definition
+     * @return Route
      */
-    protected function build($definition, $compile = true, $recursive = false)
+    protected function build($route, $compile = true, $recursive = false)
     {
-        return $this->create($this->definition($definition, $compile, $recursive));
+        return $this->create($this->definition($route, $compile, $recursive));
     }
 }

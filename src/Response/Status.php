@@ -5,6 +5,8 @@
 
 namespace Mvc5\Response;
 
+use Mvc5\Arg;
+
 class Status
 {
     /**
@@ -21,11 +23,13 @@ class Status
     }
 
     /**
-     * @param Response $response
+     * @param array|\ArrayAccess $response
      * @return mixed
      */
-    function __invoke(Response $response)
+    function __invoke($response)
     {
-        return $response->setStatus($this->status);
+        $response[Arg::STATUS] = $this->status;
+
+        return $response;
     }
 }

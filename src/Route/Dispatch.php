@@ -8,6 +8,7 @@ namespace Mvc5\Route;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\Signal;
+use Mvc5\Request\Request as Mvc5Request;
 use Mvc5\Response\Error;
 use Mvc5\Response\Response;
 
@@ -56,7 +57,7 @@ class Dispatch
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        ($result instanceof Route || $result instanceof Response) && $this->stop();
+        ($result instanceof Mvc5Request || $result instanceof Response) && $this->stop();
 
         if ($result instanceof Error) {
             $this->error  = $result;

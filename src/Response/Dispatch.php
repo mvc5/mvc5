@@ -8,6 +8,7 @@ namespace Mvc5\Response;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\Signal;
+use Mvc5\Http\Response as HttpResponse;
 use Mvc5\Response\Error;
 
 class Dispatch
@@ -40,9 +41,9 @@ class Dispatch
 
     /**
      * @param $event
-     * @param Response $response
+     * @param HttpResponse $response
      */
-    function __construct($event, Response $response = null)
+    function __construct($event, HttpResponse $response = null)
     {
         $this->event    = $event;
         $this->response = $response;
@@ -72,7 +73,7 @@ class Dispatch
     {
         $response = $this->signal($callable, $this->args() + $args, $callback);
 
-        if ($response instanceof Response) {
+        if ($response instanceof HttpResponse) {
             $this->response = $response;
             return $response;
         }
