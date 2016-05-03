@@ -190,7 +190,7 @@ interface Arg
     /**
      *
      */
-    const HTTP_VERSION = '1.1';
+    const HTTP_VERSION = '1.0';
 
     /**
      *
