@@ -98,7 +98,7 @@ trait Uri
 
         $path .= ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
 
-        $authority = $this->user() ? ($this->user() . ':' . $this->password()) : '';
+        $user = $this->user() ? ($this->user() . ':' . $this->password()) : '';
 
         $scheme = $this->scheme();
         $host   = $this->host();
@@ -108,6 +108,6 @@ trait Uri
             $port = null;
 
         return ($scheme ? $scheme . ':' : '') . '//' .
-            ($authority ? $authority . '@' : '') . $host . ($port ? ':' . $port : '') . '/' . ltrim($path, '/');
+            ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') . '/' . ltrim($path, '/');
     }
 }

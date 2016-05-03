@@ -31,7 +31,7 @@ interface Request
     function attr($name, $value);
 
     /**
-     * @return mixed
+     * @return string
      */
     function clientAddress();
 
@@ -131,13 +131,13 @@ interface Request
     function query();
 
     /**
-     * @return string|string[]
+     * @return string
      */
     function scheme();
 
     /**
      * @param $name
-     * @return array|\ArrayAccess
+     * @return mixed
      */
     function server($name = null);
 

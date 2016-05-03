@@ -16,7 +16,7 @@ interface Request
     function body();
 
     /**
-     * @return array
+     * @return array|Configuration
      */
     function headers();
 
@@ -26,7 +26,7 @@ interface Request
     function method();
 
     /**
-     * @return Uri
+     * @return string|Uri
      */
     function uri();
 

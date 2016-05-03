@@ -5,6 +5,7 @@
 
 namespace Mvc5\Response;
 
+use Mvc5\Cookie\Cookies;
 use Mvc5\Http\Response as HttpResponse;
 
 interface Response
@@ -29,7 +30,7 @@ interface Response
     function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
-     * @return array
+     * @return array|Cookies
      */
     function cookies();
 

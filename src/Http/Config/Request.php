@@ -16,7 +16,7 @@ trait Request
     use Config;
 
     /**
-     * @return string
+     * @return mixed
      */
     function body()
     {
@@ -32,7 +32,7 @@ trait Request
     }
 
     /**
-     * @return string|string[]
+     * @return string
      */
     function method()
     {
@@ -40,7 +40,7 @@ trait Request
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     function uri()
     {

@@ -107,7 +107,7 @@ trait Request
      */
     function header($name)
     {
-        return $this->headers()[$name] ?? null;
+        return $this[Arg::HEADERS][$name] ?? null;
     }
 
     /**
