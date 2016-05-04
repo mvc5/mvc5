@@ -156,4 +156,9 @@ interface Request
      * @return mixed
      */
     function user();
+
+    /**
+     * @return string
+     */
+    function userAgent();
 }

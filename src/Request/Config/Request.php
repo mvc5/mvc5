@@ -241,4 +241,12 @@ trait Request
     {
         return $this[Arg::USER];
     }
+
+    /**
+     * @return mixed
+     */
+    function userAgent()
+    {
+        return $this[Arg::USER_AGENT];
+    }
 }
