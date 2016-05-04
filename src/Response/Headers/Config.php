@@ -5,14 +5,14 @@
 
 namespace Mvc5\Response\Headers;
 
-use Mvc5\Response\Config\Headers as _Headers;
-use Mvc5\Response\Headers;
+use Mvc5\Response\Config\Headers;
+use Mvc5\Response\Headers as ResponseHeaders;
 
 class Config
-    implements Headers
+    implements ResponseHeaders
 {
     /**
      *
      */
-    use _Headers;
+    use Headers;
 }
