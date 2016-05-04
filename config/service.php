@@ -44,7 +44,7 @@ return [
     'mvc\route'                  => new Service(Mvc5\Mvc\Route::class),
     'mvc\view'                   => new Service(Mvc5\Mvc\View::class),
     'request'                    => new Dependency('request', new Plug('request\config')),
-    'request\config'             => Mvc5\Request\Config::class,
+    'request\config'             => new Plugin(Mvc5\Request\Config::class),
     'resolver\exception'         => Mvc5\Resolver\Exception::class,
     'resolver\dispatch'          => Mvc5\Resolver\Dispatch::class,
     'response\controller'        => Mvc5\Response\Controller::class,
