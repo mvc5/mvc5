@@ -190,11 +190,6 @@ interface Arg
     /**
      *
      */
-    const HTTP_VERSION = '1.0';
-
-    /**
-     *
-     */
     const INDEX = '#';
 
     /**
@@ -427,6 +422,11 @@ interface Arg
      *
      */
     const USER = 'user';
+
+    /**
+     *
+     */
+    const USER_AGENT = 'user_agent';
 
     /**
      *

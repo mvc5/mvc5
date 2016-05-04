@@ -52,6 +52,6 @@ trait Request
      */
     function version()
     {
-        return $this[Arg::VERSION] ?: Arg::HTTP_VERSION;
+        return $this[Arg::VERSION];
     }
 }

@@ -44,7 +44,7 @@ trait Response
      */
     function status()
     {
-        return $this[Arg::STATUS] ?: Arg::HTTP_OK;
+        return $this[Arg::STATUS];
     }
 
     /**
@@ -52,6 +52,6 @@ trait Response
      */
     function version()
     {
-        return $this[Arg::VERSION] ?: Arg::HTTP_VERSION;
+        return $this[Arg::VERSION];
     }
 }
