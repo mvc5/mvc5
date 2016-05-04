@@ -30,9 +30,10 @@ interface Response
     function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
+     * @param array|Cookies $cookies
      * @return array|Cookies
      */
-    function cookies();
+    function cookies($cookies = null);
 
     /**
      * @param string $name
@@ -43,8 +44,20 @@ interface Response
     function header($name, $value, $replace = false);
 
     /**
+     * @param array|Headers $headers
+     * @return array|Headers
+     */
+    function headers($headers = null);
+
+    /**
      * @param $status
      * @return int
      */
     function status($status = null);
+
+    /**
+     * @param $version
+     * @return int
+     */
+    function version($version = null);
 }

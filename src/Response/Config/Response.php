@@ -9,7 +9,8 @@ use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 use Mvc5\Cookie\Container as CookieJar;
 use Mvc5\Http\Config\Response as HttpResponse;
-use Mvc5\Response\Headers\Config as ResponseHeaders;
+use Mvc5\Response\Headers as ResponseHeaders;
+use Mvc5\Response\Headers\Config as HeadersConfig;
 
 trait Response
 {
@@ -29,8 +30,8 @@ trait Response
         $this->config = [
             Arg::BODY    => $body,
             Arg::COOKIES => $config[Arg::COOKIES] ?? new CookieJar,
-            Arg::HEADERS => $headers ?: new ResponseHeaders,
-            Arg::STATUS  => $status ?: Arg::HTTP_OK,
+            Arg::HEADERS => $headers instanceof HeadersConfig ? $headers : new HeadersConfig($headers),
+            Arg::STATUS  => $status
         ] + $config;
     }
 
@@ -59,11 +60,12 @@ trait Response
     }
 
     /**
+     * @param $cookies
      * @return array|Cookies
      */
-    function cookies()
+    function cookies($cookies = null)
     {
-        return $this[Arg::COOKIES];
+        return null !== $cookies ? $this[Arg::COOKIES] = $cookies : $this[Arg::COOKIES];
     }
 
     /**
@@ -82,11 +84,29 @@ trait Response
     }
 
     /**
+     * @param $headers
+     * @return array|ResponseHeaders
+     */
+    function headers($headers = null)
+    {
+        return null !== $headers ? $this[Arg::HEADERS] = $headers : $this[Arg::HEADERS];
+    }
+
+    /**
      * @param $status
      * @return string
      */
     function status($status = null)
     {
         return null !== $status ? $this[Arg::STATUS] = $status : $this[Arg::STATUS];
+    }
+
+    /**
+     * @param $version
+     * @return string
+     */
+    function version($version = null)
+    {
+        return null !== $version ? $this[Arg::VERSION] = $version : $this[Arg::VERSION];
     }
 }
