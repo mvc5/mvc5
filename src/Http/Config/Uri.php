@@ -42,25 +42,17 @@ trait Uri
     /**
      * @return string
      */
-    function path()
-    {
-        return $this[Arg::PATH];
-    }
-
-    /**
-     * @return string
-     */
-    function query()
-    {
-        return $this[Arg::QUERY];
-    }
-
-    /**
-     * @return string
-     */
     function password()
     {
         return $this[Arg::PASS];
+    }
+
+    /**
+     * @return string
+     */
+    function path()
+    {
+        return $this[Arg::PATH];
     }
 
     /**
@@ -69,6 +61,14 @@ trait Uri
     function port()
     {
         return $this[Arg::PORT];
+    }
+
+    /**
+     * @return string
+     */
+    function query()
+    {
+        return $this[Arg::QUERY];
     }
 
     /**

@@ -23,22 +23,22 @@ interface Uri
     /**
      * @return string
      */
-    function path();
-
-    /**
-     * @return string
-     */
-    function query();
-
-    /**
-     * @return string
-     */
     function password();
+
+    /**
+     * @return string
+     */
+    function path();
 
     /**
      * @return int
      */
     function port();
+
+    /**
+     * @return string
+     */
+    function query();
 
     /**
      * @return string
