@@ -72,6 +72,7 @@ return [
     ],
     'web' => [
         'mvc',
+        'response\prepare',
         'response\send'
     ]
 ];

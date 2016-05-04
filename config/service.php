@@ -8,6 +8,7 @@ use Mvc5\Plugin\Dependency;
 use Mvc5\Plugin\Hydrator;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
+use Mvc5\Plugin\Plug;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Response;
 use Mvc5\Plugin\Service;
@@ -35,18 +36,22 @@ return [
     'layout'                     => [Mvc5\Layout::class, 'layout'],
     'manager'                    => new Plugin(null),
     'middleware'                 => new Service(Mvc5\Middleware::class, [new Param('middleware')]),
-    'mvc'                        => new Plugin(Mvc5\Mvc::class, ['mvc', new Link], [new Dependency('request')]),
+    'mvc'                        => [Mvc5\Mvc::class, 'mvc', new Link],
     'mvc\controller'             => new Service(Mvc5\Mvc\Controller::class),
     'mvc\error'                  => new Service(Mvc5\Mvc\Error::class),
     'mvc\layout'                 => Mvc5\Mvc\Layout::class,
     'mvc\response'               => Mvc5\Mvc\Response::class,
     'mvc\route'                  => new Service(Mvc5\Mvc\Route::class),
     'mvc\view'                   => new Service(Mvc5\Mvc\View::class),
+    'request'                    => new Dependency('request', new Plug('request\config')),
+    'request\config'             => Mvc5\Request\Config::class,
     'resolver\exception'         => Mvc5\Resolver\Exception::class,
     'resolver\dispatch'          => Mvc5\Resolver\Dispatch::class,
     'response\controller'        => Mvc5\Response\Controller::class,
+    'response'                   => Mvc5\Response\Config::class,
     'response\dispatch'          => [Mvc5\Response\Dispatch::class, 'response' => new Dependency('response')],
     'response\exception'         => new Response('response\exception', ['response' => new Plugin('response')]),
+    'response\prepare'           => Mvc5\Response\Prepare::class,
     'response\send'              => Mvc5\Response\Send::class,
     'response\status'            => Mvc5\Response\Status::class,
     'route\generator'            => new Dependency('route\definition\generator'),
