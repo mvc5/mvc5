@@ -118,19 +118,17 @@ trait Config
     function __clone()
     {
         if (!is_object($this->config)) {
-            goto values;
+            return null;
         }
 
         if (!$this->config instanceof Scope) {
-            $this->config = clone $this->config;
-            goto values;
+            return $this->config = clone $this->config;
         }
 
         $scope = $this->config->scope();
 
         if (!$scope instanceof self) {
-            $this->config = clone $this->config;
-            goto values;
+            return $this->config = clone $this->config;
         }
 
         $this->config->scope(false);
@@ -141,12 +139,5 @@ trait Config
         $this->config->scope($scope);
 
         $this->config = $clone;
-
-        values:
-
-        foreach($this->config as $key => $value) {
-            is_object($value) &&
-                ($this->config[$key] = clone $value);
-        }
     }
 }

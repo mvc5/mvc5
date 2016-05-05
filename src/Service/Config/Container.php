@@ -21,7 +21,7 @@ trait Container
     protected $container = [];
 
     /**
-     * @var array|\ArrayAccess
+     * @var array|Configuration
      */
     protected $services = [];
 
@@ -178,11 +178,5 @@ trait Container
 
         is_object($this->services) &&
             $this->services = clone $this->services;
-
-        if (is_array($this->container)) {
-            foreach($this->container as $key => $value) {
-                is_object($value) && ($this->container[$key] = clone $value);
-            }
-        }
     }
 }

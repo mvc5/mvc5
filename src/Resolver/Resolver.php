@@ -664,10 +664,6 @@ trait Resolver
             if (isset($this->config[Arg::CONTAINER])) {
                 $this->config[Arg::CONTAINER] = $this->container;
             }
-        } else {
-            foreach($this->container as $key => $value) {
-                is_object($value) && ($this->container[$key] = clone $value);
-            }
         }
 
         if (is_object($this->events)) {
