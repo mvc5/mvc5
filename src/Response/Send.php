@@ -6,7 +6,6 @@
 namespace Mvc5\Response;
 
 use Mvc5\Http\Response as HttpResponse;
-use Mvc5\Http\Response\StatusCode;
 use Mvc5\Signal;
 
 class Send
@@ -15,7 +14,6 @@ class Send
      *
      */
     use Signal;
-    use StatusCode;
 
     /**
      * @param HttpResponse $response
@@ -37,12 +35,7 @@ class Send
             }
         }
 
-        $statusLine = sprintf(
-            'HTTP/%s %s %s',
-            $response->version(),
-            $response->status(),
-            trim($response->reason()) ?: $this->statusCodeText($response->status())
-        );
+        $statusLine = sprintf('HTTP/%s %s %s', $response->version(), $response->status(), $response->reason());
 
         header($statusLine, true, $response->status());
     }

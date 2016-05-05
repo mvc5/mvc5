@@ -8,9 +8,15 @@ namespace Mvc5\Response\Prepare;
 use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
+use Mvc5\Http\Response\StatusCode;
 
 trait Prepare
 {
+    /**
+     *
+     */
+    use StatusCode;
+
     /**
      * @param Request $request
      * @param Response $response
@@ -20,6 +26,9 @@ trait Prepare
     {
         !$response->status() &&
             $response[Arg::STATUS] = Arg::HTTP_OK;
+
+        !$response->reason() &&
+            $response[Arg::REASON] = $this->statusCodeText($response->status());
 
         !$response->version() &&
             $response[Arg::VERSION] = $request->version();
