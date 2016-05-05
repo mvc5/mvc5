@@ -14,7 +14,7 @@ matrix:
     
 before_script:
   - composer selfupdate
-  - composer create-project mvc5/mvc5-application build --stability dev --dev --keep-vcs
+  - composer create-project mvc5/mvc5-application build --stability dev --keep-vcs
 
 after_script:
   - composer require codeclimate/php-test-reporter
