@@ -20,39 +20,39 @@ trait ArrayAccess
     abstract function has($name);
 
     /**
-     * @param mixed $config
+     * @param mixed $name
      * @return bool
      */
-    function offsetExists($config)
+    function offsetExists($name)
     {
-        return $this->has($config);
+        return $this->has($name);
     }
 
     /**
-     * @param mixed $config
+     * @param mixed $name
      * @return mixed
      */
-    function offsetGet($config)
+    function offsetGet($name)
     {
-        return $this->get($config);
+        return $this->get($name);
     }
 
     /**
-     * @param mixed $config
+     * @param mixed $name
      * @param mixed $value
      * @return mixed $value
      */
-    function offsetSet($config, $value)
+    function offsetSet($name, $value)
     {
-        return $this->set($config, $value);
+        return $this->set($name, $value);
     }
 
     /**
-     * @param mixed $config
+     * @param mixed $name
      */
-    function offsetUnset($config)
+    function offsetUnset($name)
     {
-        $this->remove($config);
+        $this->remove($name);
     }
 
     /**
@@ -63,8 +63,8 @@ trait ArrayAccess
 
     /**
      * @param string $name
-     * @param mixed $config
-     * @return mixed $config
+     * @param mixed $value
+     * @return mixed
      */
-    abstract function set($name, $config);
+    abstract function set($name, $value);
 }

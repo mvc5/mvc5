@@ -63,8 +63,8 @@ trait Initializer
 
     /**
      * @param string $name
-     * @param mixed $service
-     * @return void
+     * @param mixed $value
+     * @return mixed
      */
-    protected abstract function set($name, $service);
+    protected abstract function set($name, $value);
 }

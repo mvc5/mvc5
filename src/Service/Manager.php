@@ -16,10 +16,10 @@ interface Manager
 
     /**
      * @param string $name
-     * @param mixed $config
-     * @return void
+     * @param mixed $value
+     * @return mixed
      */
-    function configure($name, $config);
+    function configure($name, $value);
 
     /**
      * @param string $name

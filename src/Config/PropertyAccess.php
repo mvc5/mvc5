@@ -27,44 +27,44 @@ trait PropertyAccess
 
     /**
      * @param string $name
-     * @param mixed $config
-     * @return mixed $config
-     */
-    abstract function set($name, $config);
-
-    /**
-     * @param mixed $config
+     * @param mixed $value
      * @return mixed
      */
-    function __get($config)
+    abstract function set($name, $value);
+
+    /**
+     * @param mixed $name
+     * @return mixed
+     */
+    function __get($name)
     {
-        return $this->get($config);
+        return $this->get($name);
     }
 
     /**
-     * @param mixed $config
+     * @param mixed $name
      * @return bool
      */
-    function __isset($config)
+    function __isset($name)
     {
-        return $this->has($config);
+        return $this->has($name);
     }
 
     /**
-     * @param mixed $config
+     * @param mixed $name
      * @param mixed $value
-     * @return mixed $value
+     * @return mixed
      */
-    function __set($config, $value)
+    function __set($name, $value)
     {
-        return $this->set($config, $value);
+        return $this->set($name, $value);
     }
 
     /**
-     * @param mixed $config
+     * @param mixed $name
      */
-    function __unset($config)
+    function __unset($name)
     {
-        $this->remove($config);
+        $this->remove($name);
     }
 }

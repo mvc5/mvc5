@@ -96,12 +96,12 @@ trait Config
 
     /**
      * @param string $name
-     * @param mixed $config
-     * @return mixed $config
+     * @param mixed $value
+     * @return mixed
      */
-    function set($name, $config)
+    function set($name, $value)
     {
-        return $this->config[$name] = $config;
+        return $this->config[$name] = $value;
     }
 
     /**

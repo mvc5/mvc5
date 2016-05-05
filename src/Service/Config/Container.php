@@ -36,12 +36,12 @@ trait Container
 
     /**
      * @param string $name
-     * @param mixed $config
-     * @return void
+     * @param mixed $value
+     * @return mixed
      */
-    function configure($name, $config)
+    function configure($name, $value)
     {
-        $this->services[$name] = $config;
+        return $this->services[$name] = $value;
     }
 
     /**
@@ -149,12 +149,12 @@ trait Container
 
     /**
      * @param string $name
-     * @param mixed $config
+     * @param mixed $value
      * @return mixed
      */
-    function set($name, $config)
+    function set($name, $value)
     {
-        return $this->container[$name] = $config;
+        return $this->container[$name] = $value;
     }
 
     /**
