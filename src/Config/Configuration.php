@@ -36,13 +36,13 @@ interface Configuration
     /**
      * @param string $name
      * @param mixed $value
-     * @return mixed
+     * @return self
      */
     function with($name, $value);
 
     /**
      * @param string $name
-     * @return mixed
+     * @return self
      */
     function without($name);
 }
