@@ -32,4 +32,17 @@ interface Configuration
      * @return mixed
      */
     function set($name, $value);
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
+     */
+    function with($name, $value);
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    function without($name);
 }

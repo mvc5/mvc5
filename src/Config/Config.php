@@ -114,6 +114,29 @@ trait Config
     }
 
     /**
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
+     */
+    function with($name, $value)
+    {
+        $new = clone $this;
+        $new->set($name, $value);
+        return $new;
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    function without($name)
+    {
+        $new = clone $this;
+        $new->remove($name);
+        return $new;
+    }
+
+    /**
      *
      */
     function __clone()
