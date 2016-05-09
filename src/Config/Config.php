@@ -162,6 +162,6 @@ trait Config
 
         $this->config->scope($scope);
 
-        $this->config = $clone;
+        return $this->config = $clone;
     }
 }
