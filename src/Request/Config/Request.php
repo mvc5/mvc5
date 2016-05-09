@@ -106,7 +106,7 @@ trait Request
      */
     function files()
     {
-        return $this[Arg::FILES];
+        return $this[Arg::FILES] ?: [];
     }
 
     /**
