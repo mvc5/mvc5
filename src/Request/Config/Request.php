@@ -102,6 +102,14 @@ trait Request
     }
 
     /**
+     * @return array
+     */
+    function files()
+    {
+        return $this[Arg::FILES];
+    }
+
+    /**
      * @param $name
      * @return string
      */

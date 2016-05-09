@@ -165,6 +165,11 @@ interface Arg
     /**
      *
      */
+    const FILES = 'files';
+
+    /**
+     *
+     */
     const FORM = 'form';
 
     /**

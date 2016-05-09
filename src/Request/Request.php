@@ -68,6 +68,11 @@ interface Request
     function error();
 
     /**
+     * @return array
+     */
+    function files();
+
+    /**
      * @param string $name
      * @return string
      */
