@@ -116,7 +116,7 @@ trait Config
     /**
      * @param string $name
      * @param mixed $value
-     * @return self
+     * @return self|mixed
      */
     function with($name, $value)
     {
@@ -127,7 +127,7 @@ trait Config
 
     /**
      * @param string $name
-     * @return self
+     * @return self|mixed
      */
     function without($name)
     {
