@@ -68,9 +68,10 @@ trait Router
         $parent = $request->name();
 
         foreach($route->children() as $name => $route) {
-            $request[Arg::NAME] = $this->name() === $parent ? $name : $parent . Arg::SEPARATOR . $name;
+            $this->name() !== $parent &&
+                $name = $parent . Arg::SEPARATOR . $name;
 
-            if ($match = $this->dispatch(clone $request, $this->routeDefinition($route))) {
+            if ($match = $this->dispatch($request->with(Arg::NAME, $name), $this->routeDefinition($route))) {
                 return $match;
             }
         }
