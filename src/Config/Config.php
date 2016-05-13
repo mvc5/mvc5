@@ -13,6 +13,7 @@ trait Config
      *
      */
     use ArrayAccess;
+    use PropertyAccess;
 
     /**
      * @var array|Configuration

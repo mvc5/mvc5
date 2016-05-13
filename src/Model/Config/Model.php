@@ -6,7 +6,6 @@
 namespace Mvc5\Model\Config;
 
 use Mvc5\Config\Config;
-use Mvc5\Config\PropertyAccess;
 
 trait Model
 {
@@ -14,7 +13,6 @@ trait Model
      *
      */
     use Config;
-    use PropertyAccess;
 
     /**
      * @param string $name
