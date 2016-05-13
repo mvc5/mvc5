@@ -6,16 +6,14 @@
 namespace Mvc5\Model\Template;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
-use Mvc5\Config\PropertyAccess;
+use Mvc5\Model\Config\Model as _Model;
 
 trait Model
 {
     /**
      *
      */
-    use Config;
-    use PropertyAccess;
+    use _Model;
 
     /**
      * @param $template
@@ -24,9 +22,7 @@ trait Model
     function __construct($template = null, array $config = [])
     {
         $this->config = $config + array_filter([
-                Arg::TEMPLATE_MODEL => $template ?? (
-                    defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null
-                    )
+                Arg::TEMPLATE_MODEL => $template ?? (defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null)
             ]);
     }
 
