@@ -41,8 +41,10 @@ trait Mvc
         $model = $this->signal($callable, $this->args() + $args, $callback);
 
         if ($model instanceof HttpResponse) {
-            $this->stop();
-            return $model;
+            $model !== $this->response() &&
+                $this->stop();
+
+            return $this->response($model);
         }
 
         if ($model instanceof HttpRequest) {
