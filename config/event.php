@@ -37,7 +37,8 @@ return [
         'error\handler',
         'error\status',
         'error\request',
-        // halt mvc event or new response object
+        // optionally halt mvc with a new response object,
+        // see response\exception for example service configuration
         //'error\controller',
         //'error\layout',
         //'error\view',
