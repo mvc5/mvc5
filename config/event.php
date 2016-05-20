@@ -27,6 +27,7 @@ return [
         'exception\controller',
         'exception\view',
         'exception\response',
+        'response\prepare',
         'response\send'
     ],
     'route\dispatch' => [
