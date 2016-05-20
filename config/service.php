@@ -50,7 +50,7 @@ return [
     'response'                   => new Dependency('response', new Plug('response\config')),
     'response\config'            => new Plugin(Mvc5\Response\Config::class),
     'response\controller'        => Mvc5\Response\Controller::class,
-    'response\dispatch'          => [Mvc5\Response\Dispatch::class, 'response' => new Plug('response\config')],
+    'response\dispatch'          => Mvc5\Response\Dispatch::class,
     'response\exception'         => new Response('response\exception', ['response' => new Plug('response\config')]),
     'response\prepare'           => Mvc5\Response\Prepare::class,
     'response\send'              => Mvc5\Response\Send::class,
