@@ -14,11 +14,6 @@ class Middleware
     extends Call
 {
     /**
-     *
-     */
-    const APP_CLASS = 'Mvc5\App';
-
-    /**
      * @param $config
      */
     function __construct($config)
