@@ -5,9 +5,12 @@
 
 namespace Mvc5\Request\Exception;
 
+use Exception;
 use Mvc5\Arg;
+use Mvc5\Http\Request;
+use Mvc5\Response\Error\ServerError;
 
-class Create
+class Error
 {
     /**
      * @var
@@ -30,15 +33,16 @@ class Create
     }
 
     /**
-     * @param array|\ArrayAccess $request
-     * @param $exception
-     * @return array|\ArrayAccess
+     * @param Request $request
+     * @param Exception $exception
+     * @return Request
      */
-    function __invoke($request, $exception)
+    function __invoke(Request $request, Exception $exception)
     {
         $request[Arg::CONTROLLER] = $this->controller;
         $request[Arg::EXCEPTION]  = $exception;
         $request[Arg::NAME]       = $this->name;
+        $request[Arg::ERROR]      = new ServerError;
 
         return $request;
     }

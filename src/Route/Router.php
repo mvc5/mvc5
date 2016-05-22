@@ -5,7 +5,7 @@
 
 namespace Mvc5\Route;
 
-use Mvc5\Plugin as Service;
+use Mvc5\Plugin;
 
 class Router
 {
@@ -13,6 +13,6 @@ class Router
      *
      */
     use Dispatcher;
-    use Service;
+    use Plugin;
     use Router\Router;
 }

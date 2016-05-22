@@ -8,9 +8,8 @@ namespace Mvc5\Route;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\Signal;
-use Mvc5\Request\Request as Mvc5Request;
-use Mvc5\Response\Error;
-use Mvc5\Response\Response;
+use Mvc5\Http\Request as HttpRequest;
+use Mvc5\Response\Error as ResponseError;
 
 class Dispatch
     implements Event
@@ -31,9 +30,9 @@ class Dispatch
     protected $error;
 
     /**
-     * @var int
+     * @var Request
      */
-    protected $status;
+    protected $request;
 
     /**
      * @return array
@@ -41,9 +40,9 @@ class Dispatch
     protected function args()
     {
         return array_filter([
-            Arg::ERROR  => $this->error,
-            Arg::EVENT  => $this,
-            Arg::STATUS => $this->status
+            Arg::ERROR   => $this->error,
+            Arg::EVENT   => $this,
+            Arg::REQUEST => $this->request
         ]);
     }
 
@@ -57,12 +56,11 @@ class Dispatch
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        ($result instanceof Mvc5Request || $result instanceof Response) && $this->stop();
+        $result instanceof HttpRequest
+            && $this->request = $result;
 
-        if ($result instanceof Error) {
-            $this->error  = $result;
-            $this->status = $result->status();
-        }
+        $result instanceof ResponseError
+            && $this->error = $result;
 
         return $result;
     }

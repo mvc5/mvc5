@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Request\Error;
+namespace Mvc5\Route;
 
 use Mvc5\Arg;
 use Mvc5\Response\Error;

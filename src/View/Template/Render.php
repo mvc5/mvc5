@@ -12,8 +12,7 @@ use Mvc5\Plugin;
 use RuntimeException;
 use Throwable;
 
-class Renderer
-    implements View
+trait Render
 {
     /**
      *
@@ -30,17 +29,13 @@ class Renderer
     }
 
     /**
-     * @param mixed|Template|ViewModel $model
+     * @param Template|ViewModel $model
      * @return string
      */
-    function __invoke($model)
+    function render(Template $model)
     {
-        if (!$model instanceof Template) {
-            return null;
-        }
-
         foreach($model as $k => $v) {
-            $v instanceof Template && $model[$k] = $this($v);
+            $v instanceof Template && $model[$k] = $this->render($v);
         }
 
         ($template = $this->template($model->template()))
@@ -77,5 +72,14 @@ class Renderer
         );
 
         return $render();
+    }
+
+    /**
+     * @param $model
+     * @return mixed
+     */
+    function __invoke($model = null)
+    {
+        return !$model instanceof Template ? $model : $this->render($model);
     }
 }

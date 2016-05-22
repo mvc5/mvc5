@@ -4,53 +4,29 @@
  */
 
 return [
-    'controller\exception' => [
-        'exception\status',
-        'exception\controller',
-        //'exception\view',
-        //'exception\response'
-    ],
-    'controller\error' => [
-        'error\status',
-        'error\controller'
-    ],
-    'mvc' => [
-        'mvc\route',
-        'mvc\controller',
-        'mvc\error',
-        'mvc\layout',
-        'mvc\view',
-        'mvc\response'
+    'web' => [
+        'route\dispatch',
+        'controller\action',
+        'view\layout',
+        'view\render',
+        'response\model',
+        'response\status',
+        'response\version',
+        'response\send'
     ],
     'response\exception' => [
-        'exception\status',
+        'exception\error',
         'exception\controller',
-        'exception\view',
-        'exception\response',
-        'response\prepare',
+        'view\render',
+        'response\model',
+        'response\status',
+        'response\version',
         'response\send'
     ],
     'route\dispatch' => [
-        'router',
-        'route\error'
-    ],
-    'route\error' => [
-        'error\handler',
-        'error\status',
-        'error\request',
-        // optionally halt mvc with a new response object,
-        // see response\exception for example service configuration
-        //'error\controller',
-        //'error\layout',
-        //'error\view',
-        //'error\response'
-    ],
-    'route\exception' => [
-        'exception\status',
-        'exception\request',
-        //'exception\controller',
-        //'exception\view',
-        //'exception\response'
+        'route\router',
+        'route\error',
+        'route\service',
     ],
     'route\match' => [
         'route\match\scheme',
@@ -63,18 +39,4 @@ return [
     'service\resolver' => [
         'resolver\exception'
     ],
-    'view\exception' => [
-        'exception\status',
-        'exception\controller',
-        'exception\view',
-        //'exception\response'
-    ],
-    'view\render' => [
-        'view\renderer'
-    ],
-    'web' => [
-        'mvc',
-        'response\prepare',
-        'response\send'
-    ]
 ];
