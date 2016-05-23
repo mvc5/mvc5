@@ -5,17 +5,16 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Plugin;
+use Mvc5\Response\Version\Version as ResponseVersion;
 
 class Version
 {
     /**
      *
      */
-    use Plugin;
+    use ResponseVersion;
 
     /**
      * @param Request $request
@@ -25,8 +24,6 @@ class Version
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next(
-            $request, $this->call(Arg::RESPONSE_VERSION, [Arg::REQUEST => $request, Arg::RESPONSE => $response])
-        );
+        return $next($request, $this->version($request, $response));
     }
 }

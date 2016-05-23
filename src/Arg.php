@@ -336,32 +336,12 @@ interface Arg
     /**
      *
      */
-    const RESPONSE_SEND = 'response\send';
-
-    /**
-     *
-     */
-    const RESPONSE_STATUS = 'response\status';
-
-    /**
-     *
-     */
-    const RESPONSE_VERSION = 'response\version';
-
-    /**
-     *
-     */
     const ROUTE = 'route';
 
     /**
      *
      */
     const ROUTE_DISPATCH = 'route\dispatch';
-
-    /**
-     *
-     */
-    const ROUTE_ERROR = 'route\error';
 
     /**
      *
@@ -467,11 +447,6 @@ interface Arg
      *
      */
     const VIEW_EXCEPTION = 'view\exception';
-
-    /**
-     *
-     */
-    const VIEW_LAYOUT = 'view\layout';
 
     /**
      *

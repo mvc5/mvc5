@@ -5,17 +5,16 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Plugin;
+use Mvc5\Response\Status\Status as ResponseStatus;
 
 class Status
 {
     /**
      *
      */
-    use Plugin;
+    use ResponseStatus;
 
     /**
      * @param Request $request
@@ -25,8 +24,6 @@ class Status
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next(
-            $request, $this->call(Arg::RESPONSE_STATUS, [Arg::REQUEST => $request, Arg::RESPONSE => $response])
-        );
+        return $next($request, $this->status($request, $response));
     }
 }

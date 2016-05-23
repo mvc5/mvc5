@@ -87,6 +87,15 @@ trait Router
     protected abstract function match($route, $request);
 
     /**
+     * @param Request $request
+     * @return Request
+     */
+    protected function matchRequest(Request $request)
+    {
+        return $this->dispatch(new $this->request(clone $request), $this->routeDefinition($this->route));
+    }
+
+    /**
      * @return string
      */
     protected function name()
@@ -110,6 +119,6 @@ trait Router
      */
     function __invoke(Request $request)
     {
-        return $this->dispatch(new $this->request(clone $request), $this->routeDefinition($this->route));
+        return $this->matchRequest($request);
     }
 }

@@ -5,17 +5,16 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Plugin;
+use Mvc5\Response\Send\Send as ResponseSend;
 
 class Send
 {
     /**
      *
      */
-    use Plugin;
+    use ResponseSend;
 
     /**
      * @param Request $request
@@ -25,6 +24,6 @@ class Send
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next($request, $this->call(Arg::RESPONSE_SEND, [Arg::RESPONSE => $response]));
+        return $next($request, $this->send($response));
     }
 }

@@ -17,7 +17,7 @@ trait Model
      */
     protected function model(LayoutModel $layout, $model = null)
     {
-        if (!$model || !$model instanceof ViewModel || $model instanceof LayoutModel) {
+        if (!$model instanceof ViewModel || $model instanceof LayoutModel) {
             return $model;
         }
 
