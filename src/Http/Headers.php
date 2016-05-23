@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Request;
+namespace Mvc5\Http;
 
 use Mvc5\Config\Configuration;
 

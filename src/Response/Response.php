@@ -6,6 +6,7 @@
 namespace Mvc5\Response;
 
 use Mvc5\Cookie\Cookies;
+use Mvc5\Http\Headers;
 use Mvc5\Http\Response as HttpResponse;
 
 interface Response

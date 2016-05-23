@@ -7,17 +7,17 @@ namespace Mvc5\Response\Config;
 
 use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
-use Mvc5\Cookie\Container as CookieJar;
-use Mvc5\Http\Config\Response as HttpResponse;
-use Mvc5\Response\Headers as ResponseHeaders;
-use Mvc5\Response\Headers\Config as HeadersConfig;
+use Mvc5\Cookie\Container as CookieContainer;
+use Mvc5\Http\Config\Response as _Response;
+use Mvc5\Http\Headers as HttpHeaders;
+use Mvc5\Http\Headers\Config as Headers;
 
 trait Response
 {
     /**
      *
      */
-    use HttpResponse;
+    use _Response;
 
     /**
      * @param null $body
@@ -29,8 +29,8 @@ trait Response
     {
         $this->config = [
             Arg::BODY    => $body,
-            Arg::COOKIES => $config[Arg::COOKIES] ?? new CookieJar,
-            Arg::HEADERS => $headers instanceof HeadersConfig ? $headers : new HeadersConfig($headers),
+            Arg::COOKIES => $config[Arg::COOKIES] ?? new CookieContainer,
+            Arg::HEADERS => $headers instanceof HttpHeaders ? $headers : new Headers($headers),
             Arg::STATUS  => $status
         ] + $config;
     }
@@ -51,7 +51,7 @@ trait Response
      * @param string     $path
      * @param string     $domain
      * @param bool|false $secure
-     * @param bool|true $httponly
+     * @param bool|true  $httponly
      * @return mixed
      */
     function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
@@ -85,7 +85,7 @@ trait Response
 
     /**
      * @param $headers
-     * @return array|ResponseHeaders
+     * @return array|Headers
      */
     function headers($headers = null)
     {

@@ -33,14 +33,11 @@ class Layout
 
     /**
      * @param Response $response
-     * @param $body
      * @return Response
      */
-    protected function response(Response $response, $body)
+    protected function response(Response $response)
     {
-        if ($body) {
-            $response[Arg::BODY] = $body;
-        }
+        $response[Arg::BODY] = $this->model($this->layout, $response->body());
 
         return $response;
     }
@@ -53,6 +50,6 @@ class Layout
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next($request, $this->response($response, $this->model($this->layout, $response[Arg::BODY])));
+        return $next($request, $this->response($response));
     }
 }

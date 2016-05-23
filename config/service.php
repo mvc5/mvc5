@@ -18,7 +18,7 @@ return [
     'error\model'          => [Mvc5\Request\Error\Model::class, 'error/error'],
     'event\model'          => Mvc5\Event::class,
     'exception\controller' => [Mvc5\Request\Exception\Controller::class, new Plugin('layout', ['error/exception'])],
-    'exception\error'      => [Mvc5\Request\Exception\Error::class, 'exception', 'exception\controller'],
+    'exception\error'      => [Mvc5\Request\Exception::class, 'exception', 'exception\controller'],
     'factory'              => new Service(null),
     'layout'               => [Mvc5\Layout::class, 'layout'],
     'manager'              => new Plugin(null),

@@ -5,10 +5,10 @@
 
 namespace Mvc5\Request;
 
-class Service
+class Exception
 {
     /**
      *
      */
-    use Service\Service;
+    use Exception\Exception;
 }

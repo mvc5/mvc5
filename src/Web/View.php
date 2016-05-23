@@ -25,9 +25,8 @@ class View
      */
     protected function response(Response $response)
     {
-        if ($response[Arg::BODY] instanceof Template) {
-            $response[Arg::BODY] = $this->render($response[Arg::BODY]);
-        }
+        $response->body() instanceof Template
+            && $response[Arg::BODY] = $this->render($response->body());
 
         return $response;
     }
