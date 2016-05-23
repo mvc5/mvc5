@@ -49,7 +49,7 @@ return [
     'url\plugin'           => [Mvc5\Url\Plugin::class, new Dependency('request'), new Plugin('url\generator')],
     'view\layout'          => Mvc5\View\Layout::class,
     'view\render'          => new Service(Mvc5\View\Render::class, [new Param('templates')]),
-    'web'                  => new Plugin(Mvc5\Mvc::class, ['web', new Link], [new Dependency('response')]),
+    'web'                  => [Mvc5\Mvc::class, 'web', new Link],
     'web\controller'       => new Service(Mvc5\Web\Controller::class),
     'web\layout'           => [Mvc5\Web\Layout::class, new Plugin('layout')],
     'web\middleware'       => new Service(Mvc5\Middleware::class, [new Param('middleware.web')]),
