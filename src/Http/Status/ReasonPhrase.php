@@ -3,14 +3,14 @@
  *
  */
 
-namespace Mvc5\Http\Response;
+namespace Mvc5\Http\Status;
 
-trait StatusCode
+trait ReasonPhrase
 {
     /**
      * @var array
      */
-    static $statusCodeText = [
+    static $statusReasonPhrase = [
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',
@@ -78,10 +78,10 @@ trait StatusCode
 
     /**
      * @param $status
-     * @return mixed
+     * @return string
      */
-    protected static function statusCodeText($status)
+    protected static function statusReasonPhrase($status)
     {
-        return static::$statusCodeText[$status];
+        return static::$statusReasonPhrase[$status];
     }
 }
