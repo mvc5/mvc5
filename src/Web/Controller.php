@@ -23,7 +23,7 @@ class Controller
      * @param callable $next
      * @return Response
      */
-    function __invoke(Request $request, Response $response, callable $next)
+    protected function action(Request $request, Response $response, callable $next)
     {
         $result = $this->call(
             $request[Arg::CONTROLLER], [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next]
@@ -33,8 +33,20 @@ class Controller
             return $result;
         }
 
-        $response[Arg::BODY] = $result;
+        null !== $result
+            && $response[Arg::BODY] = $result;
 
-        return $next($request, $response);
+        return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param callable $next
+     * @return Response
+     */
+    function __invoke(Request $request, Response $response, callable $next)
+    {
+        return $next($request, $this->action($request, $response, $next));
     }
 }

@@ -20,11 +20,6 @@ class Dispatch
     use Signal;
 
     /**
-     * @var
-     */
-    protected $model;
-
-    /**
      * @var HttpRequest
      */
     protected $request;
@@ -41,9 +36,11 @@ class Dispatch
      */
     function __construct($event, HttpRequest $request = null, HttpResponse $response = null)
     {
-        $this->event    = $event;
-        $this->request  = $request;
-        $this->response = $response;
+        $this->event = $event;
+
+        $request && $this->request = $request;
+
+        $response && $this->response = $response;
     }
 
     /**
@@ -52,10 +49,11 @@ class Dispatch
     protected function args()
     {
         return array_filter([
-            Arg::EVENT    => $this,
-            Arg::MODEL    => $this->model,
-            Arg::REQUEST  => $this->request,
-            Arg::RESPONSE => $this->response
+            Arg::CONTROLLER => $this->request[Arg::CONTROLLER] ?? null,
+            Arg::EVENT      => $this,
+            Arg::MODEL      => $this->response[Arg::BODY] ?? null,
+            Arg::REQUEST    => $this->request,
+            Arg::RESPONSE   => $this->response
         ]);
     }
 
@@ -70,17 +68,15 @@ class Dispatch
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
         if ($result instanceof HttpRequest) {
-            $this->request = $result;
-            return $result;
+            return $this->request = $result;
         }
 
         if ($result instanceof HttpResponse) {
-            $this->response = $result;
-            return $result;
+            return $this->response = $result;
         }
 
         null !== $result &&
-            $this->model = $result;
+            ($this->response[Arg::BODY] = $result);
 
         return $result;
     }
