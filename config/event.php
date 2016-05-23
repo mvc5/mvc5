@@ -4,7 +4,7 @@
  */
 
 return [
-    'response\exception' => [
+    'exception\response' => [
         'exception\error',
         'exception\controller',
         'view\render',
@@ -25,7 +25,7 @@ return [
         'resolver\exception'
     ],
     'web' => [
-        'route\router',
+        'route\dispatch',
         'request\error',
         'request\service',
         'controller\action',

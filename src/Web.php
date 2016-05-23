@@ -35,7 +35,7 @@ class Web
 
         } catch(Throwable $exception) {
 
-            return $this->app->call(Arg::RESPONSE_EXCEPTION, [Arg::EXCEPTION => $exception]);
+            return $this->app->call(Arg::EXCEPTION_RESPONSE, [Arg::EXCEPTION => $exception]);
         }
     }
 }

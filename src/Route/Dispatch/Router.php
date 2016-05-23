@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Route\Router;
+namespace Mvc5\Route\Dispatch;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error;
@@ -14,7 +14,7 @@ use Mvc5\Route\Route;
 use Mvc5\Route\Request as RouteRequest;
 use Mvc5\Route\Request\Config;
 
-trait Dispatch
+trait Router
 {
     /**
      *

@@ -145,6 +145,11 @@ interface Arg
     /**
      *
      */
+    const EXCEPTION_RESPONSE = 'exception\response';
+
+    /**
+     *
+     */
     const FACTORY = 'factory';
 
     /**
@@ -312,11 +317,6 @@ interface Arg
      *
      */
     const RESPONSE_DISPATCH = 'response\dispatch';
-
-    /**
-     *
-     */
-    const RESPONSE_EXCEPTION = 'response\exception';
 
     /**
      *

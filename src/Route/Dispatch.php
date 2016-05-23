@@ -7,10 +7,10 @@ namespace Mvc5\Route;
 
 use Mvc5\Plugin;
 
-class Router
+class Dispatch
 {
     /**
      *
      */
-    use Router\Dispatch;
+    use Dispatch\Router;
 }
