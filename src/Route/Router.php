@@ -12,7 +12,5 @@ class Router
     /**
      *
      */
-    use Dispatcher;
-    use Plugin;
-    use Router\Router;
+    use Router\Dispatch;
 }

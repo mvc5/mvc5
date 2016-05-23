@@ -8,6 +8,7 @@ namespace Mvc5\Request\Exception;
 use Mvc5\Arg;
 use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\Request;
+use Throwable;
 
 trait Exception
 {
@@ -33,10 +34,10 @@ trait Exception
 
     /**
      * @param Request $request
-     * @param \Exception $exception
+     * @param Throwable $exception
      * @return Request
      */
-    protected function exception(Request $request, \Exception $exception)
+    protected function exception(Request $request, Throwable $exception)
     {
         $request[Arg::CONTROLLER] = $this->controller;
         $request[Arg::EXCEPTION]  = $exception;
@@ -48,10 +49,10 @@ trait Exception
 
     /**
      * @param Request $request
-     * @param \Exception $exception
+     * @param Throwable $exception
      * @return Request
      */
-    function __invoke(Request $request, \Exception $exception)
+    function __invoke(Request $request, Throwable $exception)
     {
         return $this->exception($request, $exception);
     }

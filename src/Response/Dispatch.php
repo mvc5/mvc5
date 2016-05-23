@@ -8,7 +8,6 @@ namespace Mvc5\Response;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\Signal;
-use Mvc5\Http\Error;
 use Mvc5\Http\Request as HttpRequest;
 use Mvc5\Http\Response as HttpResponse;
 
@@ -19,11 +18,6 @@ class Dispatch
      *
      */
     use Signal;
-
-    /**
-     * @var Error
-     */
-    protected $error;
 
     /**
      * @var
@@ -39,11 +33,6 @@ class Dispatch
      * @var HttpResponse
      */
     protected $response;
-
-    /**
-     * @var int
-     */
-    protected $status;
 
     /**
      * @param $event
@@ -63,12 +52,10 @@ class Dispatch
     protected function args()
     {
         return array_filter([
-            Arg::ERROR    => $this->error,
             Arg::EVENT    => $this,
             Arg::MODEL    => $this->model,
             Arg::REQUEST  => $this->request,
-            Arg::RESPONSE => $this->response,
-            Arg::STATUS   => $this->status
+            Arg::RESPONSE => $this->response
         ]);
     }
 
@@ -89,12 +76,6 @@ class Dispatch
 
         if ($result instanceof HttpResponse) {
             $this->response = $result;
-            return $result;
-        }
-
-        if ($result instanceof Error) {
-            $this->error  = $result;
-            $this->status = $result->status();
             return $result;
         }
 

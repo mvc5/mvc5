@@ -10,14 +10,14 @@ use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Model\Template;
 use Mvc5\Plugin;
-use Mvc5\View\Template\Render;
+use Mvc5\View\Template\Render as _Render;
 
-class View
+class Render
 {
     /**
      *
      */
-    use Render;
+    use _Render;
 
     /**
      * @param Response $response

@@ -8,8 +8,7 @@ namespace Mvc5\Request\Error;
 use Mvc5\Arg;
 use Mvc5\Plugin;
 use Mvc5\Http\Error as HttpError;
-use Mvc5\Http\Error\NotFound;
-use Mvc5\Request\Request;
+use Mvc5\Http\Request;
 
 trait Error
 {
@@ -35,13 +34,11 @@ trait Error
 
     /**
      * @param Request $request
-     * @param HttpError $error
      * @return Request
      */
-    protected function error(Request $request, HttpError $error)
+    protected function error(Request $request)
     {
         $request[Arg::CONTROLLER] = $this->controller;
-        $request[Arg::ERROR]      = $error;
         $request[Arg::NAME]       = $this->name;
 
         return $request;
@@ -49,21 +46,19 @@ trait Error
 
     /**
      * @param Request $request
-     * @param HttpError|null $error
      * @return Request
      */
-    protected function request(Request $request, HttpError $error = null)
+    protected function request(Request $request)
     {
-        return $request->name() ? $request : $this->error($request, $error ?: new NotFound);
+        return !$request[Arg::ERROR] ? $request : $this->error($request);
     }
 
     /**
      * @param Request $request
-     * @param HttpError|null $error
      * @return Request
      */
-    function __invoke(Request $request, HttpError $error = null)
+    function __invoke(Request $request)
     {
-        return $this->request($request, $error);
+        return $this->request($request);
     }
 }

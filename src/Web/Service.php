@@ -5,25 +5,25 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Http\Error;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Route\Router\Dispatch;
+use Mvc5\Request\Service\Service as _Service;
 
-class Route
+class Service
 {
     /**
      *
      */
-    use Dispatch;
+    use _Service;
 
     /**
      * @param Request $request
      * @param Response $response
      * @param callable $next
+     * @return Response
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next($this->request($request), $response);
+        return $next($this->service($request), $response);
     }
 }

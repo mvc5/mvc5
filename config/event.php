@@ -4,11 +4,6 @@
  */
 
 return [
-    'route\dispatch' => [
-        'route\router',
-        'request\error',
-        'request\service',
-    ],
     'response\exception' => [
         'exception\error',
         'exception\controller',
@@ -30,7 +25,9 @@ return [
         'resolver\exception'
     ],
     'web' => [
-        'route\dispatch',
+        'route\router',
+        'request\error',
+        'request\service',
         'controller\action',
         'view\layout',
         'view\render',

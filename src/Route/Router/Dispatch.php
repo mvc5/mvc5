@@ -6,18 +6,20 @@
 namespace Mvc5\Route\Router;
 
 use Mvc5\Arg;
-use Mvc5\Request\Request;
+use Mvc5\Http\Error;
+use Mvc5\Http\Error\NotFound;
+use Mvc5\Http\Request;
+use Mvc5\Plugin;
 use Mvc5\Route\Route;
 use Mvc5\Route\Request as RouteRequest;
 use Mvc5\Route\Request\Config;
-use Mvc5\Signal;
 
-trait Router
+trait Dispatch
 {
     /**
      *
      */
-    use Signal;
+    use Plugin;
 
     /**
      * @var string
@@ -44,14 +46,17 @@ trait Router
      * @param array|Route $route
      * @return Route
      */
-    protected abstract function definition($route);
+    protected function definition($route)
+    {
+        return $this->call(Arg::ROUTE_GENERATOR, [Arg::ROUTE => $route]);
+    }
 
     /**
      * @param RouteRequest $request
      * @param Route $route
      * @return Request
      */
-    protected function dispatch(RouteRequest $request, Route $route)
+    protected function route(RouteRequest $request, Route $route)
     {
         $request = $this->match($route, $request);
 
@@ -71,7 +76,7 @@ trait Router
             $this->name() !== $parent &&
                 $name = $parent . Arg::SEPARATOR . $name;
 
-            if ($match = $this->dispatch($request->with(Arg::NAME, $name), $this->routeDefinition($route))) {
+            if ($match = $this->route($request->with(Arg::NAME, $name), $this->routeDefinition($route))) {
                 return $match;
             }
         }
@@ -80,19 +85,22 @@ trait Router
     }
 
     /**
-     * @param Route $route
-     * @param RouteRequest $request
-     * @return RouteRequest
-     */
-    protected abstract function match($route, $request);
-
-    /**
      * @param Request $request
      * @return Request
      */
-    protected function matchRequest(Request $request)
+    protected function dispatch(Request $request)
     {
-        return $this->dispatch(new $this->request(clone $request), $this->routeDefinition($this->route));
+        return $this->route(new $this->request(clone $request), $this->routeDefinition($this->route));
+    }
+
+    /**
+     * @param $route
+     * @param $request
+     * @return Request
+     */
+    protected function match($route, $request)
+    {
+        return $this->trigger([Arg::ROUTE_MATCH, Arg::ROUTE => $route, Arg::REQUEST => $request]);
     }
 
     /**
@@ -101,6 +109,23 @@ trait Router
     protected function name()
     {
         return $this->route[Arg::NAME];
+    }
+
+    /**
+     * @param Request $request
+     * @return Error|Request
+     */
+    protected function request(Request $request)
+    {
+        $result = $this->dispatch($request);
+
+        !$result &&
+            $result = new NotFound;
+
+        $result instanceof Error
+            && $request[Arg::ERROR] = $result;
+
+        return $result instanceof Request ? $result : $request;
     }
 
     /**
@@ -119,6 +144,6 @@ trait Router
      */
     function __invoke(Request $request)
     {
-        return $this->matchRequest($request);
+        return $this->request($request);
     }
 }

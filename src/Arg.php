@@ -95,16 +95,6 @@ interface Arg
     /**
      *
      */
-    const CONTROLLER_ERROR = 'controller\error';
-
-    /**
-     *
-     */
-    const CONTROLLER_EXCEPTION = 'controller\exception';
-
-    /**
-     *
-     */
     const COOKIES = 'cookies';
 
     /**
@@ -151,11 +141,6 @@ interface Arg
      *
      */
     const EXCEPTION = 'exception';
-
-    /**
-     *
-     */
-    const EXCEPTION_DISPATCH = 'exception\dispatch';
 
     /**
      *
@@ -341,16 +326,6 @@ interface Arg
     /**
      *
      */
-    const ROUTE_DISPATCH = 'route\dispatch';
-
-    /**
-     *
-     */
-    const ROUTE_EXCEPTION = 'route\exception';
-
-    /**
-     *
-     */
     const ROUTE_GENERATOR = 'route\generator';
 
     /**
@@ -442,16 +417,6 @@ interface Arg
      *
      */
     const VERSION = 'version';
-
-    /**
-     *
-     */
-    const VIEW_EXCEPTION = 'view\exception';
-
-    /**
-     *
-     */
-    const VIEW_RENDER = 'view\render';
 
     /**
      *
