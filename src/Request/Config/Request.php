@@ -7,7 +7,7 @@ namespace Mvc5\Request\Config;
 
 use Mvc5\Arg;
 use Mvc5\Http\Config\Request as HttpRequest;
-use Mvc5\Response\Error;
+use Mvc5\Http\Error;
 
 trait Request
 {

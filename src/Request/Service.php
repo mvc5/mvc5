@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Route;
+namespace Mvc5\Request;
 
 use Mvc5\Arg;
 use Mvc5\Http\Request as HttpRequest;

@@ -7,14 +7,14 @@ namespace Mvc5\Web;
 
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Response\Version\Version as ResponseVersion;
+use Mvc5\Response\Version\Version as _Version;
 
 class Version
 {
     /**
      *
      */
-    use ResponseVersion;
+    use _Version;
 
     /**
      * @param Request $request

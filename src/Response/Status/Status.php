@@ -6,10 +6,10 @@
 namespace Mvc5\Response\Status;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Http\Response\StatusCode;
-use Mvc5\Response\Error;
 
 trait Status
 {
@@ -25,8 +25,8 @@ trait Status
      */
     protected function error(Error $error, Response $response)
     {
-        $response[Arg::STATUS] = $error[Arg::STATUS];
-        $response[Arg::REASON] = $this->statusCodeText($error[Arg::STATUS]);
+        $response[Arg::STATUS] = $error->status();
+        $response[Arg::REASON] = $this->statusCodeText($error->status());
 
         return $response;
     }

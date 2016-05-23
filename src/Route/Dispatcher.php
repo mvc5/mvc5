@@ -6,7 +6,6 @@
 namespace Mvc5\Route;
 
 use Mvc5\Arg;
-use Throwable;
 
 trait Dispatcher
 {
@@ -25,16 +24,6 @@ trait Dispatcher
     protected function definition($route)
     {
         return $this->call(Arg::ROUTE_GENERATOR, [Arg::ROUTE => $route]);
-    }
-
-    /**
-     * @param Throwable $exception
-     * @param $request
-     * @return mixed
-     */
-    protected function exception(Throwable $exception, $request)
-    {
-        return $this->call(Arg::ROUTE_EXCEPTION, [Arg::EXCEPTION => $exception, Arg::REQUEST => $request]);
     }
 
     /**

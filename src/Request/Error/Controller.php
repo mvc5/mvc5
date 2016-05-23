@@ -6,21 +6,21 @@
 namespace Mvc5\Request\Error;
 
 use Mvc5\Arg;
-use Mvc5\View\Model as _ViewModel;
-use Mvc5\Response\Error;
+use Mvc5\Http\Error;
 use Mvc5\Request\Request;
+use Mvc5\View\Model as ViewModel;
 
 class Controller
 {
     /**
      *
      */
-    use _ViewModel;
+    use ViewModel;
 
     /**
-     * @param ViewModel $model
+     * @param ErrorModel $model
      */
-    function __construct(ViewModel $model)
+    function __construct(ErrorModel $model)
     {
         $this->model = $model;
     }

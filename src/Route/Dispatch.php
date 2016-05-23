@@ -8,8 +8,8 @@ namespace Mvc5\Route;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\Signal;
+use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Request as HttpRequest;
-use Mvc5\Response\Error as ResponseError;
 
 class Dispatch
     implements Event
@@ -25,7 +25,7 @@ class Dispatch
     const EVENT = Arg::ROUTE_DISPATCH;
 
     /**
-     * @var Error
+     * @var HttpError
      */
     protected $error;
 
@@ -59,7 +59,7 @@ class Dispatch
         $result instanceof HttpRequest
             && $this->request = $result;
 
-        $result instanceof ResponseError
+        $result instanceof HttpError
             && $this->error = $result;
 
         return $result;

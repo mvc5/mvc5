@@ -6,17 +6,17 @@
 namespace Mvc5\Response\Version;
 
 use Mvc5\Arg;
-use Mvc5\Http\Request as HttpRequest;
-use Mvc5\Http\Response as HttpResponse;
+use Mvc5\Http\Request;
+use Mvc5\Http\Response;
 
 trait Version
 {
     /**
-     * @param HttpRequest $request
-     * @param HttpResponse $response
-     * @return HttpRequest
+     * @param Request $request
+     * @param Response $response
+     * @return Request
      */
-    protected function version(HttpRequest $request, HttpResponse $response)
+    protected function version(Request $request, Response $response)
     {
         !$response->version() &&
             $response[Arg::VERSION] = $request->version();
@@ -25,11 +25,11 @@ trait Version
     }
 
     /**
-     * @param HttpRequest $request
-     * @param HttpResponse $response
-     * @return HttpRequest
+     * @param Request $request
+     * @param Response $response
+     * @return Request
      */
-    function __invoke(HttpRequest $request, HttpResponse $response)
+    function __invoke(Request $request, Response $response)
     {
         return $this->version($request, $response);
     }

@@ -33,6 +33,8 @@ class Controller
             return $result;
         }
 
-        return $next($request, $response->with(Arg::BODY, $result));
+        $response[Arg::BODY] = $result;
+
+        return $next($request, $response);
     }
 }

@@ -7,8 +7,8 @@ namespace Mvc5\Request\Exception;
 
 use Exception;
 use Mvc5\Arg;
+use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\Request;
-use Mvc5\Response\Error\ServerError;
 
 class Error
 {

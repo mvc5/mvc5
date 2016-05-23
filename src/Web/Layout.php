@@ -32,6 +32,20 @@ class Layout
     }
 
     /**
+     * @param Response $response
+     * @param $body
+     * @return Response
+     */
+    protected function response(Response $response, $body)
+    {
+        if ($body) {
+            $response[Arg::BODY] = $body;
+        }
+
+        return $response;
+    }
+
+    /**
      * @param Request $request
      * @param Response $response
      * @param callable $next
@@ -39,6 +53,6 @@ class Layout
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next($request, $response->with(Arg::BODY, $this->model($this->layout, $response[Arg::BODY])));
+        return $next($request, $this->response($response, $this->model($this->layout, $response[Arg::BODY])));
     }
 }

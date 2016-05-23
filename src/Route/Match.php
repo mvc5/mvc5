@@ -23,14 +23,14 @@ class Match
     const EVENT = Arg::ROUTE_MATCH;
 
     /**
-     * @var Route
-     */
-    protected $route;
-
-    /**
      * @var Request
      */
     protected $request;
+
+    /**
+     * @var Route
+     */
+    protected $route;
 
     /***
      * @param Route $route
@@ -38,8 +38,8 @@ class Match
      */
     function __construct(Route $route, Request $request)
     {
-        $this->route   = $route;
         $this->request = $request;
+        $this->route   = $route;
     }
 
     /**
@@ -49,8 +49,8 @@ class Match
     {
         return [
             Arg::EVENT   => $this,
-            Arg::ROUTE   => $this->route,
-            Arg::REQUEST => $this->request
+            Arg::REQUEST => $this->request,
+            Arg::ROUTE   => $this->route
         ];
     }
 

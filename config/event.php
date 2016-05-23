@@ -4,15 +4,10 @@
  */
 
 return [
-    'web' => [
-        'route\dispatch',
-        'controller\action',
-        'view\layout',
-        'view\render',
-        'response\model',
-        'response\status',
-        'response\version',
-        'response\send'
+    'route\dispatch' => [
+        'route\router',
+        'request\error',
+        'request\service',
     ],
     'response\exception' => [
         'exception\error',
@@ -22,11 +17,6 @@ return [
         'response\status',
         'response\version',
         'response\send'
-    ],
-    'route\dispatch' => [
-        'route\router',
-        'route\error',
-        'route\service',
     ],
     'route\match' => [
         'route\match\scheme',
@@ -38,5 +28,15 @@ return [
     ],
     'service\resolver' => [
         'resolver\exception'
+    ],
+    'web' => [
+        'route\dispatch',
+        'controller\action',
+        'view\layout',
+        'view\render',
+        'response\model',
+        'response\status',
+        'response\version',
+        'response\send'
     ],
 ];

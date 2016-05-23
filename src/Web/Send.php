@@ -7,14 +7,14 @@ namespace Mvc5\Web;
 
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Response\Send\Send as ResponseSend;
+use Mvc5\Response\Send\Send as _Send;
 
 class Send
 {
     /**
      *
      */
-    use ResponseSend;
+    use _Send;
 
     /**
      * @param Request $request

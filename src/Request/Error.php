@@ -3,13 +3,12 @@
  *
  */
 
-namespace Mvc5\Route;
+namespace Mvc5\Request;
 
 use Mvc5\Arg;
 use Mvc5\Plugin;
-use Mvc5\Http\Request as Mvc5Request;
-use Mvc5\Response\Error as ResponseError;
-use Mvc5\Response\Error\NotFound;
+use Mvc5\Http\Error as HttpError;
+use Mvc5\Http\Error\NotFound;
 
 class Error
 {
@@ -34,11 +33,11 @@ class Error
     }
 
     /**
-     * @param Mvc5Request $request
-     * @param ResponseError $error
+     * @param Request $request
+     * @param HttpError $error
      * @return Request
      */
-    protected function error(Mvc5Request $request, ResponseError $error)
+    protected function error(Request $request, HttpError $error)
     {
         $request[Arg::CONTROLLER] = $this->controller;
         $request[Arg::ERROR]      = $error;
@@ -48,11 +47,11 @@ class Error
     }
 
     /**
-     * @param Mvc5Request|Request $request
-     * @param ResponseError|null $error
+     * @param Request $request
+     * @param HttpError|null $error
      * @return Request
      */
-    function __invoke(Mvc5Request $request, ResponseError $error = null)
+    function __invoke(Request $request, HttpError $error = null)
     {
         return $request->name() ? $request : $this->error($request, $error ?: new NotFound);
     }
