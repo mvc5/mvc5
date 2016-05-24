@@ -6,19 +6,20 @@
 namespace Mvc5\Request\Service;
 
 use Mvc5\Arg;
+use Mvc5\Config\Configuration;
 use Mvc5\Http\Request as HttpRequest;
 
 trait Service
 {
     /**
-     * @var array|\ArrayAccess
+     * @var Configuration
      */
     protected $config;
 
     /**
-     * @param array|\ArrayAccess $config
+     * @param Configuration $config
      */
-    function __construct($config = [])
+    function __construct(Configuration $config)
     {
         $this->config = $config;
     }
