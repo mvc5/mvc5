@@ -70,8 +70,10 @@ class Response
         }
 
         if ($result instanceof HttpResponse) {
-            $this->stop();
-            return $result;
+            $result !== $this->response
+                && $this->stop();
+
+            return $this->response = $result;
         }
 
         null !== $result &&
