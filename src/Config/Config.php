@@ -13,6 +13,7 @@ trait Config
      *
      */
     use ArrayAccess;
+    use Iterator;
     use PropertyAccess;
 
     /**
@@ -26,22 +27,6 @@ trait Config
     function __construct($config = [])
     {
         $this->config = $config;
-    }
-
-    /**
-     * @return int
-     */
-    function count()
-    {
-        return count($this->config);
-    }
-
-    /**
-     * @return mixed
-     */
-    function current()
-    {
-        return is_array($this->config) ? current($this->config) : $this->config->current();
     }
 
     /**
@@ -64,36 +49,12 @@ trait Config
     }
 
     /**
-     * @return mixed
-     */
-    function key()
-    {
-        return is_array($this->config) ? key($this->config) : $this->config->key();
-    }
-
-    /**
-     *
-     */
-    function next()
-    {
-        is_array($this->config) ? next($this->config) : $this->config->next();
-    }
-
-    /**
      * @param string $name
      * @return void
      */
     function remove($name)
     {
         unset($this->config[$name]);
-    }
-
-    /**
-     *
-     */
-    function rewind()
-    {
-        is_array($this->config) ? reset($this->config) : $this->config->rewind();
     }
 
     /**
@@ -104,14 +65,6 @@ trait Config
     function set($name, $value)
     {
         return $this->config[$name] = $value;
-    }
-
-    /**
-     * @return bool
-     */
-    function valid()
-    {
-        return is_array($this->config) ? null !== $this->key() : $this->config->valid();
     }
 
     /**
