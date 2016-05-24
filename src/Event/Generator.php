@@ -6,7 +6,7 @@
 namespace Mvc5\Event;
 
 use Mvc5\Signal as _Signal;
-use Traversable;
+use Iterator;
 
 trait Generator
 {
@@ -34,41 +34,107 @@ trait Generator
     }
 
     /**
-     * @param array|object|string|Traversable $event
+     * @param Event|string $event
+     * @param array|Iterator $queue
+     * @return mixed|null
+     */
+    protected function forward($event, &$queue)
+    {
+        return $event instanceof Event && $event->stopped() ? null : $this->step($queue);
+    }
+
+    /**
+     * @param array|string|Iterator $event
      * @param array $args
      * @param callable $callback
      * @return mixed|null
      */
     protected function generate($event, array $args = [], callable $callback = null)
     {
-        $result = null;
-
-        foreach($this->queue($event, $args) as $listener) {
-
-            $result = $this->emit($event, $this->callable($listener), $args, $callback);
-
-            if ($event instanceof Event && $event->stopped()) {
-                break;
-            }
-        }
-
-        return $result;
+        return $this->traverse($event, $this->queue($event, $args), $args, $callback);
     }
 
     /**
-     * @param array|Event|object|string|Traversable $event
-     * @param array $args
-     * @return array|Traversable
+     * @param $listener
+     * @param $event
+     * @param $queue
+     * @param $args
+     * @param $callback
+     * @param null $result
+     * @return null
      */
-    protected function queue($event, array $args = [])
+    protected function iterate($listener, $event, $queue, $args, $callback, $result = null)
     {
-        return is_array($event) || $event instanceof Traversable ? $event : $this->traversable($event, $args);
+        return !$listener ? $result : (
+            $this->iterate(
+                $this->forward($event, $queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
+            )
+        );
     }
 
     /**
      * @param Event|object|string $event
      * @param array $args
-     * @return array|Traversable|null
+     * @return array|Iterator|null
      */
-    protected abstract function traversable($event, array $args = []);
+    protected abstract function iterator($event, array $args = []);
+
+    /**
+     * @param array|Event|object|string|Iterator $event
+     * @param array $args
+     * @return array|Iterator
+     */
+    protected function queue($event, array $args = [])
+    {
+        return is_array($event) || $event instanceof Iterator ? $event : $this->iterator($event, $args);
+    }
+
+    /**
+     * @param array|Event|object|Iterator $event
+     * @param $listener
+     * @param array $args
+     * @param callable $callback
+     * @return mixed
+     */
+    protected function result($event, $listener, array $args = [], callable $callback = null)
+    {
+        return $this->emit($event, $this->callable($listener), $args, $callback);
+    }
+
+    /**
+     * @param array|Iterator $queue
+     * @return mixed|null
+     */
+    protected function start($queue)
+    {
+        return is_array($queue) ? current($queue) : $queue->current();
+    }
+
+    /**
+     * @param array|Iterator $queue
+     * @return mixed|null
+     */
+    protected function step(&$queue)
+    {
+        if (is_array($queue)) {
+            next($queue);
+            return current($queue);
+        }
+
+        $queue->next();
+
+        return $queue->current();
+    }
+
+    /**
+     * @param $event
+     * @param $queue
+     * @param $args
+     * @param $callback
+     * @return null
+     */
+    protected function traverse($event, $queue, $args, $callback)
+    {
+        return $this->iterate($this->start($queue), $event, $queue, $args, $callback);
+    }
 }

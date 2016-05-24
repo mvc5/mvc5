@@ -70,7 +70,7 @@ trait Generator
      * @param array $args
      * @return array|\Traversable|null
      */
-    protected function traversable($event, array $args = [])
+    protected function iterator($event, array $args = [])
     {
         return $this->resolve($this->listeners($this->eventName($event)), $args);
     }
