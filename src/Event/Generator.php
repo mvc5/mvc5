@@ -34,16 +34,6 @@ trait Generator
     }
 
     /**
-     * @param Event|string $event
-     * @param array|Iterator $queue
-     * @return mixed|null
-     */
-    protected function forward($event, &$queue)
-    {
-        return $event instanceof Event && $event->stopped() ? null : $this->step($queue);
-    }
-
-    /**
      * @param array|string|Iterator $event
      * @param array $args
      * @param callable $callback
@@ -65,11 +55,9 @@ trait Generator
      */
     protected function iterate($listener, $event, $queue, $args, $callback, $result = null)
     {
-        return !$listener ? $result : (
-            $this->iterate(
-                $this->forward($event, $queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
-            )
-        );
+        return !$listener || ($event instanceof Event && $event->stopped()) ? $result : ($this->iterate(
+            $this->step($queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
+        ));
     }
 
     /**
