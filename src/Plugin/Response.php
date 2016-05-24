@@ -17,6 +17,18 @@ class Response
      */
     function __construct($event, array $args = [], array $calls = [])
     {
-        parent::__construct(Arg::RESPONSE_DISPATCH, [Arg::EVENT => $event] + $args, $calls);
+        parent::__construct(Arg::RESPONSE_DISPATCH, $this->eventArgs($event, $args), $calls);
+    }
+
+    /**
+     * @param $event
+     * @param $args
+     * @return array
+     */
+    protected function eventArgs($event, $args)
+    {
+        return [Arg::EVENT => $event] + $args + [
+            Arg::REQUEST => new Plugin('request'), Arg::RESPONSE => new Plugin('response')
+        ];
     }
 }

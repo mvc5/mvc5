@@ -95,6 +95,11 @@ interface Arg
     /**
      *
      */
+    const CONTROLLER_RESPONSE = 'controller\response';
+
+    /**
+     *
+     */
     const COOKIES = 'cookies';
 
     /**

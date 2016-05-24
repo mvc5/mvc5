@@ -10,12 +10,17 @@ use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Plugin;
 
-class Controller
+class Dispatch
 {
     /**
      *
      */
     use Plugin;
+
+    /**
+     *
+     */
+    const WEB_RESPONSE = 'web\response';
 
     /**
      * @param Request $request
@@ -25,17 +30,6 @@ class Controller
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        $result = $this->call(
-            $request[Arg::CONTROLLER], [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next]
-        );
-
-        if ($result instanceof Response) {
-            return $result;
-        }
-
-        null !== $result
-            && $response[Arg::BODY] = $result;
-
-        return $next($request, $response);
+        return $next($request, $this->call(self::WEB_RESPONSE, [Arg::REQUEST => $request, Arg::RESPONSE => $response]));
     }
 }
