@@ -55,7 +55,7 @@ return [
     'web\dispatch'         => new Service(Mvc5\Web\Dispatch::class),
     'web\error'            => [Mvc5\Web\Error::class, 'error', 'error\controller'],
     'web\layout'           => [Mvc5\Web\Layout::class, new Plugin('layout')],
-    'web\middleware'       => new Service(Mvc5\Middleware::class, [new Param('middleware.web')]),
+    'web\middleware'       => new Service(Mvc5\Middleware::class, ['stack' => new Param('middleware.web')]),
     'web\render'           => new Service(Mvc5\Web\Render::class, [new Param('templates')]),
     'web\response'         => new Service(Mvc5\Middleware::class, [new Param('middleware.web\response')]),
     'web\route'            => new Service(Mvc5\Web\Route::class, [new Param('routes')]),
