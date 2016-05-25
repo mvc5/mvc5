@@ -1,9 +1,15 @@
 {
     "name": "mvc5/mvc5",
     "description": "A PHP 7 programming environment with named arguments.",
-    "keywords": ["config", "dependency injection", "event", "plugin", "route", "router", "view"],
+    "keywords": ["config", "dependency injection", "event", "middleware", "plugin", "route", "router", "view"],
     "homepage": "https://github.com/mvc5/mvc5",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Gregory Baboolal",
+            "email": "devosc@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.0"
     },
