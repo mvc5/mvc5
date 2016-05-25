@@ -6,7 +6,7 @@
 namespace Mvc5\Http\Error;
 
 use Mvc5\Arg;
-use Mvc5\Http\Config\Error as Config;
+use Mvc5\Http\Config\Error as _Error;
 use Mvc5\Http\Error;
 
 class BadRequest
@@ -15,7 +15,7 @@ class BadRequest
     /**
      *
      */
-    use Config;
+    use _Error;
 
     /**
      * @param array $config

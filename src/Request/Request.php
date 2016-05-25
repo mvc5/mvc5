@@ -6,7 +6,7 @@
 namespace Mvc5\Request;
 
 use Mvc5\Cookie\Cookies;
-use Mvc5\Http\Error;
+use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Request as HttpRequest;
 
 interface Request
@@ -63,7 +63,7 @@ interface Request
     function data($name = null);
 
     /**
-     * @return Error
+     * @return HttpError
      */
     function error();
 

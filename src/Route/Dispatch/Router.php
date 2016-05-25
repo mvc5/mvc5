@@ -52,39 +52,6 @@ trait Router
     }
 
     /**
-     * @param RouteRequest $request
-     * @param Route $route
-     * @return Request
-     */
-    protected function route(RouteRequest $request, Route $route)
-    {
-        $request = $this->match($route, $request);
-
-        if (!$request instanceof RouteRequest) {
-            return $request;
-        }
-
-        !$request->name() && $request[Arg::NAME] = $route->name();
-
-        if ($request->matched()) {
-            return $request->request();
-        }
-
-        $parent = $request->name();
-
-        foreach($route->children() as $name => $route) {
-            $this->name() !== $parent &&
-                $name = $parent . Arg::SEPARATOR . $name;
-
-            if ($match = $this->route($request->with(Arg::NAME, $name), $this->routeDefinition($route))) {
-                return $match;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param Request $request
      * @return Request
      */
@@ -126,6 +93,39 @@ trait Router
             && $request[Arg::ERROR] = $result;
 
         return $result instanceof Request ? $result : $request;
+    }
+
+    /**
+     * @param RouteRequest $request
+     * @param Route $route
+     * @return Request
+     */
+    protected function route(RouteRequest $request, Route $route)
+    {
+        $request = $this->match($route, $request);
+
+        if (!$request instanceof RouteRequest) {
+            return $request;
+        }
+
+        !$request->name() && $request[Arg::NAME] = $route->name();
+
+        if ($request->matched()) {
+            return $request->request();
+        }
+
+        $parent = $request->name();
+
+        foreach($route->children() as $name => $route) {
+            $this->name() !== $parent &&
+            $name = $parent . Arg::SEPARATOR . $name;
+
+            if ($match = $this->route($request->with(Arg::NAME, $name), $this->routeDefinition($route))) {
+                return $match;
+            }
+        }
+
+        return null;
     }
 
     /**

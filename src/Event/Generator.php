@@ -5,8 +5,8 @@
 
 namespace Mvc5\Event;
 
-use Mvc5\Signal as _Signal;
 use Iterator;
+use Mvc5\Signal as _Signal;
 
 trait Generator
 {

@@ -5,7 +5,6 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Http\Error;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Route\Dispatch\Router;
