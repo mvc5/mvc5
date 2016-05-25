@@ -55,9 +55,9 @@ trait Generator
      */
     protected function iterate($listener, $event, $queue, $args, $callback, $result = null)
     {
-        return !$listener || ($event instanceof Event && $event->stopped()) ? $result : ($this->iterate(
-            $this->step($queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
-        ));
+        return !$listener || ($event instanceof Event && $event->stopped()) ? $result : $this->iterate(
+            next($queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
+        );
     }
 
     /**
@@ -78,40 +78,15 @@ trait Generator
     }
 
     /**
-     * @param array|Event|object|Iterator $event
+     * @param $event
      * @param $listener
-     * @param array $args
-     * @param callable $callback
+     * @param $args
+     * @param $callback
      * @return mixed
      */
-    protected function result($event, $listener, array $args = [], callable $callback = null)
+    protected function result($event, $listener, $args, $callback)
     {
         return $this->emit($event, $this->callable($listener), $args, $callback);
-    }
-
-    /**
-     * @param array|Iterator $queue
-     * @return mixed|null
-     */
-    protected function start($queue)
-    {
-        return is_array($queue) ? current($queue) : $queue->current();
-    }
-
-    /**
-     * @param array|Iterator $queue
-     * @return mixed|null
-     */
-    protected function step(&$queue)
-    {
-        if (is_array($queue)) {
-            next($queue);
-            return current($queue);
-        }
-
-        $queue->next();
-
-        return $queue->current();
     }
 
     /**
@@ -119,10 +94,10 @@ trait Generator
      * @param $queue
      * @param $args
      * @param $callback
-     * @return null
+     * @return mixed
      */
     protected function traverse($event, $queue, $args, $callback)
     {
-        return $this->iterate($this->start($queue), $event, $queue, $args, $callback);
+        return $this->iterate(current($queue), $event, $queue, $args, $callback);
     }
 }
