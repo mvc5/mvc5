@@ -104,7 +104,13 @@ trait Generator
      */
     protected function step(&$queue)
     {
-        return next($queue);
+        if (is_array($queue)) {
+            return next($queue);
+        }
+
+        $queue->next();
+
+        return $queue->current();
     }
 
     /**
