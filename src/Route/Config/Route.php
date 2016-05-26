@@ -96,7 +96,7 @@ trait Route
      */
     function host()
     {
-        return $this[Arg::HOST] ?? null;
+        return $this[Arg::HOST];
     }
 
     /**
@@ -112,7 +112,7 @@ trait Route
      */
     function method()
     {
-        return $this[Arg::METHOD] ?? null;
+        return $this[Arg::METHOD];
     }
 
     /**
