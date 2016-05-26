@@ -28,7 +28,7 @@ class Plugin
             Arg::ARGS  => $args,
             Arg::CALLS => $calls,
             Arg::NAME  => $name,
-            Arg::PARAM => $param ?: Arg::ITEM,
+            Arg::PARAM => $param ? $param : Arg::ITEM,
             Arg::MERGE => $merge
         ];
     }
