@@ -40,7 +40,13 @@ trait Request
      */
     function attr($name, $value)
     {
-        return $this->config[Arg::PARAMS][$name] = $value;
+        $params = $this->config[Arg::PARAMS] ?? [];
+
+        $params[$name] = $value;
+
+        $this->config[Arg::PARAMS] = $params;
+
+        return $value;
     }
 
     /**
