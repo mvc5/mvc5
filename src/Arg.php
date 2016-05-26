@@ -95,12 +95,7 @@ interface Arg
     /**
      *
      */
-    const CONTROLLER_ERROR = 'controller\error';
-
-    /**
-     *
-     */
-    const CONTROLLER_EXCEPTION = 'controller\exception';
+    const CONTROLLER_RESPONSE = 'controller\response';
 
     /**
      *
@@ -155,7 +150,7 @@ interface Arg
     /**
      *
      */
-    const EXCEPTION_DISPATCH = 'exception\dispatch';
+    const EXCEPTION_RESPONSE = 'exception\response';
 
     /**
      *
@@ -256,6 +251,11 @@ interface Arg
     /**
      *
      */
+    const NEXT = 'next';
+
+    /**
+     *
+     */
     const PARAM = 'param';
 
     /**
@@ -326,22 +326,7 @@ interface Arg
     /**
      *
      */
-    const RESPONSE_EXCEPTION = 'response\exception';
-
-    /**
-     *
-     */
     const ROUTE = 'route';
-
-    /**
-     *
-     */
-    const ROUTE_DISPATCH = 'route\dispatch';
-
-    /**
-     *
-     */
-    const ROUTE_EXCEPTION = 'route\exception';
 
     /**
      *
@@ -437,16 +422,6 @@ interface Arg
      *
      */
     const VERSION = 'version';
-
-    /**
-     *
-     */
-    const VIEW_EXCEPTION = 'view\exception';
-
-    /**
-     *
-     */
-    const VIEW_RENDER = 'view\render';
 
     /**
      *

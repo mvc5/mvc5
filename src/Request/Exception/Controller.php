@@ -6,6 +6,7 @@
 namespace Mvc5\Request\Exception;
 
 use Mvc5\Arg;
+use Mvc5\Http\Request;
 
 class Controller
 {
@@ -23,10 +24,10 @@ class Controller
     }
 
     /**
-     * @param array|\ArrayAccess $request
+     * @param Request $request
      * @return mixed
      */
-    function __invoke($request)
+    function __invoke(Request $request)
     {
         $this->model[Arg::EXCEPTION] = $request[Arg::EXCEPTION];
 

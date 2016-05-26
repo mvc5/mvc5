@@ -8,8 +8,8 @@ namespace Mvc5\Response;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\Signal;
+use Mvc5\Http\Request as HttpRequest;
 use Mvc5\Http\Response as HttpResponse;
-use Mvc5\Response\Error;
 
 class Dispatch
     implements Event
@@ -20,33 +20,27 @@ class Dispatch
     use Signal;
 
     /**
-     * @var Error
+     * @var HttpRequest
      */
-    protected $error;
+    protected $request;
 
     /**
-     * @var
-     */
-    protected $model;
-
-    /**
-     * @var Response
+     * @var HttpResponse
      */
     protected $response;
 
     /**
-     * @var int
-     */
-    protected $status;
-
-    /**
      * @param $event
+     * @param HttpRequest $request
      * @param HttpResponse $response
      */
-    function __construct($event, HttpResponse $response = null)
+    function __construct($event, HttpRequest $request = null, HttpResponse $response = null)
     {
-        $this->event    = $event;
-        $this->response = $response;
+        $this->event = $event;
+
+        $request && $this->request = $request;
+
+        $response && $this->response = $response;
     }
 
     /**
@@ -55,11 +49,11 @@ class Dispatch
     protected function args()
     {
         return array_filter([
-            Arg::ERROR    => $this->error,
-            Arg::EVENT    => $this,
-            Arg::MODEL    => $this->model,
-            Arg::RESPONSE => $this->response,
-            Arg::STATUS   => $this->status
+            Arg::CONTROLLER => $this->request[Arg::CONTROLLER] ?? null,
+            Arg::EVENT      => $this,
+            Arg::MODEL      => $this->response[Arg::BODY] ?? null,
+            Arg::REQUEST    => $this->request,
+            Arg::RESPONSE   => $this->response
         ]);
     }
 
@@ -71,22 +65,19 @@ class Dispatch
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
-        $response = $this->signal($callable, $this->args() + $args, $callback);
+        $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        if ($response instanceof HttpResponse) {
-            $this->response = $response;
-            return $response;
+        if ($result instanceof HttpRequest) {
+            return $this->request = $result;
         }
 
-        if ($response instanceof Error) {
-            $this->error  = $response;
-            $this->status = $response->status();
-            return $response;
+        if ($result instanceof HttpResponse) {
+            return $this->response = $result;
         }
 
-        null !== $response &&
-            $this->model = $response;
+        null !== $result &&
+            ($this->response[Arg::BODY] = $result);
 
-        return $response;
+        return $result;
     }
 }

@@ -5,14 +5,14 @@
 
 namespace Mvc5\Route\Request;
 
-use Mvc5\Route\Config\Request;
-use Mvc5\Route\Request as RouteRequest;
+use Mvc5\Route\Config\Request as _Request;
+use Mvc5\Route\Request;
 
 class Config
-    implements RouteRequest
+    implements Request
 {
     /**
      *
      */
-    use Request;
+    use _Request;
 }

@@ -50,6 +50,16 @@ trait Generator
     }
 
     /**
+     * @param Event|object|string $event
+     * @param array $args
+     * @return array|\Traversable|null
+     */
+    protected function iterator($event, array $args = [])
+    {
+        return $this->resolve($this->listeners($this->eventName($event)), $args);
+    }
+
+    /**
      * @param string $name
      * @return array|\Traversable|null
      */
@@ -64,14 +74,4 @@ trait Generator
      * @return array|callable|null|object|string
      */
     protected abstract function resolve($config, array $args = []);
-
-    /**
-     * @param Event|object|string $event
-     * @param array $args
-     * @return array|\Traversable|null
-     */
-    protected function traversable($event, array $args = [])
-    {
-        return $this->resolve($this->listeners($this->eventName($event)), $args);
-    }
 }

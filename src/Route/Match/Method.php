@@ -5,9 +5,9 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Route\Route;
-use Mvc5\Response\Error\MethodNotAllowed;
+use Mvc5\Http\Error\MethodNotAllowed;
 use Mvc5\Route\Request;
+use Mvc5\Route\Route;
 
 class Method
 {

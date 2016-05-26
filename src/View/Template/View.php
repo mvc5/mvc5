@@ -5,6 +5,7 @@
 
 namespace Mvc5\View\Template;
 
+use Mvc5\Model\Template;
 use Mvc5\Model\ViewModel;
 
 interface View
@@ -16,8 +17,8 @@ interface View
     function templates($config = null);
 
     /**
-     * @param mixed|ViewModel $model
+     * @param Template|ViewModel $model
      * @return string
      */
-    function __invoke($model);
+    function render(Template $model);
 }

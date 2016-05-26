@@ -4,51 +4,20 @@
  */
 
 return [
-    'controller\exception' => [
-        'exception\status',
+    'controller\response' => [
+        'controller\action',
+        'view\layout',
+        'view\render',
+        'response\model',
+    ],
+    'exception\response' => [
+        'exception\error',
         'exception\controller',
-        //'exception\view',
-        //'exception\response'
-    ],
-    'controller\error' => [
-        'error\status',
-        'error\controller'
-    ],
-    'mvc' => [
-        'mvc\route',
-        'mvc\controller',
-        'mvc\error',
-        'mvc\layout',
-        'mvc\view',
-        'mvc\response'
-    ],
-    'response\exception' => [
-        'exception\status',
-        'exception\controller',
-        'exception\view',
-        'exception\response',
+        'view\render',
+        'response\model',
+        'response\status',
+        'response\version',
         'response\send'
-    ],
-    'route\dispatch' => [
-        'router',
-        'route\error'
-    ],
-    'route\error' => [
-        'error\handler',
-        'error\status',
-        'error\request',
-        // halt mvc event or new response object
-        //'error\controller',
-        //'error\layout',
-        //'error\view',
-        //'error\response'
-    ],
-    'route\exception' => [
-        'exception\status',
-        'exception\request',
-        //'exception\controller',
-        //'exception\view',
-        //'exception\response'
     ],
     'route\match' => [
         'route\match\scheme',
@@ -61,18 +30,13 @@ return [
     'service\resolver' => [
         'resolver\exception'
     ],
-    'view\exception' => [
-        'exception\status',
-        'exception\controller',
-        'exception\view',
-        //'exception\response'
-    ],
-    'view\render' => [
-        'view\renderer'
-    ],
     'web' => [
-        'mvc',
-        'response\prepare',
+        'route\dispatch',
+        'request\error',
+        'request\service',
+        'controller\dispatch',
+        'response\status',
+        'response\version',
         'response\send'
-    ]
+    ],
 ];

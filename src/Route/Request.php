@@ -5,10 +5,10 @@
 
 namespace Mvc5\Route;
 
-use Mvc5\Request\Request as Mvc5Request;
+use Mvc5\Request\Request as _Request;
 
 interface Request
-    extends Mvc5Request
+    extends _Request
 {
     /**
      * @return int
@@ -21,7 +21,7 @@ interface Request
     function matched();
 
     /**
-     * @return Mvc5Request
+     * @return _Request
      */
     function request();
 }

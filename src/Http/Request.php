@@ -16,7 +16,7 @@ interface Request
     function body();
 
     /**
-     * @return array|Configuration
+     * @return array|Headers
      */
     function headers();
 

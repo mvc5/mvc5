@@ -135,7 +135,7 @@ trait Resolver
             return $this->event($config, $args, $callback);
         }
 
-        return $this->invoke($config, $args, $callback);
+        return $this->invoke($config instanceof Resolvable ? $this->resolve($config) : $config, $args, $callback);
     }
 
     /**
