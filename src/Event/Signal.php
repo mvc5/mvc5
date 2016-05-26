@@ -34,6 +34,8 @@ trait Signal
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
-        return $this->signal($callable, !$args || !is_string(key($args)) ? $args : $this->args() + $args, $callback);
+        return $this->signal(
+            $callable, !$args ? $this->args() : (!is_string(key($args)) ? $args : $this->args() + $args), $callback
+        );
     }
 }
