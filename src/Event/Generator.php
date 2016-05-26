@@ -30,7 +30,7 @@ trait Generator
      */
     protected function emit($event, callable $listener, array $args = [], callable $callback = null)
     {
-        return is_callable($event) ? $event($listener, $args, $callback) : $this->signal($listener, $args, $callback);
+        return $event instanceof Event ? $event($listener, $args, $callback) : $this->signal($listener, $args, $callback);
     }
 
     /**
