@@ -24,15 +24,18 @@ class Wildcard
 
         $parts = explode(Arg::SEPARATOR, trim(substr($request->path(), $request->length()), Arg::SEPARATOR));
 
+        $params = $request[Arg::PARAMS];
+
         for($i = 0, $n = count($parts); $i < $n; $i += 2) {
             if (!isset($parts[$i + 1])) {
                 continue;
             }
 
-            $request->attr($parts[$i], $parts[$i + 1]);
+            $params[$parts[$i]] = $parts[$i + 1];
         }
 
         $request[Arg::MATCHED] = true;
+        $request[Arg::PARAMS]  = $params;
 
         return $request;
     }
