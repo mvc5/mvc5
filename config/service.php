@@ -31,7 +31,6 @@ return [
     'resolver\exception'   => Mvc5\Resolver\Exception::class,
     'response'             => Mvc5\Response\Config::class,
     'response\dispatch'    => Mvc5\Response\Dispatch::class,
-    'response\model'       => Mvc5\Response\Model::class,
     'response\send'        => Mvc5\Response\Send::class,
     'response\status'      => Mvc5\Response\Status::class,
     'response\version'     => Mvc5\Response\Version::class,

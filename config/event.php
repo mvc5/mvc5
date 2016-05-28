@@ -7,14 +7,12 @@ return [
     'controller\response' => [
         'controller\action',
         'view\layout',
-        'view\render',
-        'response\model',
+        'view\render'
     ],
     'exception\response' => [
         'exception\error',
         'exception\controller',
         'view\render',
-        'response\model',
         'response\status',
         'response\version',
         'response\send'
