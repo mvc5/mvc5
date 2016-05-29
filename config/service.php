@@ -14,8 +14,6 @@ use Mvc5\Plugin\Service;
 return [
     'config'               => new Config,
     'controller\action'    => new Service(Mvc5\Controller\Action::class),
-    'controller\dispatch'  => new Service(Mvc5\Controller\Dispatch::class),
-    'controller\response'  => [Mvc5\Controller\Response::class, 'event' => 'controller\response'],
     'error\controller'     => [Mvc5\Request\Error\Controller::class, new Plugin('error\model')],
     'error\model'          => [Mvc5\Request\Error\Model::class, 'error'],
     'event\model'          => Mvc5\Event::class,
@@ -51,7 +49,6 @@ return [
     'view\render'          => new Service(Mvc5\View\Render::class, [new Param('templates')]),
     'web'                  => new Response('web'),
     'web\controller'       => new Service(Mvc5\Web\Controller::class),
-    'web\dispatch'         => new Service(Mvc5\Web\Dispatch::class),
     'web\error'            => [Mvc5\Web\Error::class, 'error', 'error\controller'],
     'web\layout'           => [Mvc5\Web\Layout::class, new Plugin('layout')],
     'web\middleware'       => new Service(Mvc5\Middleware::class, ['stack' => new Param('middleware.web')]),

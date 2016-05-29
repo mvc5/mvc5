@@ -4,11 +4,6 @@
  */
 
 return [
-    'controller\response' => [
-        'controller\action',
-        'view\layout',
-        'view\render'
-    ],
     'exception\response' => [
         'exception\error',
         'exception\controller',
@@ -32,7 +27,9 @@ return [
         'route\dispatch',
         'request\error',
         'request\service',
-        'controller\dispatch',
+        'controller\action',
+        'view\layout',
+        'view\render',
         'response\status',
         'response\version',
         'response\send'

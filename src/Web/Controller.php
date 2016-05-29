@@ -30,7 +30,7 @@ class Controller
         );
 
         if ($result instanceof Response) {
-            return $result;
+            return $next($request, $result);
         }
 
         null !== $result
