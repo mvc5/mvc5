@@ -53,11 +53,17 @@ trait Resolver
     protected $scope;
 
     /**
+     * @var bool
+     */
+    protected $strict = false;
+
+    /**
      * @param array|\ArrayAccess $config
      * @param callable $provider
      * @param object $scope
+     * @param bool $strict
      */
-    function __construct($config = null, callable $provider = null, $scope = null)
+    function __construct($config = null, callable $provider = null, $scope = null, $strict = false)
     {
         $config && $this->config = $config;
 
@@ -73,6 +79,8 @@ trait Resolver
         $provider && $this->provider = $this->resolve($provider);
 
         $scope && $this->scope = $this->resolve($scope);
+
+        $strict && $this->strict = $strict;
     }
 
     /**
@@ -607,6 +615,14 @@ trait Resolver
     protected function scoped(Closure $callback)
     {
         return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope) : $callback;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function strict()
+    {
+        return $this->strict;
     }
 
     /**

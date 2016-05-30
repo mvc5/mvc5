@@ -25,13 +25,16 @@ trait Build
 
     /**
      * @param $name
+     * @param $config
      * @param array $args
      * @param callable|null $callback
      * @return callable|object
      */
-    protected function callback($name, array $args = [], callable $callback = null)
+    protected function callback($name, $config = null, array $args = [], callable $callback = null)
     {
-        return $callback && !class_exists($name) ? $callback($name) : $this->make($name, $args);
+        return $callback && !class_exists($name) ? $callback($name) : (
+            !$this->strict() || $config || $this->configured($name) ? $this->make($name, $args) : null
+        );
     }
 
     /**
@@ -105,7 +108,7 @@ trait Build
      */
     protected function first($name, array $config, array $args = [], callable $callback = null)
     {
-        return !$config ? $this->callback($name, $args, $callback) : $this->create($name, $args, $callback);
+        return !$config ? $this->callback($name, null, $args, $callback) : $this->create($name, $args, $callback);
     }
 
     /**
@@ -173,6 +176,11 @@ trait Build
     protected abstract function resolve($config, array $args = []);
 
     /**
+     * @return bool
+     */
+    protected abstract function strict();
+
+    /**
      * @param $name
      * @param $config
      * @param array $args
@@ -182,7 +190,7 @@ trait Build
     protected function unique($name, $config, array $args = [], callable $callback = null)
     {
         return $config && $name !== $config ?
-            $this->plugin($config, $args, $callback) : $this->callback($name, $args, $callback);
+            $this->plugin($config, $args, $callback) : $this->callback($name, $config, $args, $callback);
     }
 
     /**
