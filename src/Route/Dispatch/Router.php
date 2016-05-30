@@ -118,7 +118,7 @@ trait Router
 
         foreach($route->children() as $name => $route) {
             $this->name() !== $parent &&
-            $name = $parent . Arg::SEPARATOR . $name;
+                $name = $parent . Arg::SEPARATOR . $name;
 
             if ($match = $this->route($request->with(Arg::NAME, $name), $this->routeDefinition($route))) {
                 return $match;
