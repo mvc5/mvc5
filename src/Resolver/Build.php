@@ -33,7 +33,7 @@ trait Build
     protected function callback($name, $config = null, array $args = [], callable $callback = null)
     {
         return $callback && !class_exists($name) ? $callback($name) : (
-            !$this->strict() || $config || $this->configured($name) ? $this->make($name, $args) : null
+            $config || !$this->strict() || $this->configured($name) ? $this->make($name, $args) : null
         );
     }
 
