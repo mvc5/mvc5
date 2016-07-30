@@ -93,7 +93,7 @@ trait Container
      */
     function has($name)
     {
-        return isset($this->container[$name]);
+        return isset($this->container[$name]) || isset($this->services[$name]);
     }
 
     /**
