@@ -22,7 +22,7 @@ trait Request
      */
     function arg($name)
     {
-        return $this[Arg::ARGS][$name] ?? null;
+        return $this->get(Arg::ARGS)[$name] ?? null;
     }
 
     /**
@@ -30,7 +30,7 @@ trait Request
      */
     function args()
     {
-        return $this[Arg::ARGS] ?? [];
+        return $this[Arg::ARGS] ?: [];
     }
 
     /**
@@ -79,7 +79,7 @@ trait Request
      */
     function cookie($name)
     {
-        return $this[Arg::COOKIES][$name] ?? null;
+        return $this->get(Arg::COOKIES)[$name] ?? null;
     }
 
     /**
@@ -87,7 +87,7 @@ trait Request
      */
     function cookies()
     {
-        return $this[Arg::COOKIES] ?? [];
+        return $this[Arg::COOKIES] ?: [];
     }
 
     /**
@@ -96,7 +96,7 @@ trait Request
      */
     function data($name = null)
     {
-        return null === $name ? ($this[Arg::DATA] ?? []) : ($this[Arg::DATA][$name] ?? null);
+        return null === $name ? ($this[Arg::DATA] ?: []) : ($this->get(Arg::DATA)[$name] ?? null);
     }
 
     /**
@@ -121,7 +121,7 @@ trait Request
      */
     function header($name)
     {
-        return $this[Arg::HEADERS][$name] ?? null;
+        return $this->get(Arg::HEADERS)[$name] ?? null;
     }
 
     /**
@@ -129,7 +129,7 @@ trait Request
      */
     function host()
     {
-        return $this[Arg::URI][Arg::HOST] ?? null;
+        return $this->get(Arg::URI)[Arg::HOST] ?? null;
     }
 
     /**
@@ -170,7 +170,7 @@ trait Request
      */
     function param($name)
     {
-        return $this[Arg::PARAMS][$name] ?? $this->arg($name) ?? $this->data($name);
+        return $this->get(Arg::PARAMS)[$name] ?? $this->arg($name) ?? $this->data($name);
     }
 
     /**
@@ -186,7 +186,7 @@ trait Request
      */
     function path()
     {
-        return $this[Arg::URI][Arg::PATH] ?? Arg::SEPARATOR;
+        return $this->get(Arg::URI)[Arg::PATH] ?? Arg::SEPARATOR;
     }
 
     /**
@@ -194,7 +194,7 @@ trait Request
      */
     function port()
     {
-        return $this[Arg::URI][Arg::PORT] ?? null;
+        return $this->get(Arg::URI)[Arg::PORT] ?? null;
     }
 
     /**
@@ -211,7 +211,7 @@ trait Request
      */
     function query()
     {
-        return $this[Arg::URI][Arg::QUERY] ?? null;
+        return $this->get(Arg::URI)[Arg::QUERY] ?? null;
     }
 
     /**
@@ -219,7 +219,7 @@ trait Request
      */
     function scheme()
     {
-        return $this[Arg::URI][Arg::SCHEME] ?? null;
+        return $this->get(Arg::URI)[Arg::SCHEME] ?? null;
     }
 
     /**
@@ -228,7 +228,7 @@ trait Request
      */
     function server($name = null)
     {
-        return null === $name ? ($this[Arg::SERVER] ?? []) : ($this[Arg::SERVER][$name] ?? null);
+        return null === $name ? ($this[Arg::SERVER] ?: []) : ($this->get(Arg::SERVER)[$name] ?? null);
     }
 
     /**
@@ -237,7 +237,7 @@ trait Request
      */
     function session($name = null)
     {
-        return null === $name ? ($this[Arg::SESSION] ?? []) : ($this[Arg::SESSION][$name] ?? null);
+        return null === $name ? ($this[Arg::SESSION] ?: []) : ($this->get(Arg::SESSION)[$name] ?? null);
     }
 
     /**
