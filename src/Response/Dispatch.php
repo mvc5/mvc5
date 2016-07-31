@@ -49,9 +49,9 @@ class Dispatch
     protected function args()
     {
         return array_filter([
-            Arg::CONTROLLER => $this->request[Arg::CONTROLLER] ?? null,
+            Arg::CONTROLLER => $this->request[Arg::CONTROLLER],
             Arg::EVENT      => $this,
-            Arg::MODEL      => $this->response[Arg::BODY] ?? null,
+            Arg::MODEL      => $this->response[Arg::BODY],
             Arg::REQUEST    => $this->request,
             Arg::RESPONSE   => $this->response
         ]);

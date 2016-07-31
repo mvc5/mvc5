@@ -31,7 +31,7 @@ trait Route
      */
     function action($name)
     {
-        return $this[Arg::ACTION][$name] ?? null;
+        return $this->get(Arg::ACTION)[$name] ?? null;
     }
 
     /**
@@ -39,7 +39,7 @@ trait Route
      */
     function actions()
     {
-        return $this[Arg::ACTION] ?? [];
+        return $this[Arg::ACTION] ?: [];
     }
 
     /**
@@ -48,7 +48,7 @@ trait Route
      */
     function child($name)
     {
-        return $this[Arg::CHILDREN][$name] ?? null;
+        return $this->get(Arg::CHILDREN)[$name] ?? null;
     }
 
     /**
@@ -56,7 +56,7 @@ trait Route
      */
     function children()
     {
-        return $this[Arg::CHILDREN] ?? [];
+        return $this[Arg::CHILDREN] ?: [];
     }
 
     /**
@@ -72,7 +72,7 @@ trait Route
      */
     function constraints()
     {
-        return $this[Arg::CONSTRAINTS] ?? [];
+        return $this[Arg::CONSTRAINTS] ?: [];
     }
 
     /**
@@ -88,7 +88,7 @@ trait Route
      */
     function defaults()
     {
-        return $this[Arg::DEFAULTS] ?? [];
+        return $this[Arg::DEFAULTS] ?: [];
     }
 
     /**
@@ -104,7 +104,7 @@ trait Route
      */
     function map()
     {
-        return $this[Arg::MAP] ?? [];
+        return $this[Arg::MAP] ?: [];
     }
 
     /**
@@ -160,7 +160,7 @@ trait Route
      */
     function tokens()
     {
-        return $this[Arg::TOKENS] ?? [];
+        return $this[Arg::TOKENS] ?: [];
     }
 
     /**
@@ -168,6 +168,6 @@ trait Route
      */
     function wildcard()
     {
-        return $this[Arg::WILDCARD] ?? false;
+        return $this[Arg::WILDCARD] ?: false;
     }
 }

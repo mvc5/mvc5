@@ -21,7 +21,7 @@ trait Request
      */
     function length()
     {
-        return $this[Arg::LENGTH] ?? 0;
+        return $this[Arg::LENGTH] ?: 0;
     }
 
     /**
@@ -29,7 +29,7 @@ trait Request
      */
     function matched()
     {
-        return $this[Arg::MATCHED] ?? false;
+        return $this[Arg::MATCHED] ?: false;
     }
 
     /**
