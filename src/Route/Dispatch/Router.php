@@ -81,7 +81,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return Error|Request|_Request
+     * @return Error|_Request
      */
     protected function request(Request $request)
     {
@@ -141,7 +141,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return Request|_Request
+     * @return _Request
      */
     function __invoke(Request $request)
     {
