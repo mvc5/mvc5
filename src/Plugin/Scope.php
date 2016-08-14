@@ -23,9 +23,9 @@ class Scope
     const APP_CLASS = 'Mvc5\App';
 
     /**
-     * @param string $name
-     * @param array|Configuration|Resolvable $config
-     * @param ...array $args
+     * @param $name
+     * @param array $config
+     * @param array ...$args
      */
     function __construct($name, $config = [], ...$args)
     {
