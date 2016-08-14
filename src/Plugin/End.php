@@ -9,7 +9,7 @@ class End
     extends Call
 {
     /**
-     * @param ...$config
+     * @param array ...$config
      */
     function __construct(...$config)
     {
