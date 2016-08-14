@@ -5,8 +5,6 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Config\Configuration;
-use Mvc5\Resolvable;
 use Mvc5\Service\Service as _Service;
 use Mvc5\Service\Scope as ServiceScope;
 
