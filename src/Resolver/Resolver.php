@@ -30,7 +30,6 @@ use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
 use Mvc5\Service\Config\Container;
-use RuntimeException;
 
 trait Resolver
 {
@@ -131,7 +130,6 @@ trait Resolver
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
-     * @throws \RuntimeException
      */
     function call($config, array $args = [], callable $callback = null)
     {
