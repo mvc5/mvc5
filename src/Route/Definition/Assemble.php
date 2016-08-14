@@ -47,7 +47,7 @@ trait Assemble
         isset($options[Arg::FRAGMENT]) &&
             $path .= '#' . $options[Arg::FRAGMENT];
 
-        $canonical = !empty($options[ARG::CANONICAL]);
+        $canonical = !empty($options[Arg::CANONICAL]);
 
         !$port && $port = $options[Arg::PORT];
 

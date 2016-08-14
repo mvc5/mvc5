@@ -14,7 +14,7 @@ trait Version
     /**
      * @param Request $request
      * @param Response $response
-     * @return Request
+     * @return Response
      */
     protected function version(Request $request, Response $response)
     {

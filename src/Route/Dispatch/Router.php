@@ -10,6 +10,7 @@ use Mvc5\Http\Error;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Request;
 use Mvc5\Plugin;
+use Mvc5\Request\Request as _Request;
 use Mvc5\Route\Route;
 use Mvc5\Route\Request as RouteRequest;
 use Mvc5\Route\Request\Config;
@@ -80,7 +81,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return Error|Request
+     * @return Error|_Request
      */
     protected function request(Request $request)
     {
@@ -140,7 +141,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return Request
+     * @return _Request
      */
     function __invoke(Request $request)
     {

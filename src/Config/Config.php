@@ -75,7 +75,11 @@ trait Config
     function with($name, $value)
     {
         $new = clone $this;
-        $new->set($name, $value);
+        
+        $new->config instanceof Immutable 
+                ? $new->config = $new->config->with($name, $value) 
+                    : $new->set($name, $value);
+        
         return $new;
     }
 
@@ -86,7 +90,11 @@ trait Config
     function without($name)
     {
         $new = clone $this;
-        $new->remove($name);
+        
+        $new->config instanceof Immutable 
+                ? $new->config = $new->config->without($name) 
+                    : $new->remove($name);
+        
         return $new;
     }
 

@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Config;
 
 use Mvc5\Arg;
+use Mvc5\Config\Configuration;
 use Mvc5\Request\Request as Mvc5Request;
 use Mvc5\Request\Config\Request as Config;
 
@@ -33,7 +34,7 @@ trait Request
     }
 
     /**
-     * @return Mvc5Request
+     * @return array|Configuration|Mvc5Request
      */
     function request()
     {

@@ -245,7 +245,7 @@ trait Request
      */
     function stream()
     {
-        return $this[ARG::STREAM];
+        return $this[Arg::STREAM];
     }
 
     /**

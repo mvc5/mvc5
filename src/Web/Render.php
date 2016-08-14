@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Model\Template;
-use Mvc5\Plugin;
 use Mvc5\View\Template\Render as _Render;
 
 class Render

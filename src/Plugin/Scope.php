@@ -5,8 +5,6 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Config\Configuration;
-use Mvc5\Resolvable;
 use Mvc5\Service\Service as _Service;
 use Mvc5\Service\Scope as ServiceScope;
 
@@ -23,9 +21,9 @@ class Scope
     const APP_CLASS = 'Mvc5\App';
 
     /**
-     * @param string $name
-     * @param array|Configuration|Resolvable $config
-     * @param ...array $args
+     * @param $name
+     * @param array $config
+     * @param array ...$args
      */
     function __construct($name, $config = [], ...$args)
     {
