@@ -3,11 +3,9 @@
  *
  */
 
-namespace Mvc5\Model\Config;
+namespace Mvc5\Config;
 
-use Mvc5\Config\Config;
-
-trait Model
+trait Overload
 {
     /**
      *
