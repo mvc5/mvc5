@@ -6,14 +6,14 @@
 namespace Mvc5\Model\Template;
 
 use Mvc5\Arg;
-use Mvc5\Model\Config\Model as _Model;
+use Mvc5\Config\Overload;
 
 trait Model
 {
     /**
      *
      */
-    use _Model;
+    use Overload;
 
     /**
      * @param $template
