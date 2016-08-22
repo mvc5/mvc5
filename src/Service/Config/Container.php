@@ -5,7 +5,7 @@
 
 namespace Mvc5\Service\Config;
 
-use Mvc5\Config\Config as Base;
+use Mvc5\Config\Config;
 use Mvc5\Config\Configuration;
 
 trait Container
@@ -13,7 +13,7 @@ trait Container
     /**
      *
      */
-    use Base;
+    use Config;
 
     /**
      * @var array|Configuration

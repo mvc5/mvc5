@@ -6,13 +6,13 @@
 namespace Mvc5\Model\Layout;
 
 use Mvc5\Model\Template\Layout;
-use Mvc5\Model\Template\Plugin as Base;
+use Mvc5\Model\Template\Plugin as _Plugin;
 
 trait Plugin
 {
     /**
      *
      */
-    use Base;
     use Layout;
+    use _Plugin;
 }

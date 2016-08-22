@@ -6,14 +6,14 @@
 namespace Mvc5\Resolver;
 
 use Mvc5\Event\Event;
-use Mvc5\Event\Generator as Base;
+use Mvc5\Event\Generator as _Generator;
 
 trait Generator
 {
     /**
      *
      */
-    use Base;
+    use _Generator;
 
     /**
      * @var array|\ArrayAccess

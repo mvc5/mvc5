@@ -6,14 +6,14 @@
 namespace Mvc5\Plugin\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config as Base;
+use Mvc5\Config\Config as _Config;
 
 trait Plugin
 {
     /**
      *
      */
-    use Base;
+    use _Config;
 
     /**
      * @return array
