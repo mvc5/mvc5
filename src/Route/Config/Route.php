@@ -6,14 +6,14 @@
 namespace Mvc5\Route\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config as Base;
+use Mvc5\Config\Config;
 
 trait Route
 {
     /**
      *
      */
-    use Base;
+    use Config;
 
     /**
      * @param $name

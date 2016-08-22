@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Service;
+namespace Mvc5\Config;
 
 interface Scope
 {

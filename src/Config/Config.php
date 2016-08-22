@@ -5,8 +5,6 @@
 
 namespace Mvc5\Config;
 
-use Mvc5\Service\Scope;
-
 trait Config
 {
     /**

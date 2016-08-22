@@ -6,15 +6,15 @@
 namespace Mvc5\Event;
 
 use Mvc5\Arg;
-use Mvc5\Signal as Base;
+use Mvc5\Signal as _Signal;
 
 trait Signal
 {
     /**
      *
      */
-    use Base;
     use Model;
+    use _Signal;
 
     /**
      * @return array

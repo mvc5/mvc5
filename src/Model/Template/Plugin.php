@@ -5,14 +5,14 @@
 
 namespace Mvc5\Model\Template;
 
-use Mvc5\Plugin as Base;
+use Mvc5\Plugin as _Plugin;
 
 trait Plugin
 {
     /**
      *
      */
-    use Base;
+    use _Plugin;
 
     /**
      * @param string $name
