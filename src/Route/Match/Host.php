@@ -14,7 +14,7 @@ class Host
     /**
      * @param Request $request
      * @param Route $route
-     * @return Request
+     * @return Request|BadRequest
      */
     function __invoke(Request $request, Route $route)
     {

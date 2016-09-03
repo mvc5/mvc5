@@ -14,7 +14,7 @@ class Method
     /**
      * @param Request $request
      * @param Route $route
-     * @return Request
+     * @return Request|MethodNotAllowed
      */
     function __invoke(Request $request, Route $route)
     {

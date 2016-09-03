@@ -48,7 +48,7 @@ trait Initializer
 
     /**
      * @param string $name
-     * @return bool
+     * @return null
      */
     protected function initializing($name)
     {
