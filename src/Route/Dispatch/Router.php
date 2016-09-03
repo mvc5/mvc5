@@ -81,7 +81,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return Error|_Request
+     * @return Error|NotFound|Request|_Request
      */
     protected function request(Request $request)
     {
