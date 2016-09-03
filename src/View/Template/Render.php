@@ -21,7 +21,7 @@ trait Render
     use Templates;
 
     /**
-     * @param $templates
+     * @param array|\ArrayAccess $templates
      */
     function __construct($templates = [])
     {
@@ -48,25 +48,29 @@ trait Render
         $model instanceof ViewModel && !$model->service() && $model->service($this->service());
 
         $render = Closure::bind(function() {
-            /** @var ViewModel $this */
+                /** @var ViewModel $this */
 
-            extract($this->vars());
+                extract($this->vars());
 
-            ob_start();
+                $level = ob_get_level();
 
-            try {
+                ob_start();
 
-                include $this->template();
+                try {
 
-                return ob_get_clean();
+                    include $this->template();
 
-            } catch (Throwable $exception) {
+                    return ob_get_clean();
 
-                ob_get_clean();
+                } catch (Throwable $exception) {
 
-                throw $exception;
-            }
-        },
+                    while(ob_get_level() > $level) {
+                        ob_end_clean();
+                    }
+
+                    throw $exception;
+                }
+            },
             $model,
             $model
         );
