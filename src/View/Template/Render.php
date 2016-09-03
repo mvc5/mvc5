@@ -52,7 +52,7 @@ trait Render
 
                 extract($this->vars());
 
-                $__ob_get_level = ob_get_level();
+                $__output_buffer_level__ = ob_get_level();
 
                 ob_start();
 
@@ -64,7 +64,7 @@ trait Render
 
                 } catch (Throwable $exception) {
 
-                    while(ob_get_level() > $__ob_get_level) {
+                    while(ob_get_level() > $__output_buffer_level__) {
                         ob_end_clean();
                     }
 
