@@ -26,7 +26,7 @@ interface Session
     function id();
 
     /**
-     * @return mixed
+     * @return string
      */
     function name();
 

@@ -102,7 +102,7 @@ trait Session
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     function name()
     {

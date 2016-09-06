@@ -17,30 +17,30 @@ trait Container
     use Overload;
 
     /**
-     * @var _Session
-     */
-    protected $container;
-
-    /**
      * @var string
      */
     protected $label = self::class;
 
     /**
-     * @param _Session $container
+     * @var _Session
+     */
+    protected $session;
+
+    /**
+     * @param _Session $session
      * @param string $label
      */
-    function __construct(_Session $container, $label = null)
+    function __construct(_Session $session, $label = null)
     {
         $label && $this->label = $label;
 
-        $this->container = $container;
+        $this->session = $session;
 
-        !isset($this->container[$this->label]) &&
+        !isset($this->session[$this->label]) &&
             $this->reset();
 
         !$this->config &&
-            $this->config = $this->container[$this->label];
+            $this->config = $this->session[$this->label];
     }
 
     /**
@@ -48,7 +48,7 @@ trait Container
      */
     function close()
     {
-        return $this->container->close();
+        return $this->session->close();
     }
 
     /**
@@ -56,7 +56,7 @@ trait Container
      */
     function destroy($cookie = true)
     {
-        $this->container->destroy($cookie);
+        $this->session->destroy($cookie);
     }
 
     /**
@@ -64,7 +64,7 @@ trait Container
      */
     function id()
     {
-        return $this->container->id();
+        return $this->session->id();
     }
 
     /**
@@ -80,7 +80,7 @@ trait Container
      */
     function name()
     {
-        return $this->container->name();
+        return $this->session->name();
     }
 
     /**
@@ -88,7 +88,7 @@ trait Container
      */
     function regenerate($delete_old_session = false)
     {
-        $this->container->regenerate($delete_old_session);
+        $this->session->regenerate($delete_old_session);
     }
 
     /**
@@ -96,7 +96,7 @@ trait Container
      */
     function reset()
     {
-        return $this->container[$this->label] = $this->config = new Config;
+        return $this->session[$this->label] = $this->config = new Config;
     }
 
     /**
@@ -104,7 +104,7 @@ trait Container
      */
     function status()
     {
-        return $this->container->status();
+        return $this->session->status();
     }
 
     /**
