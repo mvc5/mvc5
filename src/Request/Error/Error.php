@@ -6,7 +6,6 @@
 namespace Mvc5\Request\Error;
 
 use Mvc5\Arg;
-use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Request;
 
 trait Error
