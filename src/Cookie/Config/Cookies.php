@@ -5,7 +5,7 @@
 
 namespace Mvc5\Cookie\Config;
 
-use Mvc5\Cookie\Cookies as CookieJar;
+use Mvc5\Cookie\Cookies as _Cookies;
 
 trait Cookies
 {
@@ -15,19 +15,18 @@ trait Cookies
     use Container;
 
     /**
-     * @var CookieJar
+     * @var _Cookies
      */
-    protected $container;
+    protected $cookies;
 
     /**
-     * @param CookieJar $container
+     * @param _Cookies $cookies
      * @param array $config
      */
-    function __construct(CookieJar $container, array $config = [])
+    function __construct(_Cookies $cookies, array $config = [])
     {
         $this->config = $config;
-
-        $this->container = $container;
+        $this->cookies = $cookies;
     }
 
     /**
@@ -39,7 +38,7 @@ trait Cookies
      */
     function remove($name, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        $this->container->remove($name, $path, $domain, $secure, $httponly);
+        $this->cookies->remove($name, $path, $domain, $secure, $httponly);
     }
 
     /**
@@ -54,6 +53,6 @@ trait Cookies
      */
     function set($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->container->set($name, $value, $expire, $path, $domain, $secure, $httponly);
+        return $this->cookies->set($name, $value, $expire, $path, $domain, $secure, $httponly);
     }
 }
