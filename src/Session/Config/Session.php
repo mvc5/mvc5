@@ -162,6 +162,15 @@ trait Session
     }
 
     /**
+     * @param array $options
+     * @return bool
+     */
+    function start(array $options = [])
+    {
+        return session_start($options);
+    }
+
+    /**
      * @return int
      */
     function status()

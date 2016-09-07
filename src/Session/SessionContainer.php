@@ -16,5 +16,10 @@ interface SessionContainer
     /**
      *
      */
+    function register();
+
+    /**
+     *
+     */
     function reset();
 }

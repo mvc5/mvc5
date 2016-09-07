@@ -8,35 +8,57 @@ namespace Mvc5\Session;
 class Start
 {
     /**
-     * @var array
+     * @var Session
      */
-    protected $options;
+    protected $session;
 
     /**
-     * @param array $options
+     * @param Session $session
      */
-    function __construct($options = [])
+    function __construct(Session $session)
     {
-        $this->options = $options;
+        $this->session = $session;
     }
 
     /**
-     *
+     * @param Session $session
+     * @return bool
      */
-    function __invoke()
+    protected function active(Session $session)
     {
-        if (session_id()) {
-            return true;
-        }
+        return PHP_SESSION_ACTIVE === $session->status();
+    }
 
-        $cookie_params = [];
+    /**
+     * @param Session $session
+     * @return Session
+     */
+    protected function register(Session $session)
+    {
+        $session instanceof SessionContainer
+            && $session->register();
 
-        foreach(session_get_cookie_params() as $key => $value) {
-            $cookie_params['cookie_' . $key] = $value;
-        }
+        return $session;
+    }
 
-        $options = $this->options + $cookie_params;
+    /**
+     * @param Session $session
+     * @param array $options
+     * @return Session
+     */
+    protected function start(Session $session, array $options = [])
+    {
+        $session->start($options);
 
-        return session_start($options);
+        return $session;
+    }
+
+    /**
+     * @param array $options
+     * @return Session
+     */
+    function __invoke(array $options = [])
+    {
+        return $this->active($this->session) ? $this->register($this->session) : $this->start($this->session, $options);
     }
 }

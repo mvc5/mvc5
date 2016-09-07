@@ -36,6 +36,12 @@ interface Session
     function regenerate($delete_old_session = false);
 
     /**
+     * @param array $options
+     * @return bool
+     */
+    function start(array $options = []);
+
+    /**
      * @return int
      */
     function status();
