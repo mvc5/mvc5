@@ -19,7 +19,7 @@ trait Container
     /**
      * @var string
      */
-    protected $label = self::class;
+    protected $label;
 
     /**
      * @var _Session
@@ -30,17 +30,10 @@ trait Container
      * @param _Session $session
      * @param string $label
      */
-    function __construct(_Session $session, $label = null)
+    function __construct(_Session $session, $label = self::class)
     {
-        $label && $this->label = $label;
-
+        $this->label   = $label;
         $this->session = $session;
-
-        !isset($this->session[$this->label]) &&
-            $this->reset();
-
-        !$this->config &&
-            $this->config = $this->session[$this->label];
     }
 
     /**
@@ -94,9 +87,36 @@ trait Container
     /**
      *
      */
+    function register()
+    {
+        !isset($this->session[$this->label])
+            && $this->reset();
+
+        !$this->config &&
+            $this->config = $this->session[$this->label];
+    }
+
+    /**
+     *
+     */
     function reset()
     {
-        return $this->session[$this->label] = $this->config = new Config;
+        $this->session[$this->label] = $this->config = new Config;
+    }
+
+    /**
+     * @param array $options
+     * @return bool
+     */
+    function start(array $options = [])
+    {
+        if (!$this->session->start($options)) {
+            return false;
+        }
+
+        $this->register();
+
+        return true;
     }
 
     /**

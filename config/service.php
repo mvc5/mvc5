@@ -6,7 +6,6 @@
 use Mvc5\Plugin\Config;
 use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Dependency;
-use Mvc5\Plugin\End;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -15,7 +14,7 @@ use Mvc5\Plugin\Service;
 
 return [
     'config'               => new Config,
-    'cookie'               => [Mvc5\Cookie\Config::class, new Plugin('cookie\sender'), $_COOKIE],
+    'cookie'               => new Dependency('cookie', [Mvc5\Cookie\Config::class, new Plugin('cookie\sender'), $_COOKIE]),
     'cookie\sender'        => [Mvc5\Cookie\Sender::class, new Param('cookie')],
     'controller\action'    => new Service(Mvc5\Controller\Action::class),
     'error\controller'     => [Mvc5\Request\Error\Controller::class, new Plugin('error\model')],
@@ -47,11 +46,10 @@ return [
     'route\match\scheme'   => Mvc5\Route\Match\Scheme::class,
     'route\match\wildcard' => Mvc5\Route\Match\Wildcard::class,
     'service\resolver'     => Mvc5\Resolver\Dispatch::class,
-    'session'              => new Dependency('session', new Plugin('session\initializer')),
+    'session'              => new Dependency('session', new Call('session\start', [new Param('session')])),
     'session\container'    => [Mvc5\Session\Container::class, new Dependency('session\global')],
-    'session\global'       => [Mvc5\Session\Config::class, new Dependency('cookie')],
-    'session\initializer'  => new End(new Call('session\start'), new Plugin('session\container')),
-    'session\start'        => [Mvc5\Session\Start::class, new Param('session')],
+    'session\global'       => [Mvc5\Session\Config::class, new Plugin('cookie')],
+    'session\start'        => [Mvc5\Session\Start::class, new Plugin('session\container')],
     'template\render'      => new Service(Mvc5\View\Render::class, [new Param('templates')]),
     'url'                  => new Dependency('url\plugin'),
     'url\generator'        => [Mvc5\Url\Generator::class, new Param('routes')],
@@ -65,7 +63,6 @@ return [
     'web\layout'           => [Mvc5\Web\Layout::class, new Plugin('layout')],
     'web\middleware'       => new Service(Mvc5\Middleware::class, ['stack' => new Param('middleware.web')]),
     'web\render'           => new Service(Mvc5\Web\Render::class, [new Param('templates')]),
-    'web\response'         => new Service(Mvc5\Middleware::class, [new Param('middleware.web\response')]),
     'web\route'            => new Service(Mvc5\Web\Route::class, [new Param('routes')]),
     'web\send'             => Mvc5\Web\Send::class,
     'web\service'          => [Mvc5\Web\Service::class, new Link],
