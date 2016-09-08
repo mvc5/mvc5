@@ -4,8 +4,8 @@
  */
 
 use Mvc5\Plugin\Config;
-use Mvc5\Plugin\Call;
 use Mvc5\Plugin\Dependency;
+use Mvc5\Plugin\Hydrator;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -46,10 +46,9 @@ return [
     'route\match\scheme'   => Mvc5\Route\Match\Scheme::class,
     'route\match\wildcard' => Mvc5\Route\Match\Wildcard::class,
     'service\resolver'     => Mvc5\Resolver\Dispatch::class,
-    'session'              => new Dependency('session', new Call('session\start', [new Param('session')])),
-    'session\container'    => [Mvc5\Session\Container::class, new Dependency('session\global')],
+    'session'              => new Dependency('session', new Hydrator('session\container', ['start' => new Param('session')])),
+    'session\container'    => [Mvc5\Session\Container::class, 'session' => new Dependency('session\global')],
     'session\global'       => [Mvc5\Session\Config::class, new Plugin('cookie')],
-    'session\start'        => [Mvc5\Session\Start::class, new Plugin('session\container')],
     'template\render'      => new Service(Mvc5\View\Render::class, [new Param('templates')]),
     'url'                  => new Dependency('url\plugin'),
     'url\generator'        => [Mvc5\Url\Generator::class, new Param('routes')],
