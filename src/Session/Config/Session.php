@@ -167,6 +167,10 @@ trait Session
      */
     function start(array $options = [])
     {
+        if (PHP_SESSION_ACTIVE === $this->status()) {
+            return true;
+        }
+
         return session_start($options);
     }
 

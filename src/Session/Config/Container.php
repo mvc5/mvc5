@@ -87,18 +87,6 @@ trait Container
     /**
      *
      */
-    function register()
-    {
-        !isset($this->session[$this->label])
-            && $this->reset();
-
-        !$this->config &&
-            $this->config = $this->session[$this->label];
-    }
-
-    /**
-     *
-     */
     function reset()
     {
         $this->session[$this->label] = $this->config = new Config;
@@ -114,8 +102,11 @@ trait Container
             return false;
         }
 
-        $this->register();
+        !isset($this->session[$this->label])
+            && $this->reset();
 
+        !$this->config &&
+            $this->config = $this->session[$this->label];
         return true;
     }
 
