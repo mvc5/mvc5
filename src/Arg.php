@@ -120,6 +120,11 @@ interface Arg
     /**
      *
      */
+    const DOMAIN = 'domain';
+
+    /**
+     *
+     */
     const ERROR = 'error';
 
     /**
@@ -155,6 +160,11 @@ interface Arg
     /**
      *
      */
+    const EXPIRE = 'expire';
+
+    /**
+     *
+     */
     const FACTORY = 'factory';
 
     /**
@@ -186,6 +196,11 @@ interface Arg
      *
      */
     const HTTP_OK = '200';
+
+    /**
+     *
+     */
+    const HTTP_ONLY = 'httponly';
 
     /**
      *
@@ -346,6 +361,11 @@ interface Arg
     /**
      *
      */
+    const SECURE = 'secure';
+
+    /**
+     *
+     */
     const SEPARATOR = '/';
 
     /**
@@ -377,6 +397,11 @@ interface Arg
      *
      */
     const SESSION = 'session';
+
+    /**
+     *
+     */
+    const SET_COOKIE = 'setcookie';
 
     /**
      *
@@ -417,6 +442,11 @@ interface Arg
      *
      */
     const USER_AGENT = 'user_agent';
+
+    /**
+     *
+     */
+    const VALUE = 'value';
 
     /**
      *

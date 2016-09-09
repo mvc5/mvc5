@@ -5,6 +5,7 @@
 
 namespace Mvc5\Cookie\Config;
 
+use Mvc5\Arg;
 use Mvc5\Config\Config;
 
 trait Container
@@ -18,11 +19,11 @@ trait Container
      * @var array
      */
     protected $defaults = [
-        'expire'   => 0,
-        'path'     => '/',
-        'domain'   => '',
-        'secure'   => false,
-        'httponly' => true
+        Arg::EXPIRE    => 0,
+        Arg::PATH      => '/',
+        Arg::DOMAIN    => '',
+        Arg::SECURE    => false,
+        Arg::HTTP_ONLY => true
     ];
 
     /**
@@ -46,13 +47,13 @@ trait Container
     protected function cookie($name, $value, $expire, $path, $domain, $secure, $httponly)
     {
         return [
-            'name'     => $name,
-            'value'    => $value,
-            'expire'   => $expire   ?? $this->defaults['expire'],
-            'path'     => $path     ?? $this->defaults['path'],
-            'domain'   => $domain   ?? $this->defaults['domain'],
-            'secure'   => $secure   ?? $this->defaults['secure'],
-            'httponly' => $httponly ?? $this->defaults['httponly']
+            Arg::NAME      => $name,
+            Arg::VALUE     => $value,
+            Arg::EXPIRE    => $expire   ?? $this->defaults[Arg::EXPIRE],
+            Arg::PATH      => $path     ?? $this->defaults[Arg::PATH],
+            Arg::DOMAIN    => $domain   ?? $this->defaults[Arg::DOMAIN],
+            Arg::SECURE    => $secure   ?? $this->defaults[Arg::SECURE],
+            Arg::HTTP_ONLY => $httponly ?? $this->defaults[Arg::HTTP_ONLY]
         ];
     }
 
