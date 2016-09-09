@@ -5,6 +5,7 @@
 
 namespace Mvc5\Cookie\Config;
 
+use Mvc5\Arg;
 use Mvc5\Signal;
 
 trait Sender
@@ -28,7 +29,7 @@ trait Sender
     protected function setCookie($name, $value, $expire, $path, $domain, $secure, $httponly)
     {
         return $this->signal(
-            'setcookie', array_values($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly))
+            Arg::SET_COOKIE, array_values($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly))
         );
     }
 }

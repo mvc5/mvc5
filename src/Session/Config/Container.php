@@ -6,7 +6,7 @@
 namespace Mvc5\Session\Config;
 
 use Mvc5\Config\Overload;
-use Mvc5\Model\Config;
+use Mvc5\Session\Model;
 use Mvc5\Session\Session as _Session;
 
 trait Container
@@ -89,7 +89,7 @@ trait Container
      */
     function reset()
     {
-        $this->session[$this->label] = $this->config = new Config;
+        $this->session[$this->label] = $this->config = new Model;
     }
 
     /**
@@ -107,6 +107,7 @@ trait Container
 
         !$this->config &&
             $this->config = $this->session[$this->label];
+
         return true;
     }
 

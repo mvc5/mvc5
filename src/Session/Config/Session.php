@@ -5,6 +5,7 @@
 
 namespace Mvc5\Session\Config;
 
+use Mvc5\Arg;
 use Mvc5\Config\ArrayAccess;
 use Mvc5\Config\PropertyAccess;
 use Mvc5\Cookie\Cookies;
@@ -63,7 +64,7 @@ trait Session
 
         if ($cookie) {
             $params = session_get_cookie_params();
-            $this->cookies->remove(session_name(), $params['path'], $params['domain'], $params['secure']);
+            $this->cookies->remove($this->name(), $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
         }
     }
 
