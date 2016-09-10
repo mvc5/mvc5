@@ -45,11 +45,12 @@ trait Container
     }
 
     /**
-     * @param bool|true $cookie
+     * @param bool|true $remove_session_cookie
+     * @return bool
      */
-    function destroy($cookie = true)
+    function destroy($remove_session_cookie = true)
     {
-        $this->session->destroy($cookie);
+        return $this->session->destroy($remove_session_cookie);
     }
 
     /**

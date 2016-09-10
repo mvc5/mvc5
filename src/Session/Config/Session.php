@@ -26,7 +26,7 @@ trait Session
     /**
      * @param Cookies $cookies
      */
-    function __construct(Cookies $cookies)
+    function __construct(Cookies $cookies = null)
     {
         $this->cookies = $cookies;
     }
@@ -56,16 +56,15 @@ trait Session
     }
 
     /**
-     * @param bool|true $cookie
+     * @param bool $remove_session_cookie
+     * @return bool
      */
-    function destroy($cookie = true)
+    function destroy($remove_session_cookie = true)
     {
-        session_destroy();
+        $remove_session_cookie &&
+            $this->removeSessionCookie($this->name(), session_get_cookie_params());
 
-        if ($cookie) {
-            $params = session_get_cookie_params();
-            $this->cookies->remove($this->name(), $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
-        }
+        return session_destroy();
     }
 
     /**
@@ -134,6 +133,17 @@ trait Session
     function remove($name)
     {
         unset($_SESSION[$name]);
+    }
+
+    /**
+     * @param $name
+     * @param array $params
+     */
+    protected function removeSessionCookie($name, array $params = [])
+    {
+        $this->cookies ?
+            $this->cookies->remove($name, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE])
+                : setcookie($name, false, 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
     }
 
     /**

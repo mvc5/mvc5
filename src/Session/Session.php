@@ -16,9 +16,10 @@ interface Session
     function close();
 
     /**
-     * @param bool|true $cookie
+     * @param bool|true $remove_session_cookie
+     * @return bool
      */
-    function destroy($cookie = true);
+    function destroy($remove_session_cookie = true);
 
     /**
      * @return string
