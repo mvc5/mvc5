@@ -15,6 +15,7 @@ use Mvc5\Plugin\Service;
 return [
     'config'               => new Config,
     'cookie'               => new Dependency('cookie', [Mvc5\Cookie\Config::class, new Plugin('cookie\sender'), $_COOKIE]),
+    'cookie\container'     => [Mvc5\Cookie\Container::class, new Param('cookie')],
     'cookie\sender'        => [Mvc5\Cookie\Sender::class, new Param('cookie')],
     'controller\action'    => new Service(Mvc5\Controller\Action::class),
     'error\controller'     => [Mvc5\Request\Error\Controller::class, new Plugin('error\model')],
