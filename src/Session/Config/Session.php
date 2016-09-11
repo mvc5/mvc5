@@ -34,14 +34,6 @@ trait Session
     /**
      *
      */
-    function abort()
-    {
-        session_abort();
-    }
-
-    /**
-     *
-     */
     function clear()
     {
         $_SESSION = [];
@@ -170,14 +162,6 @@ trait Session
         $this->cookies ?
             $this->cookies->remove($name, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE])
                 : setcookie($name, false, 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
-    }
-
-    /**
-     *
-     */
-    function reset()
-    {
-        session_reset();
     }
 
     /**

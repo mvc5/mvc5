@@ -45,14 +45,6 @@ trait Container
     /**
      *
      */
-    function abort()
-    {
-        $this->session->abort();
-    }
-
-    /**
-     *
-     */
     function clear()
     {
         $this->session[$this->label] = $this->config = new Model;
@@ -110,14 +102,6 @@ trait Container
     }
 
     /**
-     *
-     */
-    function reset()
-    {
-        $this->session[$this->label] = $this->config = $this->previous ? clone $this->previous : new Model;
-    }
-
-    /**
      * @param array $options
      * @return bool
      */
@@ -128,9 +112,7 @@ trait Container
         }
 
         !isset($this->session[$this->label])
-            ? $this->reset() : $this->config = $this->session[$this->label];
-
-        $this->previous = clone $this->config;
+            ? $this->session[$this->label] = $this->config = new Model : $this->config = $this->session[$this->label];
 
         return true;
     }
