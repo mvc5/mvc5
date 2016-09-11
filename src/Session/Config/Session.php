@@ -146,6 +146,14 @@ trait Session
     }
 
     /**
+     * @param bool|false $delete_old_session
+     */
+    function regenerate($delete_old_session = false)
+    {
+        session_regenerate_id($delete_old_session);
+    }
+
+    /**
      * @param string $name
      * @return void
      */
@@ -163,14 +171,6 @@ trait Session
         $this->cookies ?
             $this->cookies->remove($name, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE])
                 : setcookie($name, false, 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
-    }
-
-    /**
-     * @param bool|false $delete_old_session
-     */
-    function regenerate($delete_old_session = false)
-    {
-        session_regenerate_id($delete_old_session);
     }
 
     /**
