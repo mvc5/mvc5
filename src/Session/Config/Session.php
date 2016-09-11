@@ -36,8 +36,7 @@ trait Session
      */
     function abort()
     {
-        $this->reset();
-        $this->close();
+        session_abort();
     }
 
     /**

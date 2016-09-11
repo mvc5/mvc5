@@ -19,7 +19,7 @@ trait Container
     /**
      * @var string
      */
-    protected $label;
+    protected $label = Model::class;
 
     /**
      * @var Model
@@ -35,10 +35,11 @@ trait Container
      * @param _Session $session
      * @param string $label
      */
-    function __construct(_Session $session, $label = Model::class)
+    function __construct(_Session $session, $label = null)
     {
-        $this->label   = $label;
         $this->session = $session;
+
+        $label && $this->label = $label;
     }
 
     /**
@@ -46,8 +47,7 @@ trait Container
      */
     function abort()
     {
-        $this->reset();
-        $this->close();
+        $this->session->abort();
     }
 
     /**
@@ -63,7 +63,7 @@ trait Container
      */
     function close()
     {
-        return $this->session->close();
+        $this->session->close();
     }
 
     /**
