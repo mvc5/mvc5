@@ -13,11 +13,6 @@ interface Session
     /**
      *
      */
-    function abort();
-
-    /**
-     *
-     */
     function clear();
 
     /**
@@ -47,11 +42,6 @@ interface Session
      * @param bool|false $delete_old_session
      */
     function regenerate($delete_old_session = false);
-
-    /**
-     *
-     */
-    function reset();
 
     /**
      * @param array $options
