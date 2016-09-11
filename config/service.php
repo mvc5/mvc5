@@ -48,7 +48,7 @@ return [
     'route\match\wildcard' => Mvc5\Route\Match\Wildcard::class,
     'service\resolver'     => Mvc5\Resolver\Dispatch::class,
     'session'              => new Dependency('session', new Hydrator('session\container', ['start' => new Param('session')])),
-    'session\container'    => [Mvc5\Session\Container::class, 'session' => new Dependency('session\global')],
+    'session\container'    => [Mvc5\Session\Container::class, 'session' => new Plugin('session\global')],
     'session\global'       => Mvc5\Session\Config::class,
     'template\render'      => new Service(Mvc5\View\Render::class, [new Param('templates')]),
     'url'                  => new Dependency('url\plugin'),
