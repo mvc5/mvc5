@@ -35,7 +35,7 @@ trait Container
      * @param _Session $session
      * @param string $label
      */
-    function __construct(_Session $session, $label = self::class)
+    function __construct(_Session $session, $label = Model::class)
     {
         $this->label   = $label;
         $this->session = $session;
