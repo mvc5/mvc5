@@ -13,27 +13,45 @@ interface Session
     /**
      *
      */
+    function abort();
+
+    /**
+     *
+     */
+    function clear();
+
+    /**
+     *
+     */
     function close();
 
     /**
-     * @param bool|true $cookie
+     * @param bool|true $remove_session_cookie
+     * @return bool
      */
-    function destroy($cookie = true);
+    function destroy($remove_session_cookie = true);
 
     /**
+     * @param string $id
      * @return string
      */
-    function id();
+    function id($id = null);
 
     /**
+     * @param string $name
      * @return string
      */
-    function name();
+    function name($name = null);
 
     /**
      * @param bool|false $delete_old_session
      */
     function regenerate($delete_old_session = false);
+
+    /**
+     *
+     */
+    function reset();
 
     /**
      * @param array $options

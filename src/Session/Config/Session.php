@@ -26,9 +26,26 @@ trait Session
     /**
      * @param Cookies $cookies
      */
-    function __construct(Cookies $cookies)
+    function __construct(Cookies $cookies = null)
     {
         $this->cookies = $cookies;
+    }
+
+    /**
+     *
+     */
+    function abort()
+    {
+        $this->reset();
+        $this->close();
+    }
+
+    /**
+     *
+     */
+    function clear()
+    {
+        $_SESSION = [];
     }
 
     /**
@@ -56,16 +73,15 @@ trait Session
     }
 
     /**
-     * @param bool|true $cookie
+     * @param bool $remove_session_cookie
+     * @return bool
      */
-    function destroy($cookie = true)
+    function destroy($remove_session_cookie = true)
     {
-        session_destroy();
+        $remove_session_cookie &&
+            $this->removeSessionCookie($this->name(), session_get_cookie_params());
 
-        if ($cookie) {
-            $params = session_get_cookie_params();
-            $this->cookies->remove($this->name(), $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
-        }
+        return session_destroy();
     }
 
     /**
@@ -87,11 +103,12 @@ trait Session
     }
 
     /**
+     * @param string $id
      * @return string
      */
-    function id()
+    function id($id = null)
     {
-        return session_id();
+        return null !== $id ? session_id($id) : session_id();
     }
 
     /**
@@ -103,11 +120,12 @@ trait Session
     }
 
     /**
+     * @param string $name
      * @return string
      */
-    function name()
+    function name($name = null)
     {
-        return session_name();
+        return null !== $name ? session_name($name) : session_name();
     }
 
     /**
@@ -137,11 +155,30 @@ trait Session
     }
 
     /**
+     * @param $name
+     * @param array $params
+     */
+    protected function removeSessionCookie($name, array $params = [])
+    {
+        $this->cookies ?
+            $this->cookies->remove($name, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE])
+                : setcookie($name, false, 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
+    }
+
+    /**
      * @param bool|false $delete_old_session
      */
     function regenerate($delete_old_session = false)
     {
         session_regenerate_id($delete_old_session);
+    }
+
+    /**
+     *
+     */
+    function reset()
+    {
+        session_reset();
     }
 
     /**

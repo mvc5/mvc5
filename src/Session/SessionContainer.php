@@ -12,9 +12,4 @@ interface SessionContainer
      * @return string
      */
     function label();
-
-    /**
-     *
-     */
-    function reset();
 }

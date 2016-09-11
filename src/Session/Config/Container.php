@@ -22,6 +22,11 @@ trait Container
     protected $label;
 
     /**
+     * @var Model
+     */
+    protected $previous;
+
+    /**
      * @var _Session
      */
     protected $session;
@@ -39,25 +44,44 @@ trait Container
     /**
      *
      */
+    function abort()
+    {
+        $this->reset();
+        $this->close();
+    }
+
+    /**
+     *
+     */
+    function clear()
+    {
+        $this->session[$this->label] = $this->config = new Model;
+    }
+
+    /**
+     *
+     */
     function close()
     {
         return $this->session->close();
     }
 
     /**
-     * @param bool|true $cookie
+     * @param bool|true $remove_session_cookie
+     * @return bool
      */
-    function destroy($cookie = true)
+    function destroy($remove_session_cookie = true)
     {
-        $this->session->destroy($cookie);
+        return $this->session->destroy($remove_session_cookie);
     }
 
     /**
+     * @param string $id
      * @return string
      */
-    function id()
+    function id($id = null)
     {
-        return $this->session->id();
+        return $this->session->id($id);
     }
 
     /**
@@ -69,11 +93,12 @@ trait Container
     }
 
     /**
+     * @param string $name
      * @return string
      */
-    function name()
+    function name($name = null)
     {
-        return $this->session->name();
+        return $this->session->name($name);
     }
 
     /**
@@ -89,7 +114,7 @@ trait Container
      */
     function reset()
     {
-        $this->session[$this->label] = $this->config = new Model;
+        $this->session[$this->label] = $this->config = $this->previous ? clone $this->previous : new Model;
     }
 
     /**
@@ -103,10 +128,9 @@ trait Container
         }
 
         !isset($this->session[$this->label])
-            && $this->reset();
+            ? $this->reset() : $this->config = $this->session[$this->label];
 
-        !$this->config &&
-            $this->config = $this->session[$this->label];
+        $this->previous = clone $this->config;
 
         return true;
     }
