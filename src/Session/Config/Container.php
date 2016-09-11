@@ -22,11 +22,6 @@ trait Container
     protected $label = Model::class;
 
     /**
-     * @var Model
-     */
-    protected $previous;
-
-    /**
      * @var _Session
      */
     protected $session;
@@ -47,7 +42,7 @@ trait Container
      */
     function clear()
     {
-        $this->session[$this->label] = $this->config = new Model;
+        $this->resetSessionModel();
     }
 
     /**
@@ -102,6 +97,14 @@ trait Container
     }
 
     /**
+     *
+     */
+    protected function resetSessionModel()
+    {
+        $this->session[$this->label] = $this->config = new Model;
+    }
+
+    /**
      * @param array $options
      * @return bool
      */
@@ -112,7 +115,7 @@ trait Container
         }
 
         !isset($this->session[$this->label])
-            ? $this->session[$this->label] = $this->config = new Model : $this->config = $this->session[$this->label];
+            ? $this->resetSessionModel() : $this->config = $this->session[$this->label];
 
         return true;
     }
