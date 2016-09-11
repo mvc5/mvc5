@@ -34,6 +34,23 @@ trait Session
     /**
      *
      */
+    function abort()
+    {
+        $this->reset();
+        $this->close();
+    }
+
+    /**
+     *
+     */
+    function clear()
+    {
+        $_SESSION = [];
+    }
+
+    /**
+     *
+     */
     function close()
     {
         session_write_close();
@@ -86,11 +103,12 @@ trait Session
     }
 
     /**
+     * @param string $id
      * @return string
      */
-    function id()
+    function id($id = null)
     {
-        return session_id();
+        return null !== $id ? session_id($id) : session_id();
     }
 
     /**
@@ -102,11 +120,12 @@ trait Session
     }
 
     /**
+     * @param string $name
      * @return string
      */
-    function name()
+    function name($name = null)
     {
-        return session_name();
+        return null !== $name ? session_name($name) : session_name();
     }
 
     /**
@@ -152,6 +171,14 @@ trait Session
     function regenerate($delete_old_session = false)
     {
         session_regenerate_id($delete_old_session);
+    }
+
+    /**
+     *
+     */
+    function reset()
+    {
+        session_reset();
     }
 
     /**
