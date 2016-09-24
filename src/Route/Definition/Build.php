@@ -81,10 +81,10 @@ trait Build
     }
 
     /**
-     * @param array $route
+     * @param array|\ArrayAccess $route
      * @return string
      */
-    protected function createDefault(array $route = [])
+    protected function createDefault($route = [])
     {
         return new Config($route);
     }
