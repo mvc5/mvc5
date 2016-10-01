@@ -5,6 +5,7 @@
 
 namespace Mvc5\Response\Send;
 
+use Closure;
 use Mvc5\Arg;
 use Mvc5\Http\Response as HttpResponse;
 use Mvc5\Response\Emitter;
@@ -27,11 +28,11 @@ trait Send
     }
 
     /**
-     * @param Emitter|string $body
+     * @param Closure|Emitter|string $body
      */
     protected function emit($body)
     {
-        $body instanceof Emitter ? $body->emit() : print($body);
+        $body instanceof Emitter ? $body->emit() : ($body instanceof Closure ? $body() : print($body));
     }
 
     /**
