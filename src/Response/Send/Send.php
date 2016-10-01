@@ -7,6 +7,7 @@ namespace Mvc5\Response\Send;
 
 use Mvc5\Arg;
 use Mvc5\Http\Response as HttpResponse;
+use Mvc5\Response\Emitter;
 use Mvc5\Response\Response;
 use Mvc5\Signal;
 
@@ -22,7 +23,15 @@ trait Send
      */
     protected function body(HttpResponse $response)
     {
-        echo $response->body();
+        $this->emit($response->body());
+    }
+
+    /**
+     * @param Emitter|string $body
+     */
+    protected function emit($body)
+    {
+        $body instanceof Emitter ? $body->emit() : print($body);
     }
 
     /**
