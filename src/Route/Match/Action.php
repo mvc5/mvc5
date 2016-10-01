@@ -18,12 +18,9 @@ class Action
      */
     function __invoke(Request $request, Route $route)
     {
-        if (!$route->actions()) {
-            return $request;
-        }
-
-        ($controller = $route->action($request->method())) &&
-            $request[Arg::CONTROLLER] = $controller;
+        $route->actions()
+            && ($controller = $route->action($request->method()))
+                && $request[Arg::CONTROLLER] = $controller;
 
         return $request;
     }

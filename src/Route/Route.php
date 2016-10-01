@@ -80,6 +80,11 @@ interface Route
     function name();
 
     /**
+     * @return array|null
+     */
+    function options();
+
+    /**
      * @return int|null|string
      */
     function port();

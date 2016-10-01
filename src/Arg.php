@@ -41,6 +41,7 @@ interface Arg
     const FACTORY = 'factory';
     const FILES = 'files';
     const FORM = 'form';
+    const FORMAT = 'format';
     const FRAGMENT = 'fragment';
     const HEADERS = 'headers';
     const HOST = 'host';
@@ -59,6 +60,7 @@ interface Arg
     const MODEL = 'model';
     const NAME = 'name';
     const NEXT = 'next';
+    const OPTIONS = 'options';
     const PARAM = 'param';
     const PARAMS = 'params';
     const PARENT = 'parent';
@@ -66,6 +68,7 @@ interface Arg
     const PATH = 'path';
     const PLUGIN = 'plugin';
     const PORT = 'port';
+    const PREFIX = 'prefix';
     const PROPERTY = '$';
     const QUERY = 'query';
     const REASON = 'reason';
@@ -79,6 +82,7 @@ interface Arg
     const SCHEME = 'scheme';
     const SECURE = 'secure';
     const SEPARATOR = '/';
+    const SEPARATORS = 'separators';
     const SERVER = 'server';
     const SERVICE = 'service';
     const SERVICES = 'services';
@@ -86,7 +90,9 @@ interface Arg
     const SERVICE_SEPARATOR = '->';
     const SESSION = 'session';
     const SET_COOKIE = 'setcookie';
+    const SPLIT = 'split';
     const STATUS = 'status';
+    const SUFFIX = 'suffix';
     const STREAM = 'stream';
     const TEMPLATE = 'template';
     const TEMPLATE_MODEL = '__template';
