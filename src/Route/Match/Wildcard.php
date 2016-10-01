@@ -18,16 +18,22 @@ class Wildcard
      */
     function __invoke(Request $request, Route $route)
     {
-        if (!$route->wildcard()) {
+        if ($request->matched() || !$route->wildcard()) {
             return $request;
         }
 
-        $parts = explode(Arg::SEPARATOR, trim(substr($request->path(), $request->length()), Arg::SEPARATOR));
-
         $params = $request[Arg::PARAMS];
+        $path   = trim(substr($request->path(), $request->length()), Arg::SEPARATOR);
+        $parts  = explode(Arg::SEPARATOR, $path);
 
-        for($i = 0, $n = count($parts); $i < $n; $i += 2) {
-            if (!isset($parts[$i + 1])) {
+        $n = count($parts);
+
+        if (!$path || $n < 2) {
+            return null;
+        }
+
+        for($i = 0; $i < $n; $i += 2) {
+            if (!isset($parts[$i + 1]) || isset($params[$parts[$i]])) {
                 continue;
             }
 

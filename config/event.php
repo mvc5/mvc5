@@ -18,6 +18,7 @@ return [
         'route\match\method',
         'route\match\path',
         'route\match\action',
+        'route\match\controller',
         'route\match\wildcard'
     ],
     'service\resolver' => [
