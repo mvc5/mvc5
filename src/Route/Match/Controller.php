@@ -28,9 +28,9 @@ class Controller
     protected $options = [
         Arg::PREFIX     => '',
         Arg::SEPARATORS => ['-' => '\\', '_' => '_'],
-        Arg::SUFFIX     => '\Controller',
         Arg::SPLIT      => '\\',
-        Arg::STRICT     => false
+        Arg::STRICT     => false,
+        Arg::SUFFIX     => '\Controller'
     ];
 
     /**
@@ -44,21 +44,21 @@ class Controller
     }
 
     /**
-     * @param Request $request
+     * @param array $params
      * @return null|string
      */
-    protected function action(Request $request)
+    protected function action($params)
     {
-        return $request->get(Arg::PARAMS)[Arg::ACTION] ?? null;
+        return $params[Arg::ACTION] ?? null;
     }
 
     /**
-     * @param Request $request
+     * @param array $params
      * @return null|string
      */
-    protected function controller(Request $request)
+    protected function controller($params)
     {
-        return $request->get(Arg::PARAMS)[Arg::CONTROLLER] ?? null;
+        return $params[Arg::CONTROLLER] ?? null;
     }
 
     /**
@@ -66,7 +66,7 @@ class Controller
      * @param array $options
      * @return string
      */
-    protected function format($name, array $options)
+    protected function format($name, $options)
     {
         return $options[Arg::STRICT] ? $this->replace($name, $options) : $this->uppercase($name, $options);
     }
@@ -74,12 +74,12 @@ class Controller
     /**
      * @param $action
      * @param $controller
-     * @param array $replacements
+     * @param array $replacement
      * @return bool
      */
-    protected function invalid($action, $controller, array $replacements)
+    protected function invalid($action, $controller, $replacement)
     {
-        return !$this->valid($controller, $replacements) || (!$this->valid($action, $replacements) && $action);
+        return !$this->valid($controller, $replacement) || (!$this->valid($action, $replacement) && $action);
     }
 
     /**
@@ -123,22 +123,40 @@ class Controller
     }
 
     /**
+     * @param Request $request
+     * @return array
+     */
+    protected function params(Request $request)
+    {
+        return $request->get(Arg::PARAMS) ?: [];
+    }
+
+    /**
      * @param string $name
      * @param array $options
      * @return string
      */
-    protected function replace($name, array $options)
+    protected function replace($name, $options)
     {
-        return str_replace(array_keys($options[Arg::SEPARATORS]), array_values($options[Arg::SEPARATORS]), $name);
+        return str_replace($this->separator($options), $this->replacement($options), $name);
     }
 
     /**
      * @param array $options
      * @return array
      */
-    protected function replacements(array $options)
+    protected function replacement(array $options)
     {
-        return array_filter(array_values($options[Arg::SEPARATORS]));
+        return array_values($options[Arg::SEPARATORS]);
+    }
+
+    /**
+     * @param array $options
+     * @return array
+     */
+    protected function separator(array $options)
+    {
+        return array_keys($options[Arg::SEPARATORS]);
     }
 
     /**
@@ -157,12 +175,12 @@ class Controller
 
     /**
      * @param string $name
-     * @param array $replacements
+     * @param array $replacement
      * @return bool
      */
-    protected function valid($name, array $replacements)
+    protected function valid($name, array $replacement)
     {
-        return $name && str_replace($replacements, '', $name);
+        return $name && str_replace($replacement, '', $name);
     }
 
     /**
@@ -177,11 +195,12 @@ class Controller
         }
 
         $options    = $this->options($route);
-        $action     = $this->format($this->action($request), $options);
-        $controller = $this->format($this->controller($request), $options);
+        $params     = $this->params($request);
+        $action     = $this->format($this->action($params), $options);
+        $controller = $this->format($this->controller($params), $options);
         $name       = $this->name($action, $controller, $options);
 
-        if ($this->invalid($action, $controller, $this->replacements($options))) {
+        if ($this->invalid($action, $controller, $this->replacement($options))) {
             return null;
         }
 
