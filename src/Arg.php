@@ -92,6 +92,7 @@ interface Arg
     const SET_COOKIE = 'setcookie';
     const SPLIT = 'split';
     const STATUS = 'status';
+    const STRICT = 'strict';
     const SUFFIX = 'suffix';
     const STREAM = 'stream';
     const TEMPLATE = 'template';
