@@ -124,14 +124,6 @@ trait Route
     }
 
     /**
-     * @return string
-     */
-    function options()
-    {
-        return $this[Arg::OPTIONS] ?: [];
-    }
-
-    /**
      * @return int|null|string
      */
     function port()
