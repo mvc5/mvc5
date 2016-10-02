@@ -45,7 +45,7 @@ return [
     'route\match\path'     => Mvc5\Route\Match\Path::class,
     'route\match\method'   => Mvc5\Route\Match\Method::class,
     'route\match\scheme'   => Mvc5\Route\Match\Scheme::class,
-    'route\match\controller' => Mvc5\Route\Match\Controller::class,
+    'route\match\controller' => [Mvc5\Route\Match\Controller::class, new Link],
     'route\match\wildcard' => Mvc5\Route\Match\Wildcard::class,
     'service\resolver'     => Mvc5\Resolver\Dispatch::class,
     'session'              => new Dependency('session', new Hydrator('session\container', ['start' => new Param('session')])),
