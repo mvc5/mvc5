@@ -26,6 +26,8 @@ class Controller
      * @var array
      */
     protected $options = [
+        Arg::ACTION     => 'action',
+        Arg::CONTROLLER => 'controller',
         Arg::PREFIX     => '',
         Arg::SEPARATORS => ['-' => '\\', '_' => '_'],
         Arg::SPLIT      => '\\',
@@ -45,20 +47,22 @@ class Controller
 
     /**
      * @param array $params
+     * @param array $options
      * @return null|string
      */
-    protected function action($params)
+    protected function action($params, $options)
     {
-        return $params[Arg::ACTION] ?? null;
+        return $params[$options[Arg::ACTION]] ?? null;
     }
 
     /**
      * @param array $params
+     * @param array $options
      * @return null|string
      */
-    protected function controller($params)
+    protected function controller($params, $options)
     {
-        return $params[Arg::CONTROLLER] ?? null;
+        return $params[$options[Arg::CONTROLLER]] ?? null;
     }
 
     /**
@@ -196,8 +200,8 @@ class Controller
 
         $options    = $this->options($route);
         $params     = $this->params($request);
-        $action     = $this->format($this->action($params), $options);
-        $controller = $this->format($this->controller($params), $options);
+        $action     = $this->format($this->action($params, $options), $options);
+        $controller = $this->format($this->controller($params, $options), $options);
         $name       = $this->name($action, $controller, $options);
 
         if ($this->invalid($action, $controller, $this->replacement($options))) {
