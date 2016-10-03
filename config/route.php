@@ -13,12 +13,13 @@ return [
     'constraints' => ['controller' => '[a-zA-Z0-9_-]+', 'action' => '[a-zA-Z0-9_-]+'],
     'name'        => 'app',
     'options'     => [
+        'action'     => 'action',
+        'controller' => 'controller',
         'prefix'     => '',
         'separators' => ['-' => '\\', '_' => '_'],
         'split'      => '\\',
         'strict'     => true,
         'suffix'     => '\controller'
     ],
-    'paramMap'    => ['param1' => 'controller', 'param2' => 'action'],
-    'route'       => '/[:controller[/:action]]'
+    'route' => '/[:controller[/:action]]'
 ];
