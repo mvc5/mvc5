@@ -64,11 +64,6 @@ class Match
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        if (!$result instanceof Request) {
-            $this->stop();
-            return $result;
-        }
-
-        return $this->request = $result;
+        return !$result instanceof Request && $this->stop() ? $result : $this->request = $result;
     }
 }
