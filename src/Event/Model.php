@@ -26,11 +26,11 @@ trait Model
     }
 
     /**
-     *
+     * @return bool|true
      */
     function stop()
     {
-        $this->stopped = true;
+        return $this->stopped = true;
     }
 
     /**

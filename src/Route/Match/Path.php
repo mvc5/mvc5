@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Event\Event;
 use Mvc5\Route\Route;
 use Mvc5\Route\Request;
 
@@ -29,11 +30,12 @@ class Path
     }
 
     /**
+     * @param Event $event
      * @param Request $request
      * @param Route $route
      * @return Request
      */
-    function __invoke(Request $request, Route $route)
+    function __invoke(Event $event, Request $request, Route $route)
     {
         if (!preg_match('(\G' . $route->regex() . ')', $request->path(), $matches, null, $request->length())) {
             return null;
@@ -44,6 +46,6 @@ class Path
         $request[Arg::MATCHED]    = $request->length() == strlen($request->path());
         $request[Arg::PARAMS]     = $this->params($route->map(), $matches, $route->defaults());
 
-        return $request;
+        return $request->matched() || ($route->children() && $event->stop()) ? $request : null;
     }
 }
