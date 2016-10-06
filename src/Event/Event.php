@@ -13,7 +13,7 @@ interface Event
     function event();
 
     /**
-     * @return void
+     * @return bool|true
      */
     function stop();
 
