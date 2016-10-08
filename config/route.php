@@ -10,16 +10,16 @@
 
 return [
     'defaults'    => ['controller' => 'home'],
-    'constraints' => ['controller' => '[a-zA-Z0-9_-]+', 'action' => '[a-zA-Z0-9_-]+'],
+    'constraints' => ['controller' => '[a-zA-Z][a-zA-Z0-9]+', 'action' => '[a-zA-Z][a-zA-Z0-9/]+'],
     'name'        => 'app',
     'options'     => [
         'action'     => 'action',
         'controller' => 'controller',
         'prefix'     => '',
-        'separators' => ['-' => '\\', '_' => '_'],
+        'separators' => ['/' => '\\'],
         'split'      => '\\',
-        'strict'     => true,
-        'suffix'     => '\controller'
+        'strict'     => false,
+        'suffix'     => '\Controller'
     ],
     'route' => '/[:controller[/:action]]'
 ];

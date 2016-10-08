@@ -21,6 +21,7 @@ trait Router
      *
      */
     use Plugin;
+    use Traverse;
 
     /**
      * @var string
@@ -54,29 +55,44 @@ trait Router
 
     /**
      * @param Request $request
+     * @param Route $route
      * @return Request
      */
-    protected function dispatch(Request $request)
+    protected function dispatch(Request $request, Route $route)
     {
-        return $this->route(new $this->request(clone $request), $this->routeDefinition($this->route));
+        return $this->route($this->routeRequest($request, $route), $route);
     }
 
     /**
-     * @param $route
-     * @param $request
+     * @param Request $request
+     * @param Route $route
      * @return Request
      */
-    protected function match($route, $request)
+    protected function match(Request $request, Route $route)
     {
         return $this->trigger([Arg::ROUTE_MATCH, Arg::ROUTE => $route, Arg::REQUEST => $request]);
     }
 
     /**
+     * @param $request
+     * @param $routes
+     * @return Request|_Request
+     */
+    protected function matchRequest($request, $routes)
+    {
+        return !$request instanceof RouteRequest ? $request : (
+            $request->matched() ? $request->request() : $this->traverse($request, $routes)
+        );
+    }
+
+    /**
+     * @param $name
+     * @param $parent
      * @return string
      */
-    protected function name()
+    protected function name($name, $parent)
     {
-        return $this->route[Arg::NAME];
+        return $this->route[Arg::NAME] === $parent ? $name : $parent . Arg::SEPARATOR . $name;
     }
 
     /**
@@ -85,7 +101,7 @@ trait Router
      */
     protected function request(Request $request)
     {
-        $result = $this->dispatch($request);
+        $result = $this->dispatch($request, $this->routeDefinition($this->route));
 
         !$result &&
             $result = new NotFound;
@@ -99,34 +115,21 @@ trait Router
     /**
      * @param RouteRequest $request
      * @param Route $route
-     * @return Request
+     * @return Request|_Request
      */
     protected function route(RouteRequest $request, Route $route)
     {
-        $request = $this->match($route, $request);
+        return $this->matchRequest($this->match($request, $route), $route->children());
+    }
 
-        if (!$request instanceof RouteRequest) {
-            return $request;
-        }
-
-        !$request->name() && $request[Arg::NAME] = $route->name();
-
-        if ($request->matched()) {
-            return $request->request();
-        }
-
-        $parent = $request->name();
-
-        foreach($route->children() as $name => $route) {
-            $this->name() !== $parent &&
-                $name = $parent . Arg::SEPARATOR . $name;
-
-            if ($match = $this->route($request->with(Arg::NAME, $name), $this->routeDefinition($route))) {
-                return $match;
-            }
-        }
-
-        return null;
+    /**
+     * @param Request $request
+     * @param Route $route
+     * @return RouteRequest
+     */
+    protected function routeRequest(Request $request, Route $route)
+    {
+        return new $this->request($request->with(Arg::NAME, $route->name()));
     }
 
     /**
