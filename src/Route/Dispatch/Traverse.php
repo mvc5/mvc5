@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Dispatch;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 use Mvc5\Route\Request as RouteRequest;
@@ -17,11 +18,11 @@ trait Traverse
      * @param $name
      * @param $route
      * @param array $routes
-     * @return Request|null
+     * @return Request|NotFound|null
      */
     protected function iterate(RouteRequest $request, $name, $route, $routes)
     {
-        return null === $name ? null : $this->step($request, $name, $this->routeDefinition($route), $routes);
+        return null === $name ? new NotFound : $this->step($request, $name, $this->routeDefinition($route), $routes);
     }
 
     /**
