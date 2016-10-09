@@ -130,15 +130,6 @@ trait Router
     }
 
     /**
-     * @param Request $request
-     * @return RouteRequest
-     */
-    protected function routeRequest(Request $request)
-    {
-        return new $this->request($request);
-    }
-
-    /**
      * @param array|Route $route
      * @return Route
      */
@@ -146,6 +137,15 @@ trait Router
     {
         return $route instanceof Route && isset($route[Arg::REGEX])
             ? $route : $this->definition($route);
+    }
+
+    /**
+     * @param Request $request
+     * @return RouteRequest
+     */
+    protected function routeRequest(Request $request)
+    {
+        return new $this->request($request);
     }
 
     /**
