@@ -15,18 +15,41 @@ class Path
     /**
      * @param array $map
      * @param array $matches
+     * @param array $matched
+     * @return array
+     */
+    protected function map(array $map, array $matches, array $matched = [])
+    {
+        foreach($map as $name => $arg) {
+            !empty($matches[$name]) && $matched[$arg] = $matches[$name];
+        }
+
+        return $matched;
+    }
+
+    /**
+     * @param array $matches
+     * @param array $matched
+     * @return array
+     */
+    protected function named(array $matches, array $matched = [])
+    {
+        foreach($matches as $name => $value) {
+            is_string($name) && $matched[$name] = $value;
+        }
+
+        return $matched;
+    }
+
+    /**
+     * @param array $map
+     * @param array $matches
      * @param array $defaults
      * @return array
      */
     protected function params(array $map, array $matches, array $defaults = [])
     {
-        $matched = [];
-
-        foreach($map as $name => $arg) {
-            !empty($matches[$name]) && $matched[$arg] = $matches[$name];
-        }
-
-        return $matched + $defaults;
+        return ($map ? $this->map($map, $matches) : $this->named($matches)) + $defaults;
     }
 
     /**
