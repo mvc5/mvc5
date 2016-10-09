@@ -19,7 +19,7 @@ class Path
      */
     protected function defaults(Request $request, Route $route)
     {
-        return ($request[Arg::PARAMS] ?: []) + $route->defaults();
+        return $route->defaults() + ($request[Arg::PARAMS] ?: []);
     }
 
     /**
