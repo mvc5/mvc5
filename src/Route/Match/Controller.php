@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error\NotFound;
 use Mvc5\Route\Route;
 use Mvc5\Route\Request;
 use Mvc5\Signal;
@@ -29,7 +30,7 @@ class Controller
         Arg::ACTION     => 'action',
         Arg::CONTROLLER => 'controller',
         Arg::PREFIX     => '',
-        Arg::SEPARATORS => ['-' => '\\', '_' => '_'],
+        Arg::SEPARATORS => ['/' => '\\'],
         Arg::SPLIT      => '\\',
         Arg::STRICT     => false,
         Arg::SUFFIX     => '\Controller'
@@ -190,7 +191,7 @@ class Controller
     /**
      * @param Request $request
      * @param Route $route
-     * @return Request
+     * @return Request|NotFound
      */
     function __invoke(Request $request, Route $route)
     {
@@ -211,7 +212,7 @@ class Controller
         $controller = $this->match($name, $this->load($name));
 
         if (!$controller) {
-            return null;
+            return new NotFound;
         }
 
         $request[Arg::CONTROLLER] = $controller;

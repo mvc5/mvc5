@@ -6,9 +6,11 @@
 namespace Mvc5\Route\Definition;
 
 use Mvc5\Arg;
+use Mvc5\Exception;
 use Mvc5\Route\Config;
 use Mvc5\Route\Route;
 use RuntimeException;
+use Mvc5\Signal;
 
 trait Build
 {
@@ -17,6 +19,7 @@ trait Build
      */
     use Params;
     use Regex;
+    use Signal;
     use Tokens;
 
     /**
@@ -27,8 +30,11 @@ trait Build
      */
     protected function definition($route, $compile = true, $recursive = false)
     {
+        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN]
+            = $this->children($route[Arg::CHILDREN], $compile, $recursive);
+
         if (!isset($route[Arg::ROUTE])) {
-            throw new RuntimeException('Route not specified');
+            return isset($route[Arg::REGEX]) ? $route : $this->signal(new Exception('Route path not specified'));
         }
 
         !isset($route[Arg::CONSTRAINTS]) && $route[Arg::CONSTRAINTS] = [];
@@ -41,9 +47,6 @@ trait Build
 
         !isset($route[Arg::MAP]) && $route[Arg::MAP]
             = $this->params($route[Arg::TOKENS]);
-
-        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN]
-            = $this->children($route[Arg::CHILDREN], $compile, $recursive);
 
         return $route;
     }

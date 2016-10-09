@@ -21,7 +21,6 @@ trait Router
      *
      */
     use Plugin;
-    use Traverse;
 
     /**
      * @var string
@@ -60,7 +59,7 @@ trait Router
      */
     protected function dispatch(Request $request, Route $route)
     {
-        return $this->route($this->routeRequest($request, $route), $route);
+        return $this->route($this->routeRequest($request->with(Arg::NAME, $route->name())), $route);
     }
 
     /**
@@ -101,8 +100,16 @@ trait Router
      */
     protected function request(Request $request)
     {
-        $result = $this->dispatch($request, $this->routeDefinition($this->route));
+        return $this->result($request, $this->dispatch($request, $this->routeDefinition($this->route)));
+    }
 
+    /**
+     * @param Request $request
+     * @param $result
+     * @return Error|NotFound|Request|_Request
+     */
+    protected function result(Request $request, $result = null)
+    {
         !$result &&
             $result = new NotFound;
 
@@ -124,12 +131,11 @@ trait Router
 
     /**
      * @param Request $request
-     * @param Route $route
      * @return RouteRequest
      */
-    protected function routeRequest(Request $request, Route $route)
+    protected function routeRequest(Request $request)
     {
-        return new $this->request($request->with(Arg::NAME, $route->name()));
+        return new $this->request($request);
     }
 
     /**
@@ -140,6 +146,35 @@ trait Router
     {
         return $route instanceof Route && isset($route[Arg::REGEX])
             ? $route : $this->definition($route);
+    }
+
+    /**
+     * @param RouteRequest $request
+     * @param Route $route
+     * @param string $name
+     * @return Request
+     */
+    protected function step(RouteRequest $request, Route $route, $name)
+    {
+        return $this->route(
+            $request->with(Arg::NAME, $this->name(is_string($name) ? $name : $route->name(), $request->name())), $route
+        );
+    }
+
+    /**
+     * @param RouteRequest $request
+     * @param array|\Iterator $routes
+     * @return Request|NotFound
+     */
+    protected function traverse(RouteRequest $request, $routes)
+    {
+        foreach($routes as $name => $route) {
+            if ($match = $this->step($request, $this->routeDefinition($route), $name)) {
+                return $match;
+            }
+        }
+
+        return new NotFound;
     }
 
     /**
