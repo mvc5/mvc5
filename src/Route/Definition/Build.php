@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Exception;
 use Mvc5\Route\Config;
 use Mvc5\Route\Route;
-use RuntimeException;
 use Mvc5\Signal;
 
 trait Build
