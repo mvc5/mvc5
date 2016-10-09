@@ -124,7 +124,7 @@ class Controller
      */
     protected function options($route)
     {
-        return $route[Arg::OPTIONS] ? $route[Arg::OPTIONS] + $this->options : $this->options;
+        return ($route[Arg::OPTIONS] ?: []) + $this->options;
     }
 
     /**
