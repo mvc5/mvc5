@@ -8,6 +8,7 @@ namespace Mvc5\Url\Route;
 use Mvc5\Arg;
 use Mvc5\Route\Route;
 use Mvc5\Route\Definition\Assemble;
+use Mvc5\Route\Definition\Constraint;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
 
@@ -19,6 +20,7 @@ trait Generator
     use Assemble;
     use Build;
     use Compile;
+    use Constraint;
 
     /**
      * @var array|Route
@@ -87,7 +89,7 @@ trait Generator
         }
 
         if ($args && $route->wildcard()) {
-            $params = array_diff_key($args, $route->constraints());
+            $params = array_diff_key($args, $this->constraint($route->tokens()));
 
             $params && $path = rtrim($path, Arg::SEPARATOR);
 

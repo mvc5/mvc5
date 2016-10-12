@@ -5,6 +5,8 @@
 
 namespace Mvc5\Route\Definition;
 
+use Mvc5\Arg;
+
 trait Constraint
 {
     /**
@@ -15,7 +17,7 @@ trait Constraint
     protected function constraint(array $tokens, array $constraint = [])
     {
         foreach($tokens as $token) {
-            'param' === $token[Dash::TYPE] && $token[Dash::NAME] &&
+            Arg::PARAM === $token[Dash::TYPE] && $token[Dash::NAME] &&
                 $constraint[$token[Dash::NAME]] = $token[Dash::CONSTRAINT];
         }
 

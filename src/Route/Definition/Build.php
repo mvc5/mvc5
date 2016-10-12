@@ -16,7 +16,6 @@ trait Build
     /**
      *
      */
-    use Constraint;
     use Regex;
     use Signal;
     use Tokens;
@@ -41,8 +40,6 @@ trait Build
 
         $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX] =
             $this->regex($route[Arg::TOKENS]);
-
-        $route[Arg::CONSTRAINTS] = $this->constraint($route[Arg::TOKENS]);
 
         return $route;
     }
