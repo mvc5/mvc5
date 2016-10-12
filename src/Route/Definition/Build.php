@@ -16,7 +16,7 @@ trait Build
     /**
      *
      */
-    use Params;
+    use Constraint;
     use Regex;
     use Signal;
     use Tokens;
@@ -29,23 +29,20 @@ trait Build
      */
     protected function definition($route, $compile = true, $recursive = false)
     {
-        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN]
-            = $this->children($route[Arg::CHILDREN], $compile, $recursive);
+        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN] =
+            $this->children($route[Arg::CHILDREN], $compile, $recursive);
 
         if (!isset($route[Arg::ROUTE])) {
             return isset($route[Arg::REGEX]) ? $route : $this->signal(new Exception('Route path not specified'));
         }
 
-        !isset($route[Arg::CONSTRAINTS]) && $route[Arg::CONSTRAINTS] = [];
+        !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS] =
+            $this->tokens($route[Arg::ROUTE], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : []);
 
-        !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS]
-            = $this->tokens($route[Arg::ROUTE]);
+        $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX] =
+            $this->regex($route[Arg::TOKENS]);
 
-        $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX]
-            = $this->regex($route[Arg::TOKENS], $route[Arg::CONSTRAINTS]);
-
-        !isset($route[Arg::MAP]) && $route[Arg::MAP]
-            = $this->params($route[Arg::TOKENS]);
+        $route[Arg::CONSTRAINTS] = $this->constraint($route[Arg::TOKENS]);
 
         return $route;
     }
