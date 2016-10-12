@@ -43,8 +43,11 @@ trait Compile
 
                     $current['skippable'] = true;
 
-                    if (!isset($params[$part[Dash::NAME]])) {
+                    if (!$part[Dash::NAME]) {
+                        continue;
+                    }
 
+                    if (!isset($params[$part[Dash::NAME]])) {
                         if (!$current['is_optional']) {
                             throw new InvalidArgumentException(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
                         }
@@ -79,7 +82,7 @@ trait Compile
 
                     $parent = array_pop($stack);
 
-                    if (!($current['path'] !== '' && $current['is_optional'] && $current['skippable'] && $current['skip'])) {
+                    if ($current['path'] === '' || !$current['is_optional'] || !$current['skippable'] || !$current['skip']) {
                         $parent['path'] .= $current['path'];
                         $parent['skip'] = false;
                     }
