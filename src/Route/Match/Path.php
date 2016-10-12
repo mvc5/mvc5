@@ -23,43 +23,28 @@ class Path
     }
 
     /**
+     * @param $name
      * @param array $map
-     * @param array $matches
-     * @param array $params
-     * @return array
+     * @return string
      */
-    protected function map(array $map, array $matches, array $params = [])
+    protected function map($name, array $map = [])
     {
-        foreach($map as $name => $arg) {
-            !empty($matches[$name]) && $params[$arg] = $matches[$name];
-        }
-
-        return $params;
+        return isset($map[$name]) ? $map[$name] : $name;
     }
 
     /**
      * @param array $matches
+     * @param array $map
      * @param array $params
      * @return array
      */
-    protected function named(array $matches, array $params = [])
+    protected function params(array $matches, array $map = [], array $params = [])
     {
         foreach($matches as $name => $value) {
-            is_string($name) && $params[$name] = $value;
+            is_string($name) && $params[$this->map($name, $map)] = $value;
         }
 
         return $params;
-    }
-
-    /**
-     * @param array $map
-     * @param array $matches
-     * @param array $params
-     * @return array
-     */
-    protected function params(array $map, array $matches, array $params = [])
-    {
-        return $map ? $this->map($map, $matches, $params) : $this->named($matches, $params);
     }
 
     /**
@@ -77,7 +62,7 @@ class Path
         $request[Arg::CONTROLLER] = $route->controller();
         $request[Arg::LENGTH]     = $request->length() + strlen($matches[0]);
         $request[Arg::MATCHED]    = $request->length() == strlen($request->path());
-        $request[Arg::PARAMS]     = $this->params($route->map(), $matches, $this->defaults($request, $route));
+        $request[Arg::PARAMS]     = $this->params($matches + $this->defaults($request, $route), $route->map());
 
         return $request->matched() || ($route->children() && $event->stop()) ? $request : null;
     }

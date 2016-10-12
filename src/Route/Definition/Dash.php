@@ -10,7 +10,7 @@ interface Dash
     /**
      *
      */
-    const DELIMITERS = 2;
+    const CONSTRAINT = 2;
 
     /**
      *
