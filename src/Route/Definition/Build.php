@@ -21,27 +21,28 @@ trait Build
     use Tokens;
 
     /**
+     * Klein.php match types
+     *
+     * @var array
+     */
+    protected $expressions = [
+        'a' => '[a-zA-Z0-9]++',
+        'i' => '[0-9]++',
+        'n' => '[a-zA-Z][a-zA-Z0-9]++',
+        's' => '[a-zA-Z0-9_-]++',
+        '*' => '.++',
+        '*$' => '[a-zA-Z0-9/]+[a-zA-Z0-9]$'
+    ];
+
+    /**
      * @param array|Route $route
      * @param bool $compile
      * @param bool $recursive
-     * @return array|Route
+     * @return Route
      */
-    protected function definition($route, $compile = true, $recursive = false)
+    protected function build($route, $compile = true, $recursive = false)
     {
-        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN] =
-            $this->children($route[Arg::CHILDREN], $compile, $recursive);
-
-        if (!isset($route[Arg::ROUTE])) {
-            return isset($route[Arg::REGEX]) ? $route : $this->signal(new Exception('Route path not specified'));
-        }
-
-        !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS] =
-            $this->tokens($route[Arg::ROUTE], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : []);
-
-        $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX] =
-            $this->regex($route[Arg::TOKENS]);
-
-        return $route;
+        return $this->create($this->definition($route, $compile, $recursive));
     }
 
     /**
@@ -89,10 +90,24 @@ trait Build
      * @param array|Route $route
      * @param bool $compile
      * @param bool $recursive
-     * @return Route
+     * @return array|Route
      */
-    protected function build($route, $compile = true, $recursive = false)
+    protected function definition($route, $compile = true, $recursive = false)
     {
-        return $this->create($this->definition($route, $compile, $recursive));
+        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN] =
+            $this->children($route[Arg::CHILDREN], $compile, $recursive);
+
+        if (!isset($route[Arg::ROUTE])) {
+            return isset($route[Arg::REGEX]) ? $route : $this->signal(new Exception('Route path not specified'));
+        }
+
+        !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS] = $this->tokens(
+            $route[Arg::ROUTE], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : [], $this->expressions
+        );
+
+        $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX] =
+            $this->regex($route[Arg::TOKENS]);
+
+        return $route;
     }
 }
