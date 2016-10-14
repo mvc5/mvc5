@@ -65,11 +65,6 @@ interface Route
     function host();
 
     /**
-     * @return array
-     */
-    function map();
-
-    /**
      * @return null|string|string[]
      */
     function method();
@@ -78,6 +73,11 @@ interface Route
      * @return string
      */
     function name();
+
+    /**
+     * @return array
+     */
+    function options();
 
     /**
      * @return int|null|string
