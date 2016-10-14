@@ -51,7 +51,6 @@ interface Arg
     const ITEM = 'item';
     const LENGTH = 'length';
     const MANAGER = 'manager';
-    const MAP = 'map';
     const MATCHED = 'matched';
     const MAX_RECURSION = 100;
     const MERGE = 'merge';
