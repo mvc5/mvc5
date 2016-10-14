@@ -23,25 +23,14 @@ class Path
     }
 
     /**
-     * @param $name
-     * @param array $map
-     * @return string
-     */
-    protected function map($name, array $map = [])
-    {
-        return isset($map[$name]) ? $map[$name] : $name;
-    }
-
-    /**
      * @param array $matches
-     * @param array $map
      * @param array $params
      * @return array
      */
-    protected function params(array $matches, array $map = [], array $params = [])
+    protected function params(array $matches, array $params = [])
     {
         foreach($matches as $name => $value) {
-            is_string($name) && $params[$this->map($name, $map)] = $value;
+            is_string($name) && $params[$name] = $value;
         }
 
         return $params;
@@ -62,7 +51,7 @@ class Path
         $request[Arg::CONTROLLER] = $route->controller();
         $request[Arg::LENGTH]     = $request->length() + strlen($matches[0]);
         $request[Arg::MATCHED]    = $request->length() == strlen($request->path());
-        $request[Arg::PARAMS]     = $this->params($matches + $this->defaults($request, $route), $route->map());
+        $request[Arg::PARAMS]     = $this->params($matches + $this->defaults($request, $route));
 
         return $request->matched() || ($route->children() && $event->stop()) ? $request : null;
     }
