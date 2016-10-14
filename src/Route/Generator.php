@@ -19,10 +19,12 @@ class Generator
 
     /**
      * @param null|string $class
+     * @param array|null $expressions
      */
-    function __construct($class = null)
+    function __construct($class = null, array $expressions = null)
     {
         $class && $this->class = $class;
+        $expressions && $this->expressions = $expressions + $this->expressions;
     }
 
     /**

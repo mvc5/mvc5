@@ -102,14 +102,6 @@ trait Route
     /**
      * @return array
      */
-    function map()
-    {
-        return $this[Arg::MAP] ?: [];
-    }
-
-    /**
-     * @return array
-     */
     function method()
     {
         return $this[Arg::METHOD];
@@ -121,6 +113,14 @@ trait Route
     function name()
     {
         return $this[Arg::NAME];
+    }
+
+    /**
+     * @return array
+     */
+    function options()
+    {
+        return $this[Arg::OPTIONS] ?: [];
     }
 
     /**

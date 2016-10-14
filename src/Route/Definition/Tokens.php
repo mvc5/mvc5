@@ -5,33 +5,30 @@
 
 namespace Mvc5\Route\Definition;
 
-use Mvc5\Arg;
 use RuntimeException;
 
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
  * under the Simplified BSD License (http://opensource.org/licenses/BSD-2-Clause).
  *
- * Portions copyright (c) 2013 Nikita Popov 'nikic'. (https://github.com/nikic/FastRoute)
- * under the BSD 3-Clause License (https://opensource.org/licenses/BSD-3-Clause).
+ * Variable regular expression is from https://github.com/nikic/FastRoute
  */
 trait Tokens
 {
     /**
      * @param string $route
      * @param array $constraints
-     * @param string $delimiter
+     * @param array $expressions
      * @return array
      * @throws RuntimeException
      */
-    protected function tokens($route, array $constraints = [], $delimiter = Arg::SEPARATOR)
+    protected function tokens($route, array $constraints = [], array $expressions = [])
     {
         $currentPos = 0;
-        $delimiter  = preg_quote($delimiter);
         $length     = strlen($route);
         $level      = 0;
-        $variable   = '(\G\s*(?P<name>[a-zA-Z][a-zA-Z0-9]*)?\s*(?::\s*(?P<expr>[^{}]*(?:\{(?-1)\}[^{}]*)*))?)';
         $tokens     = [];
+        $variable   = '(\G\s*(?P<name>[a-zA-Z][a-zA-Z0-9]*)?\s*(?(1):)?\s*(?P<expr>[^{}]*(?:\{(?-1)\}[^{}]*)*)?)';
 
         while($currentPos < $length) {
             preg_match('(\G(?P<literal>[^{}\[\]]*)(?P<token>[{}\[\]]|$))', $route, $matches, 0, $currentPos);
@@ -45,13 +42,14 @@ trait Tokens
 
                 $currentPos += strlen($matches[0]);
 
-                $tokens[] = [
-                    'param',
-                    $matches['name'],
-                    !empty($matches['expr']) ? $matches['expr'] : (
-                        isset($constraints[$matches['name']]) ? $constraints[$matches['name']] : '[^' . $delimiter . ']+'
-                    )
-                ];
+                $constraint = '' !== $matches['expr'] ? $matches['expr'] : (
+                    isset($constraints[$matches['name']]) ? $constraints[$matches['name']] : '[^/]+'
+                );
+
+                ':' === $constraint[0] && isset($expressions[$n = substr($constraint, 1)]) &&
+                    $constraint = $expressions[$n];
+
+                $tokens[] = ['param', $matches['name'], $constraint];
 
                 continue;
             }
