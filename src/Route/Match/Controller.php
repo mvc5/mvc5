@@ -119,12 +119,12 @@ class Controller
     }
 
     /**
-     * @param $route
+     * @param Route $route
      * @return mixed
      */
-    protected function options($route)
+    protected function options(Route $route)
     {
-        return ($route[Arg::OPTIONS] ?: []) + $this->options;
+        return $route->options() + $this->options;
     }
 
     /**
