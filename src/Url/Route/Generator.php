@@ -8,7 +8,6 @@ namespace Mvc5\Url\Route;
 use Mvc5\Arg;
 use Mvc5\Route\Route;
 use Mvc5\Route\Definition\Assemble;
-use Mvc5\Route\Definition\Constraint;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
 
@@ -20,7 +19,6 @@ trait Generator
     use Assemble;
     use Build;
     use Compile;
-    use Constraint;
 
     /**
      * @var array|Route
@@ -39,11 +37,13 @@ trait Generator
     /**
      * @param array|Route $route
      * @param array $options
+     * @param array $expressions
      */
-    function __construct($route = [], array $options = [])
+    function __construct($route = [], array $options = [], array $expressions = [])
     {
         $this->route = $route;
 
+        $expressions && $this->expressions = $expressions + $this->expressions;
         $options && $this->options = $options + $this->options;
     }
 
@@ -80,25 +80,12 @@ trait Generator
 
         $route = $parent ? $this->child($parent, $name[0]) : $this->url($this->config($name[0]));
 
-        $path .= $this->compile($route->tokens(), $args, $route->defaults());
+        $path .= $this->compile($route->tokens(), $args, $route->defaults(), $route->wildcard());
 
         array_shift($name);
 
-        if ($name) {
-            return $this->generate($name, $args, $options, $path, $route);
-        }
-
-        if ($args && $route->wildcard()) {
-            $params = array_diff_key($args, $this->constraint($route->tokens()));
-
-            $params && $path = rtrim($path, Arg::SEPARATOR);
-
-            foreach($params as $key => $value) {
-                null !== $value && $path .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
-            }
-        }
-
-        return $this->assemble($route->scheme(), $route->host(), $route->port(), $path, $this->options($options));
+        return $name ? $this->generate($name, $args, $options, $path, $route) :
+            $this->assemble($route->scheme(), $route->host(), $route->port(), $path, $this->options($options));
     }
 
     /**

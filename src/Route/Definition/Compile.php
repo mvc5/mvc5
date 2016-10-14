@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Definition;
 
 use InvalidArgumentException;
+use Mvc5\Arg;
 
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
@@ -14,13 +15,14 @@ use InvalidArgumentException;
 trait Compile
 {
     /**
-     * @param $tokens
-     * @param $params
-     * @param $defaults
-     * @return mixed
+     * @param array $tokens
+     * @param array $params
+     * @param array $defaults
+     * @param bool|false $wildcard
+     * @return string
      * @throws InvalidArgumentException
      */
-    protected function compile($tokens, $params, $defaults)
+    protected function compile(array $tokens, array $params, array $defaults = null, $wildcard = false)
     {
         $stack = [];
 
@@ -63,6 +65,8 @@ trait Compile
 
                     $current['path'] .= $params[$part[Dash::NAME]];
 
+                    unset($params[$part[Dash::NAME]]);
+
                     break;
 
                 case 'optional-start':
@@ -90,6 +94,14 @@ trait Compile
                     $current = $parent;
 
                     break;
+            }
+        }
+
+        if ($wildcard && $params) {
+            $current['path'] = rtrim($current['path'], Arg::SEPARATOR);
+
+            foreach($params as $key => $value) {
+                null !== $value && $current['path'] .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
             }
         }
 
