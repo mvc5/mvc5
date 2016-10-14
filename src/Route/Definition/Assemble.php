@@ -16,7 +16,7 @@ trait Assemble
     /**
      * @var array
      */
-    protected static $allowedPathChars = [
+    protected $allowedPathChars = [
         '%2F' => '/',
         '%40' => '@',
         '%3A' => ':',
@@ -39,7 +39,7 @@ trait Assemble
      */
     protected function assemble($scheme, $host, $port, $path, $options)
     {
-        $path = strtr(rawurlencode($path), static::$allowedPathChars);
+        $path = strtr(rawurlencode($path), $this->allowedPathChars);
 
         isset($options[Arg::QUERY]) &&
             $path .= '?' . http_build_query($options[Arg::QUERY], '', '&');
