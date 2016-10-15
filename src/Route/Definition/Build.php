@@ -21,20 +21,6 @@ trait Build
     use Tokens;
 
     /**
-     * Klein.php match types
-     *
-     * @var array
-     */
-    protected $expressions = [
-        'a' => '[a-zA-Z0-9]++',
-        'i' => '[0-9]++',
-        'n' => '[a-zA-Z][a-zA-Z0-9]++',
-        's' => '[a-zA-Z0-9_-]++',
-        '*' => '.++',
-        '*$' => '[a-zA-Z0-9/]+[a-zA-Z0-9]$'
-    ];
-
-    /**
      * @param array|Route $route
      * @param bool $compile
      * @param bool $recursive
@@ -102,7 +88,7 @@ trait Build
         }
 
         !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS] = $this->tokens(
-            $route[Arg::ROUTE], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : [], $this->expressions
+            $route[Arg::ROUTE], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : []
         );
 
         $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX] =
