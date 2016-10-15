@@ -24,8 +24,6 @@ trait Compile
      */
     protected function compile(array $tokens, array $params, array $defaults = null, $wildcard = false)
     {
-        $stack = [];
-
         $current = [
             'is_optional' => false,
             'skip'        => true,
@@ -33,67 +31,66 @@ trait Compile
             'path'        => '',
         ];
 
+        $stack = [];
+
         foreach($tokens as $part) {
-            switch($part[Dash::TYPE]) {
-                case 'literal':
+            if ('literal' === $part[Dash::TYPE]) {
+                $current['path'] .= $part[Dash::LITERAL];
+                continue;
+            }
 
-                    $current['path'] .= $part[Dash::LITERAL];
+            if ('param' === $part[Dash::TYPE]) {
+                $current['skippable'] = true;
 
-                    break;
+                if (!$part[Dash::NAME]) {
+                    continue;
+                }
 
-                case 'param':
-
-                    $current['skippable'] = true;
-
-                    if (!$part[Dash::NAME]) {
-                        continue;
+                if (!isset($params[$part[Dash::NAME]])) {
+                    if (!$current['is_optional']) {
+                        throw new InvalidArgumentException(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
                     }
 
-                    if (!isset($params[$part[Dash::NAME]])) {
-                        if (!$current['is_optional']) {
-                            throw new InvalidArgumentException(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
-                        }
+                    continue;
+                }
 
-                        continue;
-                    }
-
-                    if (!$current['is_optional']
-                            || !isset($defaults[$part[Dash::NAME]])
-                                || $defaults[$part[Dash::NAME]] !== $params[$part[Dash::NAME]]) {
+                (!$current['is_optional'] || !isset($defaults[$part[Dash::NAME]])
+                    || $defaults[$part[Dash::NAME]] !== $params[$part[Dash::NAME]]) &&
                         $current['skip'] = false;
-                    }
 
-                    $current['path'] .= $params[$part[Dash::NAME]];
+                $current['path'] .= $params[$part[Dash::NAME]];
 
-                    unset($params[$part[Dash::NAME]]);
+                unset($params[$part[Dash::NAME]]);
 
-                    break;
+                continue;
+            }
 
-                case 'optional-start':
+            if ('optional-start' === $part[Dash::TYPE]) {
 
-                    $stack[] = $current;
+                $stack[] = $current;
 
-                    $current = [
-                        'is_optional' => true,
-                        'skip'        => true,
-                        'skippable'   => false,
-                        'path'        => '',
-                    ];
+                $current = [
+                    'is_optional' => true,
+                    'skip'        => true,
+                    'skippable'   => false,
+                    'path'        => '',
+                ];
 
-                    break;
+                continue;
+            }
 
-                case 'optional-end':
+            if ('optional-end' === $part[Dash::TYPE]) {
 
-                    $parent = array_pop($stack);
+                $parent = array_pop($stack);
 
-                    if ($current['path'] === '' || !$current['is_optional'] || !$current['skippable'] || !$current['skip']) {
-                        $parent['path'] .= $current['path'];
-                        $parent['skip'] = false;
-                    }
+                if ($current['path'] === '' || !$current['is_optional'] || !$current['skippable'] || !$current['skip']) {
+                    $parent['path'] .= $current['path'];
+                    $parent['skip'] = false;
+                }
 
-                    $current = $parent;
+                $current = $parent;
 
-                    break;
+                continue;
             }
         }
 
