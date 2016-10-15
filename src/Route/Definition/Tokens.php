@@ -60,37 +60,38 @@ trait Tokens
         $currentPos = 0;
         $length     = strlen($route);
         $level      = 0;
+        $token      = '(\G(?P<literal>[^{}\[\]]*)(?P<token>[{}\[\]]|$))';
         $tokens     = [];
         $variable   = '(\G\s*(?P<name>[a-zA-Z][a-zA-Z0-9]*)?\s*(?(1):)?\s*(?P<constraint>[^{}]*(?:\{(?-1)\}[^{}]*)*)?)';
 
         while($currentPos < $length) {
-            preg_match('(\G(?P<literal>[^{}\[\]]*)(?P<token>[{}\[\]]|$))', $route, $matches, 0, $currentPos);
+            preg_match($token, $route, $match, 0, $currentPos);
 
-            $currentPos += strlen($matches[0]);
+            $currentPos += strlen($match[0]);
 
-            '' !== $matches['literal'] && $tokens[] = ['literal', $matches['literal']];
+            '' !== $match['literal'] && $tokens[] = ['literal', $match['literal']];
 
-            if ('{' === $matches['token']) {
-                preg_match($variable, $route, $matches, 0, $currentPos);
+            if ('{' === $match['token']) {
+                preg_match($variable, $route, $match, 0, $currentPos);
 
-                $currentPos += strlen($matches[0]);
+                $currentPos += strlen($match[0]);
 
                 $tokens[] = [
-                    'param', $matches['name'], $this->expression(
-                        $this->constraint($matches['name'], $matches['constraint'], $constraints)
+                    'param', $match['name'], $this->expression(
+                        $this->constraint($match['name'], $match['constraint'], $constraints)
                     )
                 ];
 
                 continue;
             }
 
-            if ('[' === $matches['token']) {
+            if ('[' === $match['token']) {
                 $tokens[] = ['optional-start'];
                 $level++;
                 continue;
             }
 
-            if (']' === $matches['token']) {
+            if (']' === $match['token']) {
                 $tokens[] = ['optional-end'];
 
                 $level--;
