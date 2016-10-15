@@ -131,7 +131,7 @@ trait Generator
      */
     protected function url($route)
     {
-        return $route instanceof Route && isset($route[Arg::REGEX]) ? $route : $this->build($route, false);
+        return $route instanceof Route && isset($route[Arg::TOKENS]) ? $route : $this->build($route, false);
     }
 
     /**

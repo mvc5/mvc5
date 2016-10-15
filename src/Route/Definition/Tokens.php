@@ -11,45 +11,75 @@ use RuntimeException;
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
  * under the Simplified BSD License (http://opensource.org/licenses/BSD-2-Clause).
  *
- * Variable regular expression is from https://github.com/nikic/FastRoute
+ * Match types are based on https://github.com/klein/klein.php
+ *
+ * Variable regular expression is based on https://github.com/nikic/FastRoute
  */
 trait Tokens
 {
     /**
+     * @var array
+     */
+    protected $expressions = [
+        'a' => '[a-zA-Z0-9]++',
+        'i' => '[0-9]++',
+        'n' => '[a-zA-Z][a-zA-Z0-9]++',
+        's' => '[a-zA-Z0-9_-]++',
+        '*' => '.++',
+        '*$' => '[a-zA-Z0-9/]+[a-zA-Z0-9]$'
+    ];
+
+    /**
+     * @param $name
+     * @param $constraint
+     * @param array $constraints
+     * @return mixed|string
+     */
+    protected function constraint($name, $constraint, array $constraints)
+    {
+        return $constraint ? $constraint : (isset($constraints[$name]) ? $constraints[$name] : '[^/]+');
+    }
+
+    /**
+     * @param string $expr
+     * @return mixed|string
+     */
+    protected function expression($expr)
+    {
+        return ':' === $expr[0] && isset($this->expressions[$n = substr($expr, 1)]) ? $this->expressions[$n] : $expr;
+    }
+
+    /**
      * @param string $route
      * @param array $constraints
-     * @param array $expressions
      * @return array
      * @throws RuntimeException
      */
-    protected function tokens($route, array $constraints = [], array $expressions = [])
+    protected function tokens($route, array $constraints = [])
     {
         $currentPos = 0;
         $length     = strlen($route);
         $level      = 0;
         $tokens     = [];
-        $variable   = '(\G\s*(?P<name>[a-zA-Z][a-zA-Z0-9]*)?\s*(?(1):)?\s*(?P<expr>[^{}]*(?:\{(?-1)\}[^{}]*)*)?)';
+        $variable   = '(\G\s*(?P<name>[a-zA-Z][a-zA-Z0-9]*)?\s*(?(1):)?\s*(?P<constraint>[^{}]*(?:\{(?-1)\}[^{}]*)*)?)';
 
         while($currentPos < $length) {
             preg_match('(\G(?P<literal>[^{}\[\]]*)(?P<token>[{}\[\]]|$))', $route, $matches, 0, $currentPos);
 
             $currentPos += strlen($matches[0]);
 
-            !empty($matches['literal']) && $tokens[] = ['literal', $matches['literal']];
+            '' !== $matches['literal'] && $tokens[] = ['literal', $matches['literal']];
 
             if ('{' === $matches['token']) {
                 preg_match($variable, $route, $matches, 0, $currentPos);
 
                 $currentPos += strlen($matches[0]);
 
-                $constraint = '' !== $matches['expr'] ? $matches['expr'] : (
-                    isset($constraints[$matches['name']]) ? $constraints[$matches['name']] : '[^/]+'
-                );
-
-                ':' === $constraint[0] && isset($expressions[$n = substr($constraint, 1)]) &&
-                    $constraint = $expressions[$n];
-
-                $tokens[] = ['param', $matches['name'], $constraint];
+                $tokens[] = [
+                    'param', $matches['name'], $this->expression(
+                        $this->constraint($matches['name'], $matches['constraint'], $constraints)
+                    )
+                ];
 
                 continue;
             }
