@@ -37,13 +37,11 @@ trait Generator
     /**
      * @param array|Route $route
      * @param array $options
-     * @param array $expressions
      */
-    function __construct($route = [], array $options = [], array $expressions = [])
+    function __construct($route = [], array $options = [])
     {
         $this->route = $route;
 
-        $expressions && $this->expressions = $expressions + $this->expressions;
         $options && $this->options = $options + $this->options;
     }
 
