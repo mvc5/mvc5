@@ -24,13 +24,6 @@ interface Request
     function args();
 
     /**
-     * @param $name
-     * @param $value
-     * @return mixed
-     */
-    function attr($name, $value);
-
-    /**
      * @return string
      */
     function clientAddress();
@@ -166,4 +159,15 @@ interface Request
      * @return string
      */
     function userAgent();
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    function variable($name);
+
+    /**
+     * @return array
+     */
+    function vars();
 }

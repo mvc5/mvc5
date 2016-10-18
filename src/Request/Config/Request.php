@@ -34,22 +34,6 @@ trait Request
     }
 
     /**
-     * @param $name
-     * @param $value
-     * @return mixed
-     */
-    function attr($name, $value)
-    {
-        $params = $this->config[Arg::PARAMS] ?? [];
-
-        $params[$name] = $value;
-
-        $this->config[Arg::PARAMS] = $params;
-
-        return $value;
-    }
-
-    /**
      * @return mixed
      */
     function clientAddress()
@@ -170,7 +154,7 @@ trait Request
      */
     function param($name)
     {
-        return $this->get(Arg::PARAMS)[$name] ?? $this->arg($name) ?? $this->data($name);
+        return $this->get(Arg::PARAMS)[$name] ?? null;
     }
 
     /**
@@ -178,7 +162,7 @@ trait Request
      */
     function params()
     {
-        return ($this[Arg::PARAMS] ?: []) + $this->args() + $this->data();
+        return $this[Arg::PARAMS] ?: [];
     }
 
     /**
@@ -262,5 +246,22 @@ trait Request
     function userAgent()
     {
         return $this[Arg::USER_AGENT];
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    function variable($name)
+    {
+        return $this->param($name) ?? $this->arg($name) ?? $this->data($name);
+    }
+
+    /**
+     * @return array
+     */
+    function vars()
+    {
+        return $this->params() + $this->args() + $this->data();
     }
 }

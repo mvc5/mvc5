@@ -13,23 +13,13 @@ use Mvc5\Route\Request;
 class Path
 {
     /**
-     * @param Request $request
-     * @param Route $route
-     * @return array
-     */
-    protected function defaults(Request $request, Route $route)
-    {
-        return $route->defaults() + ($request[Arg::PARAMS] ?: []);
-    }
-
-    /**
-     * @param array $matches
+     * @param array $match
      * @param array $params
      * @return array
      */
-    protected function params(array $matches, array $params = [])
+    protected function params(array $match, array $params = [])
     {
-        foreach($matches as $name => $value) {
+        foreach($match as $name => $value) {
             is_string($name) && $params[$name] = $value;
         }
 
@@ -44,14 +34,14 @@ class Path
      */
     function __invoke(Event $event, Request $request, Route $route)
     {
-        if (!preg_match('(\G' . $route->regex() . ')', $request->path(), $matches, null, $request->length())) {
+        if (!preg_match('(\G' . $route->regex() . ')', $request->path(), $match, null, $request->length())) {
             return null;
         }
 
         $request[Arg::CONTROLLER] = $route->controller();
-        $request[Arg::LENGTH]     = $request->length() + strlen($matches[0]);
+        $request[Arg::LENGTH]     = $request->length() + strlen($match[0]);
         $request[Arg::MATCHED]    = $request->length() == strlen($request->path());
-        $request[Arg::PARAMS]     = $this->params($matches + $this->defaults($request, $route));
+        $request[Arg::PARAMS]     = $this->params($match, $route->defaults() + $request->params());
 
         return $request->matched() || ($route->children() && $event->stop()) ? $request : null;
     }
