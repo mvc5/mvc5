@@ -62,7 +62,7 @@ trait Tokens
         $level      = 0;
         $token      = '(\G(?P<literal>[^{}\[\]]*)(?P<token>[{}\[\]]|$))';
         $tokens     = [];
-        $variable   = '(\G\s*(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)?\s*(?(1):)?\s*(?P<constraint>[^{}]*(?:\{(?-1)\}[^{}]*)*)?)';
+        $variable   = '(\G\s*(?P<name>[a-zA-Z0-9_]++)?\s*(?(1):)?\s*(?P<constraint>[^{}]*(?:\{(?-1)\}[^{}]*)*)?)';
 
         while($currentPos < $length) {
             preg_match($token, $route, $match, 0, $currentPos);
