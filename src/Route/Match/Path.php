@@ -13,16 +13,6 @@ use Mvc5\Route\Request;
 class Path
 {
     /**
-     * @param Request $request
-     * @param Route $route
-     * @return array
-     */
-    protected function defaults(Request $request, Route $route)
-    {
-        return $route->defaults() + ($request[Arg::PARAMS] ?: []);
-    }
-
-    /**
      * @param array $matches
      * @param array $params
      * @return array
@@ -51,7 +41,7 @@ class Path
         $request[Arg::CONTROLLER] = $route->controller();
         $request[Arg::LENGTH]     = $request->length() + strlen($matches[0]);
         $request[Arg::MATCHED]    = $request->length() == strlen($request->path());
-        $request[Arg::PARAMS]     = $this->params($matches + $this->defaults($request, $route));
+        $request[Arg::PARAMS]     = $this->params($matches + $route->defaults() + $request->params());
 
         return $request->matched() || ($route->children() && $event->stop()) ? $request : null;
     }

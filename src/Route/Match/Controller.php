@@ -128,15 +128,6 @@ class Controller
     }
 
     /**
-     * @param Request $request
-     * @return array
-     */
-    protected function params(Request $request)
-    {
-        return $request->get(Arg::PARAMS) ?: [];
-    }
-
-    /**
      * @param string $name
      * @param array $options
      * @return string
@@ -200,7 +191,7 @@ class Controller
         }
 
         $options    = $this->options($route);
-        $params     = $this->params($request);
+        $params     = $request->params();
         $action     = $this->format($this->action($params, $options), $options);
         $controller = $this->format($this->controller($params, $options), $options);
         $name       = $this->name($action, $controller, $options);
