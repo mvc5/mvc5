@@ -39,10 +39,9 @@ interface Response
     /**
      * @param string $name
      * @param string $value
-     * @param bool $replace
      * @return string
      */
-    function header($name, $value, $replace = false);
+    function header($name, $value);
 
     /**
      * @param array|Headers $headers

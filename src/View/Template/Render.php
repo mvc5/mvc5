@@ -6,11 +6,11 @@
 namespace Mvc5\View\Template;
 
 use Closure;
+use Mvc5\Arg;
 use Mvc5\Model\Template;
 use Mvc5\Model\ViewModel;
 use Mvc5\Plugin;
 use RuntimeException;
-use Throwable;
 
 trait Render
 {
@@ -21,11 +21,36 @@ trait Render
     use Templates;
 
     /**
-     * @param array|\ArrayAccess $templates
+     * @var null|string
      */
-    function __construct($templates = [])
+    protected $directory;
+
+    /**
+     * @var null|string
+     */
+    protected $extension = Arg::VIEW_EXTENSION;
+
+    /**
+     * @param array|\ArrayAccess $templates
+     * @param string $directory
+     * @param string $extension
+     */
+    function __construct($templates = [], $directory = null, $extension = null)
     {
+        $this->directory = $directory;
         $this->templates = $templates;
+
+        $extension && $this->extension = $extension;
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    protected function path($name)
+    {
+        return (!$name || !$this->directory || false !== strpos($name, '.')) ? $name :
+            $this->directory . DIRECTORY_SEPARATOR . $name . '.' . $this->extension;
     }
 
     /**
@@ -38,7 +63,7 @@ trait Render
             $v instanceof Template && $model[$k] = $this->render($v);
         }
 
-        ($template = $this->template($model->template()))
+        ($template = $this->template($model->template()) ?: $this->path($model->template()))
             && $model->template($template);
 
         if (!$model->template()) {
@@ -62,7 +87,7 @@ trait Render
 
                     return ob_get_clean();
 
-                } catch (Throwable $exception) {
+                } catch (\Exception $exception) {
 
                     while(ob_get_level() > $__output_buffer_level__) {
                         ob_end_clean();

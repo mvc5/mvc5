@@ -102,6 +102,7 @@ interface Arg
     const USER_AGENT = 'user_agent';
     const VALUE = 'value';
     const VERSION = 'version';
+    const VIEW_EXTENSION = 'phtml';
     const WEB = 'web';
     const WILDCARD = 'wildcard';
 }

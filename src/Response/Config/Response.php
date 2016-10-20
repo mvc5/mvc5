@@ -71,15 +71,10 @@ trait Response
     /**
      * @param string $name
      * @param string $value
-     * @param bool $replace
      * @return string
      */
-    function header($name, $value, $replace = false)
+    function header($name, $value)
     {
-        if ($replace) {
-            unset($this[Arg::HEADERS][$name]);
-        }
-
         return $this[Arg::HEADERS][$name] = $value;
     }
 
