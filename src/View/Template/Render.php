@@ -63,10 +63,12 @@ trait Render
             $v instanceof Template && $model[$k] = $this->render($v);
         }
 
-        ($template = $this->template($model->template()) ?: $this->path($model->template()))
+        $template = $model->template();
+
+        ($template = $this->template($template) ?: $this->path($template))
             && $model->template($template);
 
-        if (!$model->template()) {
+        if (!$template) {
             throw new RuntimeException('Model template not found: ' . get_class($model));
         }
 
@@ -77,7 +79,7 @@ trait Render
 
                 extract($this->vars());
 
-                $__output_buffer_level__ = ob_get_level();
+                $__ob_level__ = ob_get_level();
 
                 ob_start();
 
@@ -89,7 +91,7 @@ trait Render
 
                 } catch (\Exception $exception) {
 
-                    while(ob_get_level() > $__output_buffer_level__) {
+                    while(ob_get_level() > $__ob_level__) {
                         ob_end_clean();
                     }
 

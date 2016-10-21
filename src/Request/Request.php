@@ -8,6 +8,8 @@ namespace Mvc5\Request;
 use Mvc5\Cookie\Cookies;
 use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Request as HttpRequest;
+use Mvc5\Session\Session;
+use Mvc5\Session\SessionContainer;
 
 interface Request
     extends HttpRequest
@@ -34,7 +36,7 @@ interface Request
     function contentType();
 
     /**
-     * @return array|callable|null|object|string
+     * @return array|callable|mixed|null|object|string
      */
     function controller();
 
@@ -51,17 +53,17 @@ interface Request
 
     /**
      * @param $name
-     * @return mixed
+     * @return array|mixed
      */
     function data($name = null);
 
     /**
-     * @return HttpError
+     * @return HttpError|mixed
      */
     function error();
 
     /**
-     * @return array
+     * @return array|mixed
      */
     function files();
 
@@ -119,7 +121,7 @@ interface Request
 
     /**
      * @param $name
-     * @return mixed
+     * @return array|mixed
      */
     function post($name = null);
 
@@ -135,13 +137,13 @@ interface Request
 
     /**
      * @param $name
-     * @return mixed
+     * @return array|mixed
      */
     function server($name = null);
 
     /**
      * @param $name
-     * @return mixed
+     * @return array|mixed|Session|SessionContainer
      */
     function session($name = null);
 
