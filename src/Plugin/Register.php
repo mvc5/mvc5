@@ -27,7 +27,6 @@ class Register
     /**
      * @param _Service $plugins
      * @param array $config
-     * @param mixed $config
      * @return callable|null|object
      */
     function register(_Service $plugins, array $config)
