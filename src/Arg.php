@@ -23,6 +23,7 @@ interface Arg
     const CONSTRAINTS = 'constraints';
     const CONTAINER = 'container';
     const CONTENT_TYPE = 'content_type';
+    const CONTEXT = 'context';
     const CONTROLLER = 'controller';
     const CONTROLLER_RESPONSE = 'controller\response';
     const COOKIES = 'cookies';
@@ -40,6 +41,7 @@ interface Arg
     const EXPIRE = 'expire';
     const FACTORY = 'factory';
     const FILES = 'files';
+    const FLASH_MESSAGES = 'flash\messages';
     const FORM = 'form';
     const FORMAT = 'format';
     const FRAGMENT = 'fragment';
@@ -48,8 +50,11 @@ interface Arg
     const HTTP_OK = '200';
     const HTTP_ONLY = 'httponly';
     const INDEX = '#';
+    const INFO = 'info';
     const ITEM = 'item';
     const LENGTH = 'length';
+    const LEVEL = 'level';
+    const LOG = 'log';
     const MANAGER = 'manager';
     const MATCHED = 'matched';
     const MAX_RECURSION = 100;
@@ -75,6 +80,7 @@ interface Arg
     const REQUEST = 'request';
     const RESPONSE = 'response';
     const RESPONSE_DISPATCH = 'response\dispatch';
+    const RESPONSE_REDIRECT = 'response\redirect';
     const ROUTE = 'route';
     const ROUTE_GENERATOR = 'route\generator';
     const ROUTE_MATCH = 'route\match';
@@ -89,6 +95,7 @@ interface Arg
     const SERVICE_SEPARATOR = '->';
     const SESSION = 'session';
     const SET_COOKIE = 'setcookie';
+    const SEVERITY_CRITICAL = 2;
     const SPLIT = 'split';
     const STATUS = 'status';
     const STRICT = 'strict';
@@ -97,6 +104,7 @@ interface Arg
     const TEMPLATE = 'template';
     const TEMPLATE_MODEL = '__template';
     const TOKENS = 'tokens';
+    const TYPE = 'type';
     const URI = 'uri';
     const USER = 'user';
     const USER_AGENT = 'user_agent';

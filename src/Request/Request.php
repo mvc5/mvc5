@@ -9,7 +9,6 @@ use Mvc5\Cookie\Cookies;
 use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Request as HttpRequest;
 use Mvc5\Session\Session;
-use Mvc5\Session\SessionContainer;
 
 interface Request
     extends HttpRequest
@@ -143,7 +142,7 @@ interface Request
 
     /**
      * @param $name
-     * @return array|mixed|Session|SessionContainer
+     * @return array|mixed|Session
      */
     function session($name = null);
 
