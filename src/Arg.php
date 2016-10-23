@@ -28,6 +28,7 @@ interface Arg
     const CONTROLLER_RESPONSE = 'controller\response';
     const COOKIES = 'cookies';
     const DATA = 'data';
+    const DANGER = 'danger';
     const DEFAULTS = 'defaults';
     const DESCRIPTION = 'description';
     const DOMAIN = 'domain';
@@ -41,7 +42,6 @@ interface Arg
     const EXPIRE = 'expire';
     const FACTORY = 'factory';
     const FILES = 'files';
-    const FLASH_MESSAGES = 'flash\messages';
     const FORM = 'form';
     const FORMAT = 'format';
     const FRAGMENT = 'fragment';
@@ -94,11 +94,13 @@ interface Arg
     const SERVICE_RESOLVER = 'service\resolver';
     const SERVICE_SEPARATOR = '->';
     const SESSION = 'session';
+    const SESSION_MESSAGES = 'session\messages';
     const SET_COOKIE = 'setcookie';
     const SEVERITY_CRITICAL = 2;
     const SPLIT = 'split';
     const STATUS = 'status';
     const STRICT = 'strict';
+    const SUCCESS = 'success';
     const SUFFIX = 'suffix';
     const STREAM = 'stream';
     const TEMPLATE = 'template';
@@ -111,6 +113,7 @@ interface Arg
     const VALUE = 'value';
     const VERSION = 'version';
     const VIEW_EXTENSION = 'phtml';
+    const WARNING = 'warning';
     const WEB = 'web';
     const WILDCARD = 'wildcard';
 }
