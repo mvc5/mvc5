@@ -6,19 +6,21 @@
 namespace Mvc5\Session;
 
 use Mvc5\Arg;
+use Mvc5\Config\Config as _Config;
+
 
 class Messages
     implements SessionMessages
 {
     /**
-     * @var array
+     *
      */
-    protected $config = [];
+    use _Config;
 
     /**
      * @var array
      */
-    protected $current = [];
+    protected $new = [];
 
     /**
      * @param string $message
@@ -26,27 +28,16 @@ class Messages
      * @param string $name
      * @return mixed
      */
-    function flash($message, $type = Arg::INFO, $name = '')
+    function add($message, $type = Arg::INFO, $name = Arg::INDEX)
     {
-        return $this->current[$name] = $this->config[$name] = [Arg::MESSAGE => $message, Arg::TYPE => $type];
+        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $type]);
     }
 
     /**
      * @param string $name
      * @return mixed
      */
-    protected function get($name)
-    {
-        return isset($this->current[$name]) ? $this->current[$name] : (
-            isset($this->config[$name]) ? $this->config[$name] : null
-        );
-    }
-
-    /**
-     * @param string $name
-     * @return mixed
-     */
-    function message($name = '')
+    function message($name = Arg::INDEX)
     {
         ($message = $this->get($name))
             && $this->remove($name);
@@ -58,9 +49,9 @@ class Messages
      * @param string $name
      * @return void
      */
-    protected function remove($name)
+    function remove($name)
     {
-        unset($this->current[$name], $this->config[$name]);
+        unset($this->config[$name], $this->new[$name]);
     }
 
     /**
@@ -68,22 +59,32 @@ class Messages
      */
     function serialize()
     {
-        return serialize($this->config);
+        return serialize($this->new);
     }
 
     /**
-     * @param string $config
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
      */
-    function unserialize($config)
+    function set($name, $value)
     {
-        $this->current = unserialize($config);
+        return $this->config[$name] = $this->new[$name] = $value;
+    }
+
+    /**
+     * @param string $serialized
+     */
+    function unserialize($serialized)
+    {
+        $this->config = unserialize($serialized);
     }
 
     /**
      * @param string $name
      * @return mixed
      */
-    function __invoke($name = '')
+    function __invoke($name = Arg::INDEX)
     {
         return $this->message($name);
     }

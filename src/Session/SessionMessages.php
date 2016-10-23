@@ -6,15 +6,16 @@
 namespace Mvc5\Session;
 
 use Mvc5\Arg;
+use Mvc5\Config\Configuration;
 
 interface SessionMessages
-    extends \Serializable
+    extends Configuration, \Serializable
 {
     /**
      * @param $name
      * @return array
      */
-    function message($name = '');
+    function message($name = Arg::INDEX);
 
     /**
      * @param string $message
@@ -22,5 +23,5 @@ interface SessionMessages
      * @param string $name
      * @return mixed
      */
-    function flash($message, $type = Arg::INFO, $name = '');
+    function add($message, $type = Arg::INFO, $name = Arg::INDEX);
 }
