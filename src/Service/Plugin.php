@@ -34,8 +34,8 @@ trait Plugin
 
     /**
      * @param string $name
-     * @param callable $callback
      * @param array $args
+     * @param callable $callback
      * @return callable|null|object
      */
     protected function plugin($name, array $args = [], callable $callback = null)
