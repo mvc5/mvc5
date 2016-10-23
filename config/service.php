@@ -24,6 +24,7 @@ return [
     'event\model'          => Mvc5\Event::class,
     'exception\controller' => [Mvc5\Request\Exception\Controller::class, new Plugin('layout', ['exception'])],
     'exception\error'      => [Mvc5\Request\Exception::class, 'exception', 'exception\controller'],
+    'exception\log'        => [Mvc5\Log\Exception::class, new Plugin('log', ['throw_exceptions' => false])],
     'exception\response'   => new Response('exception\response'),
     'factory'              => new Service(null),
     'layout'               => [Mvc5\Layout::class, 'layout'],
