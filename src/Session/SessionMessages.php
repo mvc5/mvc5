@@ -12,6 +12,18 @@ interface SessionMessages
     extends Configuration, \Serializable
 {
     /**
+     * @param string $message
+     * @param string $name
+     */
+    function danger($message, $name = Arg::INDEX);
+
+    /**
+     * @param string $message
+     * @param string $name
+     */
+    function info($message, $name = Arg::INDEX);
+
+    /**
      * @param $name
      * @return array
      */
@@ -19,9 +31,13 @@ interface SessionMessages
 
     /**
      * @param string $message
-     * @param mixed|string $type
      * @param string $name
-     * @return mixed
      */
-    function add($message, $type = Arg::INFO, $name = Arg::INDEX);
+    function success($message, $name = Arg::INDEX);
+
+    /**
+     * @param string $message
+     * @param string $name
+     */
+    function warning($message, $name = Arg::INDEX);
 }

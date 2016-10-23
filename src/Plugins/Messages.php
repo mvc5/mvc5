@@ -16,7 +16,7 @@ trait Messages
      */
     protected function danger($message, $name = Arg::INDEX)
     {
-        $this->messages()->add($message, Arg::DANGER, $name);
+        $this->messages()->danger($message, $name);
     }
 
     /**
@@ -25,7 +25,7 @@ trait Messages
      */
     protected function info($message, $name = Arg::INDEX)
     {
-        $this->messages()->add($message, Arg::INFO, $name);
+        $this->messages()->info($message, $name);
     }
 
     /**
@@ -51,7 +51,7 @@ trait Messages
      */
     protected function success($message, $name = Arg::INDEX)
     {
-        $this->messages()->add($message, Arg::SUCCESS, $name);
+        $this->messages()->success($message, $name);
     }
 
     /**
@@ -60,7 +60,7 @@ trait Messages
      */
     protected function warning($message, $name = Arg::INDEX)
     {
-        $this->messages()->add($message, Arg::WARNING, $name);
+        $this->messages()->warning($message, $name);
     }
 
     /**
