@@ -11,6 +11,7 @@ use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Response;
 use Mvc5\Plugin\Service;
+use Mvc5\Plugin\Session;
 
 return [
     'config'               => new Config,
@@ -25,7 +26,9 @@ return [
     'exception\error'      => [Mvc5\Request\Exception::class, 'exception', 'exception\controller'],
     'exception\response'   => new Response('exception\response'),
     'factory'              => new Service(null),
+    'flash\messages'       => new Dependency('flash\messages', new Session('flash\messages', Mvc5\Session\Messages::class)),
     'layout'               => [Mvc5\Layout::class, 'layout'],
+    'log'                  => Mvc5\Log\Error::class,
     'manager'              => new Plugin(null),
     'render'               => new Dependency('view\renderer'),
     'request'              => Mvc5\Request\Config::class,
@@ -34,6 +37,7 @@ return [
     'resolver\exception'   => Mvc5\Resolver\Exception::class,
     'response'             => Mvc5\Response\Config::class,
     'response\dispatch'    => Mvc5\Response\Dispatch::class,
+    'response\redirect'    => Mvc5\Response\Redirect::class,
     'response\send'        => Mvc5\Response\Send::class,
     'response\status'      => Mvc5\Response\Status::class,
     'response\version'     => Mvc5\Response\Version::class,
