@@ -13,14 +13,6 @@ use Mvc5\Response\Response as _Response;
 trait Response
 {
     /**
-     * @param string $name
-     * @param array $args
-     * @param callable $callback
-     * @return callable|null|object
-     */
-    protected abstract function plugin($name, array $args = [], callable $callback = null);
-
-    /**
      * @param $data
      * @param int $status
      * @param array $headers
@@ -30,6 +22,14 @@ trait Response
     {
         return $this->plugin(Arg::RESPONSE_JSON, [$data, $status, $headers]);
     }
+
+    /**
+     * @param string $name
+     * @param array $args
+     * @param callable $callback
+     * @return callable|null|object
+     */
+    protected abstract function plugin($name, array $args = [], callable $callback = null);
 
     /**
      * @param $url

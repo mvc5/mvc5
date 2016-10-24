@@ -46,6 +46,14 @@ trait Messages
     }
 
     /**
+     * @param string $name
+     * @param array $args
+     * @param callable $callback
+     * @return callable|null|object
+     */
+    protected abstract function plugin($name, array $args = [], callable $callback = null);
+
+    /**
      * @param string $message
      * @param string $name
      */
@@ -62,12 +70,4 @@ trait Messages
     {
         $this->messages()->warning($message, $name);
     }
-
-    /**
-     * @param string $name
-     * @param array $args
-     * @param callable $callback
-     * @return callable|null|object
-     */
-    protected abstract function plugin($name, array $args = [], callable $callback = null);
 }
