@@ -6,7 +6,6 @@
 namespace Mvc5\Controller;
 
 use Mvc5\Plugin;
-use Mvc5\Resolvable;
 use Mvc5\Service;
 
 class Action
