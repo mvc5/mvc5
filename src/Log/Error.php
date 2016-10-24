@@ -7,7 +7,6 @@ namespace Mvc5\Log;
 
 use Mvc5\Arg;
 use Mvc5\Signal;
-use Exception;
 
 class Error
 {
@@ -39,11 +38,11 @@ class Error
     /**
      * @param $message
      * @return bool
-     * @throws Exception
+     * @throws \Throwable
      */
     function __invoke($message)
     {
-        if ($this->throw_exceptions && $message instanceof Exception) {
+        if ($this->throw_exceptions && $message instanceof \Throwable) {
             throw $message;
         }
 

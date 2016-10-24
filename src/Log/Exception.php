@@ -28,11 +28,11 @@ class Exception
     }
 
     /**
-     * @param \Exception $exception
-     * @return mixed
+     * @param \Throwable $exception
+     * @return bool
      */
-    function __invoke(\Exception $exception)
+    function __invoke(\Throwable $exception)
     {
-        $this->signal($this->logger, [$exception]);
+        return $this->signal($this->logger, [$exception]);
     }
 }
