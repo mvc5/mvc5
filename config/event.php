@@ -5,6 +5,7 @@
 
 return [
     'exception\response' => [
+        'exception\log',
         'exception\error',
         'exception\controller',
         'view\render',

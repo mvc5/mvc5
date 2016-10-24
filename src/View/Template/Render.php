@@ -89,7 +89,7 @@ trait Render
 
                     return ob_get_clean();
 
-                } catch (\Exception $exception) {
+                } catch (\Throwable $exception) {
 
                     while(ob_get_level() > $__ob_level__) {
                         ob_end_clean();

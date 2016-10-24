@@ -8,7 +8,6 @@ namespace Mvc5\Session;
 use Mvc5\Arg;
 use Mvc5\Config\Config as _Config;
 
-
 class Messages
     implements SessionMessages
 {
@@ -24,13 +23,22 @@ class Messages
 
     /**
      * @param string $message
-     * @param mixed|string $type
      * @param string $name
      * @return mixed
      */
-    function add($message, $type = Arg::INFO, $name = Arg::INDEX)
+    function danger($message, $name = Arg::INDEX)
     {
-        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $type]);
+        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::DANGER]);
+    }
+
+    /**
+     * @param string $message
+     * @param string $name
+     * @return mixed
+     */
+    function info($message, $name = Arg::INDEX)
+    {
+        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::INFO]);
     }
 
     /**
@@ -73,11 +81,31 @@ class Messages
     }
 
     /**
+     * @param string $message
+     * @param string $name
+     * @return mixed
+     */
+    function success($message, $name = Arg::INDEX)
+    {
+        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::SUCCESS]);
+    }
+
+    /**
      * @param string $serialized
      */
     function unserialize($serialized)
     {
         $this->config = unserialize($serialized);
+    }
+
+    /**
+     * @param string $message
+     * @param string $name
+     * @return mixed
+     */
+    function warning($message, $name = Arg::INDEX)
+    {
+        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::WARNING]);
     }
 
     /**

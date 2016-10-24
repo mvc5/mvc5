@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Plugin;
-use Mvc5\Resolvable;
 use Mvc5\Service;
 
 class Controller

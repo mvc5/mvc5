@@ -80,6 +80,7 @@ interface Arg
     const REQUEST = 'request';
     const RESPONSE = 'response';
     const RESPONSE_DISPATCH = 'response\dispatch';
+    const RESPONSE_JSON = 'response\json';
     const RESPONSE_REDIRECT = 'response\redirect';
     const ROUTE = 'route';
     const ROUTE_GENERATOR = 'route\generator';

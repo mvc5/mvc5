@@ -34,6 +34,16 @@ class Collection
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next($this->result($request, $this->traverse($this->routeRequest($request), $this->route)), $response);
+        $result = $this->result($request, $this->traverse($this->routeRequest($request), $this->route));
+
+        if ($result instanceof Request) {
+            return $next($result, $response);
+        }
+
+        !$result instanceof Response &&
+            ($response[Arg::BODY] = $result)
+                && $result = $response;
+
+        return $next($request, $result);
     }
 }

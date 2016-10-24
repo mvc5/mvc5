@@ -114,9 +114,10 @@ trait Router
             $result = new NotFound;
 
         $result instanceof Error
-            && $request[Arg::ERROR] = $result;
+            && ($request[Arg::ERROR] = $result)
+                && $result = $request;
 
-        return $result instanceof Request ? $result : $request;
+        return $result;
     }
 
     /**
