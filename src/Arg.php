@@ -106,6 +106,7 @@ interface Arg
     const STREAM = 'stream';
     const TEMPLATE = 'template';
     const TEMPLATE_MODEL = '__template';
+    const THROW_EXCEPTION = 'throw_exception';
     const TOKENS = 'tokens';
     const TYPE = 'type';
     const URI = 'uri';

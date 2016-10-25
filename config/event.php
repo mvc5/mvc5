@@ -13,6 +13,10 @@ return [
         'response\version',
         'response\send'
     ],
+    'log' => [
+        'log\exception',
+        'log\error'
+    ],
     'route\match' => [
         'route\match\scheme',
         'route\match\host',

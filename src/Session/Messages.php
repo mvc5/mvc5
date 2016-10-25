@@ -22,28 +22,39 @@ class Messages
     protected $new = [];
 
     /**
-     * @param string $message
+     * @param string|array $message
      * @param string $name
-     * @return mixed
+     * @param string $type
+     * @return array
+     */
+    protected function add($message, $name, $type)
+    {
+        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $type]);
+    }
+
+    /**
+     * @param string|array $message
+     * @param string $name
+     * @return array
      */
     function danger($message, $name = Arg::INDEX)
     {
-        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::DANGER]);
+        return $this->add($message, $name, Arg::DANGER);
     }
 
     /**
-     * @param string $message
+     * @param string|array $message
      * @param string $name
-     * @return mixed
+     * @return array
      */
     function info($message, $name = Arg::INDEX)
     {
-        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::INFO]);
+        return $this->add($message, $name, Arg::INFO);
     }
 
     /**
      * @param string $name
-     * @return mixed
+     * @return array
      */
     function message($name = Arg::INDEX)
     {
@@ -72,8 +83,8 @@ class Messages
 
     /**
      * @param string $name
-     * @param mixed $value
-     * @return mixed
+     * @param array $value
+     * @return array
      */
     function set($name, $value)
     {
@@ -81,13 +92,13 @@ class Messages
     }
 
     /**
-     * @param string $message
+     * @param string|array $message
      * @param string $name
-     * @return mixed
+     * @return array
      */
     function success($message, $name = Arg::INDEX)
     {
-        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::SUCCESS]);
+        return $this->add($message, $name, Arg::SUCCESS);
     }
 
     /**
@@ -99,18 +110,18 @@ class Messages
     }
 
     /**
-     * @param string $message
+     * @param string|array $message
      * @param string $name
-     * @return mixed
+     * @return array
      */
     function warning($message, $name = Arg::INDEX)
     {
-        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => Arg::WARNING]);
+        return $this->add($message, $name, Arg::WARNING);
     }
 
     /**
      * @param string $name
-     * @return mixed
+     * @return array
      */
     function __invoke($name = Arg::INDEX)
     {

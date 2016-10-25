@@ -5,34 +5,25 @@
 
 namespace Mvc5\Log;
 
-use Mvc5\Signal;
-
 class Exception
 {
     /**
-     *
+     * @param \Throwable|mixed|null $exception
+     * @param \Throwable|mixed|null $message
+     * @param bool $throw_exception
+     * @return \Throwable|mixed|null
+     * @throws \Throwable
      */
-    use Signal;
-
-    /**
-     * @var callable
-     */
-    protected $logger;
-
-    /**
-     * @param callable $logger
-     */
-    function __construct(callable $logger)
+    function __invoke($exception = null, $message = null, $throw_exception = false)
     {
-        $this->logger = $logger;
-    }
+        if ($throw_exception && $message instanceof \Throwable) {
+            throw $message;
+        }
 
-    /**
-     * @param \Throwable $exception
-     * @return bool
-     */
-    function __invoke(\Throwable $exception)
-    {
-        return $this->signal($this->logger, [$exception]);
+        if ($throw_exception && $exception instanceof \Throwable) {
+            throw $exception;
+        }
+
+        return $exception ?: $message;
     }
 }
