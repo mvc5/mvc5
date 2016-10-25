@@ -8,15 +8,14 @@ namespace Mvc5\Web;
 use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Plugin;
-use Mvc5\Service;
+use Mvc5\Plugins\Service;
 
 class Controller
 {
     /**
      *
      */
-    use Plugin;
+    use Service;
 
     /**
      * @param $controller
@@ -25,28 +24,7 @@ class Controller
      */
     protected function action($controller, array $args = [])
     {
-        return $controller ? $this->call($this->controller($this->resolve($controller)), $args) : null;
-    }
-
-    /**
-     * @param $controller
-     * @return mixed
-     */
-    protected function controller($controller)
-    {
-        $controller instanceof Service && !$controller->service()
-            && $controller->service($this->service());
-
-        return $controller;
-    }
-
-    /**
-     * @param $controller
-     * @return callable|null|object
-     */
-    protected function resolve($controller)
-    {
-        return is_string($controller) ? $this->plugin($controller) : $controller;
+        return $controller ? $this->call($controller, $args) : null;
     }
 
     /**
