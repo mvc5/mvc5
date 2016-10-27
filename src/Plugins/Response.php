@@ -27,7 +27,7 @@ trait Response
      * @param string $name
      * @param array $args
      * @param callable $callback
-     * @return callable|null|object
+     * @return callable|mixed|null|object
      */
     protected abstract function plugin($name, array $args = [], callable $callback = null);
 
@@ -42,7 +42,6 @@ trait Response
     {
         return $this->plugin(Arg::RESPONSE_REDIRECT, [$url, $status, $headers, $config]);
     }
-
 
     /**
      * @param null $body

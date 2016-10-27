@@ -12,7 +12,6 @@ interface Service
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
-     * @throws \RuntimeException
      */
     function call($config, array $args = [], callable $callback = null);
 
@@ -26,7 +25,7 @@ interface Service
      * @param string $name
      * @param callable $callback
      * @param array $args
-     * @return callable|null|object
+     * @return callable|mixed|null|object
      */
     function plugin($name, array $args = [], callable $callback = null);
 
