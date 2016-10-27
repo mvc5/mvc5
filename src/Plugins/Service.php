@@ -16,7 +16,6 @@ trait Service
     use Plugin;
 
     /**
-     * Service constructor.
      * @param _Service $service
      */
     function __construct(_Service $service)
