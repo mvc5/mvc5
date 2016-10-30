@@ -26,11 +26,19 @@ trait Model
 
     /**
      * @param array $vars
+     * @param null|string $template
      * @return ViewModel
      */
-    function model(array $vars = [])
+    function model(array $vars = [], $template = null)
     {
-        !$this->model && $this->model = new Mvc5Model;
+        if (!$this->model) {
+            $this->model = (defined('static::VIEW_MODEL') && $model = constant('static::VIEW_MODEL'))
+                ? new $model : new Mvc5Model;
+
+            !$template && $template = defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null;
+        }
+
+        $template && $this->model->template($template);
 
         $vars && $this->model->vars($vars);
 
@@ -44,10 +52,6 @@ trait Model
      */
     function view($template = null, array $vars = [])
     {
-        $this->model($vars);
-
-        $template && $this->model->template($template);
-
-        return $this->model;
+        return $this->model($vars, $template);
     }
 }

@@ -77,6 +77,7 @@ interface Arg
     const QUERY = 'query';
     const REASON = 'reason';
     const REGEX = 'regex';
+    const RENDER = 'render';
     const REQUEST = 'request';
     const RESPONSE = 'response';
     const RESPONSE_DISPATCH = 'response\dispatch';
@@ -110,6 +111,7 @@ interface Arg
     const TOKENS = 'tokens';
     const TYPE = 'type';
     const URI = 'uri';
+    const URL = 'url';
     const USER = 'user';
     const USER_AGENT = 'user_agent';
     const VALUE = 'value';

@@ -66,23 +66,23 @@ trait Generator
 
     /**
      * @param array|string $name
-     * @param array $args
+     * @param array $params
      * @param array $options
      * @param string $path
      * @param Route $parent
      * @return string|void
      */
-    protected function generate($name, array $args = [], array $options = [], $path = '', Route $parent = null)
+    protected function generate($name, array $params = [], array $options = [], $path = '', Route $parent = null)
     {
         $name = is_array($name) ? $name : explode(Arg::SEPARATOR, $name);
 
         $route = $parent ? $this->child($parent, $name[0]) : $this->url($this->config($name[0]));
 
-        $path .= $this->compile($route->tokens(), $args, $route->defaults(), $route->wildcard());
+        $path .= $this->compile($route->tokens(), $params, $route->defaults(), $route->wildcard());
 
         array_shift($name);
 
-        return $name ? $this->generate($name, $args, $options, $path, $route) :
+        return $name ? $this->generate($name, $params, $options, $path, $route) :
             $this->assemble($route->scheme(), $route->host(), $route->port(), $path, $this->options($options));
     }
 
@@ -134,12 +134,12 @@ trait Generator
 
     /**
      * @param null|string $name
-     * @param array $args
+     * @param array $params
      * @param array $options
      * @return string
      */
-    function __invoke($name = null, array $args = [], array $options = [])
+    function __invoke($name = null, array $params = [], array $options = [])
     {
-        return rtrim($this->generate($this->name($name), $args, $options), Arg::SEPARATOR) ?: Arg::SEPARATOR;
+        return rtrim($this->generate($this->name($name), $params, $options), Arg::SEPARATOR) ?: Arg::SEPARATOR;
     }
 }

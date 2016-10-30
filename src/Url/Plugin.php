@@ -37,16 +37,6 @@ class Plugin
     }
 
     /**
-     * @param null|string $name
-     * @param array $args
-     * @return array
-     */
-    protected function args($name = null, array $args = [])
-    {
-        return $name ? $args : $args + $this->request->args();
-    }
-
-    /**
      * @return callable
      */
     protected function generator()
@@ -78,23 +68,23 @@ class Plugin
 
     /**
      * @param string $name
-     * @param array $args
+     * @param array $params
      * @param array $options
      * @return string
      */
-    protected function url($name, array $args = [], array $options = [])
+    protected function url($name, array $params = [], array $options = [])
     {
-        return $this->signal($this->generator(), [$name, $args, $options]);
+        return $this->signal($this->generator(), [$name, $params, $options]);
     }
 
     /**
      * @param null $name
-     * @param array $args
+     * @param array $params
      * @param array $options
      * @return string
      */
-    function __invoke($name = null, array $args = [], array $options = [])
+    function __invoke($name = null, array $params = [], array $options = [])
     {
-        return $this->url($this->name($name), $this->args($name, $args), $this->options($options));
+        return $this->url($this->name($name), $params, $this->options($options));
     }
 }
