@@ -66,6 +66,7 @@ return [
     'url\generator'        => [Mvc5\Url\Generator::class, new Param('routes')],
     'url\plugin'           => [Mvc5\Url\Plugin::class, new Dependency('request'), new Plugin('url\generator')],
     'view\layout'          => Mvc5\View\Layout::class,
+    'view\model'           => Mvc5\Model::class,
     'view\render'          => new Dependency('template\render'),
     'view\renderer'        => [Mvc5\View\Renderer::class, new Dependency('template\render')],
     'web'                  => new Response('web'),

@@ -5,6 +5,7 @@
 
 namespace Mvc5\Plugins;
 
+use Mvc5\Arg;
 use Mvc5\Model as _Model;
 use Mvc5\Model\ViewModel as _ViewModel;
 
@@ -17,7 +18,7 @@ trait ViewModel
      */
     protected function model(array $vars = [], $template = null)
     {
-        $model = $this->plugin(defined('static::VIEW_MODEL') ? constant('static::VIEW_MODEL') : _Model::class);
+        $model = $this->plugin(defined('static::VIEW_MODEL') ? constant('static::VIEW_MODEL') : Arg::VIEW_MODEL);
 
         !$template && $template = defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null;
 

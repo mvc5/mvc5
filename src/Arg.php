@@ -117,6 +117,7 @@ interface Arg
     const VALUE = 'value';
     const VERSION = 'version';
     const VIEW_EXTENSION = 'phtml';
+    const VIEW_MODEL = 'view\model';
     const WARNING = 'warning';
     const WEB = 'web';
     const WILDCARD = 'wildcard';
