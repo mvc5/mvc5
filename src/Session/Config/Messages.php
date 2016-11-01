@@ -21,6 +21,24 @@ trait Messages
     protected $new = [];
 
     /**
+     * @var array
+     */
+    protected $types = [
+        Arg::DANGER  => Arg::DANGER,
+        Arg::INFO    => Arg::INFO,
+        Arg::SUCCESS => Arg::SUCCESS,
+        Arg::WARNING => Arg::WARNING
+    ];
+
+    /**
+     * @param array $types
+     */
+    function __construct(array $types = [])
+    {
+        $types && $this->types = $types + $this->types;
+    }
+
+    /**
      * @param string|array $message
      * @param string $name
      * @param string $type
@@ -28,7 +46,7 @@ trait Messages
      */
     protected function add($message, $name, $type)
     {
-        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $type]);
+        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $this->type($type)]);
     }
 
     /**
@@ -98,6 +116,15 @@ trait Messages
     function success($message, $name = Arg::INDEX)
     {
         return $this->add($message, $name, Arg::SUCCESS);
+    }
+
+    /**
+     * @param $type
+     * @return mixed
+     */
+    protected function type($type)
+    {
+        return $this->types[$type] ?? $type;
     }
 
     /**
