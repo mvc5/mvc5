@@ -5,22 +5,10 @@
 
 namespace Mvc5\Plugin;
 
+/**
+ * @deprecated
+ */
 class Dependency
-    implements Gem\Dependency
+    extends Shared
 {
-    /**
-     *
-     */
-    use Config\Config;
-    use Config\Name;
-
-    /**
-     * @param $name
-     * @param null $config
-     */
-    function __construct($name, $config = null)
-    {
-        $this->config = $config;
-        $this->name   = $name;
-    }
 }

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin\Gem;
 
-interface Dependency
+interface Shared
     extends Gem
 {
     /**
