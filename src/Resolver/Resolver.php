@@ -14,7 +14,6 @@ use Mvc5\Plugin\Gem\Calls;
 use Mvc5\Plugin\Gem\Child;
 use Mvc5\Plugin\Gem\Config;
 use Mvc5\Plugin\Gem\Copy;
-use Mvc5\Plugin\Gem\Dependency;
 use Mvc5\Plugin\Gem\Factory;
 use Mvc5\Plugin\Gem\FileInclude;
 use Mvc5\Plugin\Gem\Filter;
@@ -26,6 +25,7 @@ use Mvc5\Plugin\Gem\Param;
 use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Plugin\Gem\Provide;
+use Mvc5\Plugin\Gem\Shared;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
@@ -247,7 +247,7 @@ trait Resolver
             return $this->provide($config, $args);
         }
 
-        if ($config instanceof Dependency) {
+        if ($config instanceof Shared) {
             return $this->shared($config->name()) ?? $this->initialize($config->name(), $config->config());
         }
 
