@@ -25,6 +25,7 @@ return [
         'route\match\path',
         'route\match\action',
         'route\match\controller',
+        'route\match\middleware',
         'route\match\wildcard'
     ],
     'service\resolver' => [

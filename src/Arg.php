@@ -61,6 +61,7 @@ interface Arg
     const MERGE = 'merge';
     const MESSAGE = 'message';
     const METHOD = 'method';
+    const MIDDLEWARE = 'middleware';
     const MODEL = 'model';
     const NAME = 'name';
     const NEXT = 'next';
@@ -100,6 +101,7 @@ interface Arg
     const SET_COOKIE = 'setcookie';
     const SEVERITY_CRITICAL = 2;
     const SPLIT = 'split';
+    const STACK = 'stack';
     const STATUS = 'status';
     const STRICT = 'strict';
     const SUCCESS = 'success';

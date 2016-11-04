@@ -26,6 +26,9 @@ class Merge
         ($options = $parent->options()) &&
             $route[Arg::OPTIONS] = $route->options() + $options;
 
+        ($middleware = $parent[Arg::MIDDLEWARE] ?: []) &&
+            $route[Arg::MIDDLEWARE] = array_merge($middleware, $route[Arg::MIDDLEWARE] ?: []);
+
         return $request;
     }
 }
