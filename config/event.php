@@ -18,6 +18,7 @@ return [
         'log\error'
     ],
     'route\match' => [
+        'route\match\merge',
         'route\match\scheme',
         'route\match\host',
         'route\match\method',
