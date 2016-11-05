@@ -23,11 +23,6 @@ class Match
     const EVENT = Arg::ROUTE_MATCH;
 
     /**
-     * @var null|Route
-     */
-    protected $parent;
-
-    /**
      * @var Request
      */
     protected $request;
@@ -37,29 +32,16 @@ class Match
      */
     protected $route;
 
-    /***
-     * @param Route $route
-     * @param Request $request
-     * @param null|Route $parent
-     */
-    function __construct(Route $route, Request $request, Route $parent = null)
-    {
-        $this->parent  = $parent;
-        $this->request = $request;
-        $this->route   = $route;
-    }
-
     /**
      * @return array
      */
     protected function args()
     {
-        return [
+        return array_filter([
             Arg::EVENT   => $this,
-            Arg::PARENT  => $this->parent,
             Arg::REQUEST => $this->request,
             Arg::ROUTE   => $this->route
-        ];
+        ]);
     }
 
     /**
@@ -72,6 +54,8 @@ class Match
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        return !$result instanceof Request && $this->stop() ? $result : $this->request = $result;
+        return $result instanceof Route ? $this->route = $result : (
+            !$result instanceof Request && $this->stop() ? $result : $this->request = $result
+        );
     }
 }
