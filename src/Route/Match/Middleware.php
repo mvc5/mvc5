@@ -19,12 +19,13 @@ class Middleware
 
     /**
      * @param $controller
-     * @param array $middleware
+     * @param array|null $middleware
      * @return callable|mixed|null|object
      */
-    protected function middleware($controller, array $middleware)
+    protected function middleware($controller, array $middleware = null)
     {
-        return $controller && $middleware ? $this->plugin(Arg::MIDDLEWARE, [Arg::STACK => array_merge($middleware, [$controller])]) : null;
+        return $controller && $middleware
+            ? $this->plugin(Arg::MIDDLEWARE, [Arg::STACK => array_merge($middleware, [$controller])]) : null;
     }
 
     /**
@@ -34,7 +35,7 @@ class Middleware
      */
     function __invoke(Request $request, Route $route)
     {
-        ($middleware = $this->middleware($request->controller(), $route[Arg::MIDDLEWARE] ?: []))
+        ($middleware = $this->middleware($request->controller(), $route[Arg::MIDDLEWARE]))
             && $request[Arg::CONTROLLER] = $middleware;
 
         return $request;
