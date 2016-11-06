@@ -70,7 +70,7 @@ trait Router
      */
     protected function match($request, $route, $parent = null)
     {
-        return $this->call(Arg::ROUTE_MATCH, [Arg::ROUTE => $route, Arg::REQUEST => $request, Arg::PARENT => $parent]);
+        return $this->call(Arg::ROUTE_MATCH, [Arg::REQUEST => $request, Arg::ROUTE => $route, Arg::PARENT => $parent]);
     }
 
     /**
