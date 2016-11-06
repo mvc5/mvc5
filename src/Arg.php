@@ -65,6 +65,7 @@ interface Arg
     const MODEL = 'model';
     const NAME = 'name';
     const NEXT = 'next';
+    const OPTIONAL = 'optional';
     const OPTIONS = 'options';
     const PARAM = 'param';
     const PARAMS = 'params';
