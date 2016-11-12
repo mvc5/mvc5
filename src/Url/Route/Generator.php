@@ -78,12 +78,13 @@ trait Generator
 
         $route = $parent ? $this->child($parent, $name[0]) : $this->url($this->config($name[0]));
 
-        $path .= $this->compile($route->tokens(), $params, $route->defaults(), $route->wildcard());
+        $path .= $this->compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
 
         array_shift($name);
 
-        return $name ? $this->generate($name, $params, $options, $path, $route) :
-            $this->assemble($route->scheme(), $route->host(), $route->port(), $path, $this->options($options));
+        return $name ? $this->generate($name, $params, $options, $path, $route) : $this->assemble(
+            $route->scheme(), $route->host(), $route->port(), $path, $this->options($options)
+        );
     }
 
     /**
@@ -130,6 +131,21 @@ trait Generator
     protected function url($route)
     {
         return $route instanceof Route && isset($route[Arg::TOKENS]) ? $route : $this->build($route, false);
+    }
+
+    /**
+     * @param Route $route
+     * @return \Closure|null
+     */
+    protected function wildcard(Route $route)
+    {
+        return !$route->wildcard() ? null : function($path, array $params = []) use ($route) {
+            foreach($params as $key => $value) {
+                null !== $value && $path .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
+            }
+
+            return $path;
+        };
     }
 
     /**
