@@ -13,14 +13,29 @@ use Mvc5\Route\Route;
 class Method
 {
     /**
+     *
+     */
+    use Plugin\Optional;
+
+    /**
+     * @param Request $request
+     * @param Route $route
+     * @return bool
+     */
+    protected function match(Request $request, Route $route)
+    {
+        return in_array($request->method(), (array) $route->method());
+    }
+
+    /**
      * @param Request $request
      * @param Route $route
      * @return Request|MethodNotAllowed
      */
     function __invoke(Request $request, Route $route)
     {
-        return !$route->method() || in_array($request->method(), (array) $route->method()) ? $request : (
-            !in_array(Arg::METHOD, $route[Arg::OPTIONAL] ?: []) ? new MethodNotAllowed : null
+        return !$route->method() || $this->match($request, $route) ? $request : (
+            $this->optional($route, Arg::METHOD) ? null : new MethodNotAllowed
         );
     }
 }
