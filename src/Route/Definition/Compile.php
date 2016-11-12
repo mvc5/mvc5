@@ -18,11 +18,11 @@ trait Compile
      * @param array $tokens
      * @param array $params
      * @param array $defaults
-     * @param bool|false $wildcard
+     * @param callable $wildcard
      * @return string
      * @throws InvalidArgumentException
      */
-    protected function compile(array $tokens, array $params, array $defaults = null, $wildcard = false)
+    protected function compile(array $tokens, array $params, array $defaults = null, callable $wildcard = null)
     {
         $current = [
             'is_optional' => false,
@@ -46,19 +46,25 @@ trait Compile
                     continue;
                 }
 
-                if (!isset($params[$part[Dash::NAME]])) {
-                    if (!$current['is_optional']) {
+                $default = isset($defaults[$part[Dash::NAME]]) ? $defaults[$part[Dash::NAME]] : null;
+                $path    = isset($params[$part[Dash::NAME]])   ? $params[$part[Dash::NAME]]   : null;
+
+                if (!$path) {
+                    if ($current['is_optional']) {
+                        continue;
+                    }
+
+                    if (!$default) {
                         throw new InvalidArgumentException(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
                     }
 
-                    continue;
+                    $path = $default;
                 }
 
-                (!$current['is_optional'] || !isset($defaults[$part[Dash::NAME]])
-                    || $defaults[$part[Dash::NAME]] !== $params[$part[Dash::NAME]]) &&
-                        $current['skip'] = false;
+                (!$current['is_optional'] || !$default || $default !== $path)
+                    && $current['skip'] = false;
 
-                $current['path'] .= $params[$part[Dash::NAME]];
+                $current['path'] .= $path;
 
                 unset($params[$part[Dash::NAME]]);
 
@@ -94,14 +100,6 @@ trait Compile
             }
         }
 
-        if ($wildcard && $params) {
-            $current['path'] = rtrim($current['path'], Arg::SEPARATOR);
-
-            foreach($params as $key => $value) {
-                null !== $value && $current['path'] .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
-            }
-        }
-
-        return $current['path'];
+        return $wildcard && $params ? $wildcard(rtrim($current['path'], Arg::SEPARATOR), $params) : $current['path'];
     }
 }

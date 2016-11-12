@@ -5,6 +5,7 @@
 
 namespace Mvc5\Route\Match;
 
+use Mvc5\Arg;
 use Mvc5\Http\Error\BadRequest;
 use Mvc5\Route\Request;
 use Mvc5\Route\Route;
@@ -12,12 +13,30 @@ use Mvc5\Route\Route;
 class Host
 {
     /**
+     *
+     */
+    use Plugin\Optional;
+    use Plugin\Params;
+
+    /**
+     * @param Request $request
+     * @param Route $route
+     * @return Request|null
+     */
+    protected function match(Request $request, Route $route)
+    {
+        return !$route->host() || in_array($request->host(), (array) $route->host()) ? $request : null;
+    }
+
+    /**
      * @param Request $request
      * @param Route $route
      * @return Request|BadRequest
      */
     function __invoke(Request $request, Route $route)
     {
-        return !$route->host() || in_array($request->host(), (array) $route->host()) ? $request : new BadRequest;
+        return !$route->host() || $this->match($request, $route) ? $request : (
+            $this->optional($route, Arg::HOST) ? null : new BadRequest
+        );
     }
 }

@@ -14,11 +14,20 @@ class Scheme
     /**
      * @param Request $request
      * @param Route $route
+     * @return bool
+     */
+    protected function match(Request $request, Route $route)
+    {
+        return in_array($request->scheme(), (array) $route->scheme());
+    }
+
+    /**
+     * @param Request $request
+     * @param Route $route
      * @return Request|BadRequest
      */
     function __invoke(Request $request, Route $route)
     {
-        return !$route->scheme() || in_array($request->scheme(), (array) $route->scheme())
-            ? $request : new BadRequest;
+        return !$route->scheme() || $this->match($request, $route) ? $request : new BadRequest;
     }
 }
