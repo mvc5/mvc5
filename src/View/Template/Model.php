@@ -23,12 +23,17 @@ trait Model
     protected $model = _Model::class;
 
     /**
-     * @param $model
-     * @return mixed
+     * @var callable|null
+     */
+    protected $provider;
+
+    /**
+     * @param string $model
+     * @return callable|mixed|null|object
      */
     protected function create($model)
     {
-        return new $this->model($model);
+        return ($this->provider ? $this->call($this->provider, [$model]) : null) ? : new $this->model($model);
     }
 
     /**

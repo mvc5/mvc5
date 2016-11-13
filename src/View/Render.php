@@ -5,8 +5,10 @@
 
 namespace Mvc5\View;
 
+use Mvc5\Service;
+
 class Render
-    implements Template\Paths, View
+    implements Service, Template\Paths, View
 {
     /**
      *
@@ -18,15 +20,16 @@ class Render
     /**
      * @param array|\ArrayAccess $paths
      * @param string $directory
+     * @param callable $provider
      * @param string $extension
      * @param string $model
      */
-    function __construct($paths = [], $directory = null, $extension = null, $model = null)
+    function __construct($paths = [], $directory = null, callable $provider = null, $extension = null, $model = null)
     {
-        $this->directory = $directory;
-        $this->path = $paths;
-
+        $directory && $this->directory = $directory;
         $extension && $this->extension = $extension;
         $model && $this->model = $model;
+        $paths && $this->path = $paths;
+        $provider && $this->provider = $provider;
     }
 }
