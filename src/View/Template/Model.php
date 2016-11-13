@@ -40,10 +40,9 @@ trait Model
     /**
      * @param array|string|Template $model
      * @param array $vars
-     * @param callable $callback
      * @return Template
      */
-    protected function model($model, array $vars = [], callable $callback = null)
+    protected function model($model, array $vars = [])
     {
         !$model instanceof Template
             && $model = $this->create($model);
@@ -56,6 +55,6 @@ trait Model
         $model instanceof ViewModel && !$model->service()
             && $model->service($this->service());
 
-        return $callback ? $callback($model) : $model;
+        return $model;
     }
 }
