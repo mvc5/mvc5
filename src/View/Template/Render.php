@@ -5,112 +5,41 @@
 
 namespace Mvc5\View\Template;
 
-use Closure;
-use Mvc5\Arg;
 use Mvc5\Model\Template;
-use Mvc5\Model\ViewModel;
-use Mvc5\Plugin;
-use RuntimeException;
 
 trait Render
 {
     /**
      *
      */
-    use Plugin;
-    use Templates;
+    use Output;
+    use Traverse;
 
     /**
-     * @var null|string
+     * @param array|string|Template $model
+     * @param array $vars
+     * @param callable $callback
+     * @return Template
      */
-    protected $directory;
+    protected abstract function model($model, array $vars = [], callable $callback = null);
 
     /**
-     * @var null|string
-     */
-    protected $extension = Arg::VIEW_EXTENSION;
-
-    /**
-     * @param array|\ArrayAccess $templates
-     * @param string $directory
-     * @param string $extension
-     */
-    function __construct($templates = [], $directory = null, $extension = null)
-    {
-        $this->directory = $directory;
-        $this->templates = $templates;
-
-        $extension && $this->extension = $extension;
-    }
-
-    /**
-     * @param $name
+     * @param array|string|Template $template
+     * @param array $vars
      * @return string
      */
-    protected function path($name)
+    function render($template, array $vars = [])
     {
-        return (!$name || !$this->directory || false !== strpos($name, '.')) ? $name :
-            $this->directory . DIRECTORY_SEPARATOR . $name . '.' . $this->extension;
-    }
-
-    /**
-     * @param Template|ViewModel $model
-     * @return string
-     */
-    function render(Template $model)
-    {
-        foreach($model as $k => $v) {
-            $v instanceof Template && $model[$k] = $this->render($v);
-        }
-
-        $template = $model->template();
-
-        ($template = $this->template($template) ?: $this->path($template))
-            && $model->template($template);
-
-        if (!$template) {
-            throw new RuntimeException('Model template not found: ' . get_class($model));
-        }
-
-        $model instanceof ViewModel && !$model->service() && $model->service($this->service());
-
-        $render = Closure::bind(function() {
-                /** @var ViewModel $this */
-
-                extract($this->vars());
-
-                $__ob_level__ = ob_get_level();
-
-                ob_start();
-
-                try {
-
-                    include $this->template();
-
-                    return ob_get_clean();
-
-                } catch (\Throwable $exception) {
-
-                    while(ob_get_level() > $__ob_level__) {
-                        ob_end_clean();
-                    }
-
-                    throw $exception;
-                }
-            },
-            $model,
-            $model
-        );
-
-        return $render();
+        return $this->output($this->traverse($this->model($template, $vars)));
     }
 
     /**
      * @param $model
+     * @param array $vars
      * @return mixed
      */
-    function __invoke($model = null)
+    function __invoke($model = null, array $vars = [])
     {
-        return !$model instanceof Template ? $model : $this->render($model);
+        return !$model instanceof Template ? $model : $this->render($model, $vars);
     }
 }
