@@ -22,11 +22,11 @@ trait Path
     }
 
     /**
-     * @param array|\ArrayAccess|null $config
+     * @param array|\ArrayAccess|null $paths
      * @return array|\ArrayAccess|null
      */
-    function paths($config = null)
+    function paths($paths = null)
     {
-        return null !== $config ? $this->path = $config : $this->path;
+        return null !== $paths ? $this->path = $paths : $this->path;
     }
 }
