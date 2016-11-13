@@ -9,21 +9,21 @@ use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Model\Template;
-use Mvc5\View\Template\View;
+use Mvc5\View\View;
 
 class Render
 {
     /**
      * @param View
      */
-    protected $renderer;
+    protected $view;
 
     /**
-     * @param View $renderer
+     * @param View $view
      */
-    function __construct(View $renderer)
+    function __construct(View $view)
     {
-        $this->renderer = $renderer;
+        $this->view = $view;
     }
 
     /**
@@ -32,7 +32,7 @@ class Render
      */
     protected function render($body)
     {
-        return $this->renderer->render($body);
+        return $this->view->render($body);
     }
 
     /**

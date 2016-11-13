@@ -5,28 +5,28 @@
 
 namespace Mvc5\View\Template;
 
-trait Templates
+trait Path
 {
     /**
      * @var array|\ArrayAccess
      */
-    protected $templates = [];
+    protected $path = [];
 
     /**
      * @param string $name
      * @return string
      */
-    protected function template($name)
+    protected function path($name)
     {
-        return $this->templates[$name] ?? null;
+        return isset($this->path[$name]) ? $this->path[$name] : null;
     }
 
     /**
      * @param array|\ArrayAccess|null $config
      * @return array|\ArrayAccess|null
      */
-    function templates($config = null)
+    function paths($config = null)
     {
-        return null !== $config ? $this->templates = $config : $this->templates;
+        return null !== $config ? $this->path = $config : $this->path;
     }
 }

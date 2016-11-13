@@ -6,16 +6,16 @@
 namespace Mvc5\View\Template;
 
 use Mvc5\Model\Template;
-use Mvc5\Model\Layout as TemplateLayout;
+use Mvc5\Model\Layout as _Layout;
 
 class Layout
 {
     /**
-     * @param TemplateLayout $layout
+     * @param _Layout $layout
      * @param mixed|Template $model
-     * @return TemplateLayout
+     * @return _Layout
      */
-    function __invoke(TemplateLayout $layout, $model)
+    function __invoke(_Layout $layout, $model)
     {
         $layout->model($model);
 
