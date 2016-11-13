@@ -18,10 +18,9 @@ trait Render
     /**
      * @param array|string|Template $model
      * @param array $vars
-     * @param callable $callback
      * @return Template
      */
-    protected abstract function model($model, array $vars = [], callable $callback = null);
+    protected abstract function model($model, array $vars = []);
 
     /**
      * @param array|string|Template $template
