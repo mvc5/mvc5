@@ -17,8 +17,8 @@ interface Template
     function template($path = null);
 
     /**
-     * @param array|null $config
+     * @param array|null $vars
      * @return array|null
      */
-    function vars(array $config = null);
+    function vars(array $vars = null);
 }

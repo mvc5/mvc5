@@ -24,14 +24,14 @@ trait Layout
     }
 
     /**
-     * @param array|null $config
+     * @param array|null $vars
      * @return array|null
      */
-    function vars(array $config = null)
+    function vars(array $vars = null)
     {
-        return null === $config ? $this->config : $this->config = $config + $this->config + array_filter([
-                Arg::CHILD_MODEL    => $this->model(),
-                Arg::TEMPLATE_MODEL => $this->template()
-            ]);
+        return null === $vars ? $this->config : $this->config = $vars + $this->config + array_filter([
+            Arg::CHILD_MODEL    => $this->model(),
+            Arg::TEMPLATE_MODEL => $this->template()
+        ]);
     }
 }

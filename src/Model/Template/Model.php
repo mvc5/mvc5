@@ -16,14 +16,14 @@ trait Model
     use Overload;
 
     /**
-     * @param $template
-     * @param array $config
+     * @param array|string $template
+     * @param array $vars
      */
-    function __construct($template = null, array $config = [])
+    function __construct($template = null, array $vars = [])
     {
-        $this->config = $config + array_filter([
-                Arg::TEMPLATE_MODEL => $template ?? (defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null)
-            ]);
+        $this->config = is_array($template) ? $template : $vars + array_filter([
+            Arg::TEMPLATE_MODEL => $template ?? (defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null)
+        ]);
     }
 
     /**
@@ -36,12 +36,12 @@ trait Model
     }
 
     /**
-     * @param array|null $config
+     * @param array|null $vars
      * @return array|null
      */
-    function vars(array $config = null)
+    function vars(array $vars = null)
     {
-        return null === $config ? $this->config :
-            $this->config = $config + $this->config + array_filter([Arg::TEMPLATE_MODEL => $this->template()]);
+        return null === $vars ? $this->config :
+            $this->config = $vars + $this->config + array_filter([Arg::TEMPLATE_MODEL => $this->template()]);
     }
 }
