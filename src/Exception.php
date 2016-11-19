@@ -9,10 +9,19 @@ class Exception
     extends \Exception
 {
     /**
+     * @param \Throwable $exception
+     * @throws \Throwable
+     */
+    static function raise(\Throwable $exception)
+    {
+        throw $exception;
+    }
+
+    /**
      * @throws Exception
      */
     function __invoke()
     {
-        throw $this;
+        return $this->raise($this);
     }
 }
