@@ -23,9 +23,11 @@ class Render
      * @param callable $provider
      * @param string $extension
      * @param string $model
+     * @param bool|false $checkFileExists
      */
-    function __construct($paths = [], $directory = null, callable $provider = null, $extension = null, $model = null)
+    function __construct($paths = [], $directory = null, callable $provider = null, $extension = null, $model = null, $checkFileExists = false)
     {
+        $checkFileExists && $this->checkFileExists = $checkFileExists;
         $directory && $this->directory = $directory;
         $extension && $this->extension = $extension;
         $model && $this->model = $model;

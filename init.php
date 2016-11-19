@@ -98,6 +98,7 @@ include __DIR__ . '/src/Model/Layout/Plugin.php';
 include __DIR__ . '/src/View/Layout/Model.php';
 include __DIR__ . '/src/View/Model/Service.php';
 include __DIR__ . '/src/View/Template/Layout.php';
+include __DIR__ . '/src/View/Template/NotFound.php';
 include __DIR__ . '/src/View/Template/Output.php';
 include __DIR__ . '/src/View/Template/Path.php';
 include __DIR__ . '/src/View/Template/Paths.php';
