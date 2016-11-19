@@ -21,8 +21,9 @@ trait Model
      */
     function __construct($template = null, array $vars = [])
     {
-        $this->config = is_array($template) ? $template : $vars + array_filter([
-            Arg::TEMPLATE_MODEL => $template ?? (defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null)
+        $this->config = (is_array($template) ? $template : $vars) + array_filter([
+            Arg::TEMPLATE_MODEL => is_string($template) ? $template :
+                (defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null)
         ]);
     }
 
