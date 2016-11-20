@@ -39,7 +39,7 @@ return [
     'request'              => Mvc5\Request\Config::class,
     'request\error'        => [Mvc5\Request\Error::class, 'error', 'error\controller'],
     'request\service'      => [Mvc5\Request\Service::class, new Link],
-    'resolver\exception'   => Mvc5\Resolver\Exception::class,
+    'resolver\exception'   => Mvc5\Resolver\Unresolvable::class,
     'response'             => Mvc5\Response\Config::class,
     'response\dispatch'    => Mvc5\Response\Dispatch::class,
     'response\json'        => Mvc5\Response\Json::class,

@@ -65,7 +65,7 @@ trait Generator
      */
     protected function listeners($name)
     {
-        return $this->events[$name] ?? $this->signal(new Exception, [$name]);
+        return $this->events[$name] ?? Unresolvable::plugin($name);
     }
 
     /**

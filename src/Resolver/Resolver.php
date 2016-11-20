@@ -179,7 +179,7 @@ trait Resolver
      */
     protected function fallback($name)
     {
-        return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?: $this->signal(new Exception, [$name]);
+        return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?: Unresolvable::plugin($name);
     }
 
     /**
@@ -313,11 +313,11 @@ trait Resolver
 
         if ($config instanceof Provide) {
             return $this->signal(
-                $this->provider() ?: new Exception, [$config->config(), $this->vars($args, $config->args())]
+                $this->provider() ?: new Unresolvable, [$config->config(), $this->vars($args, $config->args())]
             );
         }
 
-        return $this->signal(new Exception, [$config]);
+        return Unresolvable::plugin($config);
     }
 
     /**
@@ -573,7 +573,7 @@ trait Resolver
     protected function resolvable($config, array $args = [], callable $callback = null, $c = 0)
     {
         return !$config instanceof Resolvable ? $config : (
-            $c > Arg::MAX_RECURSION ? $this->signal(new Exception, [$config]) :
+            $c > Arg::MAX_RECURSION ? Unresolvable::plugin($config) :
                 $this->resolvable($this->solve($config, $args, $callback), $args, $callback, ++$c)
         );
     }
