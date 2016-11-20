@@ -5,7 +5,6 @@
 
 namespace Mvc5\View\Template;
 
-use Mvc5\Exception;
 use Mvc5\Model\Template;
 
 trait Output
@@ -21,11 +20,9 @@ trait Output
      */
     protected function output(Template $template)
     {
-        !($file = $template->template())
-            && Exception::raise(new NotFound('Template name cannot be empty: ' . get_class($template)));
+        !($file = $template->template()) && NotFound::missing($template);
 
-        $this->checkFileExists && !file_exists($file)
-            && Exception::raise(new NotFound('File not found: ' . $file));
+        $this->checkFileExists && !file_exists($file) && NotFound::file($file);
 
         $render = \Closure::bind(function($__template) {
             /** @var Template $this */
