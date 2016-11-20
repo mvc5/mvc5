@@ -5,10 +5,9 @@
 
 namespace Mvc5\Resolver;
 
+use Mvc5\Exception;
 use Mvc5\Service\Container;
 use Mvc5\Service\Manager;
-use ReflectionClass;
-use RuntimeException;
 
 trait Build
 {
@@ -118,7 +117,7 @@ trait Build
      */
     protected function make($name, array $args = [])
     {
-        $class = new ReflectionClass($name);
+        $class = new \ReflectionClass($name);
 
         if (!$class->hasMethod('__construct')) {
             return $class->newInstanceWithoutConstructor();
@@ -153,7 +152,7 @@ trait Build
                 continue;
             }
 
-            throw new RuntimeException('Missing required parameter $' . $param->name . ' for ' . $name);
+            Exception::runtime('Missing required parameter $' . $param->name . ' for ' . $name);
         }
 
         return $class->newInstanceArgs($params ? $matched : $args);
@@ -171,7 +170,6 @@ trait Build
      * @param $config
      * @param array $args
      * @return array|callable|null|object|string
-     * @throws RuntimeException
      */
     protected abstract function resolve($config, array $args = []);
 

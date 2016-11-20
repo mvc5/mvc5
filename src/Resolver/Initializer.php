@@ -5,7 +5,7 @@
 
 namespace Mvc5\Resolver;
 
-use RuntimeException;
+use Mvc5\Exception;
 
 trait Initializer
 {
@@ -52,9 +52,8 @@ trait Initializer
      */
     protected function initializing($name)
     {
-        if (!empty($this->pending[$name])) {
-            throw new RuntimeException('Circular dependency: ' . $name);
-        }
+        !empty($this->pending[$name])
+            && Exception::runtime('Circular dependency: ' . $name);
 
         $this->pending[$name] = true;
 

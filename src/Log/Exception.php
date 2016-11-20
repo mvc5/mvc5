@@ -5,6 +5,8 @@
 
 namespace Mvc5\Log;
 
+use Mvc5\Exception as _Exception;
+
 class Exception
 {
     /**
@@ -16,13 +18,11 @@ class Exception
      */
     function __invoke($exception = null, $message = null, $throw_exception = false)
     {
-        if ($throw_exception && $message instanceof \Throwable) {
-            throw $message;
-        }
+        $throw_exception && $message instanceof \Throwable
+            && _Exception::raise($message);
 
-        if ($throw_exception && $exception instanceof \Throwable) {
-            throw $exception;
-        }
+        $throw_exception && $exception instanceof \Throwable
+            && _Exception::raise($exception);
 
         return $exception ?: $message;
     }
