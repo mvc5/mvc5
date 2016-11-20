@@ -21,7 +21,7 @@ trait Output
      */
     protected function output(Template $template)
     {
-        (!$file = $template->template())
+        !($file = $template->template())
             && Exception::raise(new NotFound('Template name cannot be empty: ' . get_class($template)));
 
         $this->checkFileExists && !file_exists($file)
