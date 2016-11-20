@@ -41,6 +41,7 @@ interface Arg
     const EXCEPTION_RESPONSE = 'exception\response';
     const EXPIRE = 'expire';
     const FACTORY = 'factory';
+    const FILE = 'file';
     const FILES = 'files';
     const FORM = 'form';
     const FORMAT = 'format';
@@ -54,6 +55,7 @@ interface Arg
     const ITEM = 'item';
     const LENGTH = 'length';
     const LEVEL = 'level';
+    const LINE = 'line';
     const LOG = 'log';
     const MANAGER = 'manager';
     const MATCHED = 'matched';
