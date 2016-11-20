@@ -459,9 +459,10 @@ trait Resolver
      * @param string $config
      * @param array $args
      * @param callable|null $callback
+     * @param null|string $previous
      * @return array|callable|null|object|string
      */
-    function plugin($config, array $args = [], callable $callback = null)
+    function plugin($config, array $args = [], callable $callback = null, $previous = null)
     {
         if (!$config) {
             return $config;
@@ -472,7 +473,7 @@ trait Resolver
         }
 
         if (is_array($config)) {
-            return $this->plugin(array_shift($config), $args + $this->args($config), $callback);
+            return $this->pluginArray(array_shift($config), $args + $this->args($config), $callback, $previous);
         }
 
         if ($config instanceof Closure) {
@@ -480,6 +481,19 @@ trait Resolver
         }
 
         return $this->resolve($config, $args);
+    }
+
+    /**
+     * @param $config
+     * @param array $args
+     * @param callable|null $callback
+     * @param null $previous
+     * @return array|callable|null|object|string
+     */
+    protected function pluginArray($config, array $args = [], callable $callback = null, $previous = null)
+    {
+        return $previous && $previous === $config ?
+            $this->callback($config, true, $args, $callback) : $this->plugin($config, $args, $callback);
     }
 
     /**
