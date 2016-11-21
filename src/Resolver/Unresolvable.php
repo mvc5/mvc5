@@ -30,11 +30,12 @@ class Unresolvable
 
     /**
      * @param $plugin
+     * @return mixed
      * @throws self
      */
     final static function plugin($plugin)
     {
-        static::raise(static::create(static::class, static::formatMessage($plugin)));
+        return static::raise(static::create(static::class, static::formatMessage($plugin)));
     }
 
     /**
