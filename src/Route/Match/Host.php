@@ -19,19 +19,6 @@ class Host
     use Plugin\Params;
 
     /**
-     * @var null|string
-     */
-    protected $error = NotFound::class;
-
-    /**
-     * @param null|string $error
-     */
-    function __construct($error = null)
-    {
-        $error && $this->error = $error;
-    }
-
-    /**
      * @param Request $request
      * @param Route $route
      * @return Request|null
@@ -49,7 +36,7 @@ class Host
     function __invoke(Request $request, Route $route)
     {
         return !$route->host() || $this->match($request, $route) ? $request : (
-            $this->optional($route, Arg::HOST) ? null : new $this->error
+            $this->optional($route, Arg::HOST) ? null : new NotFound
         );
     }
 }

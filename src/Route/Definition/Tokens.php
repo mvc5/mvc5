@@ -5,7 +5,7 @@
 
 namespace Mvc5\Route\Definition;
 
-use RuntimeException;
+use Mvc5\Exception;
 
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
@@ -53,7 +53,7 @@ trait Tokens
      * @param string $route
      * @param array $constraints
      * @return array
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     protected function tokens($route, array $constraints = [])
     {
@@ -94,18 +94,13 @@ trait Tokens
             if (']' === $match['token']) {
                 $tokens[] = ['optional-end'];
 
-                $level--;
+                (--$level < 0) && Exception::runtime('Found closing bracket without matching opening bracket');
 
-                if ($level < 0) {
-                    throw new RuntimeException('Found closing bracket without matching opening bracket');
-                }
                 continue;
             }
         }
 
-        if ($level > 0) {
-            throw new RuntimeException('Found unbalanced brackets');
-        }
+        ($level > 0) && Exception::runtime('Found unbalanced brackets');
 
         return $tokens;
     }

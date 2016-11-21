@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Exception;
 use Mvc5\Route\Config;
 use Mvc5\Route\Route;
-use Mvc5\Signal;
 
 trait Build
 {
@@ -17,7 +16,6 @@ trait Build
      *
      */
     use Regex;
-    use Signal;
     use Tokens;
 
     /**
@@ -84,7 +82,7 @@ trait Build
             $this->children($route[Arg::CHILDREN], $compile, $recursive);
 
         if (!isset($route[Arg::ROUTE])) {
-            return isset($route[Arg::REGEX]) ? $route : $this->signal(new Exception('Route path not specified'));
+            return isset($route[Arg::REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
         }
 
         !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS] = $this->tokens(

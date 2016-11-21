@@ -7,21 +7,30 @@ namespace Mvc5;
 
 class Exception
     extends \Exception
+    implements Exception\Throwable
 {
     /**
-     * @param \Throwable $exception
-     * @throws \Throwable
+     *
      */
-    static function raise(\Throwable $exception)
-    {
-        throw $exception;
-    }
+    use Exception\Exception;
 
     /**
+     * @var string
+     */
+    const INVALID_ARGUMENT = Exception\InvalidArgument::class;
+
+    /**
+     * @var string
+     */
+    const RUNTIME = Exception\Runtime::class;
+
+    /**
+     * @deprecated
+     * @return mixed
      * @throws Exception
      */
     function __invoke()
     {
-        return $this->raise($this);
+        return static::raise($this);
     }
 }

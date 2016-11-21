@@ -7,7 +7,6 @@ namespace Mvc5;
 
 use ReflectionFunction;
 use ReflectionMethod;
-use RuntimeException;
 
 trait Signal
 {
@@ -69,7 +68,7 @@ trait Signal
                 continue;
             }
 
-            throw new RuntimeException(
+            Exception::runtime(
                 'Missing required parameter $' . $param->name
                 . ' for ' . ($function ?? (is_string($config) ? $config : get_class($config)))
             );

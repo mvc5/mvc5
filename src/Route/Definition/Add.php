@@ -6,8 +6,8 @@
 namespace Mvc5\Route\Definition;
 
 use Mvc5\Arg;
+use Mvc5\Exception;
 use Mvc5\Route\Route;
-use RuntimeException;
 
 class Add
 {
@@ -22,7 +22,7 @@ class Add
      * @param array $path
      * @param bool $start
      * @return array|Route
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     function __invoke(Route $parent, $route, array $path, $start = false)
     {
@@ -30,9 +30,7 @@ class Add
             return $this($root, $route, array_slice($path, 1));
         }
 
-        if (isset($path[1])) {
-            throw new RuntimeException('Parent route not found: ' . $route[Arg::NAME]);
-        }
+        isset($path[1]) && Exception::runtime('Parent route not found: ' . $route[Arg::NAME]);
 
         $route[Arg::NAME] = $path[0];
 

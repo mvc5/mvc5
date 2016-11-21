@@ -5,8 +5,8 @@
 
 namespace Mvc5\Route\Definition;
 
-use InvalidArgumentException;
 use Mvc5\Arg;
+use Mvc5\Exception;
 
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
@@ -20,7 +20,7 @@ trait Compile
      * @param array $defaults
      * @param callable $wildcard
      * @return string
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     protected function compile(array $tokens, array $params, array $defaults = null, callable $wildcard = null)
     {
@@ -54,9 +54,7 @@ trait Compile
                         continue;
                     }
 
-                    if (!$default) {
-                        throw new InvalidArgumentException(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
-                    }
+                    !$default && Exception::invalidArgument(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
 
                     $path = $default;
                 }
