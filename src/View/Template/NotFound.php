@@ -6,7 +6,6 @@
 namespace Mvc5\View\Template;
 
 use Mvc5\Exception\Base;
-use Mvc5\Exception\Runtime;
 use Mvc5\Exception\Throwable;
 use Mvc5\Model\Template;
 
@@ -22,7 +21,7 @@ class NotFound
     /**
      * @param $file
      * @return mixed
-     * @throws Runtime
+     * @throws self
      */
     static function file($file)
     {
@@ -32,7 +31,7 @@ class NotFound
     /**
      * @param Template $template
      * @return mixed
-     * @throws Runtime
+     * @throws self
      */
     static function missing(Template $template)
     {

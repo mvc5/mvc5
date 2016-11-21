@@ -5,21 +5,17 @@
 
 namespace Mvc5\Resolver;
 
-use Mvc5\Exception\Runtime;
+use Mvc5\Exception\Base;
+use Mvc5\Exception\Throwable;
 
 class Unresolvable
-    extends Runtime
+    extends \RuntimeException
+    implements Throwable
 {
     /**
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
-     * @param array $backtrace
+     *
      */
-    function __construct($message = '', $code = 0, \Throwable $previous = null, array $backtrace = [])
-    {
-        parent::__construct(static::formatMessage($message), $code, $previous, $backtrace);
-    }
+    use Base;
 
     /**
      * @param $message
@@ -34,18 +30,20 @@ class Unresolvable
 
     /**
      * @param $plugin
+     * @throws self
      */
     final static function plugin($plugin)
     {
-        throw new static($plugin, 0, null, debug_backtrace(0, 1)[0]);
+        static::raise(static::create(static::class, static::formatMessage($plugin)));
     }
 
     /**
      * @param $plugin
+     * @throws self
      */
     function __invoke($plugin)
     {
-        $this->message = $this->formatMessage($plugin);
+        $this->message = static::formatMessage($plugin);
         throw $this;
     }
 }
