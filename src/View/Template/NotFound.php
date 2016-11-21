@@ -5,27 +5,37 @@
 
 namespace Mvc5\View\Template;
 
+use Mvc5\Exception\Base;
 use Mvc5\Exception\Runtime;
+use Mvc5\Exception\Throwable;
 use Mvc5\Model\Template;
 
 class NotFound
-    extends Runtime
+    extends \RuntimeException
+    implements Throwable
 {
     /**
-     * @param $file
-     * @throws \RuntimeException
+     *
      */
-    final static function file($file)
+    use Base;
+
+    /**
+     * @param $file
+     * @return mixed
+     * @throws Runtime
+     */
+    static function file($file)
     {
-        throw new static('File not found: ' . $file, 0, null, debug_backtrace(0, 1)[0]);
+        return static::raise(static::create(static::class, 'File not found: ' . $file));
     }
 
     /**
      * @param Template $template
-     * @throws \RuntimeException
+     * @return mixed
+     * @throws Runtime
      */
-    final static function missing(Template $template)
+    static function missing(Template $template)
     {
-        throw new static('Template name cannot be empty: ' . get_class($template), 0, null, debug_backtrace(0, 1)[0]);
+        return static::raise(static::create(static::class, 'Template name cannot be empty: ' . get_class($template)));
     }
 }

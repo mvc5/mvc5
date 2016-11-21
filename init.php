@@ -15,6 +15,8 @@ include __DIR__ . '/src/Config/Immutable.php';
 include __DIR__ . '/src/Config/Overload.php';
 include __DIR__ . '/src/Config/ReadOnly.php';
 include __DIR__ . '/src/Config/Scope.php';
+include __DIR__ . '/src/Exception/Base.php';
+include __DIR__ . '/src/Exception/Exception.php';
 include __DIR__ . '/src/Exception/Throwable.php';
 include __DIR__ . '/src/Exception/InvalidArgument.php';
 include __DIR__ . '/src/Exception/Runtime.php';
