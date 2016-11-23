@@ -11,19 +11,16 @@ use Mvc5\Exception as _Exception;
 trait Base
 {
     /**
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param $exception
      * @param array $backtrace
+     * @return \Throwable
      */
-    function __construct($message = '', $code = 0, \Throwable $previous = null, array $backtrace = [])
+    protected static function backtrace($exception, array $backtrace = [])
     {
-        $this->code     = $code;
-        $this->message  = $message;
-        $this->previous = $previous;
-
         $backtrace && isset($backtrace[Arg::FILE])
-            && ($this->file = $backtrace[Arg::FILE]) && ($this->line = $backtrace[Arg::LINE]);
+            && ($exception->file = $backtrace[Arg::FILE]) && ($exception->line = $backtrace[Arg::LINE]);
+
+        return $exception;
     }
 
     /**
@@ -32,17 +29,17 @@ trait Base
      * @param int $code
      * @param \Throwable|null $previous
      * @param int $offset
-     * @return mixed|_Exception|InvalidArgument|Runtime
+     * @return mixed|_Exception|InvalidArgument|Runtime|\Throwable
      */
     protected static function create($exception, $message = '', $code = 0, \Throwable $previous = null, $offset = 2)
     {
-        return new $exception($message, $code, $previous, debug_backtrace(0, $offset)[$offset - 1]);
+        return static::backtrace(new $exception($message, $code, $previous), debug_backtrace(0, $offset)[$offset - 1]);
     }
 
     /**
      * @param $exception
      * @return mixed
-     * @throws _Exception|InvalidArgument|Runtime|\Throwable
+     * @throws mixed|_Exception|InvalidArgument|Runtime|\Throwable
      */
     static function raise($exception)
     {
