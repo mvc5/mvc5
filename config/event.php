@@ -32,6 +32,7 @@ return [
         'resolver\exception'
     ],
     'web' => [
+        //'service\context',
         'route\dispatch',
         'request\error',
         'request\service',
