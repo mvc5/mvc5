@@ -5,6 +5,8 @@
 
 use Mvc5\Plugin\Config;
 use Mvc5\Plugin\Hydrator;
+use Mvc5\Plugin\Invoke;
+use Mvc5\Plugin\Invokable;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -64,6 +66,8 @@ return [
     'session\container'    => new Plugin(Mvc5\Session\Container::class, ['session' => new Plugin('session')], ['start' => []]),
     'session\global'       => new Hydrator(Mvc5\Session\Config::class, ['start' => new Param('session')]),
     'session\messages'     => new Shared('session\messages', new Session('session\messages', Mvc5\Session\Messages::class)),
+    'service\context'      => new Invoke(Mvc5\Service\Context::class, ['service' => new Link]),
+    'shared'               => new Invokable(new Plugin(Shared::class)),
     'template\render'      => new Service(Mvc5\View\Render::class, [new Param('templates'), new Param('view')]),
     'url'                  => new Shared('url\plugin'),
     'url\generator'        => [Mvc5\Url\Generator::class, new Param('routes')],
@@ -74,6 +78,7 @@ return [
     'view\renderer'        => [Mvc5\View\Renderer::class, new Shared('template\render')],
     'web'                  => new Response('web'),
     'web\controller'       => [Mvc5\Web\Controller::class, new Link],
+    'web\context'          => [Mvc5\Web\Context::class, new Link],
     'web\error'            => [Mvc5\Web\Error::class, 'error', 'error\controller'],
     'web\layout'           => [Mvc5\Web\Layout::class, new Plugin('layout')],
     'web\middleware'       => ['middleware', 'stack' => new Param('middleware.web')],

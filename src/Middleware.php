@@ -56,7 +56,7 @@ class Middleware
      */
     function __invoke(Http\Request $request, Http\Response $response, callable $next = null)
     {
-        return $this->stack ? $this->call(current($this->stack), $this->args($request, $response, $this->next($next))) : (
+        return $this->stack ? $this->call(reset($this->stack), $this->args($request, $response, $this->next($next))) : (
             $next ? $next($request, $response) : $response
         );
     }

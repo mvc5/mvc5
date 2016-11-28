@@ -5,6 +5,7 @@
 
 return [
     'web' => [
+        //'web\context',
         'web\route',
         'web\error',
         'web\service',

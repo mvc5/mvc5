@@ -103,6 +103,7 @@ interface Arg
     const SESSION_MESSAGES = 'session\messages';
     const SET_COOKIE = 'setcookie';
     const SEVERITY_CRITICAL = 2;
+    const SHARED = 'shared';
     const SPLIT = 'split';
     const STACK = 'stack';
     const STATUS = 'status';
