@@ -22,6 +22,7 @@ include __DIR__ . '/src/Exception/InvalidArgument.php';
 include __DIR__ . '/src/Exception/Runtime.php';
 include __DIR__ . '/src/Exception.php';
 include __DIR__ . '/src/Service/Config/Container.php';
+include __DIR__ . '/src/Service/Alias.php';
 include __DIR__ . '/src/Service/Container.php';
 include __DIR__ . '/src/Service/Service.php';
 include __DIR__ . '/src/Service/Manager.php';
