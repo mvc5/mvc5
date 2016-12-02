@@ -41,7 +41,7 @@ trait Facade
     }
 
     /**
-     * @return Container|Service
+     * @return callable|Manager|Service
      */
     protected static function service()
     {
