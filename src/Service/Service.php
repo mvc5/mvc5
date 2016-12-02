@@ -30,6 +30,13 @@ interface Service
     function plugin($name, array $args = [], callable $callback = null);
 
     /**
+     * @param string $name
+     * @param $config
+     * @return callable|mixed|null|object
+     */
+    function shared($name, $config = null);
+
+    /**
      * @param array|object|string|\Traversable $event
      * @param array $args
      * @param callable $callback

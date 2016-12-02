@@ -84,7 +84,7 @@ trait Container
      */
     function get($name)
     {
-        return $this->shared($name);
+        return $this->stored($name);
     }
 
     /**
@@ -130,15 +130,6 @@ trait Container
     }
 
     /**
-     * @param string $name
-     * @return mixed
-     */
-    protected function shared($name)
-    {
-        return $this->container[$name] ?? null;
-    }
-
-    /**
      * @param array|\ArrayAccess $config
      * @return array|\ArrayAccess
      */
@@ -155,6 +146,15 @@ trait Container
     function set($name, $value)
     {
         return $this->container[$name] = $value;
+    }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    protected function stored($name)
+    {
+        return $this->container[$name] ?? null;
     }
 
     /**

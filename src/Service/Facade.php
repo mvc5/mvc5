@@ -5,8 +5,6 @@
 
 namespace Mvc5\Service;
 
-use Mvc5\Arg;
-
 trait Facade
 {
     /**
@@ -41,7 +39,7 @@ trait Facade
     }
 
     /**
-     * @return Container|Service
+     * @return callable|Manager|Service
      */
     protected static function service()
     {
@@ -50,11 +48,12 @@ trait Facade
 
     /**
      * @param string $name
+     * @param $config
      * @return callable|mixed|null|object
      */
-    protected static function shared($name)
+    protected static function shared($name, $config = null)
     {
-        return static::call(Arg::SHARED, [$name]);
+        return static::service()->shared($name, $config);
     }
 
     /**

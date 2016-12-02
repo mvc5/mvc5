@@ -16,7 +16,7 @@ trait Signal
      * @param callable $callback
      * @return mixed
      */
-    protected function signal(callable $config, array $args = [], callable $callback = null)
+    protected static function signal(callable $config, array $args = [], callable $callback = null)
     {
         if ($args && !is_string(key($args))) {
             return call_user_func_array($config, $args);
