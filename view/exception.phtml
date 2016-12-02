@@ -56,7 +56,7 @@ if (!function_exists('buildParamList')) {
     }
 }
 
-/** @var Exception $exception */
+/** @var \Exception $exception */
 // fix stack trace in case it doesn't contain the exception origin as the first entry
 if (!isset($exception)) {
     $exception = $this->exception;
