@@ -1,5 +1,11 @@
 <?php
 /**
+ *
+ */
+
+namespace Mvc5\Exception;
+
+/**
 * @copyright  Copyright (c) 2003-2007 the Agavi Project. (http://www.agavi.org)
 * @license http://www.agavi.org/LICENSE.txt GNU LGPL
 */
@@ -57,8 +63,13 @@ if (!isset($exception)) {
 }
 
 $fixedTrace = $exception->getTrace();
-if(isset($fixedTrace[0]['file']) && $fixedTrace[0]['file'] != $exception->getFile() && $fixedTrace[0]['line'] != $exception->getLine()) {
-$fixedTrace = array_merge(array(array('file' => $exception->getFile(), 'line' => $exception->getLine())), $fixedTrace);
+
+if (!$fixedTrace) {
+    $exception->getFile() && $fixedTrace = [['file' => $exception->getFile(), 'line' => $exception->getLine()]];
+} elseif(isset($exception->offset)) {
+    $fixedTrace = array_slice($fixedTrace, $exception->offset);
+} elseif (isset($fixedTrace[0]['file']) && $fixedTrace[0]['file'] != $exception->getFile() && $fixedTrace[0]['line'] != $exception->getLine()) {
+    $fixedTrace = array_merge([['file' => $exception->getFile(), 'line' => $exception->getLine()]], $fixedTrace);
 }
 
 ?>

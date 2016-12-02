@@ -20,7 +20,7 @@ trait Exception
      * @return mixed
      * @throws \InvalidArgumentException
      */
-    static function exception($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function exception($message = '', $code = 0, \Throwable $previous = null, $offset = 1)
     {
         return static::raise(static::create(static::class, $message, $code, $previous, $offset));
     }
@@ -33,7 +33,7 @@ trait Exception
      * @return mixed
      * @throws \InvalidArgumentException
      */
-    static function invalidArgument($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function invalidArgument($message = '', $code = 0, \Throwable $previous = null, $offset = 1)
     {
         return static::raise(static::create(static::INVALID_ARGUMENT, $message, $code, $previous, $offset));
     }
@@ -46,7 +46,7 @@ trait Exception
      * @return mixed
      * @throws \RuntimeException
      */
-    static function runtime($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function runtime($message = '', $code = 0, \Throwable $previous = null, $offset = 1)
     {
         return static::raise(static::create(static::RUNTIME, $message, $code, $previous, $offset));
     }
