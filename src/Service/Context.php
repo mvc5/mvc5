@@ -24,7 +24,7 @@ final class Context
 
     /**
      * @param Service $service
-     * @return Service
+     * @return callable|Manager|Service
      */
     static function bind(Service $service)
     {
@@ -35,7 +35,7 @@ final class Context
     }
 
     /**
-     * @return Container|Service
+     * @return callable|Manager|Service
      */
     static function service()
     {
