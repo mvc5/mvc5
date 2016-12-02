@@ -248,7 +248,7 @@ trait Resolver
         }
 
         if ($config instanceof Shared) {
-            return $this->shared($config->name()) ?? $this->initialize($config->name(), $config->config());
+            return $this->shared($config->name(), $config->config());
         }
 
         if ($config instanceof Param) {
@@ -627,6 +627,16 @@ trait Resolver
     protected function scoped(Closure $callback)
     {
         return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope) : $callback;
+    }
+
+    /**
+     * @param $name
+     * @param null $config
+     * @return callable|mixed|null|object
+     */
+    function shared($name, $config = null)
+    {
+        return $this->stored($name) ?? $this->initialize($name, $config);
     }
 
     /**

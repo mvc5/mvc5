@@ -44,6 +44,16 @@ trait Plugin
     }
 
     /**
+     * @param string $name
+     * @param $config
+     * @return mixed
+     */
+    protected function shared($name, $config = null)
+    {
+        return $this->service->shared($name, $config);
+    }
+
+    /**
      * @param array|object|string|\Traversable $event
      * @param array $args
      * @param callable $callback
