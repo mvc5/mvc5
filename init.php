@@ -18,6 +18,7 @@ include __DIR__ . '/src/Config/Scope.php';
 include __DIR__ . '/src/Exception/Base.php';
 include __DIR__ . '/src/Exception/Exception.php';
 include __DIR__ . '/src/Exception/Throwable.php';
+include __DIR__ . '/src/Exception/ErrorException.php';
 include __DIR__ . '/src/Exception/InvalidArgument.php';
 include __DIR__ . '/src/Exception/Runtime.php';
 include __DIR__ . '/src/Exception.php';

@@ -17,6 +17,11 @@ class Exception
     /**
      * @var string
      */
+    const ERROR_EXCEPTION = Exception\ErrorException::class;
+
+    /**
+     * @var string
+     */
     const INVALID_ARGUMENT = Exception\InvalidArgument::class;
 
     /**
