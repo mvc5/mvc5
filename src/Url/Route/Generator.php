@@ -70,7 +70,7 @@ trait Generator
      * @param array $options
      * @param string $path
      * @param Route $parent
-     * @return string|void
+     * @return string
      */
     protected function generate($name, array $params = [], array $options = [], $path = '', Route $parent = null)
     {

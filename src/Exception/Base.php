@@ -11,37 +11,57 @@ use Mvc5\Exception as _Exception;
 trait Base
 {
     /**
-     * @param \Exception|mixed $exception
+     * @param mixed|\Throwable $exception
      * @param int $offset
-     * @return \Exception
+     * @return \Throwable
+     */
+    protected static function backtrace(\Throwable $exception, $offset = 2)
+    {
+        $offset && ($origin = $exception->getTrace()[$offset]) && isset($origin[Arg::FILE])
+            && ($exception->file = $origin[Arg::FILE]) && ($exception->line = $origin[Arg::LINE]);
+
+        return static::offset($exception, $offset);
+    }
+
+    /**
+     * @param $exception
+     * @param int $offset
+     * @return \Throwable
      */
     protected static function offset($exception, $offset = 1)
     {
-        ($exception->offset = $offset) && ($trace = $exception->getTrace()[$offset]) && isset($trace[Arg::FILE])
-            && ($exception->file = $trace[Arg::FILE]) && ($exception->line = $trace[Arg::LINE]);
+        $offset && $exception->offset = $offset;
 
         return $exception;
     }
 
     /**
      * @param $exception
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param array|string $params
      * @param int $offset
-     * @return mixed|_Exception|InvalidArgument|Runtime|\Throwable
+     * @return \Throwable
      */
-    protected static function create($exception, $message = '', $code = 0, \Throwable $previous = null, $offset = 1)
+    protected static function create($exception, $params = [], $offset = 2)
     {
-        return static::offset(new $exception($message, $code, $previous), $offset);
+        return static::backtrace(static::instance($exception, (array) $params), $offset);
+    }
+
+    /**
+     * @param $exception
+     * @param array|string $params
+     * @return \Throwable
+     */
+    protected static function instance($exception, array $params = [])
+    {
+        return new $exception(...$params);
     }
 
     /**
      * @param $exception
      * @return mixed
-     * @throws mixed|_Exception|InvalidArgument|Runtime|\Throwable
+     * @throws \Throwable
      */
-    static function raise($exception)
+    static function raise(\Throwable $exception)
     {
         throw $exception;
     }
