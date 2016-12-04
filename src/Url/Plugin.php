@@ -7,15 +7,9 @@ namespace Mvc5\Url;
 
 use Mvc5\Arg;
 use Mvc5\Request\Request;
-use Mvc5\Signal;
 
 class Plugin
 {
-    /**
-     *
-     */
-    use Signal;
-
     /**
      * @var callable
      */
@@ -74,7 +68,7 @@ class Plugin
      */
     protected function url($name, array $params = [], array $options = [])
     {
-        return $this->signal($this->generator(), [$name, $params, $options]);
+        return ($this->generator())($name, $params, $options);
     }
 
     /**
