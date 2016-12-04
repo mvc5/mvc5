@@ -24,19 +24,7 @@ trait Base
     }
 
     /**
-     * @param $exception
-     * @param int $offset
-     * @return \Throwable
-     */
-    protected static function offset($exception, $offset = 1)
-    {
-        $offset && $exception->offset = $offset;
-
-        return $exception;
-    }
-
-    /**
-     * @param $exception
+     * @param string $exception
      * @param array|string $params
      * @param int $offset
      * @return \Throwable
@@ -47,13 +35,25 @@ trait Base
     }
 
     /**
-     * @param $exception
+     * @param string $exception
      * @param array|string $params
      * @return \Throwable
      */
     protected static function instance($exception, array $params = [])
     {
         return new $exception(...$params);
+    }
+
+    /**
+     * @param $exception
+     * @param int $offset
+     * @return \Throwable
+     */
+    protected static function offset($exception, $offset = 1)
+    {
+        $offset && $exception->offset = $offset;
+
+        return $exception;
     }
 
     /**
