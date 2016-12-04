@@ -24,7 +24,7 @@ trait Output
 
         $this->checkFileExists && !file_exists($file) && NotFound::file($file);
 
-        $render = \Closure::bind(function($__template) {
+        return (function($__template) {
             /** @var Template $this */
 
             extract($this->vars(), EXTR_SKIP);
@@ -46,11 +46,6 @@ trait Output
 
                 throw $exception;
             }
-        },
-            $template,
-            $template
-        );
-
-        return $render($file);
+        })->call($template, $file);
     }
 }
