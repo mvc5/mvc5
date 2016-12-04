@@ -22,6 +22,11 @@ class Exception
     /**
      * @var string
      */
+    const EXCEPTION = self::class;
+
+    /**
+     * @var string
+     */
     const INVALID_ARGUMENT = Exception\InvalidArgument::class;
 
     /**

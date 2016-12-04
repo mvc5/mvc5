@@ -21,12 +21,13 @@ class ErrorException
      * @param $message
      * @param $file
      * @param $line
+     * @return bool
      * @throws ErrorException|\ErrorException
      * @link http://php.net/manual/en/class.errorexception.php#variable.post.basic
      */
     static function handler($severity, $message, $file, $line)
     {
-        (error_reporting() & $severity) &&
+        return (error_reporting() & $severity) &&
             _Exception::errorException($message, 0, $severity, $file, $line);
     }
 }
