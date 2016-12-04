@@ -101,7 +101,6 @@ interface Arg
     const SERVICE_SEPARATOR = '->';
     const SESSION = 'session';
     const SESSION_MESSAGES = 'session\messages';
-    const SET_COOKIE = 'setcookie';
     const SEVERITY_CRITICAL = 2;
     const SHARED = 'shared';
     const SPLIT = 'split';

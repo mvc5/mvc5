@@ -9,15 +9,9 @@ use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Route\Route;
 use Mvc5\Route\Request;
-use Mvc5\Signal;
 
 class Controller
 {
-    /**
-     *
-     */
-    use Signal;
-
     /**
      * @var callable|null
      */
@@ -93,7 +87,7 @@ class Controller
      */
     protected function load($name)
     {
-        return $this->loader ? $this->signal($this->loader, [$name]) : class_exists($name);
+        return $this->loader ? ($this->loader)($name) : class_exists($name);
     }
 
     /**

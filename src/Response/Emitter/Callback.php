@@ -5,16 +5,10 @@
 namespace Mvc5\Response\Emitter;
 
 use Mvc5\Response\Emitter;
-use Mvc5\Signal;
 
 class Callback
     implements Emitter
 {
-    /**
-     *
-     */
-    use Signal;
-
     /**
      * @var callable
      */
@@ -33,6 +27,6 @@ class Callback
      */
     function emit()
     {
-       return $this->signal($this->emitter);
+       return ($this->emitter)();
     }
 }

@@ -6,19 +6,12 @@
 namespace Mvc5\Response\Send;
 
 use Closure;
-use Mvc5\Arg;
 use Mvc5\Http\Response as HttpResponse;
 use Mvc5\Response\Emitter;
 use Mvc5\Response\Response;
-use Mvc5\Signal;
 
 trait Send
 {
-    /**
-     *
-     */
-    use Signal;
-
     /**
      * @param HttpResponse $response
      */
@@ -51,7 +44,7 @@ trait Send
 
         if ($response instanceof Response) {
             foreach($response->cookies() as $cookie) {
-                $this->signal(Arg::SET_COOKIE, array_values($cookie));
+                setcookie(...array_values($cookie));
             }
         }
 

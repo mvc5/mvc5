@@ -33,7 +33,7 @@ trait Model
      */
     protected function create($model)
     {
-        return ($this->provider ? $this->call($this->provider, [$model]) : null) ? : new $this->model($model);
+        return ($this->provider ? ($this->provider)($model) : null) ? : new $this->model($model);
     }
 
     /**
