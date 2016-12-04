@@ -41,7 +41,7 @@ trait Exception
      */
     static function exception($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
     {
-        return static::raise(static::create(static::class, [$message, $code, $previous], $offset));
+        return static::raise(static::create(static::EXCEPTION, [$message, $code, $previous], $offset));
     }
 
     /**
