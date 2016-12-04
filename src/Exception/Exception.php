@@ -16,15 +16,16 @@ trait Exception
      * @param string $message
      * @param int $code
      * @param int $severity
-     * @param null $file
-     * @param null $line
+     * @param string $file
+     * @param int $line
      * @param \Throwable|null $previous
      * @param int $offset
      * @return mixed
      * @throws \ErrorException
      */
-    static function errorException($message = '', $code = 0, $severity = E_ERROR, $file = null, $line = null, \Throwable $previous = null, $offset = 2)
-    {
+    static function errorException(
+        $message = '', $code = 0, $severity = E_ERROR, $file = __FILE__, $line = __LINE__, \Throwable $previous = null, $offset = 2
+    ) {
         return static::raise(static::offset(
             static::instance(static::ERROR_EXCEPTION, [$message, $code, $severity, $file, $line, $previous]), $offset
         ));
