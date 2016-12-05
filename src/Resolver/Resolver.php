@@ -312,9 +312,7 @@ trait Resolver
         }
 
         if ($config instanceof Provide) {
-            return $this->signal(
-                $this->provider() ?: new Unresolvable, [$config->config(), $this->vars($args, $config->args())]
-            );
+            return ($this->provider() ?: new Unresolvable)($config->config(), $this->vars($args, $config->args()));
         }
 
         return Unresolvable::plugin($config);
