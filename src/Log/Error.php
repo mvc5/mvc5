@@ -6,15 +6,9 @@
 namespace Mvc5\Log;
 
 use Mvc5\Arg;
-use Mvc5\Signal;
 
 class Error
 {
-    /**
-     *
-     */
-    use Signal;
-
     /**
      * @var null
      */
@@ -34,6 +28,6 @@ class Error
      */
     function __invoke($message)
     {
-        return $this->signal('error_log', [Arg::MESSAGE => (string) $message] + $this->options);
+        return error_log(...array_values([Arg::MESSAGE => (string) $message] + $this->options));
     }
 }
