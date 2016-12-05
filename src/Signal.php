@@ -19,7 +19,7 @@ trait Signal
     protected static function signal(callable $config, array $args = [], callable $callback = null)
     {
         if ($args && !is_string(key($args))) {
-            return call_user_func_array($config, $args);
+            return $config(...$args);
         }
 
         $function = null;
@@ -74,6 +74,6 @@ trait Signal
             );
         }
 
-        return call_user_func_array($function ?? [$config, $method], $params ? $matched : $args);
+        return ($function ?? [$config, $method])(...($params ? $matched : array_values($args)));
     }
 }
