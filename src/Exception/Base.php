@@ -36,7 +36,7 @@ trait Base
 
     /**
      * @param string $exception
-     * @param array|string $params
+     * @param array $params
      * @return \Throwable
      */
     protected static function instance($exception, array $params = [])
