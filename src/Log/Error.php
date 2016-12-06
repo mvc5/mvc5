@@ -5,21 +5,33 @@
 
 namespace Mvc5\Log;
 
-use Mvc5\Arg;
-
 class Error
 {
     /**
-     * @var null
+     * @var string
      */
-    protected $options = [];
+    protected $destination = '';
 
     /**
-     * @param array $options
+     * @var string
      */
-    function __construct(array $options = [])
+    protected $extra_headers = '';
+
+    /**
+     * @var int
+     */
+    protected $message_type = 0;
+
+    /**
+     * @param int $message_type
+     * @param string $destination
+     * @param string $extra_headers
+     */
+    function __construct($message_type = 0, $destination = '', $extra_headers = '')
     {
-        $this->options = $options;
+        $this->destination   = $destination;
+        $this->extra_headers = $extra_headers;
+        $this->message_type  = $message_type;
     }
 
     /**
@@ -28,6 +40,6 @@ class Error
      */
     function __invoke($message)
     {
-        return error_log(...array_values([Arg::MESSAGE => (string) $message] + $this->options));
+        return error_log((string) $message, $this->message_type, $this->destination, $this->extra_headers);
     }
 }
