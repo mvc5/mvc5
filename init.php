@@ -169,6 +169,7 @@ include __DIR__ . '/src/Url/Collection.php';
 include __DIR__ . '/src/Url/Plugin.php';
 include __DIR__ . '/src/Url/Generator.php';
 include __DIR__ . '/src/Resolver/Build.php';
+include __DIR__ . '/src/Resolver/Builder.php';
 include __DIR__ . '/src/Resolver/Dispatch.php';
 include __DIR__ . '/src/Resolver/Generator.php';
 include __DIR__ . '/src/Resolver/Initializer.php';
