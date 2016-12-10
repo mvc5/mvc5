@@ -27,7 +27,7 @@ trait Version
     /**
      * @param Request $request
      * @param Response $response
-     * @return Request
+     * @return Response
      */
     function __invoke(Request $request, Response $response)
     {
