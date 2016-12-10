@@ -39,7 +39,8 @@ trait Signal
 
         is_array($config) && list($config, $method) = $config;
 
-        !$function && $params = (new ReflectionMethod($config, $method))->getParameters();
+        !$function && ($function = [$config, $method])
+            && $params = (new ReflectionMethod($config, $method))->getParameters();
 
         foreach($params as $param) {
             if (isset($args[$param->name])) {
@@ -68,12 +69,13 @@ trait Signal
                 continue;
             }
 
-            Exception::runtime(
-                'Missing required parameter $' . $param->name
-                . ' for ' . ($function ?? (is_string($config) ? $config : get_class($config)))
-            );
+            Exception::runtime('Missing required parameter $' . $param->name . ' for ' . (
+                is_string($function) ? $function : (
+                    (is_string($config) ? $config : get_class($config)) . '::' . $method
+                )
+            ));
         }
 
-        return ($function ?? [$config, $method])(...($params ? $matched : array_values($args)));
+        return $function(...($params ? $matched : array_values($args)));
     }
 }
