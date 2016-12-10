@@ -69,15 +69,10 @@ trait Build
      */
     protected function composite($plugin, $name, array $args = [], callable $callback = null)
     {
-        if ($plugin instanceof Manager) {
-            return $plugin->plugin($name, $args, $callback);
-        }
-
-        if ($plugin instanceof Container) {
-            return $this->plugin($plugin[$name], $args, $callback);
-        }
-
-        return $this->resolve($plugin[$name], $args);
+        return $plugin instanceof Manager ? $plugin->plugin($name, $args, $callback) : (
+            $plugin instanceof Container ? $this->plugin($plugin[$name], $args, $callback) :
+                $this->resolve($plugin[$name], $args)
+        );
     }
 
     /**
