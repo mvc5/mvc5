@@ -50,20 +50,15 @@ trait Build
      */
     protected function create($route)
     {
-        if ($route instanceof Route) {
-            return $route;
-        }
-
-        if (isset($route[Arg::CLASS_NAME])) {
-            return new $route[Arg::CLASS_NAME]($route);
-        }
-
-        return $this->createDefault($route);
+        return $route instanceof Route ? $route : (
+            isset($route[Arg::CLASS_NAME]) ? new $route[Arg::CLASS_NAME]($route) :
+                $this->createDefault($route)
+        );
     }
 
     /**
      * @param array|\ArrayAccess $route
-     * @return string
+     * @return Route
      */
     protected function createDefault($route = [])
     {
