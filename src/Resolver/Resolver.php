@@ -25,6 +25,7 @@ use Mvc5\Plugin\Gem\Param;
 use Mvc5\Plugin\Gem\Plug;
 use Mvc5\Plugin\Gem\Plugin;
 use Mvc5\Plugin\Gem\Provide;
+use Mvc5\Plugin\Gem\Scoped;
 use Mvc5\Plugin\Gem\Shared;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
@@ -309,6 +310,10 @@ trait Resolver
 
         if ($config instanceof Value) {
             return $config->config();
+        }
+
+        if ($config instanceof Scoped) {
+            return $this->scoped($config->closure());
         }
 
         if ($config instanceof Provide) {
