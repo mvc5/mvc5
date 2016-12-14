@@ -6,7 +6,7 @@
 namespace Mvc5;
 
 class App
-    implements Config\Scope, Service\Manager
+    implements Config\Scope, \Serializable, Service\Manager
 {
     /**
      *

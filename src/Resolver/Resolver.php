@@ -633,6 +633,14 @@ trait Resolver
     }
 
     /**
+     * @return string
+     */
+    function serialize()
+    {
+        return serialize([$this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict]);
+    }
+
+    /**
      * @param $name
      * @param null $config
      * @return callable|mixed|null|object
@@ -670,6 +678,16 @@ trait Resolver
     function trigger($event, array $args = [], callable $callback = null)
     {
         return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    function unserialize($serialized)
+    {
+        list(
+            $this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict
+            ) = unserialize($serialized);
     }
 
     /**
