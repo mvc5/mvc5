@@ -13,15 +13,6 @@ class End
      */
     function __construct(...$config)
     {
-        parent::__construct([$this, 'end'], [new Args($config)]);
-    }
-
-    /**
-     * @param array $config
-     * @return mixed
-     */
-    function end(array $config)
-    {
-        return end($config);
+        parent::__construct('@end', [new Args($config)]);
     }
 }
