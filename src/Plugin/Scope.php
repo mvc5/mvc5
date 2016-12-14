@@ -5,7 +5,6 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Config\Scope as _Scope;
 use Mvc5\Service\Service as _Service;
 
 /**
@@ -16,44 +15,25 @@ class Scope
     extends Call
 {
     /**
-     *
-     */
-    const APP_CLASS = 'Mvc5\App';
-
-    /**
      * @param $name
-     * @param array $config
-     * @param array ...$args
+     * @param array $args
      */
-    function __construct($name, $config = [], ...$args)
+    function __construct($name, array $args)
     {
-        parent::__construct([$this, 'scope'], [new Link, $this->plugins($config), $name, new Args($args)]);
+        parent::__construct([$this, 'scope'], [$name, new Link, new Args($args)]);
     }
 
     /**
-     * @param $config
-     * @return Plugin|Plugins
-     */
-    protected function plugins($config)
-    {
-        return $config instanceof Plugins || $config instanceof Plugin || $config instanceof Plug  ? $config :
-            new Plugin(static::APP_CLASS, [$config, new Link]);
-    }
-
-    /**
-     * @param _Service $service
-     * @param _Scope $plugins
      * @param string $name
+     * @param _Service $service
      * @param array $args
      * @return callable|null|object
      */
-    function scope(_Service $service, _Scope $plugins, $name, array $args = [])
+    function scope($name, _Service $service, array $args)
     {
-        array_unshift($args, $plugins);
-
         $plugin = $service->plugin($name, $args);
 
-        $plugins->scope($plugin);
+        $args[0]->scope($plugin);
 
         return $plugin;
     }
