@@ -33,11 +33,8 @@ class Register
     {
         $service = $plugins->plugin($config[Arg::SERVICE]);
 
-        if (isset($service[$config[Arg::NAME]])) {
-            return $service[$config[Arg::NAME]];
-        }
-
-        return isset($config[Arg::PLUGIN]) ?
-            $service[$config[Arg::NAME]] = $plugins->plugin($config[Arg::PLUGIN]) : null;
+        return isset($service[$config[Arg::NAME]]) ? $service[$config[Arg::NAME]] : (
+            isset($config[Arg::PLUGIN]) ? $service[$config[Arg::NAME]] = $plugins->plugin($config[Arg::PLUGIN]) : null
+        );
     }
 }
