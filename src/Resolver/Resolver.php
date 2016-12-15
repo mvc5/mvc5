@@ -687,7 +687,7 @@ trait Resolver
     {
         list(
             $this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict
-            ) = unserialize($serialized);
+        ) = unserialize($serialized);
     }
 
     /**
