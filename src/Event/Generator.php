@@ -53,7 +53,7 @@ trait Generator
      * @param null $result
      * @return null
      */
-    protected function iterate($listener, $event, $queue, $args, $callback, $result = null)
+    protected function iterate($listener, $event, &$queue, $args, $callback, $result = null)
     {
         return !$listener || ($event instanceof Event && $event->stopped()) ? $result : $this->iterate(
             $this->step($queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
@@ -93,9 +93,15 @@ trait Generator
      * @param array|Iterator $queue
      * @return mixed|null
      */
-    protected function start($queue)
+    protected function start(&$queue)
     {
-        return is_array($queue) ? current($queue) : $queue->current();
+        if (is_array($queue)) {
+            return reset($queue);
+        }
+
+        $queue->rewind();
+
+        return $queue->current();
     }
 
     /**
