@@ -93,9 +93,15 @@ trait Generator
      * @param array|Iterator $queue
      * @return mixed|null
      */
-    protected function start($queue)
+    protected function start(&$queue)
     {
-        return is_array($queue) ? current($queue) : $queue->current();
+        if (is_array($queue)) {
+            return reset($queue);
+        }
+
+        $queue->rewind();
+
+        return $queue->current();
     }
 
     /**
