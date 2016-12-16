@@ -53,7 +53,7 @@ trait Generator
      * @param null $result
      * @return null
      */
-    protected function iterate($listener, $event, $queue, $args, $callback, $result = null)
+    protected function iterate($listener, $event, &$queue, $args, $callback, $result = null)
     {
         return !$listener || ($event instanceof Event && $event->stopped()) ? $result : $this->iterate(
             $this->step($queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
