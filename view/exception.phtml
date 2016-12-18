@@ -66,7 +66,7 @@ $fixedTrace = $exception->getTrace();
 !empty($exception->offset) &&
     $fixedTrace = array_slice($fixedTrace, $exception->offset);
 
-(!isset($fixedTrace[0]['file']) || ($fixedTrace[0]['file'] != $exception->getFile() && $fixedTrace[0]['line'] != $exception->getLine()))
+(!isset($fixedTrace[0]['file']) || $fixedTrace[0]['file'] != $exception->getFile() || $fixedTrace[0]['line'] != $exception->getLine())
     && $fixedTrace = array_merge([['file' => $exception->getFile(), 'line' => $exception->getLine()]], $fixedTrace);
 
 ?>
