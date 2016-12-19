@@ -247,6 +247,7 @@ include __DIR__ . '/src/Plugin/Shared.php';
 include __DIR__ . '/src/Plugin/Dependency.php';
 include __DIR__ . '/src/Plugin/SignalArgs.php';
 include __DIR__ . '/src/Plugin/Value.php';
+include __DIR__ . '/src/Plugin/GlobalVar.php';
 include __DIR__ . '/src/Plugin/NullValue.php';
 include __DIR__ . '/src/Web/Controller.php';
 include __DIR__ . '/src/Web/Context.php';
