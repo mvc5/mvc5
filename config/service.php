@@ -4,6 +4,7 @@
  */
 
 use Mvc5\Plugin\Config;
+use Mvc5\Plugin\GlobalVar;
 use Mvc5\Plugin\Hydrator;
 use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Link;
@@ -16,7 +17,7 @@ use Mvc5\Plugin\Shared;
 
 return [
     'config'               => new Config,
-    'cookie'               => new Shared('cookie', [Mvc5\Cookie\Config::class, new Plugin('cookie\sender'), $_COOKIE]),
+    'cookie'               => new Shared('cookie', [Mvc5\Cookie\Config::class, new Plugin('cookie\sender'), new GlobalVar('_COOKIE')]),
     'cookie\container'     => [Mvc5\Cookie\Container::class, new Param('cookie')],
     'cookie\sender'        => [Mvc5\Cookie\Sender::class, new Param('cookie')],
     'controller\action'    => [Mvc5\Controller\Action::class, new Link],
