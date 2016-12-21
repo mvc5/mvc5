@@ -30,8 +30,15 @@ class ErrorException
      */
     static function handler($severity, $message, $file, $line)
     {
+        $success = true;
+        while(ob_get_level() && $success) {
+            $success = ob_end_clean();
+        }
+
         $exception = new self($message, 0, $severity, $file, $line);
+
         include __DIR__ . '/../../view/exception.phtml';
+
         exit(static::EXIT_CODE);
     }
 }
