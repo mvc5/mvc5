@@ -37,6 +37,8 @@ class ErrorException
 
         $exception = new self($message, 0, $severity, $file, $line);
 
+        http_response_code(500);
+
         include __DIR__ . '/../../view/exception.phtml';
 
         exit(static::EXIT_CODE);
