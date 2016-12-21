@@ -17,17 +17,21 @@ class ErrorException
     use Base;
 
     /**
+     *
+     */
+    const EXIT_CODE = 70;
+
+    /**
      * @param $severity
      * @param $message
      * @param $file
      * @param $line
-     * @return bool
-     * @throws ErrorException|\ErrorException
-     * @link http://php.net/manual/en/class.errorexception.php#variable.post.basic
+     * @codeCoverageIgnore
      */
     static function handler($severity, $message, $file, $line)
     {
-        return (error_reporting() & $severity) &&
-            _Exception::errorException($message, 0, $severity, $file, $line);
+        $exception = new self($message, 0, $severity, $file, $line);
+        include __DIR__ . '/../../view/exception.phtml';
+        exit(static::EXIT_CODE);
     }
 }
