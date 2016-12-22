@@ -5,8 +5,6 @@
 
 namespace Mvc5\Exception;
 
-use Mvc5\Exception as _Exception;
-
 class ErrorException
     extends \ErrorException
     implements Throwable
@@ -17,30 +15,30 @@ class ErrorException
     use Base;
 
     /**
-     *
-     */
-    const EXIT_CODE = 70;
-
-    /**
      * @param $severity
      * @param $message
      * @param $file
      * @param $line
+     * @return bool
      * @codeCoverageIgnore
      */
     static function handler($severity, $message, $file, $line)
     {
+        if (!ini_get('display_errors') || in_array($severity, [E_DEPRECATED, E_USER_DEPRECATED])) {
+            return false;
+        }
+
         $success = true;
         while(ob_get_level() && $success) {
             $success = ob_end_clean();
         }
 
-        $exception = new self($message, 0, $severity, $file, $line);
-
         http_response_code(500);
+
+        $exception = new self($message, 0, $severity, $file, $line);
 
         include __DIR__ . '/../../view/exception.phtml';
 
-        exit(static::EXIT_CODE);
+        exit(70);
     }
 }
