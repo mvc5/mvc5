@@ -15,9 +15,10 @@ interface Request
 {
     /**
      * @param $name
+     * @param null $default
      * @return mixed
      */
-    function arg($name);
+    function arg($name, $default = null);
 
     /**
      * @return array
@@ -52,9 +53,10 @@ interface Request
 
     /**
      * @param $name
+     * @param null $default
      * @return array|mixed
      */
-    function data($name = null);
+    function data($name = null, $default = null);
 
     /**
      * @return HttpError|mixed
@@ -99,9 +101,10 @@ interface Request
 
     /**
      * @param $name
+     * @param null $default
      * @return mixed
      */
-    function param($name);
+    function param($name, $default = null);
 
     /**
      * @return array
@@ -120,9 +123,10 @@ interface Request
 
     /**
      * @param $name
+     * @param null $default
      * @return array|mixed
      */
-    function post($name = null);
+    function post($name = null, $default = null);
 
     /**
      * @return string
@@ -136,15 +140,17 @@ interface Request
 
     /**
      * @param $name
+     * @param null $default
      * @return array|mixed
      */
-    function server($name = null);
+    function server($name = null, $default = null);
 
     /**
      * @param $name
+     * @param null $default
      * @return array|mixed|Session
      */
-    function session($name = null);
+    function session($name = null, $default = null);
 
     /**
      * @return resource
@@ -163,9 +169,10 @@ interface Request
 
     /**
      * @param $name
+     * @param null $default
      * @return mixed
      */
-    function variable($name);
+    function variable($name, $default = null);
 
     /**
      * @return array

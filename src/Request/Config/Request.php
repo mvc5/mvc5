@@ -18,11 +18,12 @@ trait Request
 
     /**
      * @param $name
+     * @param null $default
      * @return mixed
      */
-    function arg($name)
+    function arg($name, $default = null)
     {
-        return $this->get(Arg::ARGS)[$name] ?? null;
+        return $this->get(Arg::ARGS)[$name] ?? $default;
     }
 
     /**
@@ -76,11 +77,12 @@ trait Request
 
     /**
      * @param $name
+     * @param null $default
      * @return mixed
      */
-    function data($name = null)
+    function data($name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::DATA] ?: []) : ($this->get(Arg::DATA)[$name] ?? null);
+        return null === $name ? ($this[Arg::DATA] ?: []) : ($this->get(Arg::DATA)[$name] ?? $default);
     }
 
     /**
@@ -150,11 +152,12 @@ trait Request
 
     /**
      * @param $name
+     * @param null $default
      * @return mixed
      */
-    function param($name)
+    function param($name, $default = null)
     {
-        return $this->get(Arg::PARAMS)[$name] ?? null;
+        return $this->get(Arg::PARAMS)[$name] ?? $default;
     }
 
     /**
@@ -183,11 +186,12 @@ trait Request
 
     /**
      * @param $name
+     * @param null $default
      * @return array
      */
-    function post($name = null)
+    function post($name = null, $default = null)
     {
-        return $this->data($name);
+        return $this->data($name, $default);
     }
 
     /**
@@ -208,20 +212,22 @@ trait Request
 
     /**
      * @param $name
+     * @param null $default
      * @return array|\ArrayAccess
      */
-    function server($name = null)
+    function server($name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::SERVER] ?: []) : ($this->get(Arg::SERVER)[$name] ?? null);
+        return null === $name ? ($this[Arg::SERVER] ?: []) : ($this->get(Arg::SERVER)[$name] ?? $default);
     }
 
     /**
      * @param $name
+     * @param null $default
      * @return array|\ArrayAccess
      */
-    function session($name = null)
+    function session($name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::SESSION] ?: []) : ($this->get(Arg::SESSION)[$name] ?? null);
+        return null === $name ? ($this[Arg::SESSION] ?: []) : ($this->get(Arg::SESSION)[$name] ?? $default);
     }
 
     /**
@@ -250,11 +256,12 @@ trait Request
 
     /**
      * @param $name
+     * @param null $default
      * @return mixed
      */
-    function variable($name)
+    function variable($name, $default = null)
     {
-        return $this->param($name) ?? $this->arg($name) ?? $this->data($name);
+        return $this->param($name) ?? $this->arg($name) ?? $this->data($name, $default);
     }
 
     /**
