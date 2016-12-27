@@ -61,6 +61,16 @@ class Plugin
     }
 
     /**
+     * @param $name
+     * @param array $params
+     * @return array
+     */
+    protected function params($name, array $params = [])
+    {
+        return $name ? $params : $params + $this->request->params();
+    }
+
+    /**
      * @param string $name
      * @param array $params
      * @param array $options
@@ -79,6 +89,6 @@ class Plugin
      */
     function __invoke($name = null, array $params = [], array $options = [])
     {
-        return $this->url($this->name($name), $params, $this->options($options));
+        return $this->url($this->name($name), $this->params($name, $params), $this->options($options));
     }
 }
