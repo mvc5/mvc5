@@ -41,7 +41,7 @@ trait Assemble
     {
         $path = strtr(rawurlencode($path), $this->allowedPathChars);
 
-        isset($options[Arg::QUERY]) &&
+        !empty($options[Arg::QUERY]) &&
             $path .= '?' . http_build_query($options[Arg::QUERY], '', '&');
 
         isset($options[Arg::FRAGMENT]) &&
