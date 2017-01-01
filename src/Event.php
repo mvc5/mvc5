@@ -48,7 +48,9 @@ class Event
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)
     {
-        $model = $this->signal($callable, !$args || !is_string(key($args)) ? $args : $this->args() + $args, $callback);
+        $model = $this->signal(
+            $callable, !$args ? $this->args() : (!is_string(key($args)) ? $args : $this->args() + $args), $callback
+        );
 
         null !== $model
             && $this->model = $model;
