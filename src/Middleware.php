@@ -40,7 +40,7 @@ class Middleware
      */
     protected function args($request, $response, $next)
     {
-        return $this->args + [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next];
+        return [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next] + $this->args;
     }
 
     /**
