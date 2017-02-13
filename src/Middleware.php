@@ -15,13 +15,20 @@ class Middleware
     /**
      * @var array
      */
+    protected $args;
+
+    /**
+     * @var array
+     */
     protected $stack;
 
     /**
      * @param array $stack
+     * @param array $args
      */
-    function __construct(array $stack = [])
+    function __construct(array $stack = [], array $args = [])
     {
+        $this->args = $args;
         $this->stack = $stack;
     }
 
@@ -33,7 +40,7 @@ class Middleware
      */
     protected function args($request, $response, $next)
     {
-        return [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next];
+        return $this->args + [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next];
     }
 
     /**

@@ -25,6 +25,7 @@ interface Arg
     const CONTENT_TYPE = 'content_type';
     const CONTEXT = 'context';
     const CONTROLLER = 'controller';
+    const CONTROLLER_ACTION = 'controller\action';
     const CONTROLLER_RESPONSE = 'controller\response';
     const COOKIES = 'cookies';
     const DATA = 'data';

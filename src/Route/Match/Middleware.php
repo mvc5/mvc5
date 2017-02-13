@@ -25,7 +25,19 @@ class Middleware
     protected function middleware($controller, array $middleware = null)
     {
         return $controller && $middleware
-            ? $this->plugin(Arg::MIDDLEWARE, [Arg::STACK => array_merge($middleware, [$controller])]) : null;
+            ? $this->plugin(Arg::MIDDLEWARE, [$this->stack($middleware), [Arg::CONTROLLER => $controller]]) : null;
+    }
+
+    /**
+     * @param $middleware
+     * @return array
+     */
+    protected function stack($middleware)
+    {
+        !in_array(Arg::CONTROLLER_ACTION, $middleware) &&
+            $middleware = array_merge($middleware, [Arg::CONTROLLER_ACTION]);
+
+        return $middleware;
     }
 
     /**
