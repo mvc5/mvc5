@@ -40,7 +40,6 @@ trait Resolver
     use Build;
     use Container;
     use Generator;
-    use Initializer;
 
     /**
      * @var callable
@@ -641,13 +640,26 @@ trait Resolver
     }
 
     /**
+     * @param string $name
+     * @param callable|null|object $service
+     * @return callable|null|object
+     */
+    protected function share($name, $service = null)
+    {
+        null !== $service
+            && $this->set($name, $service);
+
+        return $service;
+    }
+
+    /**
      * @param $name
      * @param null $config
      * @return callable|mixed|null|object
      */
     function shared($name, $config = null)
     {
-        return $this->stored($name) ?? $this->initialize($name, $config);
+        return $this->stored($name) ?? $this->share($name, $this->plugin($config ?? $name));
     }
 
     /**

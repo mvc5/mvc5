@@ -172,7 +172,6 @@ include __DIR__ . '/src/Resolver/Build.php';
 include __DIR__ . '/src/Resolver/Builder.php';
 include __DIR__ . '/src/Resolver/Dispatch.php';
 include __DIR__ . '/src/Resolver/Generator.php';
-include __DIR__ . '/src/Resolver/Initializer.php';
 include __DIR__ . '/src/Resolver/Resolver.php';
 include __DIR__ . '/src/Resolver/Unresolvable.php';
 include __DIR__ . '/src/Session/Config/Container.php';
