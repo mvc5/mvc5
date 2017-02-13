@@ -17,6 +17,11 @@ class Exception
     /**
      * @var string
      */
+    const DOMAIN = Exception\Domain::class;
+
+    /**
+     * @var string
+     */
     const ERROR_EXCEPTION = Exception\ErrorException::class;
 
     /**
