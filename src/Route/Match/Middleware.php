@@ -18,6 +18,16 @@ class Middleware
     use Service;
 
     /**
+     *
+     */
+    const CONTROLLER_ACTION = 'controller\action';
+
+    /**
+     *
+     */
+    const CONTROLLER_MIDDLEWARE = 'controller\middleware';
+
+    /**
      * @param $controller
      * @param array|null $middleware
      * @return callable|mixed|null|object
@@ -25,7 +35,7 @@ class Middleware
     protected function middleware($controller, array $middleware = null)
     {
         return $controller && $middleware
-            ? $this->plugin(Arg::MIDDLEWARE, [$this->stack($middleware), [Arg::CONTROLLER => $controller]]) : null;
+            ? $this->plugin(static::CONTROLLER_MIDDLEWARE, [$controller, $this->stack($middleware)]) : null;
     }
 
     /**
@@ -34,8 +44,8 @@ class Middleware
      */
     protected function stack($middleware)
     {
-        !in_array(Arg::CONTROLLER_ACTION, $middleware) &&
-            $middleware = array_merge($middleware, [Arg::CONTROLLER_ACTION]);
+        !in_array(static::CONTROLLER_ACTION, $middleware) &&
+            $middleware[] = static::CONTROLLER_ACTION;
 
         return $middleware;
     }

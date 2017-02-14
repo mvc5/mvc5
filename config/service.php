@@ -21,6 +21,7 @@ return [
     'cookie\container'     => [Mvc5\Cookie\Container::class, new Param('cookie')],
     'cookie\sender'        => [Mvc5\Cookie\Sender::class, new Param('cookie')],
     'controller\action'    => [Mvc5\Controller\Action::class, new Link],
+    'controller\middleware' => new Service(Mvc5\Controller\Middleware::class),
     'error\controller'     => [Mvc5\Request\Error\Controller::class, new Plugin('error\model')],
     'error\model'          => [Mvc5\Request\Error\Model::class, 'error'],
     'event\model'          => Mvc5\Event::class,

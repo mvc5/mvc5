@@ -15,20 +15,13 @@ class Middleware
     /**
      * @var array
      */
-    protected $args;
-
-    /**
-     * @var array
-     */
     protected $stack;
 
     /**
      * @param array $stack
-     * @param array $args
      */
-    function __construct(array $stack = [], array $args = [])
+    function __construct(array $stack = [])
     {
-        $this->args = $args;
         $this->stack = $stack;
     }
 
@@ -40,7 +33,7 @@ class Middleware
      */
     protected function args($request, $response, $next)
     {
-        return [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next] + $this->args;
+        return [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next];
     }
 
     /**
@@ -49,7 +42,7 @@ class Middleware
      */
     protected function next(callable $pipe = null)
     {
-        return function(Http\Request $request, Http\Response $response) use ($pipe) {
+        return function($request, $response) use ($pipe) {
             return ($next = next($this->stack)) ? $this->call($next, $this->args($request, $response, $this->next($pipe)))
                 : ($pipe ? $pipe($request, $response) : $response);
         };
@@ -61,7 +54,7 @@ class Middleware
      * @param callable|null $next
      * @return callable|mixed|null|object|Http\Response
      */
-    function __invoke(Http\Request $request, Http\Response $response, callable $next = null)
+    function __invoke($request, $response, callable $next = null)
     {
         return $this->stack ? $this->call(reset($this->stack), $this->args($request, $response, $this->next($next))) : (
             $next ? $next($request, $response) : $response
