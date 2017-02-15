@@ -26,22 +26,12 @@ class Middleware
     }
 
     /**
-     * @param $request
-     * @param $response
-     * @return array
-     */
-    protected function args($request, $response)
-    {
-        return [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $this->next()];
-    }
-
-    /**
      * @return \Closure
      */
     protected function next()
     {
         return function($request, $response) {
-            return ($next = next($this->stack)) ? $this->call($next, $this->args($request, $response)) : $response;
+            return ($next = next($this->stack)) ? $this->call($next, [$request, $response, $this->next()]) : $response;
         };
     }
 
@@ -52,6 +42,6 @@ class Middleware
      */
     function __invoke($request, $response)
     {
-        return $this->stack ? $this->call(reset($this->stack), $this->args($request, $response)) : $response;
+        return $this->stack ? $this->call(reset($this->stack), [$request, $response, $this->next()]) : $response;
     }
 }
