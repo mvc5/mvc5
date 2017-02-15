@@ -240,6 +240,7 @@ include __DIR__ . '/src/Plugin/Register.php';
 include __DIR__ . '/src/Plugin/Response.php';
 include __DIR__ . '/src/Plugin/Scope.php';
 include __DIR__ . '/src/Plugin/Scoped.php';
+include __DIR__ . '/src/Plugin/Callback.php';
 include __DIR__ . '/src/Plugin/ScopedCall.php';
 include __DIR__ . '/src/Plugin/Service.php';
 include __DIR__ . '/src/Plugin/Session.php';
