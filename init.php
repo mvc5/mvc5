@@ -165,7 +165,6 @@ include __DIR__ . '/src/Route/Config.php';
 include __DIR__ . '/src/Route/Dispatch.php';
 include __DIR__ . '/src/Route/Match.php';
 include __DIR__ . '/src/Controller/Action.php';
-include __DIR__ . '/src/Controller/Middleware.php';
 include __DIR__ . '/src/Url/Route/Generator.php';
 include __DIR__ . '/src/Url/Collection.php';
 include __DIR__ . '/src/Url/Plugin.php';
