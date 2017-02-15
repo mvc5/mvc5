@@ -52,7 +52,7 @@ class Middleware
      */
     protected function stack($controller, array $middleware)
     {
-        (false !== ($key = array_search($this->placeholder, $middleware, true))) ?
+        false !== ($key = array_search($this->placeholder, $middleware, true)) ?
             $middleware[$key] = $controller : $middleware[] = $controller;
 
         return $middleware;
