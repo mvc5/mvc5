@@ -332,6 +332,15 @@ trait Resolver
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    function has($name)
+    {
+        return isset($this->container[$name]) || isset($this->services[$name]);
+    }
+
+    /**
      * @param Plugin $config
      * @param object $service
      * @return object
