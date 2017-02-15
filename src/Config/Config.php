@@ -33,8 +33,7 @@ trait Config
      */
     function get($name)
     {
-        return is_array($this->config) ?
-            (isset($this->config[$name]) ? $this->config[$name] : null) : $this->config[$name];
+        return is_array($this->config) ? ($this->config[$name] ?? null) : $this->config[$name];
     }
 
     /**
