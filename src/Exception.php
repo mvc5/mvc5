@@ -38,14 +38,4 @@ class Exception
      * @var string
      */
     const RUNTIME = Exception\Runtime::class;
-
-    /**
-     * @deprecated
-     * @return mixed
-     * @throws Exception
-     */
-    function __invoke()
-    {
-        return static::raise($this);
-    }
 }
