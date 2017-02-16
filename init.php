@@ -245,7 +245,6 @@ include __DIR__ . '/src/Plugin/ScopedCall.php';
 include __DIR__ . '/src/Plugin/Service.php';
 include __DIR__ . '/src/Plugin/Session.php';
 include __DIR__ . '/src/Plugin/Shared.php';
-include __DIR__ . '/src/Plugin/Dependency.php';
 include __DIR__ . '/src/Plugin/SignalArgs.php';
 include __DIR__ . '/src/Plugin/Value.php';
 include __DIR__ . '/src/Plugin/GlobalVar.php';
