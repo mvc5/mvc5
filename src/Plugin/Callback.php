@@ -9,6 +9,14 @@ class Callback
     extends Scoped
 {
     /**
+     * @param $callable
+     */
+    function __construct(callable $callable)
+    {
+        parent::__construct($callable, false);
+    }
+
+    /**
      * @return \Closure
      */
     function closure()

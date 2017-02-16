@@ -117,12 +117,13 @@ trait Resolver
 
     /**
      * @param Closure $callback
-     * @param $scope
+     * @param object $object
+     * @param bool $scoped
      * @return Closure
      */
-    protected function bind(Closure $callback, $scope)
+    protected function bind(Closure $callback, $object, $scoped)
     {
-        return Closure::bind($callback, $scope, $scope);
+        return Closure::bind($callback, $object, $scoped ? $object : null);
     }
 
     /**
@@ -312,7 +313,7 @@ trait Resolver
         }
 
         if ($config instanceof Scoped) {
-            return $this->scoped($config->closure());
+            return $this->scoped($config->closure(), $config->scoped());
         }
 
         if ($config instanceof Provide) {
@@ -633,11 +634,12 @@ trait Resolver
 
     /**
      * @param Closure $callback
+     * @param bool $scoped
      * @return Closure
      */
-    protected function scoped(Closure $callback)
+    protected function scoped(Closure $callback, $scoped = false)
     {
-        return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope) : $callback;
+        return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope, $scoped) : $callback;
     }
 
     /**
