@@ -5,8 +5,10 @@
 
 namespace Mvc5;
 
+use Psr\Container\ContainerInterface;
+
 class App
-    implements Config\Scope, \Serializable, Service\Manager
+    implements Config\Scope, ContainerInterface, \Serializable, Service\Manager
 {
     /**
      *

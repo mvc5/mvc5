@@ -40,7 +40,6 @@ trait Resolver
     use Build;
     use Container;
     use Generator;
-    use Initializer;
 
     /**
      * @var callable
@@ -118,12 +117,13 @@ trait Resolver
 
     /**
      * @param Closure $callback
-     * @param $scope
+     * @param object $object
+     * @param bool $scoped
      * @return Closure
      */
-    protected function bind(Closure $callback, $scope)
+    protected function bind(Closure $callback, $object, $scoped)
     {
-        return Closure::bind($callback, $scope, $scope);
+        return Closure::bind($callback, $object, $scoped ? $object : null);
     }
 
     /**
@@ -313,7 +313,7 @@ trait Resolver
         }
 
         if ($config instanceof Scoped) {
-            return $this->scoped($config->closure());
+            return $this->scoped($config->closure(), $config->scoped());
         }
 
         if ($config instanceof Provide) {
@@ -330,6 +330,15 @@ trait Resolver
     function get($name)
     {
         return $this->stored($name) ?? $this($name);
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    function has($name)
+    {
+        return isset($this->container[$name]) || isset($this->services[$name]);
     }
 
     /**
@@ -625,11 +634,12 @@ trait Resolver
 
     /**
      * @param Closure $callback
+     * @param bool $scoped
      * @return Closure
      */
-    protected function scoped(Closure $callback)
+    protected function scoped(Closure $callback, $scoped = false)
     {
-        return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope) : $callback;
+        return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope, $scoped) : $callback;
     }
 
     /**
@@ -641,13 +651,26 @@ trait Resolver
     }
 
     /**
+     * @param string $name
+     * @param callable|null|object $service
+     * @return callable|null|object
+     */
+    protected function share($name, $service = null)
+    {
+        null !== $service
+            && $this->set($name, $service);
+
+        return $service;
+    }
+
+    /**
      * @param $name
      * @param null $config
      * @return callable|mixed|null|object
      */
     function shared($name, $config = null)
     {
-        return $this->stored($name) ?? $this->initialize($name, $config);
+        return $this->stored($name) ?? $this->share($name, $this->plugin($config ?? $name));
     }
 
     /**

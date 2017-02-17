@@ -47,7 +47,7 @@ class Builder
         $params  = $class->params();
 
         foreach($params as $param) {
-            if (isset($args[$param->name])) {
+            if (array_key_exists($param->name, $args)) {
                 $matched[] = $args[$param->name];
                 continue;
             }

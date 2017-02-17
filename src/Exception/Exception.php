@@ -15,6 +15,19 @@ trait Exception
     /**
      * @param string $message
      * @param int $code
+     * @param \Throwable|null $previous
+     * @param int $offset
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
+    static function domain($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    {
+        return static::raise(static::create(static::DOMAIN, [$message, $code, $previous], $offset));
+    }
+
+    /**
+     * @param string $message
+     * @param int $code
      * @param int $severity
      * @param string $file
      * @param int $line

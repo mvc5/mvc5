@@ -17,6 +17,11 @@ class Exception
     /**
      * @var string
      */
+    const DOMAIN = Exception\Domain::class;
+
+    /**
+     * @var string
+     */
     const ERROR_EXCEPTION = Exception\ErrorException::class;
 
     /**
@@ -33,14 +38,4 @@ class Exception
      * @var string
      */
     const RUNTIME = Exception\Runtime::class;
-
-    /**
-     * @deprecated
-     * @return mixed
-     * @throws Exception
-     */
-    function __invoke()
-    {
-        return static::raise($this);
-    }
 }

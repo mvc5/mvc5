@@ -6,16 +6,34 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Plugins\Service;
+use Mvc5\Plugin;
 use Mvc5\Route\Request;
 use Mvc5\Route\Route;
+use Mvc5\Service\Service;
 
 class Middleware
 {
     /**
      *
      */
-    use Service;
+    use Plugin;
+
+    /**
+     * @var string
+     */
+    protected $placeholder = Arg::CONTROLLER;
+
+    /**
+     * @param Service $service
+     * @param $placeholder
+     */
+    function __construct(Service $service, $placeholder = null)
+    {
+        $placeholder &&
+            $this->placeholder = $placeholder;
+
+        $this->service = $service;
+    }
 
     /**
      * @param $controller
@@ -24,8 +42,20 @@ class Middleware
      */
     protected function middleware($controller, array $middleware = null)
     {
-        return $controller && $middleware
-            ? $this->plugin(Arg::MIDDLEWARE, [Arg::STACK => array_merge($middleware, [$controller])]) : null;
+        return $controller && $middleware ? $this->plugin(Arg::MIDDLEWARE, [$this->stack($controller, $middleware)]) : null;
+    }
+
+    /**
+     * @param $controller
+     * @param array|null $middleware
+     * @return callable|mixed|null|object
+     */
+    protected function stack($controller, array $middleware)
+    {
+        false !== ($key = array_search($this->placeholder, $middleware, true)) ?
+            $middleware[$key] = $controller : $middleware[] = $controller;
+
+        return $middleware;
     }
 
     /**

@@ -6,11 +6,15 @@
 namespace Mvc5\Plugin;
 
 use Mvc5\Arg;
-use Mvc5\App as _App;
 
 class Plugins
     extends Plugin
 {
+    /**
+     *
+     */
+    const APP_CLASS = 'Mvc5\App';
+
     /**
      * @param array|\ArrayAccess $services
      * @param $provider
@@ -20,7 +24,7 @@ class Plugins
     function __construct($services = [], $provider = true, $scope = true, array $calls = [])
     {
         parent::__construct(
-            _App::class, [$this->plugins($services, $provider), $provider === true ? new Link : $provider, $scope], $calls
+            static::APP_CLASS, [$this->plugins($services, $provider), $provider === true ? new Link : $provider, $scope], $calls
         );
     }
 
