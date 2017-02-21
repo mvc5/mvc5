@@ -42,7 +42,7 @@ class Middleware
      */
     protected function middleware($controller, array $middleware = null)
     {
-        return $controller && $middleware ? $this->plugin(Arg::MIDDLEWARE, [$this->stack($controller, $middleware)]) : null;
+        return $middleware ? $this->plugin(Arg::MIDDLEWARE, [$this->stack($controller, $middleware)]) : null;
     }
 
     /**
@@ -52,8 +52,8 @@ class Middleware
      */
     protected function stack($controller, array $middleware)
     {
-        false !== ($key = array_search($this->placeholder, $middleware, true)) ?
-            $middleware[$key] = $controller : $middleware[] = $controller;
+        $controller && (false !== ($key = array_search($this->placeholder, $middleware, true)) ?
+            $middleware[$key] = $controller : $middleware[] = $controller);
 
         return $middleware;
     }
