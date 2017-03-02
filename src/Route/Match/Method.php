@@ -7,7 +7,7 @@ namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\MethodNotAllowed;
-use Mvc5\Route\Request;
+use Mvc5\Request\Request;
 use Mvc5\Route\Route;
 
 class Method
@@ -28,13 +28,14 @@ class Method
     }
 
     /**
-     * @param Request $request
      * @param Route $route
+     * @param Request $request
+     * @param callable $next
      * @return Request|MethodNotAllowed
      */
-    function __invoke(Request $request, Route $route)
+    function __invoke(Route $route, Request $request, callable $next)
     {
-        return !$route->method() || $this->match($request, $route) ? $request : (
+        return !$route->method() || $this->match($request, $route) ? $next($route, $request) : (
             $this->optional($route, Arg::METHOD) ? null : new MethodNotAllowed
         );
     }

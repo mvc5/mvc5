@@ -6,7 +6,7 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Http\Error\BadRequest;
-use Mvc5\Route\Request;
+use Mvc5\Request\Request;
 use Mvc5\Route\Route;
 
 class Scheme
@@ -22,12 +22,13 @@ class Scheme
     }
 
     /**
-     * @param Request $request
      * @param Route $route
+     * @param Request $request
+     * @param callable $next
      * @return Request|BadRequest
      */
-    function __invoke(Request $request, Route $route)
+    function __invoke(Route $route, Request $request, callable $next)
     {
-        return !$route->scheme() || $this->match($request, $route) ? $request : new BadRequest;
+        return !$route->scheme() || $this->match($request, $route) ? $next($route, $request) : new BadRequest;
     }
 }

@@ -32,6 +32,6 @@ class Collection
      */
     function __invoke(Request $request)
     {
-        return $this->result($request, $this->traverse($this->routeRequest($request), $this->route));
+        return $this->result($request, $this->traverse($request, $this->route));
     }
 }

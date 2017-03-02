@@ -9,6 +9,7 @@ use Mvc5\Cookie\Cookies;
 use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Request as HttpRequest;
 use Mvc5\Session\Session;
+use Mvc5\Route\Route;
 
 interface Request
     extends HttpRequest
@@ -132,6 +133,11 @@ interface Request
      * @return string
      */
     function query();
+
+    /**
+     * @return Route
+     */
+    function route();
 
     /**
      * @return string
