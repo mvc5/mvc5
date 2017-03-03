@@ -7,7 +7,6 @@ namespace Mvc5\Route\Dispatch;
 
 use Mvc5\Arg;
 use Mvc5\Http\Request;
-use Mvc5\Request\Request as _Request;
 
 class Collection
 {
@@ -28,7 +27,7 @@ class Collection
 
     /**
      * @param Request $request
-     * @return _Request
+     * @return Request
      */
     function __invoke(Request $request)
     {

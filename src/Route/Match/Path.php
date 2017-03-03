@@ -20,22 +20,24 @@ class Path
      * @param Route $route
      * @param Request $request
      * @param int $offset
+     * @param callable $next
      * @return Request
      */
-    protected function match(Route $route, Request $request, $offset)
+    protected function match(Route $route, Request $request, $offset, callable $next)
     {
-        if (!preg_match('(\G' . $route->regex() . ')', $request->path(), $match, null, $offset ?? 0)) {
+        if (!preg_match('(\G' . $route->regex() . ')', $request->path(), $match, null, (int) $offset)) {
             return null;
         }
 
         $offset += strlen($match[0]);
+        $matched = $offset == strlen($request->path());
 
         $request[Arg::CONTROLLER] = $route->controller();
         $request[Arg::MATCHED] = $offset;
         $request[Arg::PARAMS] = $this->params($match, $route->defaults() + $request->params());
-        $request[Arg::ROUTE] = $offset == strlen($request->path()) ? $route : null;
+        $request[Arg::ROUTE] = $matched ? $route : null;
 
-        return $request;
+        return $matched ? $next($route, $request) : $request;
     }
 
     /**
@@ -46,8 +48,6 @@ class Path
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        $request = $this->match($route, $request, $request[Arg::MATCHED]);
-
-        return is_null($request) ? null : ($request->route() ? $next($route, $request) : $request);
+        return $this->match($route, $request, $request[Arg::MATCHED], $next);
     }
 }

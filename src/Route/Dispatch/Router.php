@@ -8,7 +8,7 @@ namespace Mvc5\Route\Dispatch;
 use Mvc5\Arg;
 use Mvc5\Http\Error;
 use Mvc5\Http\Error\NotFound;
-use Mvc5\Request\Request;
+use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 trait Router
@@ -41,6 +41,16 @@ trait Router
     }
 
     /**
+     * @param array|Route $parent
+     * @param array|Route $route
+     * @return Route
+     */
+    protected function child($parent, $route)
+    {
+        return $route->with(Arg::PARENT, $parent);
+    }
+
+    /**
      * @param array|Route $route
      * @return Route
      */
@@ -63,12 +73,11 @@ trait Router
     /**
      * @param Request $request
      * @param Route $route
-     * @param null|Route $parent
      * @return Request
      */
-    protected function match(Request $request, Route $route, Route $parent = null)
+    protected function match(Request $request, Route $route)
     {
-        return ($this->match)($route->with(Arg::PARENT, $parent), $request);
+        return ($this->match)($route, $request);
     }
 
     /**
@@ -110,12 +119,11 @@ trait Router
     /**
      * @param Request $request
      * @param Route $route
-     * @param null|Route $parent
      * @return Request
      */
-    protected function route(Request $request, Route $route, Route $parent = null)
+    protected function route(Request $request, Route $route)
     {
-        return $this->routeRequest($this->match($request, $route, $parent), $route);
+        return $this->routeRequest($this->match($request, $route), $route);
     }
 
     /**
@@ -126,7 +134,7 @@ trait Router
     protected function routeRequest($request, Route $route)
     {
         return !$request instanceof Request ? $request : (
-            $request->route() ? $request : $this->traverse($request, $route->children(), $route)
+            $request[Arg::ROUTE] ? $request : $this->traverse($request, $route->children(), $route)
         );
     }
 
@@ -134,13 +142,12 @@ trait Router
      * @param Request $request
      * @param Route $route
      * @param string $name
-     * @param null|Route $parent
      * @return Request
      */
-    protected function step(Request $request, Route $route, $name, $parent = null)
+    protected function step(Request $request, Route $route, $name)
     {
         return $this->route(
-            $request->with(Arg::NAME, $this->name(is_string($name) ? $name : $route->name(), $request->name())), $route, $parent
+            $request->with(Arg::NAME, $this->name(is_string($name) ? $name : $route->name(), $request[Arg::NAME])), $route
         );
     }
 
@@ -153,7 +160,7 @@ trait Router
     protected function traverse($request, $routes, $parent = null)
     {
         foreach($routes as $name => $route) {
-            if ($match = $this->step($request, $this->definition($route), $name, $parent)) {
+            if ($match = $this->step($request, $this->child($parent, $this->definition($route)), $name)) {
                 return $match;
             }
         }
