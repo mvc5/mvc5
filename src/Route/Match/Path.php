@@ -25,7 +25,9 @@ class Path
      */
     protected function match(Route $route, Request $request, $offset, callable $next)
     {
-        if (!preg_match('(\G' . $route->regex() . ')', $request->path(), $match, null, (int) $offset)) {
+        $match = $this->search($route->regex(), $request->path(), $offset);
+
+        if (!$match) {
             return null;
         }
 
@@ -37,7 +39,18 @@ class Path
         $request[Arg::PARAMS] = $this->params($match, $route->defaults() + $request->params());
         $request[Arg::ROUTE] = $matched ? $route : null;
 
-        return $matched ? $next($route, $request) : $request;
+        return $matched ? $next($route, $request) : ($route->children() ? $request : null);
+    }
+
+    /**
+     * @param $regex
+     * @param $path
+     * @param $offset
+     * @return array|null
+     */
+    protected function search($regex, $path, $offset)
+    {
+        return !$regex || !preg_match('(\G' . $regex . ')', $path, $match, null, (int) $offset) ? null : $match;
     }
 
     /**

@@ -31,7 +31,7 @@ trait Router
     /**
      * @param callable $match
      * @param callable $generator
-     * @param $route
+     * @param array|Route $route
      */
     function __construct(callable $match, callable $generator, $route)
     {
@@ -41,11 +41,11 @@ trait Router
     }
 
     /**
-     * @param array|Route $parent
-     * @param array|Route $route
+     * @param Route $parent
+     * @param null|Route $route
      * @return Route
      */
-    protected function child($parent, $route)
+    protected function child(Route $route, $parent)
     {
         return $route->with(Arg::PARENT, $parent);
     }
@@ -71,11 +71,21 @@ trait Router
     }
 
     /**
+     * @param Route $route
+     * @param $name
+     * @return string
+     */
+    protected function key(Route $route, $name)
+    {
+        return is_string($name) ? $name : $route->name();
+    }
+
+    /**
      * @param Request $request
      * @param Route $route
      * @return Request
      */
-    protected function match(Request $request, Route $route)
+    protected function match($request, $route)
     {
         return ($this->match)($route, $request);
     }
@@ -94,7 +104,7 @@ trait Router
      * @param Request $request
      * @return Error|NotFound|Request
      */
-    protected function request(Request $request)
+    protected function request($request)
     {
         return $this->result($request, $this->dispatch($request, $this->definition($this->route)));
     }
@@ -104,7 +114,7 @@ trait Router
      * @param $result
      * @return Error|NotFound|Request
      */
-    protected function result(Request $request, $result = null)
+    protected function result($request, $result = null)
     {
         !$result &&
             $result = new NotFound;
@@ -121,7 +131,7 @@ trait Router
      * @param Route $route
      * @return Request
      */
-    protected function route(Request $request, Route $route)
+    protected function route($request, $route)
     {
         return $this->routeRequest($this->match($request, $route), $route);
     }
@@ -147,7 +157,7 @@ trait Router
     protected function step(Request $request, Route $route, $name)
     {
         return $this->route(
-            $request->with(Arg::NAME, $this->name(is_string($name) ? $name : $route->name(), $request[Arg::NAME])), $route
+            $request->with(Arg::NAME, $this->name($this->key($route, $name), $request[Arg::NAME])), $route
         );
     }
 
@@ -160,7 +170,7 @@ trait Router
     protected function traverse($request, $routes, $parent = null)
     {
         foreach($routes as $name => $route) {
-            if ($match = $this->step($request, $this->child($parent, $this->definition($route)), $name)) {
+            if ($match = $this->step($request, $this->child($this->definition($route), $parent), $name)) {
                 return $match;
             }
         }
