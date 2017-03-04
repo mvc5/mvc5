@@ -59,7 +59,7 @@ return [
     'route\match\middleware' => [Mvc5\Route\Match\Middleware::class, new Link],
     'route\match\path'     => Mvc5\Route\Match\Path::class,
     'route\match\scheme'   => Mvc5\Route\Match\Scheme::class,
-    'route\match\controller' => [Mvc5\Route\Match\Controller::class, new Link],
+    'route\match\controller' => [Mvc5\Route\Match\Controller::class, new Link, ['middleware' => true]],
     'route\match\wildcard' => Mvc5\Route\Match\Wildcard::class,
     'service\context'      => new Invoke(Mvc5\Service\Context::class, ['service' => new Link]),
     'service\resolver'     => Mvc5\Resolver\Dispatch::class,

@@ -23,6 +23,7 @@ class Controller
     protected $options = [
         Arg::ACTION     => 'action',
         Arg::CONTROLLER => 'controller',
+        Arg::MIDDLEWARE => false,
         Arg::PREFIX     => '',
         Arg::SEPARATORS => ['/' => '\\'],
         Arg::SPLIT      => '\\',
@@ -98,6 +99,16 @@ class Controller
     protected function match($name, $controller)
     {
         return $controller ? (true === $controller ? $name : $controller) : null;
+    }
+
+    /**
+     * @param $options
+     * @param $route
+     * @return bool
+     */
+    protected function middleware($options, $route)
+    {
+        return !empty($options[Arg::MIDDLEWARE]) && isset($route[Arg::MIDDLEWARE]);
     }
 
     /**
@@ -192,7 +203,7 @@ class Controller
         $name       = $this->name($action, $controller, $options);
 
         if ($this->invalid($action, $controller, $this->replacement($options))) {
-            return null;
+            return $this->middleware($options, $route) ? $next($route, $request) : null;
         }
 
         $controller = $this->match($name, $this->load($name));
