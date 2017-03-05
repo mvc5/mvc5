@@ -208,7 +208,7 @@ trait Request
      */
     function route()
     {
-        return $this[Arg::ROUTE] ?? null;
+        return $this[Arg::ROUTE];
     }
 
     /**

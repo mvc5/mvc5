@@ -34,7 +34,7 @@ class Collection
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        $result = $this->result($request, $this->traverse($request, $this->route));
+        $result = $this->result($request, $this->traverse($this->route, $request));
 
         if ($result instanceof Request) {
             return $next($result, $response);

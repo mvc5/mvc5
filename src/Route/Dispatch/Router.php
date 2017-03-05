@@ -61,13 +61,13 @@ trait Router
     }
 
     /**
-     * @param Request $request
      * @param Route $route
+     * @param Request $request
      * @return Request
      */
-    protected function dispatch(Request $request, Route $route)
+    protected function dispatch(Route $route, Request $request)
     {
-        return $this->route($request->with(Arg::NAME, $route->name()), $route);
+        return $this->route($route, $request->with(Arg::NAME, $route->name()));
     }
 
     /**
@@ -81,11 +81,11 @@ trait Router
     }
 
     /**
-     * @param Request $request
      * @param Route $route
+     * @param Request $request
      * @return Request
      */
-    protected function match($request, $route)
+    protected function match($route, $request)
     {
         return ($this->match)($route, $request);
     }
@@ -106,7 +106,7 @@ trait Router
      */
     protected function request($request)
     {
-        return $this->result($request, $this->dispatch($request, $this->definition($this->route)));
+        return $this->result($request, $this->dispatch($this->definition($this->route), $request));
     }
 
     /**
@@ -127,37 +127,37 @@ trait Router
     }
 
     /**
-     * @param Request $request
      * @param Route $route
+     * @param Request $request
      * @return Request
      */
-    protected function route($request, $route)
+    protected function route($route, $request)
     {
-        return $this->routeRequest($this->match($request, $route), $route);
+        return $this->routeRequest($route, $this->match($route, $request));
     }
 
     /**
-     * @param $request
      * @param Route $route
+     * @param $request
      * @return Request
      */
-    protected function routeRequest($request, Route $route)
+    protected function routeRequest(Route $route, $request)
     {
         return !$request instanceof Request ? $request : (
-            $request[Arg::ROUTE] ? $request : $this->traverse($request, $route->children(), $route)
+            $request[Arg::ROUTE] ? $request : $this->traverse($route->children(), $request, $route)
         );
     }
 
     /**
-     * @param Request $request
      * @param Route $route
+     * @param Request $request
      * @param string $name
      * @return Request
      */
-    protected function step(Request $request, Route $route, $name)
+    protected function step(Route $route, Request $request, $name)
     {
         return $this->route(
-            $request->with(Arg::NAME, $this->name($this->key($route, $name), $request[Arg::NAME])), $route
+            $route, $request->with(Arg::NAME, $this->name($this->key($route, $name), $request[Arg::NAME]))
         );
     }
 
@@ -167,10 +167,10 @@ trait Router
      * @param null|Route $parent
      * @return Request|NotFound
      */
-    protected function traverse($request, $routes, $parent = null)
+    protected function traverse($routes, $request, $parent = null)
     {
         foreach($routes as $name => $route) {
-            if ($match = $this->step($request, $this->child($this->definition($route), $parent), $name)) {
+            if ($match = $this->step($this->child($this->definition($route), $parent), $request, $name)) {
                 return $match;
             }
         }
