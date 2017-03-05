@@ -133,7 +133,7 @@ trait Router
      */
     protected function route($route, $request)
     {
-        return $this->routeRequest($route, $this->match($route, $request));
+        return $this->solve($route, $this->match($route, $request));
     }
 
     /**
@@ -141,11 +141,10 @@ trait Router
      * @param $request
      * @return Request
      */
-    protected function routeRequest(Route $route, $request)
+    protected function solve(Route $route, $request)
     {
-        return !$request instanceof Request ? $request : (
-            $request[Arg::ROUTE] ? $request : $this->traverse($route->children(), $request, $route)
-        );
+        return !$request instanceof Request || $request[Arg::ROUTE] ? $request :
+            $this->traverse($route->children(), $request, $route);
     }
 
     /**
