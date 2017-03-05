@@ -17,17 +17,6 @@ return [
         'log\exception',
         'log\error'
     ],
-    'route\match' => [
-        'route\match\merge',
-        'route\match\scheme',
-        'route\match\host',
-        'route\match\path',
-        'route\match\method',
-        'route\match\action',
-        'route\match\controller',
-        'route\match\middleware',
-        'route\match\wildcard'
-    ],
     'service\resolver' => [
         'resolver\exception'
     ],

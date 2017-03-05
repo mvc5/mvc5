@@ -7,8 +7,8 @@ namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
+use Mvc5\Request\Request;
 use Mvc5\Route\Route;
-use Mvc5\Route\Request;
 
 class Controller
 {
@@ -174,14 +174,15 @@ class Controller
     }
 
     /**
-     * @param Request $request
      * @param Route $route
+     * @param Request $request
+     * @param callable $next
      * @return Request|NotFound
      */
-    function __invoke(Request $request, Route $route)
+    function __invoke(Route $route, Request $request, callable $next)
     {
         if ($request->controller()) {
-            return $request;
+            return $next($route, $request);
         }
 
         $options    = $this->options($route);
@@ -191,7 +192,7 @@ class Controller
         $name       = $this->name($action, $controller, $options);
 
         if ($this->invalid($action, $controller, $this->replacement($options))) {
-            return null;
+            return !empty($route[Arg::MIDDLEWARE]) ? $next($route, $request) : null;
         }
 
         $controller = $this->match($name, $this->load($name));
@@ -202,6 +203,6 @@ class Controller
 
         $request[Arg::CONTROLLER] = $controller;
 
-        return $request;
+        return $next($route, $request);
     }
 }

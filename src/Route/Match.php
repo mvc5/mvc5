@@ -5,57 +5,47 @@
 
 namespace Mvc5\Route;
 
-use Mvc5\Arg;
-use Mvc5\Event\Event;
-use Mvc5\Event\Signal;
+use Mvc5\Http\Request;
+use Mvc5\Plugin;
 
 class Match
-    implements Event
 {
     /**
      *
      */
-    use Signal;
+    use Plugin;
 
     /**
-     *
+     * @var array
      */
-    const EVENT = Arg::ROUTE_MATCH;
+    protected $stack;
 
     /**
-     * @var Request
+     * @param array $stack
      */
-    protected $request;
-
-    /**
-     * @var Route
-     */
-    protected $route;
-
-    /**
-     * @return array
-     */
-    protected function args()
+    function __construct(array $stack = [])
     {
-        return array_filter([
-            Arg::EVENT   => $this,
-            Arg::REQUEST => $this->request,
-            Arg::ROUTE   => $this->route
-        ]);
+        $this->stack = $stack;
     }
 
     /**
-     * @param callable $callable
-     * @param array $args
-     * @param callable $callback
-     * @return mixed
+     * @return \Closure
      */
-    function __invoke(callable $callable, array $args = [], callable $callback = null)
+    protected function next()
     {
-        $result = $this->signal($callable, $this->args() + $args, $callback);
+        return function($route, $request) {
+            return ($next = next($this->stack)) ? $this->call($next, [$route, $request, $this->next()]) : $request;
+        };
+    }
 
-        return $result instanceof Route ? $this->route = $result : (
-            !$result instanceof Request && $this->stop() ? $result : $this->request = $result
-        );
+    /**
+     * @param Route $route
+     * @param Request $request
+     * @return Request;
+
+     */
+    function __invoke($route, $request)
+    {
+        return $this->stack ? $this->call(reset($this->stack), [$route, $request, $this->next()]) : $request;
     }
 }

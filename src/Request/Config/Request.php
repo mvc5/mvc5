@@ -8,6 +8,7 @@ namespace Mvc5\Request\Config;
 use Mvc5\Arg;
 use Mvc5\Http\Config\Request as HttpRequest;
 use Mvc5\Http\Error;
+use Mvc5\Route\Route;
 
 trait Request
 {
@@ -200,6 +201,14 @@ trait Request
     function query()
     {
         return $this->get(Arg::URI)[Arg::QUERY] ?? null;
+    }
+
+    /**
+     * @return Route
+     */
+    function route()
+    {
+        return $this[Arg::ROUTE];
     }
 
     /**

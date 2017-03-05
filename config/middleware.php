@@ -4,6 +4,17 @@
  */
 
 return [
+    'route\match' => [
+        'route\match\merge',
+        'route\match\scheme',
+        'route\match\host',
+        'route\match\path',
+        'route\match\method',
+        'route\match\action',
+        'route\match\controller',
+        'route\match\middleware',
+        'route\match\wildcard'
+    ],
     'web' => [
         //'web\context',
         'web\route',

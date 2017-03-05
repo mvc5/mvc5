@@ -6,6 +6,7 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Request\Request;
 use Mvc5\Route\Route;
 
 class Merge
@@ -28,11 +29,12 @@ class Merge
 
     /**
      * @param Route $route
-     * @param null|Route $parent
-     * @return Route
+     * @param Request $request
+     * @param callable $next
+     * @return Request
      */
-    function __invoke(Route $route, Route $parent = null)
+    function __invoke(Route $route, Request $request, callable $next)
     {
-        return $parent ? $this->merge($route, $parent) : $route;
+        return $next($route[Arg::PARENT] ? $this->merge($route, $route[Arg::PARENT]) : $route, $request);
     }
 }
