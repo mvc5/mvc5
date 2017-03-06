@@ -27,7 +27,7 @@ class Collection
 
     /**
      * @param Request $request
-     * @return Request
+     * @return mixed|Request
      */
     function __invoke(Request $request)
     {

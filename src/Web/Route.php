@@ -21,7 +21,7 @@ class Route
      * @param Request $request
      * @param Response $response
      * @param callable $next
-     * @return mixed
+     * @return mixed|Response
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
