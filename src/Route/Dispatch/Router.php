@@ -114,14 +114,13 @@ trait Router
      * @param $result
      * @return mixed|Request
      */
-    protected function result($request, $result = null)
+    protected function result(Request $request, $result = null)
     {
         !$result &&
             $result = new NotFound;
 
         $result instanceof Error
-            && ($request[Arg::ERROR] = $result)
-                && $result = $request;
+            && $result = $request->with(Arg::ERROR, $result);
 
         return $result;
     }
