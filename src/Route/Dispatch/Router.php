@@ -63,7 +63,7 @@ trait Router
     /**
      * @param Route $route
      * @param Request $request
-     * @return Request
+     * @return mixed|Request
      */
     protected function dispatch(Route $route, Request $request)
     {
@@ -83,7 +83,7 @@ trait Router
     /**
      * @param Route $route
      * @param Request $request
-     * @return Request
+     * @return mixed|Request
      */
     protected function match($route, $request)
     {
@@ -102,7 +102,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return Error|NotFound|Request
+     * @return mixed|Request
      */
     protected function request($request)
     {
@@ -112,7 +112,7 @@ trait Router
     /**
      * @param Request $request
      * @param $result
-     * @return Error|NotFound|Request
+     * @return mixed|Request
      */
     protected function result($request, $result = null)
     {
@@ -129,7 +129,7 @@ trait Router
     /**
      * @param Route $route
      * @param Request $request
-     * @return Request
+     * @return mixed|Request
      */
     protected function route($route, $request)
     {
@@ -139,7 +139,7 @@ trait Router
     /**
      * @param Route $route
      * @param $request
-     * @return Request
+     * @return mixed|Request
      */
     protected function solve(Route $route, $request)
     {
@@ -151,7 +151,7 @@ trait Router
      * @param Route $route
      * @param Request $request
      * @param string $name
-     * @return Request
+     * @return mixed|Request
      */
     protected function step(Route $route, Request $request, $name)
     {
@@ -161,10 +161,10 @@ trait Router
     }
 
     /**
-     * @param Request $request
      * @param array|\Iterator $routes
+     * @param Request $request
      * @param null|Route $parent
-     * @return Request|NotFound
+     * @return mixed|Request
      */
     protected function traverse($routes, $request, $parent = null)
     {
@@ -179,7 +179,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return Request
+     * @return mixed|Request
      */
     function __invoke(Request $request)
     {

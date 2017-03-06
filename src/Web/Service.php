@@ -20,7 +20,7 @@ class Service
      * @param Request $request
      * @param Response $response
      * @param callable $next
-     * @return Response
+     * @return mixed|Response
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
