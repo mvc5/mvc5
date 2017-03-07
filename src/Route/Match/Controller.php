@@ -187,8 +187,15 @@ class Controller
 
         $options    = $this->options($route);
         $params     = $request->params();
-        $action     = $this->format($this->action($params, $options), $options);
-        $controller = $this->format($this->controller($params, $options), $options);
+        $action     = $this->action($params, $options);
+        $controller = $this->controller($params, $options);
+
+        if (!$controller && !empty($route[Arg::MIDDLEWARE])) {
+            return $next($route, $request);
+        }
+
+        $action     = $this->format($action, $options);
+        $controller = $this->format($controller, $options);
         $name       = $this->name($action, $controller, $options);
 
         if ($this->invalid($action, $controller, $this->replacement($options))) {
