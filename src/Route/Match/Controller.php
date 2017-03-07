@@ -192,7 +192,7 @@ class Controller
         $name       = $this->name($action, $controller, $options);
 
         if ($this->invalid($action, $controller, $this->replacement($options))) {
-            return !empty($route[Arg::MIDDLEWARE]) ? $next($route, $request) : null;
+            return null;
         }
 
         $controller = $this->match($name, $this->load($name));
