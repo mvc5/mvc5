@@ -9,6 +9,7 @@ interface Arg
 {
     const ACTION = 'action';
     const ARGS = 'args';
+    const ATTRIBUTES = 'attributes';
     const BODY = 'body';
     const CALL = '@';
     const CALLS = 'calls';
@@ -110,6 +111,7 @@ interface Arg
     const SUCCESS = 'success';
     const SUFFIX = 'suffix';
     const STREAM = 'stream';
+    const TARGET = 'target';
     const TEMPLATE = 'template';
     const TEMPLATE_MODEL = '__template';
     const THROW_EXCEPTION = 'throw_exception';

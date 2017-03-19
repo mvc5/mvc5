@@ -6,7 +6,7 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Request\Request;
+use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 class Merge

@@ -16,7 +16,7 @@ trait Response
     use Config;
 
     /**
-     * @return string
+     * @return mixed
      */
     function body()
     {

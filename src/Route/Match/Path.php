@@ -19,18 +19,19 @@ class Path
     /**
      * @param Route $route
      * @param Request $request
+     * @param string $path
      * @param int $offset
      * @param callable $next
      * @return Request
      */
-    protected function match(Route $route, Request $request, $offset, callable $next)
+    protected function match(Route $route, Request $request, $path, $offset, callable $next)
     {
-        if (!preg_match('(\G' . $route->regex() . ')', $request->path(), $match, null, (int) $offset)) {
+        if (!preg_match('(\G' . $route->regex() . ')', $path, $match, null, $offset)) {
             return null;
         }
 
         $offset += strlen($match[0]);
-        $matched = $offset == strlen($request->path());
+        $matched = !isset($path[$offset]);
 
         $request[Arg::CONTROLLER] = $route->controller();
         $request[Arg::MATCHED] = $offset;
@@ -48,6 +49,6 @@ class Path
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $this->match($route, $request, $request[Arg::MATCHED], $next);
+        return $this->match($route, $request, $request->path(), (int) $request[Arg::MATCHED], $next);
     }
 }

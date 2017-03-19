@@ -16,11 +16,19 @@ trait Uri
     use Config;
 
     /**
+     * @param array|string $config
+     */
+    function __construct($config = [])
+    {
+        $this->config = is_string($config) ? parse_url($config) : $config;
+    }
+
+    /**
      * @return string
      */
     function fragment()
     {
-        return $this[Arg::FRAGMENT];
+        return $this[Arg::FRAGMENT] ?: '';
     }
 
     /**
@@ -28,19 +36,11 @@ trait Uri
      */
     function host()
     {
-        return $this[Arg::HOST];
+        return $this[Arg::HOST] ?: '';
     }
 
     /**
-     * @return string
-     */
-    function method()
-    {
-        return $this[Arg::METHOD];
-    }
-
-    /**
-     * @return string
+     * @return null|string
      */
     function password()
     {
@@ -52,11 +52,11 @@ trait Uri
      */
     function path()
     {
-        return $this[Arg::PATH];
+        return $this[Arg::PATH] ?: '';
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     function port()
     {
@@ -68,7 +68,7 @@ trait Uri
      */
     function query()
     {
-        return $this[Arg::QUERY];
+        return $this[Arg::QUERY] ?: '';
     }
 
     /**
@@ -76,11 +76,11 @@ trait Uri
      */
     function scheme()
     {
-        return $this[Arg::SCHEME];
+        return $this[Arg::SCHEME] ?: '';
     }
 
     /**
-     * @return string
+     * @return mixed|string
      */
     function user()
     {
