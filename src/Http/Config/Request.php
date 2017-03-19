@@ -40,7 +40,7 @@ trait Request
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     function uri()
     {
