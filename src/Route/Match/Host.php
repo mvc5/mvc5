@@ -20,12 +20,12 @@ class Host
 
     /**
      * @param Request $request
-     * @param Route $route
+     * @param $host
      * @return Request|null
      */
-    protected function match(Request $request, Route $route)
+    protected function match(Request $request, $host)
     {
-        return !$route->host() || in_array($request->host(), (array) $route->host()) ? $request : null;
+        return !$host || in_array($request->host(), (array) $host) ? $request : null;
     }
 
     /**
@@ -36,7 +36,7 @@ class Host
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return !$route->host() || $this->match($request, $route) ? $next($route, $request) : (
+        return $this->match($request, $route->host()) ? $next($route, $request) : (
             $this->optional($route, Arg::HOST) ? null : new NotFound
         );
     }
