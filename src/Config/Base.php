@@ -21,14 +21,14 @@ interface Base
     function has($name);
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $value
      * @return self|mixed
      */
     function with($name, $value);
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return self|mixed
      */
     function without($name);

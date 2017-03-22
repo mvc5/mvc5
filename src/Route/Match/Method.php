@@ -19,12 +19,12 @@ class Method
 
     /**
      * @param Request $request
-     * @param Route $route
+     * @param $method
      * @return bool
      */
-    protected function match(Request $request, Route $route)
+    protected function match(Request $request, $method)
     {
-        return in_array($request->method(), (array) $route->method());
+        return !$method || in_array($request->method(), (array) $method);
     }
 
     /**
@@ -35,7 +35,7 @@ class Method
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return !$route->method() || $this->match($request, $route) ? $next($route, $request) : (
+        return $this->match($request, $route->method()) ? $next($route, $request) : (
             $this->optional($route, Arg::METHOD) ? null : new MethodNotAllowed
         );
     }

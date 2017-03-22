@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Plugin;
 use Mvc5\Request\Request;
 use Mvc5\Route\Route;
-use Mvc5\Service\Service;
 
 class Middleware
 {
@@ -24,10 +23,10 @@ class Middleware
     protected $placeholder = Arg::CONTROLLER;
 
     /**
-     * @param Service $service
+     * @param callable $service
      * @param $placeholder
      */
-    function __construct(Service $service, $placeholder = null)
+    function __construct(callable $service, $placeholder = null)
     {
         $placeholder &&
             $this->placeholder = $placeholder;
@@ -42,7 +41,7 @@ class Middleware
      */
     protected function middleware($controller, array $middleware = null)
     {
-        return $middleware ? $this->plugin(Arg::MIDDLEWARE, [$this->stack($controller, $middleware)]) : null;
+        return $middleware ? ($this->service)(Arg::MIDDLEWARE, [$this->stack($controller, $middleware)]) : null;
     }
 
     /**
