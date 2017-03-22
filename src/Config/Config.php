@@ -46,30 +46,40 @@ trait Config
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return void
      */
     function remove($name)
     {
-        unset($this->config[$name]);
+        foreach((array) $name as $value) {
+            unset($this->config[$value]);
+        }
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $value
      * @return mixed
      */
-    function set($name, $value)
+    function set($name, $value = null)
     {
-        return $this->config[$name] = $value;
+        if (is_string($name)) {
+            return $this->config[$name] = $value;
+        }
+
+        foreach($name as $key => $value) {
+            $this->config[$key] = $value;
+        }
+
+        return $name;
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $value
      * @return self|mixed
      */
-    function with($name, $value)
+    function with($name, $value = null)
     {
         $new = clone $this;
         
@@ -81,7 +91,7 @@ trait Config
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return self|mixed
      */
     function without($name)
