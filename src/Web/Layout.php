@@ -37,9 +37,7 @@ class Layout
      */
     protected function response(Response $response)
     {
-        $response[Arg::BODY] = $this->model($this->layout, $response->body());
-
-        return $response;
+        return $response->with(Arg::BODY,  $this->model($this->layout, $response->body()));
     }
 
     /**

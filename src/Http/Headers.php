@@ -5,9 +5,9 @@
 
 namespace Mvc5\Http;
 
-use Mvc5\Config\Configuration;
+use Mvc5\Config\Immutable;
 
 interface Headers
-    extends Configuration
+    extends Immutable
 {
 }

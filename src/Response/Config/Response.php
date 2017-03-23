@@ -52,56 +52,56 @@ trait Response
      * @param string     $domain
      * @param bool|false $secure
      * @param bool|true  $httponly
-     * @return mixed
+     * @return self|mixed
      */
     function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->cookies()->set($name, $value, $expire, $path, $domain, $secure, $httponly);
+        return $this->with(Arg::COOKIES, $this->cookies()->with($name, $value, $expire, $path, $domain, $secure, $httponly));
     }
 
     /**
      * @param $cookies
-     * @return array|Cookies
+     * @return self|mixed
      */
     function cookies($cookies = null)
     {
-        return null !== $cookies ? $this[Arg::COOKIES] = $cookies : $this[Arg::COOKIES];
+        return null !== $cookies ? $this->with(Arg::COOKIES, $cookies) : $this[Arg::COOKIES];
     }
 
     /**
      * @param string $name
      * @param string $value
-     * @return string
+     * @return self|mixed
      */
     function header($name, $value)
     {
-        return $this[Arg::HEADERS][$name] = $value;
+        return $this->with(Arg::HEADERS, $this->headers()->with($name, $value));
     }
 
     /**
      * @param $headers
-     * @return array|Headers
+     * @return self|mixed|Headers
      */
     function headers($headers = null)
     {
-        return null !== $headers ? $this[Arg::HEADERS] = $headers : $this[Arg::HEADERS];
+        return null !== $headers ? $this->with(Arg::HEADERS, $headers) : $this[Arg::HEADERS];
     }
 
     /**
      * @param $status
-     * @return string
+     * @return self|mixed|string
      */
     function status($status = null)
     {
-        return null !== $status ? $this[Arg::STATUS] = $status : $this[Arg::STATUS];
+        return null !== $status ? $this->with(Arg::STATUS, $status) : $this[Arg::STATUS];
     }
 
     /**
      * @param $version
-     * @return string
+     * @return self|mixed|string
      */
     function version($version = null)
     {
-        return null !== $version ? $this[Arg::VERSION] = $version : $this[Arg::VERSION];
+        return null !== $version ? $this->with(Arg::VERSION, $version) : $this[Arg::VERSION];
     }
 }

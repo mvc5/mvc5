@@ -143,7 +143,7 @@ trait Container
      * @param mixed $value
      * @return mixed
      */
-    function set($name, $value)
+    function set($name, $value = null)
     {
         return $this->container[$name] = $value;
     }

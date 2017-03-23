@@ -208,8 +208,6 @@ class Controller
             return new NotFound;
         }
 
-        $request[Arg::CONTROLLER] = $controller;
-
-        return $next($route, $request);
+        return $next($route, $request->with(Arg::CONTROLLER, $controller));
     }
 }

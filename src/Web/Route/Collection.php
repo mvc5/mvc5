@@ -42,8 +42,7 @@ class Collection
         }
 
         !$result instanceof Response &&
-            ($response[Arg::BODY] = $result)
-                && $result = $response;
+            $result = $response->with(Arg::BODY, $result);
 
         return $next($request, $result);
     }

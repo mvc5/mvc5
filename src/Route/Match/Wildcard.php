@@ -111,7 +111,7 @@ class Wildcard
         $params  = $this->params($request);
         $options = $this->options($route);
 
-        $request[Arg::PARAMS] = $this->match($params, $options, $this->parts($params, $options));
+        $request = $request->with(Arg::PARAMS, $this->match($params, $options, $this->parts($params, $options)));
 
         return $next($route, $request);
     }

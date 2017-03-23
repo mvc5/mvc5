@@ -6,14 +6,14 @@
 namespace Mvc5\Cookie\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
+use Mvc5\Config\ReadOnly;
 
 trait Container
 {
     /**
      *
      */
-    use Config;
+    use ReadOnly;
 
     /**
      * @var array
@@ -79,7 +79,7 @@ trait Container
      * @param bool|true  $httponly
      * @return string
      */
-    function set($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function set($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
         $this->setCookie($name, $value, $expire, $path, $domain, $secure, $httponly);
 

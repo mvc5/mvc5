@@ -76,7 +76,7 @@ class Dispatch
         }
 
         null !== $result &&
-            ($this->response[Arg::BODY] = $result);
+            $this->response = $this->response->with(Arg::BODY, $result);
 
         return $result;
     }

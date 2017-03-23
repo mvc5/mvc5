@@ -177,7 +177,7 @@ trait Session
      * @param mixed $value
      * @return mixed
      */
-    function set($name, $value)
+    function set($name, $value = null)
     {
         return $_SESSION[$name] = $value;
     }
@@ -212,7 +212,7 @@ trait Session
      * @param mixed $config
      * @return self|mixed
      */
-    function with($name, $config)
+    function with($name, $config = null)
     {
         $this->set($name, $config);
         return $this;

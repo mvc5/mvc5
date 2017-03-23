@@ -6,14 +6,14 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
+use Mvc5\Config\ReadOnly;
 
 trait Response
 {
     /**
      *
      */
-    use Config;
+    use ReadOnly;
 
     /**
      * @return mixed

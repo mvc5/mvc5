@@ -16,12 +16,9 @@ trait Version
      * @param Response $response
      * @return Response
      */
-    protected function version(Request $request, Response $response)
+    function version(Request $request, Response $response)
     {
-        !$response->version() &&
-            $response[Arg::VERSION] = $request->version();
-
-        return $response;
+        return $response->version() ? $response : $response->with(Arg::VERSION, $request->version());
     }
 
     /**

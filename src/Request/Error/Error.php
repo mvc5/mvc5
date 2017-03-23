@@ -34,21 +34,10 @@ trait Error
      * @param Request $request
      * @return Request
      */
-    protected function error(Request $request)
+    function request(Request $request)
     {
-        $request[Arg::CONTROLLER] = $this->controller;
-        $request[Arg::NAME]       = $this->name;
-
-        return $request;
-    }
-
-    /**
-     * @param Request $request
-     * @return Request
-     */
-    protected function request(Request $request)
-    {
-        return !$request[Arg::ERROR] ? $request : $this->error($request);
+        return !$request[Arg::ERROR] ? $request :
+            $request->with([Arg::CONTROLLER => $this->controller, Arg::NAME => $this->name]);
     }
 
     /**
@@ -57,6 +46,7 @@ trait Error
      */
     function __invoke(Request $request)
     {
-        return $this->request($request);
+        return !$request[Arg::ERROR] ? $request :
+            $request->with([Arg::CONTROLLER => $this->controller, Arg::NAME => $this->name]);
     }
 }

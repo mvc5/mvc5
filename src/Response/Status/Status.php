@@ -25,10 +25,10 @@ trait Status
      */
     protected function error(Error $error, Response $response)
     {
-        $response[Arg::STATUS] = $error->status();
-        $response[Arg::REASON] = $this->statusReasonPhrase($error->status());
-
-        return $response;
+        return $response->with([
+            Arg::STATUS => $error->status(),
+            Arg::REASON => $this->statusReasonPhrase($error->status())
+        ]);
     }
 
     /**
@@ -43,10 +43,10 @@ trait Status
         }
 
         !$response->status() &&
-            $response[Arg::STATUS] = Arg::HTTP_OK;
+            $response = $response->with(Arg::STATUS, Arg::HTTP_OK);
 
         !$response->reason() &&
-            $response[Arg::REASON] = $this->statusReasonPhrase($response->status());
+            $response = $response->with(Arg::REASON, $this->statusReasonPhrase($response->status()));
 
         return $response;
     }

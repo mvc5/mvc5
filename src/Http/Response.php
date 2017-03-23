@@ -5,10 +5,10 @@
 
 namespace Mvc5\Http;
 
-use Mvc5\Config\Configuration;
+use Mvc5\Config\Immutable;
 
 interface Response
-    extends Configuration
+    extends Immutable
 {
     /**
      * @return mixed
@@ -16,7 +16,7 @@ interface Response
     function body();
 
     /**
-     * @return array|Configuration
+     * @return array|mixed
      */
     function headers();
 

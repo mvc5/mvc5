@@ -25,7 +25,7 @@ interface Base
      * @param mixed $value
      * @return self|mixed
      */
-    function with($name, $value);
+    function with($name, $value = null);
 
     /**
      * @param array|string $name

@@ -103,7 +103,7 @@ trait Messages
      * @param array $value
      * @return array
      */
-    function set($name, $value)
+    function set($name, $value = null)
     {
         return $this->config[$name] = $this->new[$name] = $value;
     }

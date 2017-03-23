@@ -5,11 +5,11 @@
 
 namespace Mvc5\Http\Headers;
 
-use Mvc5\Config as _Config;
+use Mvc5\Immutable;
 use Mvc5\Http\Headers;
 
 class Config
-    extends _Config
+    extends Immutable
     implements Headers
 {
     /**
@@ -40,29 +40,10 @@ class Config
 
     /**
      * @param string $name
-     * @return void
-     */
-    function remove($name)
-    {
-        parent::remove(strtolower($name));
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @return mixed
-     */
-    function set($name, $value)
-    {
-        return parent::set(strtolower($name), $value);
-    }
-
-    /**
-     * @param string $name
      * @param mixed $value
      * @return self|mixed
      */
-    function with($name, $value)
+    function with($name, $value = null)
     {
         return parent::with(strtolower($name), $value);
     }

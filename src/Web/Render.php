@@ -42,7 +42,7 @@ class Render
     protected function response(Response $response)
     {
         $response->body() instanceof Template
-            && $response[Arg::BODY] = $this->render($response->body());
+            && $response = $response->with(Arg::BODY, $this->render($response->body()));
 
         return $response;
     }

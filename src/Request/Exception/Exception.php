@@ -37,23 +37,13 @@ trait Exception
      * @param Throwable $exception
      * @return Request
      */
-    protected function exception(Request $request, Throwable $exception)
-    {
-        $request[Arg::CONTROLLER] = $this->controller;
-        $request[Arg::EXCEPTION]  = $exception;
-        $request[Arg::NAME]       = $this->name;
-        $request[Arg::ERROR]      = new ServerError;
-
-        return $request;
-    }
-
-    /**
-     * @param Request $request
-     * @param Throwable $exception
-     * @return Request
-     */
     function __invoke(Request $request, Throwable $exception)
     {
-        return $this->exception($request, $exception);
+        return $request->with([
+            Arg::CONTROLLER => $this->controller,
+            Arg::EXCEPTION => $exception,
+            Arg::NAME => $this->name,
+            Arg::ERROR => new ServerError
+        ]);
     }
 }

@@ -33,10 +33,12 @@ class Path
         $offset += strlen($match[0]);
         $matched = !isset($path[$offset]);
 
-        $request[Arg::CONTROLLER] = $route->controller();
-        $request[Arg::MATCHED] = $offset;
-        $request[Arg::PARAMS] = $this->params($match, $route->defaults() + $request->params());
-        $request[Arg::ROUTE] = $matched ? $route : null;
+        $request = $request->with([
+            Arg::CONTROLLER => $route->controller(),
+            Arg::MATCHED => $offset,
+            Arg::PARAMS => $this->params($match, $route->defaults() + $request->params()),
+            Arg::ROUTE => $matched ? $route : null
+        ]);
 
         return $matched ? $next($route, $request) : ($route->children() ? $request : null);
     }

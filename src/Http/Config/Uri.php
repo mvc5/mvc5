@@ -6,14 +6,14 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
+use Mvc5\Config\ReadOnly;
 
 trait Uri
 {
     /**
      *
      */
-    use Config;
+    use ReadOnly;
 
     /**
      * @param array|string $config

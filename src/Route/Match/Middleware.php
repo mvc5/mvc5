@@ -65,8 +65,8 @@ class Middleware
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        ($middleware = $this->middleware($request->controller(), $route[Arg::MIDDLEWARE]))
-            && $request[Arg::CONTROLLER] = $middleware;
+        ($middleware = $this->middleware($request->controller(), $route[Arg::MIDDLEWARE])) &&
+            $request = $request->with(Arg::CONTROLLER, $middleware);
 
         return $next($route, $request);
     }

@@ -133,7 +133,7 @@ trait Container
      * @param mixed $config
      * @return self|mixed
      */
-    function with($name, $config)
+    function with($name, $config = null)
     {
         $this->set($name, $config);
         return $this;

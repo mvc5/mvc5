@@ -5,10 +5,10 @@
 
 namespace Mvc5\Http;
 
-use Mvc5\Config\Configuration;
+use Mvc5\Config\Immutable;
 
 interface Error
-    extends Configuration
+    extends Immutable
 {
     /**
      * @return int

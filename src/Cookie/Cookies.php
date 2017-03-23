@@ -29,5 +29,5 @@ interface Cookies
      * @param bool|true  $httponly
      * @return string
      */
-    function set($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
+    function set($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 }
