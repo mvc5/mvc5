@@ -78,6 +78,16 @@ class Wildcard
     }
 
     /**
+     * @param Request $request
+     * @param array $matched
+     * @return Request
+     */
+    protected function request(Request $request, array $matched = [])
+    {
+        return $matched ? $request->with(Arg::PARAMS, $matched) : $request;
+    }
+
+    /**
      * @param array $params
      * @param array $parts
      * @param int $n
@@ -111,7 +121,7 @@ class Wildcard
         $params  = $this->params($request);
         $options = $this->options($route);
 
-        $request = $request->with(Arg::PARAMS, $this->match($params, $options, $this->parts($params, $options)));
+        $request = $this->request($request, $this->match($params, $options, $this->parts($params, $options)));
 
         return $next($route, $request);
     }
