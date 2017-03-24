@@ -6,7 +6,6 @@
 namespace Mvc5\Exception;
 
 use Mvc5\Arg;
-use Mvc5\Exception as _Exception;
 
 trait Base
 {
