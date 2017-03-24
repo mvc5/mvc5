@@ -44,7 +44,7 @@ class Controller
         }
 
         null !== $result
-            && $response[Arg::BODY] = $result;
+            && $response = $response->with(Arg::BODY, $result);
 
         return $next($request, $response);
     }
