@@ -17,9 +17,7 @@ use Mvc5\Plugin\Shared;
 
 return [
     'config'               => new Config,
-    'cookie'               => new Shared('cookie', [Mvc5\Cookie\Config::class, new Plugin('cookie\sender'), new GlobalVar('_COOKIE')]),
-    'cookie\container'     => [Mvc5\Cookie\Container::class, new Param('cookie')],
-    'cookie\sender'        => [Mvc5\Cookie\Sender::class, new Param('cookie')],
+    'cookie'               => new Shared('cookie', [Mvc5\Cookie\Config::class, new GlobalVar('_COOKIE'), new Param('cookie')]),
     'controller\action'    => [Mvc5\Controller\Action::class, new Link],
     'error\controller'     => [Mvc5\Request\Error\Controller::class, new Plugin('error\model')],
     'error\model'          => [Mvc5\Request\Error\Model::class, 'error'],

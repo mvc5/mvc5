@@ -6,8 +6,8 @@
 namespace Mvc5\Response\Config;
 
 use Mvc5\Arg;
-use Mvc5\Cookie\Cookies;
-use Mvc5\Cookie\Container as CookieContainer;
+use Mvc5\Http\Cookies as HttpCookies;
+use Mvc5\Http\Cookies\Config as Cookies;
 use Mvc5\Http\Config\Response as _Response;
 use Mvc5\Http\Headers as HttpHeaders;
 use Mvc5\Http\Headers\Config as Headers;
@@ -27,12 +27,19 @@ trait Response
      */
     function __construct($body = null, $status = null, $headers = [], array $config = [])
     {
-        $this->config = [
-            Arg::BODY    => $body,
-            Arg::COOKIES => $config[Arg::COOKIES] ?? new CookieContainer,
-            Arg::HEADERS => $headers instanceof HttpHeaders ? $headers : new Headers($headers),
-            Arg::STATUS  => $status
-        ] + $config;
+        !isset($config[Arg::COOKIES]) &&
+            $config[Arg::COOKIES] = new Cookies;
+
+        !($config[Arg::COOKIES] instanceof HttpCookies) &&
+            $config[Arg::COOKIES] = new Cookies($config[Arg::COOKIES]);
+
+        $config[Arg::HEADERS] = $headers instanceof HttpHeaders ? $headers : new Headers($headers);
+
+        $config[Arg::STATUS] = $status;
+
+        $config[Arg::BODY] = $body;
+
+        $this->config = $config;
     }
 
     /**
@@ -56,16 +63,19 @@ trait Response
      */
     function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->with(Arg::COOKIES, $this->cookies()->with($name, $value, $expire, $path, $domain, $secure, $httponly));
+        return $this->with(
+            Arg::COOKIES, $this->cookies()->withCookie($name, $value, $expire, $path, $domain, $secure, $httponly)
+        );
     }
 
     /**
      * @param $cookies
-     * @return self|mixed
+     * @return HttpCookies|self|mixed
      */
     function cookies($cookies = null)
     {
-        return null !== $cookies ? $this->with(Arg::COOKIES, $cookies) : $this[Arg::COOKIES];
+        return null === $cookies ? $this[Arg::COOKIES] :
+            $this->with(Arg::COOKIES, $cookies instanceof HttpCookies ? $cookies : new Cookies($cookies));
     }
 
     /**
@@ -84,7 +94,8 @@ trait Response
      */
     function headers($headers = null)
     {
-        return null !== $headers ? $this->with(Arg::HEADERS, $headers) : $this[Arg::HEADERS];
+        return null === $headers ? $this[Arg::HEADERS] :
+            $this->with(Arg::HEADERS, $headers instanceof HttpHeaders ? $headers : new Headers($headers));
     }
 
     /**
@@ -93,7 +104,7 @@ trait Response
      */
     function status($status = null)
     {
-        return null !== $status ? $this->with(Arg::STATUS, $status) : $this[Arg::STATUS];
+        return null === $status ? $this[Arg::STATUS] : $this->with(Arg::STATUS, $status);
     }
 
     /**
@@ -102,6 +113,6 @@ trait Response
      */
     function version($version = null)
     {
-        return null !== $version ? $this->with(Arg::VERSION, $version) : $this[Arg::VERSION];
+        return null === $version ? $this[Arg::VERSION] : $this->with(Arg::VERSION, $version);
     }
 }
