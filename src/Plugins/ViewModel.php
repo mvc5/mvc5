@@ -6,7 +6,6 @@
 namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
-use Mvc5\Model as _Model;
 use Mvc5\Model\ViewModel as _ViewModel;
 
 trait ViewModel
