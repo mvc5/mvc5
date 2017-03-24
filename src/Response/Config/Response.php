@@ -48,7 +48,7 @@ trait Response
      */
     function body($body = null)
     {
-        return func_num_args() ? $this[Arg::BODY] = $body : $this[Arg::BODY];
+        return !func_num_args() ? $this[Arg::BODY] : $this->with(Arg::BODY, $body);
     }
 
     /**
