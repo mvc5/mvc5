@@ -16,6 +16,7 @@ interface Cookies
      * @param string     $domain
      * @param bool|false $secure
      * @param bool|true  $httponly
+     * @return bool
      */
     function remove($name, $path = null, $domain = null, $secure = null, $httponly = null);
 
@@ -27,7 +28,7 @@ interface Cookies
      * @param string     $domain
      * @param bool|false $secure
      * @param bool|true  $httponly
-     * @return string
+     * @return bool
      */
     function set($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 }
