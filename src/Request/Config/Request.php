@@ -200,7 +200,7 @@ trait Request
      */
     function query()
     {
-        return $this->get(Arg::URI)[Arg::QUERY] ?? null;
+        return $this->get(Arg::URI)[Arg::QUERY] ?? '';
     }
 
     /**
@@ -216,7 +216,7 @@ trait Request
      */
     function scheme()
     {
-        return $this->get(Arg::URI)[Arg::SCHEME] ?? null;
+        return $this->get(Arg::URI)[Arg::SCHEME] ?? '';
     }
 
     /**
@@ -237,14 +237,6 @@ trait Request
     function session($name = null, $default = null)
     {
         return null === $name ? ($this[Arg::SESSION] ?: []) : ($this->get(Arg::SESSION)[$name] ?? $default);
-    }
-
-    /**
-     * @return resource
-     */
-    function stream()
-    {
-        return $this[Arg::STREAM];
     }
 
     /**

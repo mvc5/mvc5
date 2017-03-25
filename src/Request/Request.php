@@ -159,11 +159,6 @@ interface Request
     function session($name = null, $default = null);
 
     /**
-     * @return resource
-     */
-    function stream();
-
-    /**
      * @return mixed
      */
     function user();
