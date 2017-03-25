@@ -13,51 +13,51 @@ interface Response
     extends HttpResponse
 {
     /**
-     * @param $body
-     * @return mixed
+     * @return Cookies
      */
-    function body($body = null);
+    function cookies();
 
     /**
-     * @param string     $name
-     * @param string     $value
-     * @param int        $expire
-     * @param string     $path
-     * @param string     $domain
-     * @param bool|false $secure
-     * @param bool|false $httponly
-     * @return mixed
+     * @param array|string $name
+     * @param string       $value
+     * @param int          $expire
+     * @param string       $path
+     * @param string       $domain
+     * @param bool|false   $secure
+     * @param bool|false   $httponly
+     * @return mixed|self
      */
-    function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
+    function withCookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
      * @param array|Cookies $cookies
-     * @return array|Cookies
+     * @return mixed|self
      */
-    function cookies($cookies = null);
+    function withCookies($cookies);
 
     /**
      * @param string $name
      * @param string $value
-     * @return string
+     * @return mixed|self
      */
-    function header($name, $value);
+    function withHeader($name, $value);
 
     /**
      * @param array|Headers $headers
-     * @return array|Headers
+     * @return mixed|self
      */
-    function headers($headers = null);
+    function withHeaders($headers);
 
     /**
-     * @param $status
-     * @return int
+     * @param int $status
+     * @param string $reason
+     * @return mixed|self
      */
-    function status($status = null);
+    function withStatus($status, $reason = '');
 
     /**
-     * @param $version
-     * @return int
+     * @param string $version
+     * @return mixed|self
      */
-    function version($version = null);
+    function withVersion($version);
 }

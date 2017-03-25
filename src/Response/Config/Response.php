@@ -43,12 +43,11 @@ trait Response
     }
 
     /**
-     * @param $body
-     * @return string
+     * @return HttpCookies
      */
-    function body($body = null)
+    function cookies()
     {
-        return !func_num_args() ? $this[Arg::BODY] : $this->with(Arg::BODY, $body);
+        return $this[Arg::COOKIES];
     }
 
     /**
@@ -61,21 +60,18 @@ trait Response
      * @param bool|true  $httponly
      * @return self|mixed
      */
-    function cookie($name, $value, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function withCookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->with(
-            Arg::COOKIES, $this->cookies()->withCookie($name, $value, $expire, $path, $domain, $secure, $httponly)
-        );
+        return $this->withCookies($this->cookies()->withCookie($name, $value, $expire, $path, $domain, $secure, $httponly));
     }
 
     /**
      * @param $cookies
      * @return HttpCookies|self|mixed
      */
-    function cookies($cookies = null)
+    function withCookies($cookies)
     {
-        return null === $cookies ? $this[Arg::COOKIES] :
-            $this->with(Arg::COOKIES, $cookies instanceof HttpCookies ? $cookies : new Cookies($cookies));
+        return $this->with(Arg::COOKIES, $cookies instanceof HttpCookies ? $cookies : new Cookies($cookies));
     }
 
     /**
@@ -83,7 +79,7 @@ trait Response
      * @param string $value
      * @return self|mixed
      */
-    function header($name, $value)
+    function withHeader($name, $value)
     {
         return $this->with(Arg::HEADERS, $this->headers()->with($name, $value));
     }
@@ -92,27 +88,27 @@ trait Response
      * @param $headers
      * @return self|mixed|Headers
      */
-    function headers($headers = null)
+    function withHeaders($headers)
     {
-        return null === $headers ? $this[Arg::HEADERS] :
-            $this->with(Arg::HEADERS, $headers instanceof HttpHeaders ? $headers : new Headers($headers));
+        return $this->with(Arg::HEADERS, $headers instanceof HttpHeaders ? $headers : new Headers($headers));
     }
 
     /**
      * @param $status
+     * @param $reason
      * @return self|mixed|string
      */
-    function status($status = null)
+    function withStatus($status, $reason = '')
     {
-        return null === $status ? $this[Arg::STATUS] : $this->with(Arg::STATUS, $status);
+        return $this->with([Arg::STATUS => $status, Arg::REASON => $reason]);
     }
 
     /**
      * @param $version
      * @return self|mixed|string
      */
-    function version($version = null)
+    function withVersion($version)
     {
-        return null === $version ? $this[Arg::VERSION] : $this->with(Arg::VERSION, $version);
+        return $this->with(Arg::VERSION, $version);
     }
 }
