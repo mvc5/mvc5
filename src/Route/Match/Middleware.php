@@ -6,8 +6,8 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
+use Mvc5\Http\Request;
 use Mvc5\Plugin;
-use Mvc5\Request\Request;
 use Mvc5\Route\Route;
 
 class Middleware
@@ -65,7 +65,7 @@ class Middleware
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        ($middleware = $this->middleware($request->controller(), $route[Arg::MIDDLEWARE])) &&
+        ($middleware = $this->middleware($request[Arg::CONTROLLER], $route[Arg::MIDDLEWARE])) &&
             $request = $request->with(Arg::CONTROLLER, $middleware);
 
         return $next($route, $request);

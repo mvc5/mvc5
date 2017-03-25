@@ -7,7 +7,7 @@ namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
-use Mvc5\Request\Request;
+use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 class Controller
@@ -181,12 +181,12 @@ class Controller
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        if ($request->controller()) {
+        if ($request[Arg::CONTROLLER]) {
             return $next($route, $request);
         }
 
         $options    = $this->options($route);
-        $params     = $request->params();
+        $params     = $request[Arg::PARAMS] ?? [];
         $action     = $this->action($params, $options);
         $controller = $this->controller($params, $options);
 

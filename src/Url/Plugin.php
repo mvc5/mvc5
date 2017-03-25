@@ -6,7 +6,7 @@
 namespace Mvc5\Url;
 
 use Mvc5\Arg;
-use Mvc5\Request\Request;
+use Mvc5\Http\Request;
 
 class Plugin
 {
@@ -44,7 +44,7 @@ class Plugin
      */
     protected function name($name = null)
     {
-        return $name ?? $this->request->name();
+        return $name ?? $this->request[Arg::NAME];
     }
 
     /**
@@ -54,9 +54,9 @@ class Plugin
     protected function options(array $options = [])
     {
         return $options + [
-            Arg::HOST   => $this->request->host(),
-            Arg::PORT   => $this->request->port(),
-            Arg::SCHEME => $this->request->scheme()
+            Arg::HOST   => $this->request[Arg::HOST],
+            Arg::PORT   => $this->request[Arg::PORT],
+            Arg::SCHEME => $this->request[Arg::SCHEME]
         ];
     }
 
@@ -67,7 +67,7 @@ class Plugin
      */
     protected function params($name, array $params = [])
     {
-        return $name ? $params : $params + $this->request->params();
+        return $name ? $params : $params + (array) $this->request[Arg::PARAMS];
     }
 
     /**

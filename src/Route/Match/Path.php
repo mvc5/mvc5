@@ -6,7 +6,7 @@
 namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
-use Mvc5\Request\Request;
+use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 class Path
@@ -36,7 +36,7 @@ class Path
         $request = $request->with([
             Arg::CONTROLLER => $route->controller(),
             Arg::MATCHED => $offset,
-            Arg::PARAMS => $this->params($match, $route->defaults() + $request->params()),
+            Arg::PARAMS => $this->params($match, $route->defaults() + (array) $request[Arg::PARAMS]),
             Arg::ROUTE => $matched ? $route : null
         ]);
 
@@ -51,6 +51,6 @@ class Path
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $this->match($route, $request, $request->path(), (int) $request[Arg::MATCHED], $next);
+        return $this->match($route, $request, $request[Arg::URI][Arg::PATH], (int) $request[Arg::MATCHED], $next);
     }
 }

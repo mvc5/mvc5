@@ -7,7 +7,7 @@ namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
-use Mvc5\Request\Request;
+use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 class Host
@@ -25,7 +25,7 @@ class Host
      */
     protected function match(Request $request, $host)
     {
-        return !$host || in_array($request->host(), (array) $host) ? $request : null;
+        return !$host || in_array($request[Arg::URI][Arg::HOST], (array) $host) ? $request : null;
     }
 
     /**
