@@ -92,15 +92,6 @@ trait Response
     }
 
     /**
-     * @param $version
-     * @return self|mixed|string
-     */
-    function withProtocolVersion($version)
-    {
-        return $this->with(Arg::VERSION, $version);
-    }
-
-    /**
      * @param $status
      * @param $reason
      * @return self|mixed|string
@@ -108,5 +99,14 @@ trait Response
     function withStatus($status, $reason = '')
     {
         return $this->with([Arg::STATUS => $status, Arg::REASON => $reason]);
+    }
+
+    /**
+     * @param $version
+     * @return self|mixed|string
+     */
+    function withVersion($version)
+    {
+        return $this->with(Arg::VERSION, $version);
     }
 }
