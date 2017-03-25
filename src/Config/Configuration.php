@@ -9,13 +9,13 @@ interface Configuration
     extends Base
 {
     /**
-     * @param string $name
+     * @param array|string $name
      * @return void
      */
     function remove($name);
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $value
      * @return mixed
      */
