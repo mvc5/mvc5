@@ -5,10 +5,9 @@
 
 namespace Mvc5\Response\Send;
 
-use Closure;
+use Mvc5\Arg;
 use Mvc5\Http\Response as HttpResponse;
 use Mvc5\Response\Emitter;
-use Mvc5\Response\Response;
 
 trait Send
 {
@@ -21,11 +20,20 @@ trait Send
     }
 
     /**
-     * @param Closure|Emitter|string $body
+     * @param HttpResponse $response
+     * @return array|mixed
+     */
+    protected function cookies(HttpResponse $response)
+    {
+        return $response[Arg::COOKIES] ?? [];
+    }
+
+    /**
+     * @param \Closure|Emitter|string $body
      */
     protected function emit($body)
     {
-        $body instanceof Emitter ? $body->emit() : ($body instanceof Closure ? $body() : print($body));
+        $body instanceof Emitter ? $body->emit() : ($body instanceof \Closure ? $body() : print($body));
     }
 
     /**
@@ -42,10 +50,8 @@ trait Send
             header($name . ': ' . (is_array($header) ? implode(', ', $header) : $header));
         }
 
-        if ($response instanceof Response) {
-            foreach($response->cookies() as $cookie) {
-                setcookie(...array_values($cookie));
-            }
+        foreach($this->cookies($response) as $cookie) {
+            setcookie(...array_values($cookie));
         }
 
         $statusLine = sprintf('HTTP/%s %s %s', $response->version(), $response->status(), $response->reason());
