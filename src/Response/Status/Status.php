@@ -45,6 +45,7 @@ trait Status
         !$response->status() &&
             $response = $response->with(Arg::STATUS, Arg::HTTP_OK);
 
+        /** @var Response $response */
         !$response->reason() &&
             $response = $response->with(Arg::REASON, $this->statusReasonPhrase($response->status()));
 
