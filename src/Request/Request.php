@@ -173,7 +173,7 @@ interface Request
      * @param null $default
      * @return mixed
      */
-    function variable($name, $default = null);
+    function var($name, $default = null);
 
     /**
      * @return array

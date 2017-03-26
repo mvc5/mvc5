@@ -174,7 +174,7 @@ trait Request
      */
     function path()
     {
-        return $this->get(Arg::URI)[Arg::PATH] ?? Arg::SEPARATOR;
+        return $this->get(Arg::URI)[Arg::PATH] ?? '';
     }
 
     /**
@@ -260,7 +260,7 @@ trait Request
      * @param null $default
      * @return mixed
      */
-    function variable($name, $default = null)
+    function var($name, $default = null)
     {
         return $this->param($name) ?? $this->arg($name) ?? $this->data($name, $default);
     }
