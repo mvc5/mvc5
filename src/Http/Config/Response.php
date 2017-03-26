@@ -7,7 +7,6 @@ namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
 use Mvc5\Config\ReadOnly;
-use Mvc5\Http\Headers as HttpHeaders;
 
 trait Response
 {
@@ -25,7 +24,7 @@ trait Response
     }
 
     /**
-     * @return HttpHeaders
+     * @return mixed
      */
     function headers()
     {

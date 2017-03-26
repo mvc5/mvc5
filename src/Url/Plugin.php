@@ -16,9 +16,19 @@ class Plugin
     protected $generator;
 
     /**
-     * @var Request
+     * @var string
      */
-    protected $request;
+    protected $name;
+
+    /**
+     * @var array
+     */
+    protected $options;
+
+    /**
+     * @var array
+     */
+    protected $params;
 
     /**
      * @param Request $request
@@ -27,15 +37,16 @@ class Plugin
     function __construct(Request $request, callable $generator)
     {
         $this->generator = $generator;
-        $this->request   = $request;
-    }
+        $this->name      = $request[Arg::NAME];
+        $this->params    = (array) $request[Arg::PARAMS];
 
-    /**
-     * @return callable
-     */
-    protected function generator()
-    {
-        return $this->generator;
+        $uri = $request[Arg::URI];
+
+        $this->options = array_filter([
+            Arg::HOST   => $uri[Arg::HOST] ?? '',
+            Arg::PORT   => $uri[Arg::PORT] ?? '',
+            Arg::SCHEME => $uri[Arg::SCHEME] ?? ''
+        ]);
     }
 
     /**
@@ -44,7 +55,7 @@ class Plugin
      */
     protected function name($name = null)
     {
-        return $name ?? $this->request[Arg::NAME];
+        return $name ?? $this->name;
     }
 
     /**
@@ -53,11 +64,7 @@ class Plugin
      */
     protected function options(array $options = [])
     {
-        return $options + [
-            Arg::HOST   => $this->request[Arg::HOST],
-            Arg::PORT   => $this->request[Arg::PORT],
-            Arg::SCHEME => $this->request[Arg::SCHEME]
-        ];
+        return $options + $this->options;
     }
 
     /**
@@ -67,7 +74,7 @@ class Plugin
      */
     protected function params($name, array $params = [])
     {
-        return $name ? $params : $params + (array) $this->request[Arg::PARAMS];
+        return $name ? $params : $params + $this->params;
     }
 
     /**
@@ -78,7 +85,7 @@ class Plugin
      */
     protected function url($name, array $params = [], array $options = [])
     {
-        return ($this->generator())($name, $params, $options);
+        return ($this->generator)($name, $params, $options);
     }
 
     /**

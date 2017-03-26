@@ -28,7 +28,7 @@ trait Uri
      */
     function fragment()
     {
-        return $this[Arg::FRAGMENT] ?: '';
+        return (string) $this[Arg::FRAGMENT];
     }
 
     /**
@@ -36,7 +36,7 @@ trait Uri
      */
     function host()
     {
-        return $this[Arg::HOST] ?: '';
+        return (string) $this[Arg::HOST];
     }
 
     /**
@@ -52,7 +52,7 @@ trait Uri
      */
     function path()
     {
-        return $this[Arg::PATH] ?: '';
+        return (string) $this[Arg::PATH];
     }
 
     /**
@@ -68,7 +68,7 @@ trait Uri
      */
     function query()
     {
-        return $this[Arg::QUERY] ?: '';
+        return (string) $this[Arg::QUERY];
     }
 
     /**
@@ -76,7 +76,7 @@ trait Uri
      */
     function scheme()
     {
-        return $this[Arg::SCHEME] ?: '';
+        return (string) $this[Arg::SCHEME];
     }
 
     /**

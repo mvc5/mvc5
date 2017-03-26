@@ -33,7 +33,7 @@ trait Cookies
     function __construct(array $cookies = [], array $defaults = [])
     {
         $this->config = $cookies;
-        $defaults && $this->defaults = $defaults + $this->defaults;
+        $this->defaults = $defaults + $this->defaults;
     }
 
     /**

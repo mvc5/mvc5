@@ -24,11 +24,11 @@ trait Request
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     function headers()
     {
-        return $this[Arg::HEADERS] ?: [];
+        return $this[Arg::HEADERS];
     }
 
     /**
