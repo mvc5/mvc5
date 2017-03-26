@@ -51,8 +51,8 @@ trait Config
      */
     function remove($name)
     {
-        foreach((array) $name as $value) {
-            unset($this->config[$value]);
+        foreach((array) $name as $key) {
+            unset($this->config[$key]);
         }
     }
 
