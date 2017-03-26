@@ -39,11 +39,10 @@ class Generator
     /**
      * @param array|Route $route
      * @param bool $compile
-     * @param bool $recursive
      * @return Route
      */
-    function __invoke($route, $compile = true, $recursive = false)
+    function __invoke($route, $compile = true)
     {
-        return $this->build($route, $compile, $recursive);
+        return $this->build($route, $compile);
     }
 }

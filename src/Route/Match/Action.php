@@ -19,7 +19,7 @@ class Action
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        $route->actions() && ($controller = $route->action($request->method())) &&
+        ($controller = $route->action($request->method())) &&
             $request = $request->with(Arg::CONTROLLER, $controller);
 
         return $next($route, $request);

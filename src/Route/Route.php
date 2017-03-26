@@ -5,28 +5,16 @@
 
 namespace Mvc5\Route;
 
-use Mvc5\Config\Configuration;
+use Mvc5\Config\Immutable;
 
 interface Route
-    extends Configuration
+    extends Immutable
 {
-    /**
-     * @param $name
-     * @param array|Route $route
-     * @return void
-     */
-    function add($name, $route);
-
     /**
      * @param $name
      * @return mixed
      */
-    function action($name);
-
-    /**
-     * @return string[]
-     */
-    function actions();
+    function action($name = null);
 
     /**
      * @param string $name
@@ -38,11 +26,6 @@ interface Route
      * @return self[]
      */
     function children();
-
-    /**
-     * @return null|string
-     */
-    function className();
 
     /**
      * @return array

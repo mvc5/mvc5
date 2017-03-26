@@ -67,7 +67,7 @@ trait Router
      */
     protected function dispatch(Route $route, Request $request)
     {
-        return $this->route($route, $request->with(Arg::NAME, $route->name()));
+        return $this->route($route, $request);
     }
 
     /**
@@ -132,18 +132,17 @@ trait Router
      */
     protected function route($route, $request)
     {
-        return $this->solve($route, $this->match($route, $request));
+        return $this->solve($this->match($route, $request));
     }
 
     /**
-     * @param Route $route
      * @param $request
      * @return mixed|Request
      */
-    protected function solve(Route $route, $request)
+    protected function solve($request)
     {
-        return !$request instanceof Request || $request[Arg::ROUTE] ? $request :
-            $this->traverse($route->children(), $request, $route);
+        return !$request instanceof Request || true === $request[Arg::MATCHED] ? $request :
+            $this->traverse($request[Arg::ROUTE]->children(), $request, $request[Arg::ROUTE]);
     }
 
     /**
@@ -155,7 +154,7 @@ trait Router
     protected function step(Route $route, Request $request, $name)
     {
         return $this->route(
-            $route, $request->with(Arg::NAME, $this->name($this->key($route, $name), $request[Arg::NAME]))
+            $route->with(Arg::NAME, $this->name($this->key($route, $name), $request[Arg::NAME])), $request
         );
     }
 

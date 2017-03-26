@@ -6,40 +6,22 @@
 namespace Mvc5\Route\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
+use Mvc5\Config\ReadOnly;
 
 trait Route
 {
     /**
      *
      */
-    use Config;
-
-    /**
-     * @param $name
-     * @param array|Route $route
-     * @return void
-     */
-    function add($name, $route)
-    {
-        $this->config[Arg::CHILDREN][$name] = $route;
-    }
+    use ReadOnly;
 
     /**
      * @param $name
      * @return mixed
      */
-    function action($name)
+    function action($name = null)
     {
-        return $this->get(Arg::ACTION)[$name] ?? null;
-    }
-
-    /**
-     * @return array
-     */
-    function actions()
-    {
-        return $this[Arg::ACTION] ?: [];
+        return null === $name ? $this[Arg::ACTION] : ($this->get(Arg::ACTION)[$name] ?? null);
     }
 
     /**
@@ -57,14 +39,6 @@ trait Route
     function children()
     {
         return $this[Arg::CHILDREN] ?: [];
-    }
-
-    /**
-     * @return null|string
-     */
-    function className()
-    {
-        return $this[Arg::CLASS_NAME];
     }
 
     /**

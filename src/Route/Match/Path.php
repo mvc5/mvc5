@@ -35,9 +35,10 @@ class Path
 
         $request = $request->with([
             Arg::CONTROLLER => $route->controller(),
-            Arg::MATCHED => $offset,
+            Arg::MATCHED => $matched ?: $offset,
+            Arg::NAME => $route->name(),
             Arg::PARAMS => $this->params($match, $route->defaults() + (array) $request[Arg::PARAMS]),
-            Arg::ROUTE => $matched ? $route : null
+            Arg::ROUTE => $route
         ]);
 
         return $matched ? $next($route, $request) : ($route->children() ? $request : null);

@@ -90,20 +90,21 @@ trait Generator
     /**
      * @param Route $parent
      * @param Route $child
+     * @param array $config
      * @return Route
      */
-    protected function merge(Route $parent, Route $child)
+    protected function merge(Route $parent, Route $child, array $config = [])
     {
         !$child->scheme() && $parent->scheme()
-            && $child[Arg::SCHEME] = $parent->scheme();
+            && $config[Arg::SCHEME] = $parent->scheme();
 
         !$child->host() && $parent->host()
-            && $child[Arg::HOST] = $parent->host();
+            && $config[Arg::HOST] = $parent->host();
 
         !$child->port() && $parent->port()
-            && $child[Arg::PORT] = $parent->port();
+            && $config[Arg::PORT] = $parent->port();
 
-        return $child;
+        return $config ? $child->with($config) : $child;
     }
 
     /**
@@ -139,7 +140,7 @@ trait Generator
      */
     protected function wildcard(Route $route)
     {
-        return !$route->wildcard() ? null : function($path, array $params = []) use ($route) {
+        return !$route->wildcard() ? null : function($path, array $params = []) {
             foreach($params as $key => $value) {
                 null !== $value && $path .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
             }

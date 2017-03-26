@@ -21,27 +21,11 @@ trait Build
     /**
      * @param array|Route $route
      * @param bool $compile
-     * @param bool $recursive
      * @return Route
      */
-    protected function build($route, $compile = true, $recursive = false)
+    protected function build($route, $compile = true)
     {
-        return $this->create($this->definition($route, $compile, $recursive));
-    }
-
-    /**
-     * @param array $routes
-     * @param bool $compile
-     * @param bool $recursive
-     * @return array
-     */
-    protected function children(array $routes, $compile = true, $recursive = true)
-    {
-        foreach($routes as $name => $route) {
-            $routes[$name] = $this->build($route, $compile, $recursive);
-        }
-
-        return $routes;
+        return $this->definition($this->create($route), $compile);
     }
 
     /**
@@ -68,24 +52,20 @@ trait Build
     /**
      * @param array|Route $route
      * @param bool $compile
-     * @param bool $recursive
      * @return array|Route
      */
-    protected function definition($route, $compile = true, $recursive = false)
+    protected function definition($route, $compile = true)
     {
-        $recursive && isset($route[Arg::CHILDREN]) && $route[Arg::CHILDREN] =
-            $this->children($route[Arg::CHILDREN], $compile, $recursive);
-
         if (!isset($route[Arg::ROUTE])) {
             return isset($route[Arg::REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
         }
 
-        !isset($route[Arg::TOKENS]) && $route[Arg::TOKENS] = $this->tokens(
+        !isset($route[Arg::TOKENS]) && $route = $route->with(Arg::TOKENS, $this->tokens(
             $route[Arg::ROUTE], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : []
-        );
+        ));
 
-        $compile && !isset($route[Arg::REGEX]) && $route[Arg::REGEX] =
-            $this->regex($route[Arg::TOKENS]);
+        $compile && !isset($route[Arg::REGEX]) &&
+            $route = $route->with(Arg::REGEX, $this->regex($route[Arg::TOKENS]));
 
         return $route;
     }

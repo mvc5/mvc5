@@ -14,17 +14,18 @@ class Merge
     /**
      * @param Route $route
      * @param Route $parent
+     * @param array $config
      * @return Route
      */
-    protected function merge(Route $route, Route $parent)
+    protected function merge(Route $route, Route $parent, array $config = [])
     {
         ($options = $parent->options()) &&
-            $route[Arg::OPTIONS] = $route->options() + $options;
+            $config[Arg::OPTIONS] = $route->options() + $options;
 
         ($middleware = $parent[Arg::MIDDLEWARE]) &&
-            $route[Arg::MIDDLEWARE] = array_merge($middleware, $route[Arg::MIDDLEWARE] ?: []);
+            $config[Arg::MIDDLEWARE] = array_merge($middleware, $route[Arg::MIDDLEWARE] ?: []);
 
-        return $route;
+        return $config ? $route->with($config) : $route;
     }
 
     /**

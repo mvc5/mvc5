@@ -137,7 +137,6 @@ include __DIR__ . '/src/Route/Definition/Assemble.php';
 include __DIR__ . '/src/Route/Definition/Regex.php';
 include __DIR__ . '/src/Route/Definition/Tokens.php';
 include __DIR__ . '/src/Route/Definition/Build.php';
-include __DIR__ . '/src/Route/Definition/Add.php';
 include __DIR__ . '/src/Route/Definition/Compile.php';
 include __DIR__ . '/src/Route/Route.php';
 include __DIR__ . '/src/Route/Generator.php';
