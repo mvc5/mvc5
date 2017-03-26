@@ -113,12 +113,14 @@ trait Container
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return void
      */
     function remove($name)
     {
-        unset($this->container[$name]);
+        foreach((array) $name as $key) {
+            unset($this->container[$key]);
+        }
     }
 
     /**
@@ -139,13 +141,21 @@ trait Container
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $value
      * @return mixed
      */
     function set($name, $value = null)
     {
-        return $this->container[$name] = $value;
+        if (is_string($name)) {
+            return $this->container[$name] = $value;
+        }
+
+        foreach($name as $key => $value) {
+            $this->container[$key] = $value;
+        }
+
+        return $name;
     }
 
     /**

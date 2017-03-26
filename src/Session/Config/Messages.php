@@ -35,7 +35,7 @@ trait Messages
      */
     function __construct(array $types = [])
     {
-        $types && $this->types = $types + $this->types;
+        $this->types = $types + $this->types;
     }
 
     /**
@@ -82,12 +82,14 @@ trait Messages
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return void
      */
     function remove($name)
     {
-        unset($this->config[$name], $this->new[$name]);
+        foreach((array) $name as $key) {
+            unset($this->config[$key], $this->new[$key]);
+        }
     }
 
     /**
@@ -99,13 +101,21 @@ trait Messages
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param array $value
      * @return array
      */
     function set($name, $value = null)
     {
-        return $this->config[$name] = $this->new[$name] = $value;
+        if (is_string($name)) {
+            return $this->config[$name] = $this->new[$name] = $value;
+        }
+
+        foreach($name as $key => $value) {
+            $this->config[$key] = $this->new[$key] = $value;
+        }
+
+        return $name;
     }
 
     /**

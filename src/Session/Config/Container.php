@@ -130,12 +130,12 @@ trait Container
 
     /**
      * @param string $name
-     * @param mixed $config
+     * @param mixed $value
      * @return self|mixed
      */
-    function with($name, $config = null)
+    function with($name, $value = null)
     {
-        $this->set($name, $config);
+        $this->set($name, $value);
         return $this;
     }
 

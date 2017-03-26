@@ -145,12 +145,14 @@ trait Session
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return void
      */
     function remove($name)
     {
-        unset($_SESSION[$name]);
+        foreach((array) $name as $key) {
+            unset($_SESSION[$key]);
+        }
     }
 
     /**
@@ -173,13 +175,21 @@ trait Session
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $value
      * @return mixed
      */
     function set($name, $value = null)
     {
-        return $_SESSION[$name] = $value;
+        if (is_string($name)) {
+            return $_SESSION[$name] = $value;
+        }
+
+        foreach($name as $key => $value) {
+            $_SESSION[$key] = $value;
+        }
+
+        return $name;
     }
 
     /**
@@ -208,18 +218,18 @@ trait Session
     }
 
     /**
-     * @param string $name
-     * @param mixed $config
+     * @param array|string $name
+     * @param mixed $value
      * @return self|mixed
      */
-    function with($name, $config = null)
+    function with($name, $value = null)
     {
-        $this->set($name, $config);
+        $this->set($name, $value);
         return $this;
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return self|mixed
      */
     function without($name)
