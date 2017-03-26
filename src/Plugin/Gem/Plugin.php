@@ -5,10 +5,10 @@
 
 namespace Mvc5\Plugin\Gem;
 
-use Mvc5\Config\Configuration;
+use Mvc5\Config\Immutable;
 
 interface Plugin
-    extends Configuration, Gem
+    extends Gem, Immutable
 {
     /**
      * @return array

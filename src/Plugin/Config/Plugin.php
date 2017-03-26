@@ -6,14 +6,14 @@
 namespace Mvc5\Plugin\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config as _Config;
+use Mvc5\Config\ReadOnly;
 
 trait Plugin
 {
     /**
      *
      */
-    use _Config;
+    use ReadOnly;
 
     /**
      * @return array

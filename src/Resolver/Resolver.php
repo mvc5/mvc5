@@ -421,25 +421,26 @@ trait Resolver
 
     /**
      * @param Plugin $parent
-     * @param Plugin $config
+     * @param Plugin $child
      * @param null|string $name
+     * @param array $config
      * @return Plugin
      */
-    protected function merge(Plugin $parent, Plugin $config, $name = null)
+    protected function merge(Plugin $parent, Plugin $child, $name = null, array $config = [])
     {
         !$parent->name() &&
-            $parent[Arg::NAME] = $name ?? $this->resolve($config->name());
+            $config[Arg::NAME] = $name ?? $this->resolve($child->name());
 
-        $config->args() &&
-            $parent[Arg::ARGS] = is_string(key($config->args())) ? $config->args() + $parent->args() : $config->args();
+        $child->args() &&
+            $config[Arg::ARGS] = is_string(key($child->args())) ? $child->args() + $parent->args() : $child->args();
 
-        $config->calls() &&
-            $parent[Arg::CALLS] = $config->merge() ? array_merge($parent->calls(), $config->calls()) : $config->calls();
+        $child->calls() &&
+            $config[Arg::CALLS] = $child->merge() ? array_merge($parent->calls(), $child->calls()) : $child->calls();
 
-        $config->param() &&
-            $parent[Arg::PARAM] = $config->param();
+        $child->param() &&
+            $config[Arg::PARAM] = $child->param();
 
-        return $parent;
+        return $config ? $parent->with($config) : $parent;
     }
 
     /**
