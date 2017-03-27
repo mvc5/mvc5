@@ -61,13 +61,12 @@ trait Router
     }
 
     /**
-     * @param Route $route
      * @param Request $request
      * @return mixed|Request
      */
-    protected function dispatch(Route $route, Request $request)
+    protected function dispatch($request)
     {
-        return $this->route($route, $request);
+        return $this->result($request, $this->route($this->definition($this->route), $request));
     }
 
     /**
@@ -98,15 +97,6 @@ trait Router
     protected function name($name, $parent)
     {
         return $this->route[Arg::NAME] === $parent ? $name : $parent . Arg::SEPARATOR . $name;
-    }
-
-    /**
-     * @param Request $request
-     * @return mixed|Request
-     */
-    protected function request($request)
-    {
-        return $this->result($request, $this->dispatch($this->definition($this->route), $request));
     }
 
     /**
@@ -142,7 +132,7 @@ trait Router
     protected function solve($request)
     {
         return !$request instanceof Request || true === $request[Arg::MATCHED] ? $request :
-            $this->traverse($request[Arg::ROUTE]->children(), $request, $request[Arg::ROUTE]);
+            $this->traverse($request[Arg::ROUTE][Arg::CHILDREN] ?? [], $request, $request[Arg::ROUTE]);
     }
 
     /**
@@ -181,6 +171,6 @@ trait Router
      */
     function __invoke(Request $request)
     {
-        return $this->request($request);
+        return $this->dispatch($request);
     }
 }

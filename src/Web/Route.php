@@ -25,7 +25,7 @@ class Route
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        $result = $this->request($request);
+        $result = $this->dispatch($request);
 
         if ($result instanceof Request) {
             return $next($result, $response);
