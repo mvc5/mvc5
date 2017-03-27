@@ -5,8 +5,6 @@
 
 namespace Mvc5\Url;
 
-use Mvc5\Route\Route as _Route;
-
 class Collection
 {
     /**
@@ -16,7 +14,7 @@ class Collection
 
     /**
      * @param $name
-     * @return array|_Route
+     * @return array|mixed
      */
     protected function config($name)
     {

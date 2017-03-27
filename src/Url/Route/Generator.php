@@ -7,7 +7,6 @@ namespace Mvc5\Url\Route;
 
 use Mvc5\Arg;
 use Mvc5\Route\Route;
-use Mvc5\Route\Definition\Assemble;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
 
@@ -16,9 +15,13 @@ trait Generator
     /**
      *
      */
-    use Assemble;
     use Build;
     use Compile;
+
+    /**
+     * @var callable
+     */
+    protected $assembler;
 
     /**
      * @var array|Route
@@ -35,14 +38,28 @@ trait Generator
     ];
 
     /**
+     * @param callable $assembler
      * @param array|Route $route
      * @param array $options
      */
-    function __construct($route = [], array $options = [])
+    function __construct(callable $assembler, $route = [], array $options = [])
     {
+        $this->assembler = $assembler;
+        $this->options = $options + $this->options;
         $this->route = $route;
+    }
 
-        $options && $this->options = $options + $this->options;
+    /**
+     * @param string $scheme
+     * @param string $host
+     * @param string $port
+     * @param string $path
+     * @param array|\ArrayAccess $options
+     * @return string
+     */
+    protected function assemble($scheme, $host, $port, $path, $options)
+    {
+        return ($this->assembler)($scheme, $host, $port, $path, $options);
     }
 
     /**

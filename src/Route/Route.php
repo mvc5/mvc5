@@ -63,6 +63,11 @@ interface Route
     function options();
 
     /**
+     * @return string
+     */
+    function path();
+
+    /**
      * @return int|null|string
      */
     function port();
@@ -71,11 +76,6 @@ interface Route
      * @return string
      */
     function regex();
-
-    /**
-     * @return string
-     */
-    function route();
 
     /**
      * @return null|string|string[]

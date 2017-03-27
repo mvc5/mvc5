@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Route\Definition;
+namespace Mvc5\Url;
 
 use Mvc5\Arg;
 
@@ -11,12 +11,12 @@ use Mvc5\Arg;
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
  * under the Simplified BSD License (http://opensource.org/licenses/BSD-2-Clause).
  */
-trait Assemble
+class Assemble
 {
     /**
      * @var array
      */
-    protected $allowedPathChars = [
+    protected static $allowedPathChars = [
         '%2F' => '/',
         '%40' => '@',
         '%3A' => ':',
@@ -37,9 +37,9 @@ trait Assemble
      * @param array|\ArrayAccess $options
      * @return string
      */
-    protected function assemble($scheme, $host, $port, $path, $options)
+    function __invoke($scheme, $host, $port, $path, $options)
     {
-        $path = strtr(rawurlencode($path), $this->allowedPathChars);
+        $path = strtr(rawurlencode($path), static::$allowedPathChars);
 
         !empty($options[Arg::QUERY]) &&
             $path .= '?' . http_build_query($options[Arg::QUERY], '', '&');

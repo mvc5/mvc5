@@ -98,6 +98,14 @@ trait Route
     }
 
     /**
+     * @return string
+     */
+    function path()
+    {
+        return $this[Arg::PATH];
+    }
+
+    /**
      * @return int|null|string
      */
     function port()
@@ -111,14 +119,6 @@ trait Route
     function regex()
     {
         return $this[Arg::REGEX];
-    }
-
-    /**
-     * @return string
-     */
-    function route()
-    {
-        return $this[Arg::ROUTE];
     }
 
     /**

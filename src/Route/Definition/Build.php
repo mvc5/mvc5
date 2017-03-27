@@ -56,12 +56,12 @@ trait Build
      */
     protected function definition($route, $compile = true)
     {
-        if (!isset($route[Arg::ROUTE])) {
+        if (!isset($route[Arg::PATH])) {
             return isset($route[Arg::REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
         }
 
         !isset($route[Arg::TOKENS]) && $route = $route->with(Arg::TOKENS, $this->tokens(
-            $route[Arg::ROUTE], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : []
+            $route[Arg::PATH], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : []
         ));
 
         $compile && !isset($route[Arg::REGEX]) &&

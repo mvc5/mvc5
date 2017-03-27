@@ -6,7 +6,6 @@
 namespace Mvc5\Url;
 
 use Mvc5\Arg;
-use Mvc5\Http\Request;
 
 class Plugin
 {
@@ -31,10 +30,10 @@ class Plugin
     protected $params;
 
     /**
-     * @param Request $request
+     * @param array|\ArrayAccess $request
      * @param callable $generator
      */
-    function __construct(Request $request, callable $generator)
+    function __construct($request, callable $generator)
     {
         $this->generator = $generator;
         $this->name      = $request[Arg::NAME];
