@@ -44,14 +44,6 @@ trait Request
     }
 
     /**
-     * @return mixed
-     */
-    function contentType()
-    {
-        return $this[Arg::CONTENT_TYPE];
-    }
-
-    /**
      * @return array|callable|null|object|string
      */
     function controller()

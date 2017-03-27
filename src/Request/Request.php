@@ -32,11 +32,6 @@ interface Request
     function clientAddress();
 
     /**
-     * @return string
-     */
-    function contentType();
-
-    /**
      * @return array|callable|mixed|null|object|string
      */
     function controller();
