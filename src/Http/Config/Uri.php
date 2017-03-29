@@ -16,11 +16,11 @@ trait Uri
     use ReadOnly;
 
     /**
-     * @param array|string $config
+     * @param array|string|mixed $config
      */
     function __construct($config = [])
     {
-        $this->config = is_string($config) ? parse_url($config) : $config;
+        $this->config = is_array($config) ? $config : parse_url((string) $config);
     }
 
     /**
