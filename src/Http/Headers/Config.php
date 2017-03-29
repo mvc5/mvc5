@@ -5,6 +5,7 @@
 
 namespace Mvc5\Http\Headers;
 
+use Mvc5\Arg;
 use Mvc5\Immutable;
 use Mvc5\Http\Headers;
 
@@ -13,11 +14,12 @@ class Config
     implements Headers
 {
     /**
-     * @param array $config
+     * @param array $headers
      */
-    function __construct(array $config = [])
+    function __construct(array $headers = [])
     {
-        parent::__construct(array_change_key_case($config, CASE_LOWER));
+        $headers = array_change_key_case($headers);
+        parent::__construct(isset($headers[Arg::HOST]) ? [Arg::HOST => $headers[Arg::HOST]] + $headers : $headers);
     }
 
     /**
@@ -39,13 +41,34 @@ class Config
     }
 
     /**
+     * @param array|string $name
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function set($name, $value = null)
+    {
+        if (is_string($name)) {
+            Arg::HOST !== $name ? $this->config[$name] = $value :
+                $this->config = [Arg::HOST => $value] + $this->config;
+            return $value;
+        }
+
+        isset($name[Arg::HOST]) &&
+            $name = [Arg::HOST => $name[Arg::HOST]] + $name;
+
+        $this->config = $name + $this->config;
+
+        return $name;
+    }
+
+    /**
      * @param string $name
      * @param mixed $value
      * @return self|mixed
      */
     function with($name, $value = null)
     {
-        return parent::with(strtolower($name), $value);
+        return parent::with(is_array($name) ? array_change_key_case($name, CASE_LOWER) : strtolower($name), $value);
     }
 
     /**
@@ -54,6 +77,6 @@ class Config
      */
     function without($name)
     {
-        return parent::without(strtolower($name));
+        return parent::without(is_array($name) ? array_change_key_case($name, CASE_LOWER) : strtolower($name));
     }
 }
