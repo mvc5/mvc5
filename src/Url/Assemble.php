@@ -7,27 +7,37 @@ namespace Mvc5\Url;
 
 use Mvc5\Arg;
 
-/**
- * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
- * under the Simplified BSD License (http://opensource.org/licenses/BSD-2-Clause).
- */
 class Assemble
 {
     /**
-     * @var array
+     * @param array $query
+     * @param string $parent
+     * @param array $params
+     * @return string
      */
-    protected static $allowedPathChars = [
-        '%2F' => '/',
-        '%40' => '@',
-        '%3A' => ':',
-        '%3B' => ';',
-        '%2C' => ',',
-        '%3D' => '=',
-        '%2B' => '+',
-        '%21' => '!',
-        '%2A' => '*',
-        '%7C' => '|',
-    ];
+    static function buildQuery(array $query, $parent = '', $params = [])
+    {
+        foreach($query as $key => $value) {
+            $key = $parent ? $parent . '[' . static::encode($key) . ']' : static::encode($key);
+            $params[] = is_array($value) ? static::buildQuery($value, $key) :
+                (!isset($value) ? $key : $key . '=' . static::encode($value));
+        }
+
+        return implode('&', $params);
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     */
+    static function encode($value)
+    {
+        return preg_replace_callback(
+            '/(?:[^a-zA-Z0-9_\-\.~!\$&\'\(\)\*\+,;=%:@\/\?]++|%(?![A-Fa-f0-9]{2}))/',
+            function(array $match) { return \rawurlencode($match[0]); },
+            $value
+        );
+    }
 
     /**
      * @param null|string $scheme
@@ -37,12 +47,12 @@ class Assemble
      * @param array|\ArrayAccess $options
      * @return string
      */
-    function __invoke($scheme, $host, $port, $path, $options)
+    static function url($scheme, $host, $port, $path, $options = [])
     {
-        $path = strtr(rawurlencode($path), static::$allowedPathChars);
+        $path = static::encode($path);
 
         !empty($options[Arg::QUERY]) &&
-            $path .= '?' . http_build_query($options[Arg::QUERY], '', '&');
+            $path .= '?' . static::buildQuery($options[Arg::QUERY]);
 
         isset($options[Arg::FRAGMENT]) &&
             $path .= '#' . $options[Arg::FRAGMENT];

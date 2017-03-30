@@ -9,6 +9,7 @@ use Mvc5\Arg;
 use Mvc5\Route\Route;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
+use Mvc5\Url\Assemble;
 
 trait Generator
 {
@@ -17,11 +18,6 @@ trait Generator
      */
     use Build;
     use Compile;
-
-    /**
-     * @var callable
-     */
-    protected $assembler;
 
     /**
      * @var array|Route
@@ -38,13 +34,11 @@ trait Generator
     ];
 
     /**
-     * @param callable $assembler
      * @param array|Route $route
      * @param array $options
      */
-    function __construct(callable $assembler, $route = [], array $options = [])
+    function __construct($route = [], array $options = [])
     {
-        $this->assembler = $assembler;
         $this->options = $options + $this->options;
         $this->route = $route;
     }
@@ -59,7 +53,7 @@ trait Generator
      */
     protected function assemble($scheme, $host, $port, $path, $options)
     {
-        return ($this->assembler)($scheme, $host, $port, $path, $options);
+        return Assemble::url($scheme, $host, $port, $path, $options);
     }
 
     /**
