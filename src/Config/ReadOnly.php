@@ -13,8 +13,8 @@ trait ReadOnly
      *
      */
     use Config {
-        remove as protected;
-        set as protected;
+        remove as private;
+        set as private;
     }
 
     /**

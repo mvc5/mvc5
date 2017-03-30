@@ -43,32 +43,26 @@ class Config
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return mixed
-     */
-    protected function set($name, $value = null)
-    {
-        if (is_string($name)) {
-            Arg::HOST !== $name ? $this->config[$name] = $value :
-                $this->config = [Arg::HOST => $value] + $this->config;
-            return $value;
-        }
-
-        isset($name[Arg::HOST]) &&
-            $name = [Arg::HOST => $name[Arg::HOST]] + $name;
-
-        $this->config = $name + $this->config;
-
-        return $name;
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
      * @return self|mixed
      */
     function with($name, $value = null)
     {
-        return parent::with(is_array($name) ? array_change_key_case($name, CASE_LOWER) : strtolower($name), $value);
+        if (is_string($name)) {
+            $name = strtolower($name);
+            $new = clone $this;
+
+            Arg::HOST !== $name ? $new->config[$name] = $value
+                : $new->config = [Arg::HOST => $value] + $new->config;
+
+            return $new;
+        }
+
+        $name = array_change_key_case($name, CASE_LOWER);
+
+        $new = clone $this;
+        $new->config = (isset($name[Arg::HOST]) ? [Arg::HOST => $name[Arg::HOST]] + $name : $name) + $this->config;
+
+        return $new;
     }
 
     /**
