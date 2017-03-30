@@ -60,7 +60,15 @@ class Config
         $name = array_change_key_case($name, CASE_LOWER);
 
         $new = clone $this;
-        $new->config = (isset($name[Arg::HOST]) ? [Arg::HOST => $name[Arg::HOST]] + $name : $name) + $this->config;
+
+        if (isset($name[Arg::HOST])) {
+            $new->config = [Arg::HOST => $name[Arg::HOST]] + $name + $this->config;
+            return $new;
+        }
+
+        foreach($name as $key => $value) {
+            $new->config[$key] = $value;
+        }
 
         return $new;
     }
