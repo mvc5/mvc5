@@ -10,56 +10,154 @@ use Mvc5\Arg;
 class Assemble
 {
     /**
-     * @param array $query
-     * @param string $parent
-     * @param array $params
-     * @return string
+     *
      */
-    static function buildQuery(array $query, $parent = '', $params = [])
-    {
-        foreach($query as $key => $value) {
-            $key = $parent ? $parent . '[' . static::encode($key) . ']' : static::encode($key);
-            $params[] = is_array($value) ? static::buildQuery($value, $key) :
-                (!isset($value) ? $key : $key . '=' . static::encode($value));
-        }
+    protected static $path = [
+        '%21' => '!', '%24' => '$', '%26' => '&', '%27' => '\'', '%28' => '(', '%29' => ')', '%2A' => '*',
+        '%2B' => '+', '%2C' => ',', '%3B' => ';', '%3D' => '=', '%3A' => ':', '%40' => '@', '%2F' => '/'
+    ];
 
-        return implode('&', $params);
+    /**
+     * @var string
+     */
+    protected static $separator = Arg::QUERY_SEPARATOR;
+
+    /**
+     * @var int
+     */
+    protected static $type = \PHP_QUERY_RFC3986;
+
+    /**
+     *
+     */
+    protected static $var = ['%21' => '!', '%2A' => '*', '%27' => '\'', '%28' => '(', '%29' => ')'];
+
+    /**
+     * @param array $options
+     */
+    function __construct(array $options = [])
+    {
+        isset($options[Arg::SEPARATORS]) &&
+            (static::$separator = $options[Arg::SEPARATORS][0]);
+
+        isset($options[Arg::TYPE]) &&
+            (static::$type = $options[Arg::TYPE]);
+
+        isset($options[Arg::VALUE]) &&
+            (static::$var = $options[Arg::VALUE]);
     }
 
     /**
-     * @param $value
-     * @return mixed
+     * @param null|string $path
+     * @param array|string $query
+     * @param null|string $fragment
+     * @param null|string $host
+     * @param null|string $scheme
+     * @param null|string $port
+     * @return string
      */
-    static function encode($value)
+    static function assemble($scheme, $host, $port, $path, $query, $fragment)
     {
-        return preg_replace_callback(
-            '/(?:[^a-zA-Z0-9_\-\.~!\$&\'\(\)\*\+,;=%:@\/\?]++|%(?![A-Fa-f0-9]{2}))/',
-            function(array $match) { return \rawurlencode($match[0]); },
-            $value
+        return ($scheme ? $scheme . ':' : '') . ($host ? '//' . $host : '') . ($host && $port ? ':' . $port : '') .
+            $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
+    }
+
+    /**
+     * @param string $value
+     * @param array $unreserved
+     * @return string
+     */
+    static function encode($value, array $unreserved = [])
+    {
+        return $value ? strtr(rawurlencode($value), $unreserved ?: static::$var) : '';
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    static function fragment($value)
+    {
+        return static::encode($value);
+    }
+
+    /**
+     * @param string $host
+     * @return string
+     */
+    static function host($host)
+    {
+        return strtolower($host);
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    static function path($path)
+    {
+        return static::encode($path, static::$path);
+    }
+
+    /**
+     * @param string $port
+     * @return int|null
+     */
+    static function port($port)
+    {
+        return $port && 80 != $port && 443 != $port ? (int) $port : null;
+    }
+
+    /**
+     * @param array|string $query
+     * @return string
+     */
+    static function query($query)
+    {
+        return http_build_query(
+            is_string($query) ? explode(static::$separator, $query) : $query, '', static::$separator, static::$type
         );
     }
 
     /**
-     * @param null|string $scheme
-     * @param null|string $host
-     * @param null|string $port
-     * @param null|string $path
-     * @param array|\ArrayAccess $options
+     * @param string $scheme
      * @return string
      */
-    static function url($scheme, $host, $port, $path, $options = [])
+    static function scheme($scheme)
     {
-        $path = static::encode($path);
+        return strtolower($scheme);
+    }
 
-        !empty($options[Arg::QUERY]) &&
-            $path .= '?' . static::buildQuery($options[Arg::QUERY]);
+    /**
+     * @param null|string $path
+     * @param array|string $query
+     * @param null|string $fragment
+     * @param null|string $host
+     * @param null|string $scheme
+     * @param null|string $port
+     * @return string
+     */
+    static function url($path, $query = [], $fragment = null, $host = null, $scheme = null, $port = null)
+    {
+        return static::assemble(
+            static::scheme($scheme), static::host($host), static::port($port),
+                static::path($path), static::query($query), static::fragment($fragment)
+        );
+    }
 
-        isset($options[Arg::FRAGMENT]) &&
-            $path .= '#' . $options[Arg::FRAGMENT];
-
+    /**
+     * @param $scheme
+     * @param $host
+     * @param $port
+     * @param $path
+     * @param array $options
+     * @return string
+     */
+    function __invoke($scheme, $host, $port, $path, array $options = [])
+    {
         $canonical = !empty($options[Arg::CANONICAL]);
 
-        !$port && $port = $options[Arg::PORT];
+        !$port && $port = $options[Arg::PORT] ?? null;
 
         ($port == 80 || $port == 443) &&
             $port = null;
@@ -70,6 +168,6 @@ class Assemble
         $host = $host ? (!$scheme && !$canonical && $host === $options[Arg::HOST] ? '' : $host) :
             ($canonical || $scheme ? $options[Arg::HOST] : '');
 
-        return ($scheme ? $scheme . ':' : '') . ($host ? '//' . $host : '') . ($port ? ':' . $port : '') . $path;
+        return static::url($path, $options[Arg::QUERY] ?? [], $options[Arg::FRAGMENT] ?? null, $host, $scheme, $port);
     }
 }

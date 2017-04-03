@@ -80,6 +80,7 @@ interface Arg
     const PREFIX = 'prefix';
     const PROPERTY = '$';
     const QUERY = 'query';
+    const QUERY_SEPARATOR = '&';
     const REASON = 'reason';
     const REGEX = 'regex';
     const RENDER = 'render';
