@@ -20,6 +20,11 @@ trait Generator
     use Compile;
 
     /**
+     * @var callable
+     */
+    protected $assembler;
+
+    /**
      * @var array|Route
      */
     protected $route;
@@ -36,11 +41,13 @@ trait Generator
     /**
      * @param array|Route $route
      * @param array $options
+     * @param callable $assembler
      */
-    function __construct($route = [], array $options = [])
+    function __construct($route = [], array $options = [], callable $assembler = null)
     {
         $this->options = $options + $this->options;
         $this->route = $route;
+        $this->assembler = $assembler ?: new Assemble;
     }
 
     /**
@@ -53,7 +60,7 @@ trait Generator
      */
     protected function assemble($scheme, $host, $port, $path, $options)
     {
-        return Assemble::url($scheme, $host, $port, $path, $options);
+        return ($this->assembler)($scheme, $host, $port, $path, $options);
     }
 
     /**
