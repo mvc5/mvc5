@@ -12,10 +12,40 @@ class Assemble
     /**
      *
      */
-    protected static $path = [
-        '%21' => '!', '%24' => '$', '%26' => '&', '%27' => '\'', '%28' => '(', '%29' => ')', '%2A' => '*',
-        '%2B' => '+', '%2C' => ',', '%3B' => ';', '%3D' => '=', '%3A' => ':', '%40' => '@', '%2F' => '/'
+    const FRAGMENT = self::UNRESERVED + ['%2B' => '+', '%26' => '&', '%3F' => '?'];
+
+    /**
+     *
+     */
+    const PATH = self::UNRESERVED + ['%2B' => '+', '%26' => '&'];
+
+    /**
+     *
+     */
+    const QUERY = self::UNRESERVED + ['%3F' => '?'];
+
+    /**
+     *
+     */
+    const UNRESERVED = [
+        '%2F' => '/', '%5B' => '[', '%5D' => ']', '%3A' => ':', '%40' => '@', '%21' => '!', '%24' => '$',
+        '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*', '%2C' => ',', '%3B' => ';', '%3D' => '='
     ];
+
+    /**
+     * @var array
+     */
+    protected static $fragment = self::FRAGMENT;
+
+    /**
+     * @var array
+     */
+    protected static $path = self::PATH;
+
+    /**
+     * @var array
+     */
+    protected static $query = self::QUERY;
 
     /**
      * @var string
@@ -28,37 +58,51 @@ class Assemble
     protected static $type = \PHP_QUERY_RFC3986;
 
     /**
-     *
-     */
-    protected static $var = ['%21' => '!', '%2A' => '*', '%27' => '\'', '%28' => '(', '%29' => ')'];
-
-    /**
      * @param array $options
      */
     function __construct(array $options = [])
     {
+        isset($options[Arg::FRAGMENT]) &&
+            (static::$fragment = $options[Arg::FRAGMENT]);
+
+        isset($options[Arg::PATH]) &&
+            (static::$path = $options[Arg::PATH]);
+
+        isset($options[Arg::QUERY]) &&
+            (static::$query = $options[Arg::QUERY]);
+
         isset($options[Arg::SEPARATORS]) &&
             (static::$separator = $options[Arg::SEPARATORS][0]);
 
         isset($options[Arg::TYPE]) &&
             (static::$type = $options[Arg::TYPE]);
-
-        isset($options[Arg::VALUE]) &&
-            (static::$var = $options[Arg::VALUE]);
     }
 
     /**
+     * @param null|string $scheme
+     * @param null|string $host
+     * @param null|string $port
      * @param null|string $path
      * @param array|string $query
      * @param null|string $fragment
-     * @param null|string $host
-     * @param null|string $scheme
-     * @param null|string $port
      * @return string
      */
-    static function assemble($scheme, $host, $port, $path, $query, $fragment)
+    static function build($scheme, $host, $port, $path, $query, $fragment)
     {
-        return ($scheme ? $scheme . ':' : '') . ($host ? '//' . $host : '') . ($host && $port ? ':' . $port : '') .
+        return static::component($scheme, $host && $port ? $host . ':' . $port : $host, $path, $query, $fragment);
+    }
+
+    /**
+     * @param null|string $scheme
+     * @param null|string $authority
+     * @param null|string $path
+     * @param array|string $query
+     * @param null|string $fragment
+     * @return string
+     */
+    static function component($scheme, $authority, $path, $query, $fragment)
+    {
+        return ($scheme ? $scheme . ':' : '') . ($authority ? '//' . $authority : '') .
             $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
     }
 
@@ -69,7 +113,7 @@ class Assemble
      */
     static function encode($value, array $unreserved = [])
     {
-        return $value ? strtr(rawurlencode($value), $unreserved ?: static::$var) : '';
+        return $value ? strtr(rawurlencode($value), $unreserved ?: static::UNRESERVED) : (string) $value;
     }
 
     /**
@@ -78,7 +122,7 @@ class Assemble
      */
     static function fragment($value)
     {
-        return static::encode($value);
+        return static::encode($value, static::$fragment);
     }
 
     /**
@@ -114,9 +158,9 @@ class Assemble
      */
     static function query($query)
     {
-        return http_build_query(
+        return strtr(http_build_query(
             is_string($query) ? explode(static::$separator, $query) : $query, '', static::$separator, static::$type
-        );
+        ), static::$query);
     }
 
     /**
@@ -139,7 +183,7 @@ class Assemble
      */
     static function url($path, $query = [], $fragment = null, $host = null, $scheme = null, $port = null)
     {
-        return static::assemble(
+        return static::build(
             static::scheme($scheme), static::host($host), static::port($port),
                 static::path($path), static::query($query), static::fragment($fragment)
         );
