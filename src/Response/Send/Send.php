@@ -47,7 +47,7 @@ trait Send
         }
 
         foreach($response->headers() as $name => $header) {
-            header($name . ': ' . (is_array($header) ? implode(', ', $header) : $header));
+            header($name . ': ' . implode(', ', (array) $header));
         }
 
         foreach($this->cookies($response) as $cookie) {
@@ -56,7 +56,7 @@ trait Send
 
         $statusLine = sprintf('HTTP/%s %s %s', $response->version(), $response->status(), $response->reason());
 
-        header($statusLine, true, $response->status());
+        header($statusLine, true, (int) $response->status());
     }
 
     /**

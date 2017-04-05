@@ -26,7 +26,7 @@ class Path
      */
     protected function match(Route $route, Request $request, $path, $offset, callable $next)
     {
-        if (!preg_match('(\G' . $route->regex() . ')', $path, $match, null, $offset)) {
+        if (!preg_match('(\G' . $route->regex() . ')', $path, $match, 0, $offset)) {
             return null;
         }
 

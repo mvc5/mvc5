@@ -69,7 +69,7 @@ trait Cookies
      */
     function remove($name, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->setCookie($this->cookie($name, false, 946706400, $path, $domain, $secure, $httponly));
+        return $this->setCookie($this->cookie($name, '', 946706400, $path, $domain, $secure, $httponly));
     }
 
     /**

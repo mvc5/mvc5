@@ -49,7 +49,7 @@ interface Arg
     const FRAGMENT = 'fragment';
     const HEADERS = 'headers';
     const HOST = 'host';
-    const HTTP_OK = '200';
+    const HTTP_OK = 200;
     const HTTP_ONLY = 'httponly';
     const INDEX = '#';
     const INFO = 'info';
