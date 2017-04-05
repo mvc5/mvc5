@@ -158,9 +158,9 @@ class Assemble
      */
     static function query($query)
     {
-        return strtr(http_build_query(
+        return $query ? strtr(http_build_query(
             is_string($query) ? explode(static::$separator, $query) : $query, '', static::$separator, static::$type
-        ), static::$query);
+        ), static::$query) : $query;
     }
 
     /**
@@ -181,7 +181,7 @@ class Assemble
      * @param null|string $port
      * @return string
      */
-    static function url($path, $query = [], $fragment = null, $host = null, $scheme = null, $port = null)
+    static function url($path, $query = [], $fragment = '', $host = '', $scheme = '', $port = '')
     {
         return static::build(
             static::scheme($scheme), static::host($host), static::port($port),
@@ -190,28 +190,16 @@ class Assemble
     }
 
     /**
-     * @param $scheme
-     * @param $host
-     * @param $port
      * @param $path
-     * @param array $options
+     * @param $query
+     * @param $fragment
+     * @param $host
+     * @param $scheme
+     * @param $port
      * @return string
      */
-    function __invoke($scheme, $host, $port, $path, array $options = [])
+    function __invoke($path, $query = [], $fragment = '', $host = '', $scheme = '', $port = '')
     {
-        $canonical = !empty($options[Arg::CANONICAL]);
-
-        !$port && $port = $options[Arg::PORT] ?? null;
-
-        ($port == 80 || $port == 443) &&
-            $port = null;
-
-        $scheme = $scheme ? (!$port && !$canonical && $scheme === $options[Arg::SCHEME] ? '' : $scheme) :
-            ($canonical || $port ? $options[Arg::SCHEME] : '');
-
-        $host = $host ? (!$scheme && !$canonical && $host === $options[Arg::HOST] ? '' : $host) :
-            ($canonical || $scheme ? $options[Arg::HOST] : '');
-
-        return static::url($path, $options[Arg::QUERY] ?? [], $options[Arg::FRAGMENT] ?? null, $host, $scheme, $port);
+        return static::url($path, $query, $fragment, $host, $scheme, $port);
     }
 }

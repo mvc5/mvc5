@@ -33,9 +33,12 @@ trait Generator
      * @var array
      */
     protected $options = [
-        Arg::HOST   => null,
-        Arg::PORT   => null,
-        Arg::SCHEME => null
+        Arg::CANONICAL => true,
+        Arg::FRAGMENT => '',
+        Arg::HOST   => '',
+        Arg::PORT   => '',
+        Arg::QUERY => '',
+        Arg::SCHEME => ''
     ];
 
     /**
@@ -60,7 +63,27 @@ trait Generator
      */
     protected function assemble($scheme, $host, $port, $path, $options)
     {
-        return ($this->assembler)($scheme, $host, $port, $path, $options);
+        $canonical = !empty($options[Arg::CANONICAL]);
+
+        return ($this->assembler)(
+            $path,
+            $options[Arg::QUERY],
+            $options[Arg::FRAGMENT],
+            $this->canonical($host, $options[Arg::HOST], $canonical),
+            $this->canonical($scheme, $options[Arg::SCHEME], $canonical),
+            $this->canonical($port, $options[Arg::PORT], $canonical)
+        );
+    }
+
+    /**
+     * @param $part
+     * @param $default
+     * @param $canonical
+     * @return string
+     */
+    protected function canonical($part, $default, $canonical = false)
+    {
+        return $part ? (!$canonical && $part === $default ? '' : $part) : ($canonical ? $default : '');
     }
 
     /**
