@@ -76,14 +76,14 @@ trait Generator
     }
 
     /**
-     * @param $part
+     * @param $value
      * @param $default
      * @param $canonical
      * @return string
      */
-    protected function canonical($part, $default, $canonical = false)
+    protected function canonical($value, $default, $canonical = false)
     {
-        return $part ? (!$canonical && $part === $default ? '' : $part) : ($canonical ? $default : '');
+        return $value ? (!$canonical && $value === $default ? '' : $value) : ($canonical ? $default : '');
     }
 
     /**
