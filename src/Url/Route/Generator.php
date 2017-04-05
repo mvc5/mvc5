@@ -33,7 +33,7 @@ trait Generator
      * @var array
      */
     protected $options = [
-        Arg::CANONICAL => true,
+        Arg::CANONICAL => false,
         Arg::FRAGMENT => '',
         Arg::HOST   => '',
         Arg::PORT   => '',
