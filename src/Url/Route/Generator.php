@@ -6,10 +6,11 @@
 namespace Mvc5\Url\Route;
 
 use Mvc5\Arg;
+use Mvc5\Http\Uri;
+use Mvc5\Http\Uri\Config as HttpUri;
 use Mvc5\Route\Route;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
-use Mvc5\Url\Assemble;
 
 trait Generator
 {
@@ -20,70 +21,23 @@ trait Generator
     use Compile;
 
     /**
-     * @var callable
-     */
-    protected $assembler;
-
-    /**
      * @var array|Route
      */
     protected $route;
 
     /**
-     * @var array
+     * @var Uri
      */
-    protected $options = [
-        Arg::CANONICAL => false,
-        Arg::FRAGMENT => '',
-        Arg::HOST   => '',
-        Arg::PORT   => '',
-        Arg::QUERY => '',
-        Arg::SCHEME => ''
-    ];
+    protected $uri;
 
     /**
      * @param array|Route $route
-     * @param array $options
-     * @param callable $assembler
+     * @param Uri $uri
      */
-    function __construct($route = [], array $options = [], callable $assembler = null)
+    function __construct($route, Uri $uri = null)
     {
-        $this->options = $options + $this->options;
         $this->route = $route;
-        $this->assembler = $assembler ?: new Assemble;
-    }
-
-    /**
-     * @param string $scheme
-     * @param string $host
-     * @param string $port
-     * @param string $path
-     * @param array|\ArrayAccess $options
-     * @return string
-     */
-    protected function assemble($scheme, $host, $port, $path, $options)
-    {
-        $canonical = !empty($options[Arg::CANONICAL]);
-
-        return ($this->assembler)(
-            $path,
-            $options[Arg::QUERY],
-            $options[Arg::FRAGMENT],
-            $this->canonical($host, $options[Arg::HOST], $canonical),
-            $this->canonical($scheme, $options[Arg::SCHEME], $canonical),
-            $this->canonical($port, $options[Arg::PORT], $canonical)
-        );
-    }
-
-    /**
-     * @param $value
-     * @param $default
-     * @param $canonical
-     * @return string
-     */
-    protected function canonical($value, $default, $canonical = false)
-    {
-        return $value ? (!$canonical && $value === $default ? '' : $value) : ($canonical ? $default : '');
+        $this->uri = $uri ?: new HttpUri;
     }
 
     /**
@@ -93,7 +47,7 @@ trait Generator
      */
     protected function child(Route $parent, $name)
     {
-        return $this->merge($parent, clone $this->url($parent->child($name)));
+        return $this->merge($parent, clone $this->route($parent->child($name)));
     }
 
     /**
@@ -111,21 +65,20 @@ trait Generator
      * @param array $options
      * @param string $path
      * @param Route $parent
-     * @return string
+     * @return Uri
      */
     protected function generate($name, array $params = [], array $options = [], $path = '', Route $parent = null)
     {
         $name = is_array($name) ? $name : explode(Arg::SEPARATOR, $name);
 
-        $route = $parent ? $this->child($parent, $name[0]) : $this->url($this->config($name[0]));
+        $route = $parent ? $this->child($parent, $name[0]) : $this->route($this->config($name[0]));
 
         $path .= $this->compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
 
         array_shift($name);
 
-        return $name ? $this->generate($name, $params, $options, $path, $route) : $this->assemble(
-            $route->scheme(), $route->host(), $route->port(), $path, $this->options($options)
-        );
+        return $name ? $this->generate($name, $params, $options, $path, $route) :
+            $this->uri($route->scheme(), $route->host(), $route->port(), $path, $options);
     }
 
     /**
@@ -158,21 +111,27 @@ trait Generator
     }
 
     /**
-     * @param array $options
-     * @return array
-     */
-    protected function options(array $options = [])
-    {
-        return $options + $this->options;
-    }
-
-    /**
      * @param array|Route $route
      * @return Route|null
      */
-    protected function url($route)
+    protected function route($route)
     {
         return $route instanceof Route && isset($route[Arg::TOKENS]) ? $route : $this->build($route, false);
+    }
+
+    /**
+     * @param $scheme
+     * @param $host
+     * @param $port
+     * @param $path
+     * @param array $options
+     * @return Uri
+     */
+    protected function uri($scheme, $host, $port, $path, array $options = [])
+    {
+        return $this->uri->with(
+            [Arg::HOST => $host, Arg::PATH => $path, Arg::PORT => $port, Arg::SCHEME => $scheme] + $options
+        );
     }
 
     /**
@@ -198,6 +157,6 @@ trait Generator
      */
     function __invoke($name = null, array $params = [], array $options = [])
     {
-        return rtrim($this->generate($this->name($name), $params, $options), Arg::SEPARATOR) ?: Arg::SEPARATOR;
+        return $this->generate($this->name($name), $params, $options);
     }
 }

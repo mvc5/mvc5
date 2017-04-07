@@ -64,11 +64,11 @@ trait Uri
     }
 
     /**
-     * @return string
+     * @return array|string
      */
     function query()
     {
-        return (string) $this[Arg::QUERY];
+        return $this[Arg::QUERY];
     }
 
     /**
@@ -93,10 +93,8 @@ trait Uri
     function __toString()
     {
         $path     = $this->path();
-        $query    = ltrim($this->query(), '?');
+        $query    = $this->query();
         $fragment = $this->fragment();
-
-        $path .= ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
 
         $user = $this->user() ? ($this->user() . ':' . $this->password()) : '';
 
@@ -107,7 +105,8 @@ trait Uri
         ($port == 80 || $port == 443) &&
             $port = null;
 
-        return ($scheme ? $scheme . ':' : '') . '//' .
-            ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') . '/' . ltrim($path, '/');
+        return ($scheme ? $scheme . ':' : '') .
+            ($host ? '//' . ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') : '') .
+                $path . ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
     }
 }

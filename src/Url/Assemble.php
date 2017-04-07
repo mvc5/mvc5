@@ -6,13 +6,14 @@
 namespace Mvc5\Url;
 
 use Mvc5\Arg;
+use Mvc5\Http\Uri;
 
 class Assemble
 {
     /**
      *
      */
-    const FRAGMENT = self::UNRESERVED + ['%2B' => '+', '%26' => '&', '%3F' => '?'];
+    const FRAGMENT = self::UNRESERVED + ['%2B' => '+', '%26' => '&', '%3F' => '?', '%23' => '#'];
 
     /**
      *
@@ -27,64 +28,23 @@ class Assemble
     /**
      *
      */
+    const QUERY_STRING = self::QUERY + ['%26' => '&'];
+
+    /**
+     *
+     */
     const UNRESERVED = [
         '%2F' => '/', '%5B' => '[', '%5D' => ']', '%3A' => ':', '%40' => '@', '%21' => '!', '%24' => '$',
         '%27' => "'", '%28' => '(', '%29' => ')', '%2A' => '*', '%2C' => ',', '%3B' => ';', '%3D' => '='
     ];
 
     /**
-     * @var array
-     */
-    protected static $fragment = self::FRAGMENT;
-
-    /**
-     * @var array
-     */
-    protected static $path = self::PATH;
-
-    /**
-     * @var array
-     */
-    protected static $query = self::QUERY;
-
-    /**
-     * @var string
-     */
-    protected static $separator = Arg::QUERY_SEPARATOR;
-
-    /**
-     * @var int
-     */
-    protected static $type = \PHP_QUERY_RFC3986;
-
-    /**
-     * @param array $options
-     */
-    function __construct(array $options = [])
-    {
-        isset($options[Arg::FRAGMENT]) &&
-            (static::$fragment = $options[Arg::FRAGMENT]);
-
-        isset($options[Arg::PATH]) &&
-            (static::$path = $options[Arg::PATH]);
-
-        isset($options[Arg::QUERY]) &&
-            (static::$query = $options[Arg::QUERY]);
-
-        isset($options[Arg::SEPARATORS]) &&
-            (static::$separator = $options[Arg::SEPARATORS][0]);
-
-        isset($options[Arg::TYPE]) &&
-            (static::$type = $options[Arg::TYPE]);
-    }
-
-    /**
-     * @param null|string $scheme
-     * @param null|string $host
-     * @param null|string $port
-     * @param null|string $path
+     * @param string $scheme
+     * @param string $host
+     * @param int|null $port
+     * @param string $path
      * @param array|string $query
-     * @param null|string $fragment
+     * @param string $fragment
      * @return string
      */
     static function build($scheme, $host, $port, $path, $query, $fragment)
@@ -122,7 +82,7 @@ class Assemble
      */
     static function fragment($value)
     {
-        return static::encode($value, static::$fragment);
+        return static::encode($value, static::FRAGMENT);
     }
 
     /**
@@ -140,7 +100,7 @@ class Assemble
      */
     static function path($path)
     {
-        return static::encode($path, static::$path);
+        return static::encode($path, static::PATH);
     }
 
     /**
@@ -158,9 +118,9 @@ class Assemble
      */
     static function query($query)
     {
-        return $query ? strtr(http_build_query(
-            is_string($query) ? explode(static::$separator, $query) : $query, '', static::$separator, static::$type
-        ), static::$query) : $query;
+        return !$query ? $query : (is_string($query) ? static::encode($query, static::QUERY_STRING) : strtr(
+            http_build_query($query, '', Arg::QUERY_SEPARATOR, \PHP_QUERY_RFC3986), static::QUERY
+        ));
     }
 
     /**
@@ -173,15 +133,15 @@ class Assemble
     }
 
     /**
-     * @param null|string $path
+     * @param string $scheme
+     * @param string $host
+     * @param int $port
+     * @param string $path
      * @param array|string $query
      * @param null|string $fragment
-     * @param null|string $host
-     * @param null|string $scheme
-     * @param null|string $port
      * @return string
      */
-    static function url($path, $query = [], $fragment = '', $host = '', $scheme = '', $port = '')
+    static function url($scheme, $host, $port, $path, $query = '', $fragment = '')
     {
         return static::build(
             static::scheme($scheme), static::host($host), static::port($port),
@@ -190,16 +150,11 @@ class Assemble
     }
 
     /**
-     * @param $path
-     * @param $query
-     * @param $fragment
-     * @param $host
-     * @param $scheme
-     * @param $port
+     * @param Uri $uri
      * @return string
      */
-    function __invoke($path, $query = [], $fragment = '', $host = '', $scheme = '', $port = '')
+    function __invoke(Uri $uri)
     {
-        return static::url($path, $query, $fragment, $host, $scheme, $port);
+        return static::url($uri->scheme(), $uri->host(), $uri->port(), $uri->path(), $uri->query(), $uri->fragment());
     }
 }
