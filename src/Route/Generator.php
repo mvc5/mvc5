@@ -37,7 +37,7 @@ class Generator
     }
 
     /**
-     * @param array|Route $route
+     * @param array|\ArrayAccess|Route $route
      * @param bool $compile
      * @return Route
      */

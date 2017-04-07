@@ -295,6 +295,7 @@ trait Resolver
         }
 
         if ($config instanceof FileInclude) {
+            /** @var callable $include */
             $include = new class() {
                 function __invoke($file) {
                     return include $file;
@@ -533,7 +534,7 @@ trait Resolver
             );
         }
 
-        if ($name == $parent->name()) {
+        if ($name === $parent->name()) {
             return $this->hydrate($config, $this->make($name, $args));
         }
 
