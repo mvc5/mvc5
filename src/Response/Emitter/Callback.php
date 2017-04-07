@@ -23,10 +23,10 @@ class Callback
     }
 
     /**
-     * @return mixed
+     *
      */
     function emit()
     {
-       return ($this->emitter)();
+       echo ($this->emitter)();
     }
 }
