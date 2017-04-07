@@ -8,9 +8,9 @@ namespace Mvc5\Url\Route;
 use Mvc5\Arg;
 use Mvc5\Http\Uri;
 use Mvc5\Http\Uri\Config as HttpUri;
-use Mvc5\Route\Route;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compile;
+use Mvc5\Route\Route;
 
 trait Generator
 {
@@ -47,7 +47,7 @@ trait Generator
      */
     protected function child(Route $parent, $name)
     {
-        return $this->merge($parent, clone $this->route($parent->child($name)));
+        return $this->merge($parent, $this->route($parent->child($name)));
     }
 
     /**
