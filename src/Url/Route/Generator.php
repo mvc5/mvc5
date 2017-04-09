@@ -51,6 +51,21 @@ trait Generator
     }
 
     /**
+     * @param array $segment
+     * @param $params
+     * @param string $path
+     * @return string
+     */
+    protected function combine(array $segment, $params, $path = '')
+    {
+        foreach($segment as $route) {
+            $path .= $this->compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
+        }
+
+        return $path;
+    }
+
+    /**
      * @param string $name
      * @return array|Route
      */
@@ -63,11 +78,11 @@ trait Generator
      * @param array|string $name
      * @param array $params
      * @param array $options
-     * @param string $path
+     * @param array $path
      * @param Route $parent
      * @return Uri
      */
-    protected function generate(array $name, array $params = [], array $options = [], $path = '', $parent = null)
+    protected function generate(array $name, array $params = [], array $options = [], array $path = [], $parent = null)
     {
         return $this->solve($this->resolve(array_shift($name), $parent), $name, $params, $options, $path);
     }
@@ -116,13 +131,13 @@ trait Generator
      * @param array $name
      * @param array $params
      * @param array $options
-     * @param string $path
+     * @param array $path
      * @return Uri
      */
-    protected function path(Route $route, $name, $params, $options, $path = '')
+    protected function path(Route $route, $name, $params, $options, $path)
     {
         return $name ? $this->generate($name, $params, $options, $path, $route) :
-            $this->uri($route->scheme(), $route->host(), $route->port(), $path, $options);
+            $this->uri($route->scheme(), $route->host(), $route->port(), $this->combine($path, $params), $options);
     }
 
     /**
@@ -141,18 +156,7 @@ trait Generator
      */
     protected function route($route)
     {
-        return !$route || ($route instanceof Route && isset($route[Arg::TOKENS])) ? $route :
-            $this->build($route, false);
-    }
-
-    /**
-     * @param Route $route
-     * @param $params
-     * @return string
-     */
-    protected function segment(Route $route, $params)
-    {
-        return $this->compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
+        return !$route || ($route instanceof Route && isset($route[Arg::TOKENS])) ? $route : $this->build($route, false);
     }
 
     /**
@@ -160,13 +164,13 @@ trait Generator
      * @param array $name
      * @param array $params
      * @param array $options
-     * @param string $path
+     * @param array $path
      * @return Uri
      */
     protected function solve($route, $name, $params, $options, $path)
     {
         return !$route || $route instanceof Uri ? $route :
-            $this->path($route, $name, $params, $options, $path . $this->segment($route, $params));
+            $this->path($route, $name, $params, $options, array_merge($path, [$route]));
     }
 
     /**
