@@ -7,6 +7,7 @@ namespace Mvc5\Url;
 
 use Mvc5\Arg;
 use Mvc5\Http\Uri;
+use Mvc5\Http\Uri\Config as HttpUri;
 
 class Plugin
 {
@@ -39,12 +40,21 @@ class Plugin
     }
 
     /**
+     * @param Uri $uri
+     * @return string
+     */
+    protected function assemble($uri)
+    {
+        return ($this->assembler)($uri);
+    }
+
+    /**
      * @param string $name
      * @param array $params
      * @param array $options
      * @return Uri
      */
-    protected function generate($name, array $params = [], array $options = [])
+    protected function generate($name, $params, $options)
     {
         return ($this->generator)($name, $params, $options);
     }
@@ -53,7 +63,7 @@ class Plugin
      * @param string $name
      * @return string
      */
-    protected function name($name = null)
+    protected function name($name)
     {
         return $name ?? $this->name;
     }
@@ -61,11 +71,12 @@ class Plugin
     /**
      * @param string $query
      * @param string $fragment
+     * @param array $options
      * @return array
      */
-    protected function options($query = '', $fragment = '')
+    protected function options($query, $fragment, array $options = [])
     {
-        return [Arg::FRAGMENT => $fragment, Arg::QUERY => $query];
+        return [Arg::FRAGMENT => $fragment, Arg::QUERY => $query] + $options;
     }
 
     /**
@@ -73,31 +84,64 @@ class Plugin
      * @param array $params
      * @return array
      */
-    protected function params($name, array $params = [])
+    protected function params($name, array $params)
     {
         return $name ? $params : $params + $this->params;
     }
 
     /**
-     * @param Uri $uri
-     * @return string
+     * @param array $route
+     * @param array $options
+     * @return Uri
      */
-    protected function url(Uri $uri)
+    protected function resolve(array $route, array $options)
     {
-        return ($this->assembler)($uri);
+        return $this->solve(array_shift($route), $this->values($route), $options);
     }
 
     /**
-     * @param null $name
+     * @param string $name
      * @param array $params
+     * @param array $options
+     * @return Uri
+     */
+    protected function solve($name, $params, $options)
+    {
+        return $this->generate($this->name($name), $this->params($name, $params), $options) ?:
+            $this->uri($name, $options);
+    }
+
+    /**
+     * @param $path
+     * @param array $options
+     * @return HttpUri
+     */
+    protected function uri($path, array $options)
+    {
+        return new HttpUri([Arg::PATH => $path] + $options);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     */
+    protected function values(array $params)
+    {
+        return is_numeric(key($params)) ? $params[0] : $params;
+    }
+
+    /**
+     * @param array|string $route
      * @param array|string $query
      * @param string $fragment
+     * @param array $options
      * @return string
      */
-    function __invoke($name = null, array $params = [], $query = '', $fragment = '')
+    function __invoke($route = null, $query = '', $fragment = '', array $options = [])
     {
-        return $this->url(
-            $this->generate($this->name($name), $this->params($name, $params), $this->options($query, $fragment))
+        return $this->assemble(
+            $route instanceof Uri ? $route :
+                $this->resolve((array) $route, $this->options($query, $fragment, $options))
         );
     }
 }

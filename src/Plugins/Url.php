@@ -18,13 +18,14 @@ trait Url
     protected abstract function call($name, array $args = [], callable $callback = null);
 
     /**
-     * @param null $name
-     * @param array $params
+     * @param array|null|string $route
+     * @param array|string $query
+     * @param string $fragment
      * @param array $options
      * @return string
      */
-    protected function url($name = null, array $params = [], array $options = [])
+    protected function url($route = null, $query = '', $fragment = '', array $options = [])
     {
-        return $this->call(Arg::URL, [$name, $params, $options]);
+        return $this->call(Arg::URL, [$route, $query, $fragment, $options]);
     }
 }
