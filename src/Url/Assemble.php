@@ -41,9 +41,9 @@ class Assemble
     /**
      * @param string $scheme
      * @param string $host
-     * @param int|null $port
+     * @param int $port
      * @param string $path
-     * @param array|string $query
+     * @param string $query
      * @param string $fragment
      * @return string
      */
@@ -53,16 +53,16 @@ class Assemble
     }
 
     /**
-     * @param null|string $scheme
-     * @param null|string $authority
-     * @param null|string $path
-     * @param array|string $query
-     * @param null|string $fragment
+     * @param string $scheme
+     * @param string $authority
+     * @param string $path
+     * @param string $query
+     * @param string $fragment
      * @return string
      */
     static function component($scheme, $authority, $path, $query, $fragment)
     {
-        return ($scheme ? $scheme . ':' : '') . ($authority ? '//' . $authority : '') .
+        return ($scheme ? $scheme . ':' : '') . ($scheme || $authority ? '//' : '') . $authority .
             $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
     }
 
