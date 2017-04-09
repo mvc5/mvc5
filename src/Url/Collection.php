@@ -18,7 +18,7 @@ class Collection
      */
     protected function config($name)
     {
-        return isset($this->route[$name]) ? $this->route[$name] : null;
+        return $name && isset($this->route[$name]) ? $this->route[$name] : null;
     }
 
     /**

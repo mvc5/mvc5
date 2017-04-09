@@ -42,21 +42,21 @@ trait Generator
 
     /**
      * @param Route $parent
-     * @param $name
+     * @param Route $route
      * @return Route
      */
-    protected function child(Route $parent, $name)
+    protected function child($parent, $route)
     {
-        return $this->merge($parent, $this->route($parent->child($name)));
+        return $this->next($parent, $route);
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return array|Route
      */
     protected function config($name)
     {
-        return $name === $this->route[Arg::NAME] ? $this->route : $this->route->child($name);
+        return $name === $this->route[Arg::NAME] ? $this->route : null;
     }
 
     /**
@@ -67,18 +67,9 @@ trait Generator
      * @param Route $parent
      * @return Uri
      */
-    protected function generate($name, array $params = [], array $options = [], $path = '', Route $parent = null)
+    protected function generate(array $name, array $params = [], array $options = [], $path = '', $parent = null)
     {
-        $name = is_array($name) ? $name : explode(Arg::SEPARATOR, $name);
-
-        $route = $parent ? $this->child($parent, $name[0]) : $this->route($this->config($name[0]));
-
-        $path .= $this->compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
-
-        array_shift($name);
-
-        return $name ? $this->generate($name, $params, $options, $path, $route) :
-            $this->uri($route->scheme(), $route->host(), $route->port(), $path, $options);
+        return $this->solve($this->resolve(array_shift($name), $parent), $name, $params, $options, $path);
     }
 
     /**
@@ -107,7 +98,41 @@ trait Generator
      */
     protected function name($name)
     {
-        return $name === $this->route[Arg::NAME] ? $name : $this->route[Arg::NAME] . Arg::SEPARATOR . $name;
+        return !$name || $name === $this->route[Arg::NAME] ? $name : $this->route[Arg::NAME] . Arg::SEPARATOR . $name;
+    }
+
+    /**
+     * @param Route $parent
+     * @param Route $route
+     * @return null
+     */
+    protected function next($parent, $route)
+    {
+        return $route ? $this->merge($parent, $this->route($route)) : null;
+    }
+
+    /**
+     * @param Route $route
+     * @param array $name
+     * @param array $params
+     * @param array $options
+     * @param string $path
+     * @return Uri
+     */
+    protected function path(Route $route, $name, $params, $options, $path = '')
+    {
+        return $name ? $this->generate($name, $params, $options, $path, $route) :
+            $this->uri($route->scheme(), $route->host(), $route->port(), $path, $options);
+    }
+
+    /**
+     * @param $name
+     * @param Route $parent
+     * @return Route|Uri
+     */
+    protected function resolve($name, $parent)
+    {
+        return $parent ? $this->step($parent, $name) : $this->route($this->config($name));
     }
 
     /**
@@ -116,7 +141,42 @@ trait Generator
      */
     protected function route($route)
     {
-        return $route instanceof Route && isset($route[Arg::TOKENS]) ? $route : $this->build($route, false);
+        return !$route || ($route instanceof Route && isset($route[Arg::TOKENS])) ? $route :
+            $this->build($route, false);
+    }
+
+    /**
+     * @param Route $route
+     * @param $params
+     * @return string
+     */
+    protected function segment(Route $route, $params)
+    {
+        return $this->compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
+    }
+
+    /**
+     * @param Route|Uri $route
+     * @param array $name
+     * @param array $params
+     * @param array $options
+     * @param string $path
+     * @return Uri
+     */
+    protected function solve($route, $name, $params, $options, $path)
+    {
+        return !$route || $route instanceof Uri ? $route :
+            $this->path($route, $name, $params, $options, $path . $this->segment($route, $params));
+    }
+
+    /**
+     * @param Route $parent
+     * @param $name
+     * @return Route
+     */
+    protected function step(Route $parent, $name)
+    {
+        return $this->child($parent, $parent->child($name));
     }
 
     /**
@@ -150,13 +210,13 @@ trait Generator
     }
 
     /**
-     * @param null|string $name
+     * @param string $name
      * @param array $params
      * @param array $options
      * @return string
      */
-    function __invoke($name = null, array $params = [], array $options = [])
+    function __invoke($name, array $params = [], array $options = [])
     {
-        return $this->generate($this->name($name), $params, $options);
+        return $this->generate(explode(Arg::SEPARATOR, $this->name($name)), $params, $options);
     }
 }
