@@ -49,6 +49,16 @@ class Plugin
     }
 
     /**
+     * @param array $route
+     * @param array $options
+     * @return Uri
+     */
+    protected function create(array $route, array $options)
+    {
+        return $this->url(array_shift($route), $this->values($route), $options);
+    }
+
+    /**
      * @param string $name
      * @param array $params
      * @param array $options
@@ -90,13 +100,13 @@ class Plugin
     }
 
     /**
-     * @param array $route
+     * @param $path
      * @param array $options
-     * @return Uri
+     * @return HttpUri
      */
-    protected function resolve(array $route, array $options)
+    protected function uri($path, array $options)
     {
-        return $this->solve(array_shift($route), $this->values($route), $options);
+        return new HttpUri([Arg::PATH => $path] + $options);
     }
 
     /**
@@ -105,20 +115,9 @@ class Plugin
      * @param array $options
      * @return Uri
      */
-    protected function solve($name, $params, $options)
+    protected function url($name, $params, $options)
     {
-        return $this->generate($this->name($name), $this->params($name, $params), $options) ?:
-            $this->uri($name, $options);
-    }
-
-    /**
-     * @param $path
-     * @param array $options
-     * @return HttpUri
-     */
-    protected function uri($path, array $options)
-    {
-        return new HttpUri([Arg::PATH => $path] + $options);
+        return $this->generate($this->name($name), $this->params($name, $params), $options) ?: $this->uri($name, $options);
     }
 
     /**
@@ -140,8 +139,7 @@ class Plugin
     function __invoke($route = null, $query = '', $fragment = '', array $options = [])
     {
         return $this->assemble(
-            $route instanceof Uri ? $route :
-                $this->resolve((array) $route, $this->options($query, $fragment, $options))
+            $route instanceof Uri ? $route : $this->create((array) $route, $this->options($query, $fragment, $options))
         );
     }
 }

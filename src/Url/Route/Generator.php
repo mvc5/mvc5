@@ -41,13 +41,24 @@ trait Generator
     }
 
     /**
+     * @param array $path
+     * @param $route
+     * @return array
+     */
+    protected function append(array $path, $route)
+    {
+        $path[] = $route;
+        return $path;
+    }
+
+    /**
      * @param Route $parent
      * @param Route $route
      * @return Route
      */
     protected function child($parent, $route)
     {
-        return $this->next($parent, $route);
+        return $route ? $this->merge($parent, $this->route($route)) : null;
     }
 
     /**
@@ -84,7 +95,17 @@ trait Generator
      */
     protected function generate(array $name, array $params = [], array $options = [], array $path = [], $parent = null)
     {
-        return $this->solve($this->resolve(array_shift($name), $parent), $name, $params, $options, $path);
+        return $this->resolve($this->match(array_shift($name), $parent), $name, $params, $options, $path);
+    }
+
+    /**
+     * @param string $name
+     * @param Route $parent
+     * @return Route|Uri
+     */
+    protected function match($name, $parent)
+    {
+        return $parent ? $this->child($parent, $parent->child($name)) : $this->route($this->config($name));
     }
 
     /**
@@ -117,16 +138,6 @@ trait Generator
     }
 
     /**
-     * @param Route $parent
-     * @param Route $route
-     * @return null
-     */
-    protected function next($parent, $route)
-    {
-        return $route ? $this->merge($parent, $this->route($route)) : null;
-    }
-
-    /**
      * @param Route $route
      * @param array $name
      * @param array $params
@@ -141,13 +152,16 @@ trait Generator
     }
 
     /**
-     * @param $name
-     * @param Route $parent
-     * @return Route|Uri
+     * @param Route|Uri $route
+     * @param array $name
+     * @param array $params
+     * @param array $options
+     * @param array $path
+     * @return Uri
      */
-    protected function resolve($name, $parent)
+    protected function resolve($route, $name, $params, $options, $path)
     {
-        return $parent ? $this->step($parent, $name) : $this->route($this->config($name));
+        return $route ? $this->path($route, $name, $params, $options, $this->append($path, $route)) : $route;
     }
 
     /**
@@ -160,34 +174,10 @@ trait Generator
     }
 
     /**
-     * @param Route|Uri $route
-     * @param array $name
-     * @param array $params
-     * @param array $options
-     * @param array $path
-     * @return Uri
-     */
-    protected function solve($route, $name, $params, $options, $path)
-    {
-        return !$route || $route instanceof Uri ? $route :
-            $this->path($route, $name, $params, $options, array_merge($path, [$route]));
-    }
-
-    /**
-     * @param Route $parent
-     * @param $name
-     * @return Route
-     */
-    protected function step(Route $parent, $name)
-    {
-        return $this->child($parent, $parent->child($name));
-    }
-
-    /**
-     * @param $scheme
-     * @param $host
-     * @param $port
-     * @param $path
+     * @param string $scheme
+     * @param string $host
+     * @param string $port
+     * @param string $path
      * @param array $options
      * @return Uri
      */
