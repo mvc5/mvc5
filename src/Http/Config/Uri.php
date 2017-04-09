@@ -105,8 +105,9 @@ trait Uri
         ($port == 80 || $port == 443) &&
             $port = null;
 
-        return ($scheme ? $scheme . ':' : '') .
-            ($host ? '//' . ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') : '') .
-                $path . ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
+        return ($scheme ? $scheme . ':' : '') . ($scheme || $host ? '//' : '') .
+            ($host ? ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') : '') .
+                $path . ($query ? '?'. implode(Arg::QUERY_SEPARATOR, (array) $query) : '') .
+                    ($fragment ? '#' . $fragment : '');
     }
 }
