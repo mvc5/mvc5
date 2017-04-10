@@ -107,7 +107,6 @@ trait Uri
 
         return ($scheme ? $scheme . ':' : '') . ($scheme || $host ? '//' : '') .
             ($host ? ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') : '') .
-                $path . ($query ? '?'. implode(Arg::QUERY_SEPARATOR, (array) $query) : '') .
-                    ($fragment ? '#' . $fragment : '');
+                $path . ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
     }
 }
