@@ -54,6 +54,23 @@ class Assemble
 
     /**
      * @param string $scheme
+     * @param string $host
+     * @param int $port
+     * @param string $path
+     * @param array|string $query
+     * @param string $fragment
+     * @return string
+     */
+    static function compile($scheme, $host, $port, $path, $query, $fragment)
+    {
+        return static::build(
+            static::scheme($scheme), static::host($host), static::port($port),
+            static::path($path), static::query($query), static::fragment($fragment)
+        );
+    }
+
+    /**
+     * @param string $scheme
      * @param string $authority
      * @param string $path
      * @param string $query
@@ -133,28 +150,39 @@ class Assemble
     }
 
     /**
-     * @param string $scheme
-     * @param string $host
-     * @param int $port
-     * @param string $path
-     * @param array|string $query
-     * @param null|string $fragment
+     * @param Uri $uri
      * @return string
      */
-    static function url($scheme, $host, $port, $path, $query = '', $fragment = '')
+    static function uri(Uri $uri)
     {
-        return static::build(
-            static::scheme($scheme), static::host($host), static::port($port),
-                static::path($path), static::query($query), static::fragment($fragment)
+        return static::compile(
+            $uri->scheme(), $uri->host(), $uri->port(), $uri->path(), $uri->query(), $uri->fragment()
         );
     }
 
     /**
-     * @param Uri $uri
+     * @param string $path
+     * @param array|string $query
+     * @param string $fragment
+     * @param array $options
      * @return string
      */
-    function __invoke(Uri $uri)
+    static function url($path, $query = '', $fragment = '', array $options = [])
     {
-        return static::url($uri->scheme(), $uri->host(), $uri->port(), $uri->path(), $uri->query(), $uri->fragment());
+        return static::compile(
+            $options[Arg::SCHEME] ?? '', $options[Arg::HOST] ?? '', $options[Arg::PORT] ?? null, $path, $query, $fragment
+        );
+    }
+
+    /**
+     * @param $path
+     * @param string $query
+     * @param string $fragment
+     * @param array $options
+     * @return string
+     */
+    function __invoke($path, $query = '', $fragment = '', array $options = [])
+    {
+        return $path instanceof Uri ? static::uri($path) : static::url($path, $query, $fragment, $options);
     }
 }
