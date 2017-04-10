@@ -50,11 +50,11 @@ trait Build
     }
 
     /**
-     * @param array|Route $route
+     * @param Route $route
      * @param bool $compile
      * @return array|Route
      */
-    protected function definition($route, $compile = true)
+    protected function definition(Route $route, $compile = true)
     {
         if (!isset($route[Arg::PATH])) {
             return isset($route[Arg::REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
