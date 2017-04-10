@@ -66,7 +66,7 @@ trait Router
      */
     protected function dispatch($request)
     {
-        return $this->result($request, $this->route($this->definition($this->route), $request));
+        return $this->result($request, $this->traverse($this->route, $request));
     }
 
     /**
@@ -90,13 +90,13 @@ trait Router
     }
 
     /**
-     * @param string $name
-     * @param string $parent
+     * @param $name
+     * @param $parent
      * @return string
      */
     protected function name($name, $parent)
     {
-        return $this->route[Arg::NAME] === $parent ? $name : $parent . Arg::SEPARATOR . $name;
+        return !$parent ? $name : $parent . Arg::SEPARATOR . $name;
     }
 
     /**
