@@ -71,7 +71,7 @@ class Plugin
      */
     protected function generate($name, $params, $options)
     {
-        return ($this->generator)($this->name($name), $this->params($name, $params), $options);
+        return $name[0] !== Arg::SEPARATOR ? ($this->generator)($name, $this->params($name, $params), $options) : null;
     }
 
     /**
@@ -80,7 +80,7 @@ class Plugin
      */
     protected function name($name)
     {
-        return $name ?? $this->name;
+        return (string) ($name ?: $this->name);
     }
 
     /**
@@ -101,7 +101,7 @@ class Plugin
      */
     protected function params($name, array $params)
     {
-        return $name ? $params : $params + $this->params;
+        return $name === $this->name ? $params + $this->params : $params;
     }
 
     /**
@@ -111,7 +111,7 @@ class Plugin
      */
     protected function route(array $route, $options)
     {
-        return $this->generate(array_shift($route), $route, $options);
+        return $this->generate($this->name(array_shift($route)), $route, $options);
     }
 
     /**
