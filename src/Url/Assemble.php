@@ -39,34 +39,15 @@ class Assemble
     ];
 
     /**
-     * @param string $scheme
-     * @param string $host
-     * @param int $port
-     * @param string $path
-     * @param string $query
-     * @param string $fragment
+     * @param $host
+     * @param int|null $port
+     * @param string $user
+     * @param string $password
      * @return string
      */
-    static function build($scheme, $host, $port, $path, $query, $fragment)
+    static function authority($host, $port = null, $user = '', $password = '')
     {
-        return static::component($scheme, $host && $port ? $host . ':' . $port : $host, $path, $query, $fragment);
-    }
-
-    /**
-     * @param string $scheme
-     * @param string $host
-     * @param int $port
-     * @param string $path
-     * @param array|string $query
-     * @param string $fragment
-     * @return string
-     */
-    static function compile($scheme, $host, $port, $path, $query, $fragment)
-    {
-        return static::build(
-            static::scheme($scheme), static::host($host), static::port($port),
-            static::path($path), static::query($query), static::fragment($fragment)
-        );
+        return static::user($user, $password, '@') . static::host($host) . static::port($port, ':');
     }
 
     /**
@@ -77,7 +58,7 @@ class Assemble
      * @param string $fragment
      * @return string
      */
-    static function component($scheme, $authority, $path, $query, $fragment)
+    static function compile($scheme, $authority, $path, $query, $fragment)
     {
         return ($scheme ? $scheme . ':' : '') . ($scheme || $authority ? '//' : '') . $authority .
             $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
@@ -108,7 +89,7 @@ class Assemble
      */
     static function host($host)
     {
-        return strtolower($host);
+        return static::encode(strtolower($host));
     }
 
     /**
@@ -122,11 +103,12 @@ class Assemble
 
     /**
      * @param string $port
-     * @return int|null
+     * @param string $prefix
+     * @return string
      */
-    static function port($port)
+    static function port($port, $prefix = '')
     {
-        return $port && 80 != $port && 443 != $port ? (int) $port : null;
+        return $port && 80 != $port && 443 != $port ? $prefix . (int) $port : null;
     }
 
     /**
@@ -150,13 +132,28 @@ class Assemble
     }
 
     /**
+     * @param string|Uri $path
+     * @param array|string $query
+     * @return string
+     */
+    static function target($path = '', $query = '')
+    {
+        return $path instanceof Uri ? static::url($path->path() ?: '/', $path->query()) :
+            static::url($path ?: '/', $query);
+    }
+
+    /**
      * @param Uri $uri
      * @return string
      */
     static function uri(Uri $uri)
     {
         return static::compile(
-            $uri->scheme(), $uri->host(), $uri->port(), $uri->path(), $uri->query(), $uri->fragment()
+            static::scheme($uri->scheme()),
+            static::authority($uri->host(), $uri->port(), $uri->user(), $uri->password()),
+            static::path($uri->path()),
+            static::query($uri->query()),
+            static::fragment($uri->fragment())
         );
     }
 
@@ -170,12 +167,30 @@ class Assemble
     static function url($path, $query = '', $fragment = '', array $options = [])
     {
         return static::compile(
-            $options[Arg::SCHEME] ?? '', $options[Arg::HOST] ?? '', $options[Arg::PORT] ?? null, $path, $query, $fragment
+            static::scheme($options[Arg::SCHEME] ?? ''),
+            static::authority(
+                $options[Arg::HOST] ?? '', $options[Arg::PORT] ?? null,
+                    $options[Arg::USER] ?? '', $options[Arg::PASS] ?? ''
+            ),
+            static::path($path),
+            static::query($query),
+            static::fragment($fragment)
         );
     }
 
     /**
-     * @param $path
+     * @param string $user
+     * @param string $password
+     * @param string $suffix
+     * @return string
+     */
+    static function user($user, $password = '', $suffix = '')
+    {
+        return $user ? static::encode($user . ($password ? ':' . $password : '')) . $suffix  : '';
+    }
+
+    /**
+     * @param string|Uri $path
      * @param string $query
      * @param string $fragment
      * @param array $options
