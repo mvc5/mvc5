@@ -96,7 +96,7 @@ trait Uri
         $query    = $this->query();
         $fragment = $this->fragment();
 
-        $user = $this->user() ? ($this->user() . ':' . $this->password()) : '';
+        $user = $this->user() ? $this->user(). ($this->password() ? ':' . $this->password() : '') : '';
 
         $scheme = $this->scheme();
         $host   = $this->host();
