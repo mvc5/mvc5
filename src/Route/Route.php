@@ -63,7 +63,7 @@ interface Route
     function options();
 
     /**
-     * @return string
+     * @return array|string
      */
     function path();
 

@@ -98,7 +98,7 @@ trait Route
     }
 
     /**
-     * @return string
+     * @return array|string
      */
     function path()
     {

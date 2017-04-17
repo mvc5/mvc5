@@ -19,13 +19,57 @@ class Host
     use Plugin\Params;
 
     /**
+     * @param Route $route
      * @param Request $request
      * @param $host
-     * @return Request|null
+     * @param callable $next
+     * @return NotFound|null|Request
      */
-    protected function match(Request $request, $host)
+    protected function match(Route $route, Request $request, $host, callable $next)
     {
-        return !$host || in_array($request[Arg::URI][Arg::HOST], (array) $host) ? $request : null;
+        return !$host ? $next($route, $request) : (
+            is_string($host) ? $this->name($route, $request, $host, $next) :
+                $this->regex($route, $request, $host, $next)
+        );
+    }
+
+    /**
+     * @param Route $route
+     * @param Request $request
+     * @param $host
+     * @param callable $next
+     * @return NotFound|null|Request
+     */
+    protected function name(Route $route, Request $request, $host, callable $next)
+    {
+        return $host === $request[Arg::URI][Arg::HOST] ? $next($route, $request) : $this->notFound($route);
+    }
+
+    /**
+     * @param Route $route
+     * @return NotFound|null
+     */
+    protected function notFound($route)
+    {
+        return $this->optional($route, Arg::HOST) ? null : new NotFound;
+    }
+
+    /**
+     * @param $route
+     * @param Request $request
+     * @param $host
+     * @param callable $next
+     * @return NotFound|null|Request
+     */
+    protected function regex(Route $route, Request $request, $host, callable $next)
+    {
+        if (!preg_match('(\G' . $host[Arg::REGEX] . ')', $request[Arg::URI][Arg::HOST], $match)) {
+            return $this->notFound($route);
+        }
+
+        $request = $request->with(Arg::PARAMS, $this->params($match, $host[Arg::DEFAULTS] ?? []));
+
+        return $next($route, $request);
     }
 
     /**
@@ -36,8 +80,6 @@ class Host
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $this->match($request, $route->host()) ? $next($route, $request) : (
-            $this->optional($route, Arg::HOST) ? null : new NotFound
-        );
+        return $this->match($route, $request, $route->host(), $next);
     }
 }

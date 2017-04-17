@@ -56,17 +56,39 @@ trait Build
      */
     protected function definition(Route $route, $compile = true)
     {
+        $route = $this->host($route, $route[Arg::HOST] ?? []);
+
         if (!isset($route[Arg::PATH])) {
             return isset($route[Arg::REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
         }
 
         !isset($route[Arg::TOKENS]) && $route = $route->with(Arg::TOKENS, $this->tokens(
-            $route[Arg::PATH], isset($route[Arg::CONSTRAINTS]) ? $route[Arg::CONSTRAINTS] : []
+            $route[Arg::PATH], $route[Arg::CONSTRAINTS] ?? []
         ));
 
         $compile && !isset($route[Arg::REGEX]) &&
             $route = $route->with(Arg::REGEX, $this->regex($route[Arg::TOKENS]));
 
         return $route;
+    }
+
+    /**
+     * @param Route $route
+     * @param $host
+     * @return array|mixed|\Mvc5\Config\Base
+     */
+    protected function host(Route $route, $host)
+    {
+        if (!$host || !is_array($host)) {
+            return $route;
+        }
+
+        !isset($host[Arg::TOKENS]) &&
+            $host[Arg::TOKENS] = $this->tokens($host[Arg::NAME], $host[Arg::CONSTRAINTS] ?? []);
+
+        !isset($host[Arg::REGEX]) &&
+            $host[Arg::REGEX] = $this->regex($host[Arg::TOKENS]);
+
+        return $route->with(Arg::HOST, $host);
     }
 }

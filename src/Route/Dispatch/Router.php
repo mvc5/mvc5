@@ -56,8 +56,7 @@ trait Router
      */
     protected function definition($route)
     {
-        return $route instanceof Route && isset($route[Arg::REGEX])
-            ? $route : ($this->generator)($route);
+        return $route instanceof Route ? $route : ($this->generator)($route);
     }
 
     /**
