@@ -9,7 +9,7 @@ use Mvc5\Arg;
 use Mvc5\Http\Uri;
 use Mvc5\Http\Uri\Config as HttpUri;
 use Mvc5\Route\Definition\Build;
-use Mvc5\Route\Definition\Compile;
+use Mvc5\Route\Definition\Compiler;
 use Mvc5\Route\Route;
 
 trait Generator
@@ -18,7 +18,11 @@ trait Generator
      *
      */
     use Build;
-    use Compile;
+
+    /**
+     * @var array
+     */
+    protected $generated = [];
 
     /**
      * @var array|\ArrayAccess
@@ -42,13 +46,13 @@ trait Generator
 
     /**
      * @param Route $route
-     * @param array $params
      * @param string $path
-     * @return string
+     * @return array
      */
-    protected function append(Route $route, $params, $path)
+    protected function append(Route $route, $path)
     {
-        return $path . $this->compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
+        $path[] = $route;
+        return $path;
     }
 
     /**
@@ -71,22 +75,39 @@ trait Generator
     }
 
     /**
-     * @param array|string $name
-     * @param array $params
-     * @param array $options
-     * @param string $path
-     * @param Route $parent
-     * @return Uri
+     * @param $name
+     * @return Route
      */
-    protected function generate(array $name, array $params = [], array $options = [], $path = '', $parent = null)
+    protected function construct($name)
     {
-        return $this->resolve($this->match(array_shift($name), $parent), $name, $params, $options, $path);
+        return $this->generated[$name] ?? $this->generated[$name] = $this->generate(explode(Arg::SEPARATOR, $name));
+    }
+
+    /**
+     * @param array|string $name
+     * @param array $path
+     * @param Route $parent
+     * @return Route
+     */
+    protected function generate(array $name, array $path = [], $parent = null)
+    {
+        return $this->resolve($this->match(array_shift($name), $parent), $name, $path);
+    }
+
+    /**
+     * @param $host
+     * @param $params
+     * @return string
+     */
+    protected function hostname($host, array &$params)
+    {
+        return !is_array($host) ? $host : Compiler::compile($host[Arg::TOKENS], $params, $host[Arg::DEFAULTS] ?? []);
     }
 
     /**
      * @param string $name
      * @param Route $parent
-     * @return Route|Uri
+     * @return Route
      */
     protected function match($name, Route $parent = null)
     {
@@ -115,39 +136,55 @@ trait Generator
 
     /**
      * @param Route $route
-     * @param array $options
-     * @return array
+     * @param array $name
+     * @param array $path
+     * @return Route
      */
-    protected function options(Route $route, array $options)
+    protected function next(Route $route, $name, $path)
     {
-        return [Arg::SCHEME => $route->scheme(), Arg::HOST => $route->host(), Arg::PORT => $route->port()] + $options;
+        return $name ? $this->generate($name, $path, $route) : $route->with(Arg::PATH, $path);
     }
 
     /**
      * @param Route $route
-     * @param array $name
      * @param array $params
      * @param array $options
-     * @param string $path
-     * @return Uri
+     * @return array
      */
-    protected function path(Route $route, $name, $params, $options, $path)
+    protected function options(Route $route, $params, array $options)
     {
-        return $name ? $this->generate($name, $params, $options, $path, $route) :
-            $this->uri($path, $this->options($route, $options));
+        return $options + [
+            Arg::SCHEME => $route->scheme(),
+            Arg::HOST => $this->hostname($route->host(), $params),
+            Arg::PORT => $route->port(),
+            Arg::PATH => $this->path($route->path(), $params)
+        ];
     }
 
     /**
-     * @param Route|Uri $route
-     * @param array $name
-     * @param array $params
-     * @param array $options
+     * @param array $segment
+     * @param $params
      * @param string $path
-     * @return Uri
+     * @return string
      */
-    protected function resolve($route, $name, $params, $options, $path)
+    protected function path(array $segment, $params, $path = '')
     {
-        return $route ? $this->path($route, $name, $params, $options, $this->append($route, $params, $path)) : null;
+        foreach($segment as $route) {
+            $path .= Compiler::compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
+        }
+
+        return $path;
+    }
+
+    /**
+     * @param array|Route $route
+     * @param array $name
+     * @param array $path
+     * @return null|Route
+     */
+    protected function resolve($route, $name, $path)
+    {
+        return $route ? $this->next($route, $name, $this->append($route, $path)) : null;
     }
 
     /**
@@ -156,17 +193,18 @@ trait Generator
      */
     protected function route($route)
     {
-        return !$route || ($route instanceof Route && isset($route[Arg::TOKENS])) ? $route : $this->build($route, false);
+        return !$route || $route instanceof Route ? $route : $this->build($route, false);
     }
 
     /**
-     * @param string $path
+     * @param Route|null $route
+     * @param array $params
      * @param array $options
-     * @return Uri
+     * @return null|Uri
      */
-    protected function uri($path, array $options = [])
+    protected function uri(Route $route = null, array $params = [], array $options = [])
     {
-        return $this->uri->with([Arg::PATH => $path] + $options);
+        return $route ? $this->uri->with($this->options($route, $params, $options)) : null;
     }
 
     /**
@@ -192,6 +230,6 @@ trait Generator
      */
     function __invoke($name, array $params = [], array $options = [])
     {
-        return $this->generate(explode(Arg::SEPARATOR, $name), $params, $options);
+        return $this->uri($this->construct($name), $params, $options);
     }
 }

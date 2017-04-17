@@ -23,7 +23,7 @@ class Plugin
     /**
      * @var array
      */
-    protected $params;
+    protected $params = [];
 
     /**
      * @param array|\ArrayAccess $request
@@ -35,7 +35,15 @@ class Plugin
         $this->assembler = $assembler ?: new Assemble;
         $this->generator = $generator;
         $this->name      = $request[Arg::NAME];
-        $this->params    = (array) $request[Arg::PARAMS];
+
+        $this->params[$this->name] = (array) $request[Arg::PARAMS];
+
+        $parent = $request[Arg::PARENT];
+
+        while($parent && $name = $parent[Arg::NAME]) {
+            $this->params[$name] = $parent[Arg::PARAMS];
+            $parent = $parent[Arg::PARENT];
+        }
     }
 
     /**
@@ -71,7 +79,7 @@ class Plugin
      */
     protected function generate($name, $params, $options)
     {
-        return $name[0] !== Arg::SEPARATOR ? ($this->generator)($name, $this->params($name, $params), $options) : null;
+        return $name[0] === Arg::SEPARATOR ? null : ($this->generator)($name, $this->params($name, $params), $options);
     }
 
     /**
@@ -101,7 +109,17 @@ class Plugin
      */
     protected function params($name, array $params)
     {
-        return $name === $this->name ? $params + $this->params : $params;
+        return $params + ($this->params[$name] ?? $this->parent(strrpos($name, Arg::SEPARATOR), $name));
+    }
+
+    /**
+     * @param $pos
+     * @param $name
+     * @return array
+     */
+    protected function parent($pos, $name)
+    {
+        return $pos ? ($this->params[substr($name, 0, $pos)] ?? []) : [];
     }
 
     /**

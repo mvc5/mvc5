@@ -38,6 +38,7 @@ class Path
             Arg::MATCHED => $matched ?: $offset,
             Arg::NAME => $route->name(),
             Arg::PARAMS => $this->params($match, $route->defaults() + (array) $request[Arg::PARAMS]),
+            Arg::PARENT => $request,
             Arg::ROUTE => $route
         ]);
 

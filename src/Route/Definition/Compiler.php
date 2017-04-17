@@ -12,7 +12,7 @@ use Mvc5\Exception;
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
  * under the Simplified BSD License (http://opensource.org/licenses/BSD-2-Clause).
  */
-trait Compile
+class Compiler
 {
     /**
      * @param array $tokens
@@ -22,7 +22,7 @@ trait Compile
      * @return string
      * @throws \InvalidArgumentException
      */
-    protected function compile(array $tokens, array $params, array $defaults = null, callable $wildcard = null)
+    static function compile(array $tokens, array &$params, array $defaults = null, callable $wildcard = null)
     {
         $current = [
             'is_optional' => false,
@@ -99,5 +99,18 @@ trait Compile
         }
 
         return $wildcard && $params ? $wildcard(rtrim($current['path'], Arg::SEPARATOR), $params) : $current['path'];
+    }
+
+    /**
+     * @param array $tokens
+     * @param array $params
+     * @param array $defaults
+     * @param callable $wildcard
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    function __invoke(array $tokens, array $params, array $defaults = null, callable $wildcard = null)
+    {
+        return $this->compile($tokens, $params, $defaults, $wildcard);
     }
 }
