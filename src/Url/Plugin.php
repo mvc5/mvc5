@@ -6,10 +6,16 @@
 namespace Mvc5\Url;
 
 use Mvc5\Arg;
+use Mvc5\Http\Request;
 use Mvc5\Http\Uri;
 
 class Plugin
 {
+    /**
+     * @var callable
+     */
+    protected $assembler;
+
     /**
      * @var callable
      */
@@ -26,15 +32,16 @@ class Plugin
     protected $params = [];
 
     /**
-     * @param array|\ArrayAccess $request
+     * @param Request $request
      * @param callable $generator
      * @param callable $assembler
      */
-    function __construct($request, callable $generator, callable $assembler = null)
+    function __construct(Request $request, callable $generator, callable $assembler = null)
     {
         $this->assembler = $assembler ?: new Assemble;
         $this->generator = $generator;
-        $this->name      = $request[Arg::NAME];
+
+        $this->name = $request[Arg::NAME];
 
         $this->params[$this->name] = (array) $request[Arg::PARAMS];
 
@@ -83,6 +90,17 @@ class Plugin
     }
 
     /**
+     * @param int $pos
+     * @param string $name
+     * @return array
+     */
+    protected function match($pos, $name)
+    {
+        return !$pos ? [] : $this->params[$name = substr($name, 0, $pos)] ??
+            $this->match(strrpos($name, Arg::SEPARATOR), $name);
+    }
+
+    /**
      * @param string $name
      * @return string
      */
@@ -109,17 +127,7 @@ class Plugin
      */
     protected function params($name, array $params)
     {
-        return $params + ($this->params[$name] ?? $this->parent(strrpos($name, Arg::SEPARATOR), $name));
-    }
-
-    /**
-     * @param $pos
-     * @param $name
-     * @return array
-     */
-    protected function parent($pos, $name)
-    {
-        return $pos ? ($this->params[substr($name, 0, $pos)] ?? []) : [];
+        return $params + ($this->params[$name] ?? $this->match(strrpos($name, Arg::SEPARATOR), $name));
     }
 
     /**
