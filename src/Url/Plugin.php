@@ -40,7 +40,6 @@ class Plugin
     {
         $this->assembler = $assembler ?: new Assemble;
         $this->generator = $generator;
-
         $this->name = $request[Arg::NAME];
 
         $this->params[$this->name] = (array) $request[Arg::PARAMS];
