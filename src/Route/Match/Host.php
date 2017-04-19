@@ -63,7 +63,7 @@ class Host
      */
     protected function regex(Route $route, Request $request, $host, callable $next)
     {
-        if (!preg_match('(\G' . $host[Arg::REGEX] . ')', $request[Arg::URI][Arg::HOST], $match)) {
+        if (!preg_match('(\G' . $host[Arg::REGEX] . ')', (string) $request[Arg::URI][Arg::HOST], $match)) {
             return $this->notFound($route);
         }
 
