@@ -34,19 +34,18 @@ trait Build
      */
     protected function create($route)
     {
-        return $route instanceof Route ? $route : (
-            isset($route[Arg::CLASS_NAME]) ? new $route[Arg::CLASS_NAME]($route) :
-                $this->createDefault($route)
-        );
+        return $route instanceof Route ? $route :
+            $this->createDefault($route, $route[Arg::CLASS_NAME] ?? Config::class);
     }
 
     /**
      * @param array|\ArrayAccess $route
+     * @param string $class
      * @return Route
      */
-    protected function createDefault($route = [])
+    protected function createDefault($route = [], $class = Config::class)
     {
-        return new Config($route);
+        return new $class($route);
     }
 
     /**
@@ -56,7 +55,7 @@ trait Build
      */
     protected function definition(Route $route, $compile = true)
     {
-        $route = $this->host($route, $route[Arg::HOST] ?? []);
+        $route = $this->host($route, $route[Arg::HOST]);
 
         if (!isset($route[Arg::PATH])) {
             return isset($route[Arg::REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
@@ -79,7 +78,7 @@ trait Build
      */
     protected function host(Route $route, $host)
     {
-        if (!$host || !is_array($host)) {
+        if (!is_array($host)) {
             return $route;
         }
 

@@ -46,10 +46,10 @@ trait Generator
 
     /**
      * @param Route $route
-     * @param string $path
+     * @param array $path
      * @return array
      */
-    protected function append(Route $route, $path)
+    protected function append(Route $route, array $path)
     {
         $path[] = $route;
         return $path;
@@ -57,7 +57,7 @@ trait Generator
 
     /**
      * @param Route $parent
-     * @param Route $route
+     * @param array|Route $route
      * @return Route
      */
     protected function child($parent, $route)
@@ -75,7 +75,7 @@ trait Generator
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return Route
      */
     protected function construct($name)
@@ -95,8 +95,8 @@ trait Generator
     }
 
     /**
-     * @param $host
-     * @param $params
+     * @param array $host
+     * @param array $params
      * @return string
      */
     protected function hostname($host, array &$params)
@@ -122,13 +122,13 @@ trait Generator
      */
     protected function merge(Route $parent, Route $child, array $config = [])
     {
-        !$child->scheme() && $parent->scheme()
+        !$child->scheme()
             && $config[Arg::SCHEME] = $parent->scheme();
 
-        !$child->host() && $parent->host()
+        !$child->host()
             && $config[Arg::HOST] = $parent->host();
 
-        !$child->port() && $parent->port()
+        !$child->port()
             && $config[Arg::PORT] = $parent->port();
 
         return $config ? $child->with($config) : $child;
@@ -153,12 +153,18 @@ trait Generator
      */
     protected function options(Route $route, $params, array $options)
     {
-        return $options + [
-            Arg::SCHEME => $route->scheme(),
-            Arg::HOST => $this->hostname($route->host(), $params),
-            Arg::PORT => $route->port(),
-            Arg::PATH => $this->path($route->path(), $params)
-        ];
+        !isset($options[Arg::SCHEME])
+            && $options[Arg::SCHEME] = $route->scheme();
+
+        !isset($options[Arg::HOST])
+            && $options[Arg::HOST] = $this->hostname($route->host(), $params);
+
+        !isset($options[Arg::PORT])
+            && $options[Arg::PORT] = $route->port();
+
+        $options[Arg::PATH] = $this->path($route->path(), $params);
+
+        return $options;
     }
 
     /**
@@ -202,7 +208,7 @@ trait Generator
      * @param array $options
      * @return null|Uri
      */
-    protected function uri(Route $route = null, array $params = [], array $options = [])
+    protected function uri($route, array $params = [], array $options = [])
     {
         return $route ? $this->uri->with($this->options($route, $params, $options)) : null;
     }
