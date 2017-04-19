@@ -9,17 +9,18 @@
  */
 
 return [
-    'defaults'    => ['controller' => 'home'],
-    'constraints' => ['controller' => '[a-zA-Z][a-zA-Z0-9]+', 'action' => '[a-zA-Z][a-zA-Z0-9/]+'],
-    'name'        => 'app',
-    'options'     => [
-        'action'     => 'action',
-        'controller' => 'controller',
-        'prefix'     => '',
-        'separators' => ['/' => '\\'],
-        'split'      => '\\',
-        'strict'     => false,
-        'suffix'     => '\Controller'
-    ],
-    'route' => '/[:controller[/:action]]'
+    'app' => [
+        'defaults'    => ['controller' => 'home'],
+        'constraints' => ['controller' => '[a-zA-Z][a-zA-Z0-9]+', 'action' => '[a-zA-Z][a-zA-Z0-9/]+'],
+        'options'     => [
+            'action'     => 'action',
+            'controller' => 'controller',
+            'prefix'     => '',
+            'separators' => ['/' => '\\'],
+            'split'      => '\\',
+            'strict'     => false,
+            'suffix'     => '\Controller'
+        ],
+        'path' => '/[{controller}[/{action}]]'
+    ]
 ];
