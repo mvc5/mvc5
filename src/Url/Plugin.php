@@ -12,6 +12,11 @@ use Mvc5\Http\Uri;
 class Plugin
 {
     /**
+     * @var bool|false
+     */
+    protected $absolute = false;
+
+    /**
      * @var callable
      */
     protected $assembler;
@@ -32,15 +37,23 @@ class Plugin
     protected $params = [];
 
     /**
+     * @var array|Uri
+     */
+    protected $uri;
+
+    /**
      * @param Request $request
      * @param callable $generator
      * @param callable $assembler
+     * @param bool|false $absolute
      */
-    function __construct(Request $request, callable $generator, callable $assembler = null)
+    function __construct(Request $request, callable $generator, callable $assembler = null, $absolute = false)
     {
+        $this->absolute = $absolute;
         $this->assembler = $assembler ?: new Assemble;
         $this->generator = $generator;
         $this->name = $request[Arg::NAME];
+        $this->uri = $request[Arg::URI];
 
         $this->params[$this->name] = (array) $request[Arg::PARAMS];
 
@@ -50,6 +63,29 @@ class Plugin
             $this->params[$name] = $parent[Arg::PARAMS];
             $parent = $parent[Arg::PARENT];
         }
+    }
+
+    /**
+     * @param array|Uri $config
+     * @param array $options
+     * @return array|Uri
+     */
+    protected function absolute($config, array $options = [])
+    {
+        if (!$this->absolute && empty($config[Arg::ABSOLUTE])) {
+            return $config;
+        }
+
+        !isset($config[Arg::SCHEME]) &&
+            $options[Arg::SCHEME] = $this->uri[Arg::SCHEME];
+
+        !isset($config[Arg::PORT]) &&
+            $options[Arg::PORT] = $this->uri[Arg::PORT];
+
+        !isset($config[Arg::HOST]) &&
+            $options[Arg::HOST] = $this->uri[Arg::HOST];
+
+        return !$options ? $config : ($config instanceof Uri ? $config->with($options) : $options + $config);
     }
 
     /**
@@ -65,16 +101,16 @@ class Plugin
     }
 
     /**
-     * @param array|string $route
+     * @param array|string|Uri $route
      * @param array|string $query
      * @param string $fragment
      * @param array $options
-     * @return Uri
+     * @return null|string
      */
-    protected function create($route, $query, $fragment, $options)
+    protected function create($route, $query = '', $fragment = '', array $options = [])
     {
-        return $this->assemble($this->route((array) $route, $this->options($query, $fragment, $options))) ?:
-            $this->assemble($route, $query, $fragment, $options);
+        return $route instanceof Uri ? $this->uri($route) :
+            $this->uri($this->route((array) $route, $this->options($query, $fragment, $options)));
     }
 
     /**
@@ -140,6 +176,15 @@ class Plugin
     }
 
     /**
+     * @param null|Uri $uri
+     * @return null|string
+     */
+    protected function uri($uri)
+    {
+        return $uri ? $this->assemble($this->absolute($uri)) : null;
+    }
+
+    /**
      * @param array|string $route
      * @param array|string $query
      * @param string $fragment
@@ -148,6 +193,7 @@ class Plugin
      */
     function __invoke($route = null, $query = '', $fragment = '', array $options = [])
     {
-        return $route instanceof Uri ? $this->assemble($route) : $this->create($route, $query, $fragment, $options);
+        return $this->create($route, $query, $fragment, $options) ?:
+            $this->assemble($route, $query, $fragment, $this->absolute($options));
     }
 }

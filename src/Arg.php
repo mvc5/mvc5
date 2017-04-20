@@ -7,6 +7,7 @@ namespace Mvc5;
 
 interface Arg
 {
+    const ABSOLUTE = 'absolute';
     const ACTION = 'action';
     const ARGS = 'args';
     const ATTRIBUTES = 'attributes';
@@ -14,7 +15,6 @@ interface Arg
     const CALL = '@';
     const CALLS = 'calls';
     const CALL_SEPARATOR = '.';
-    const CANONICAL = 'canonical';
     const CHILDREN = 'children';
     const CHILD_MODEL = '__child';
     const CLASS_NAME = 'class';
