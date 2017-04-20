@@ -24,7 +24,8 @@ class ErrorException
      */
     static function handler($severity, $message, $file, $line)
     {
-        if (!ini_get('display_errors') || in_array($severity, [E_DEPRECATED, E_USER_DEPRECATED])) {
+        if (!ini_get('display_errors') ||
+            in_array($severity, [E_DEPRECATED, E_USER_DEPRECATED]) || 'cli' === php_sapi_name()) {
             return false;
         }
 
