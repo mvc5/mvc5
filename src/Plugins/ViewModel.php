@@ -13,19 +13,16 @@ trait ViewModel
     /**
      * @param array $vars
      * @param null|string $template
-     * @return _ViewModel
+     * @return _ViewModel|ViewLayout|mixed
      */
     protected function model(array $vars = [], $template = null)
     {
-        $model = $this->plugin(defined('static::VIEW_MODEL') ? constant('static::VIEW_MODEL') : Arg::VIEW_MODEL);
+        !$template && defined('static::TEMPLATE_NAME')
+            && $template = constant('static::TEMPLATE_NAME');
 
-        !$template && $template = defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null;
+        $model = defined('static::VIEW_MODEL') ? constant('static::VIEW_MODEL') : Arg::VIEW_MODEL;
 
-        $template && $model->template($template);
-
-        $vars && $model->vars($vars);
-
-        return $model;
+        return $this->plugin($model, [$template, $vars]);
     }
 
     /**
