@@ -7,9 +7,21 @@ namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
 use Mvc5\Model\ViewModel as _ViewModel;
+use Mvc5\Model\ViewLayout;
 
 trait ViewModel
 {
+    /**
+     * @param array $vars
+     * @param string $template
+     * @param string $model
+     * @return ViewLayout
+     */
+    protected function layout(array $vars = [], $template = null, $model = Arg::LAYOUT)
+    {
+        return $this->plugin($model, array_filter([Arg::TEMPLATE => $template, Arg::VARS => $vars]));
+    }
+
     /**
      * @param array $vars
      * @param null|string $template

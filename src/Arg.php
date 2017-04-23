@@ -54,6 +54,7 @@ interface Arg
     const INDEX = '#';
     const INFO = 'info';
     const ITEM = 'item';
+    const LAYOUT = 'layout';
     const LENGTH = 'length';
     const LEVEL = 'level';
     const LINE = 'line';
@@ -123,6 +124,7 @@ interface Arg
     const USER = 'user';
     const USER_AGENT = 'user_agent';
     const VALUE = 'value';
+    const VARS = 'vars';
     const VERSION = 'version';
     const VIEW_EXTENSION = 'phtml';
     const VIEW_MODEL = 'view\model';
