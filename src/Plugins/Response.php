@@ -20,9 +20,7 @@ trait Response
      */
     protected function json($data, $status = 200, array $headers = [])
     {
-        return $this->plugin(
-            Arg::RESPONSE_JSON, [Arg::DATA => $data, Arg::STATUS => $status, Arg::HEADERS => $headers]
-        );
+        return $this->plugin(Arg::RESPONSE_JSON, [$data, $status, $headers]);
     }
 
     /**
@@ -42,10 +40,7 @@ trait Response
      */
     protected function redirect($url, $status = 302, array $headers = [], array $config = [])
     {
-        return $this->plugin(
-            Arg::RESPONSE_REDIRECT, [Arg::URL => $url, Arg::STATUS => $status, Arg::HEADERS => $headers]
-                + ($config ? [Arg::CONFIG => $config] : [])
-        );
+        return $this->plugin(Arg::RESPONSE_REDIRECT, [$url, $status, $headers, $config]);
     }
 
     /**
@@ -57,9 +52,6 @@ trait Response
      */
     protected function response($body = null, $status = null, $headers = [], array $config = [])
     {
-        return $this->plugin(
-            Arg::RESPONSE, [Arg::BODY => $body, Arg::STATUS => $status, Arg::HEADERS => $headers]
-                + ($config ? [Arg::CONFIG => $config] : [])
-        );
+        return $this->plugin(Arg::RESPONSE, [$body, $status, $headers, $config]);
     }
 }
