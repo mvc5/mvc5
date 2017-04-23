@@ -5,6 +5,7 @@
 
 namespace Mvc5\View;
 
+use Mvc5\Arg;
 use Mvc5\Model as Mvc5Model;
 use Mvc5\Model\ViewModel;
 use Mvc5\Model\Template;
@@ -23,17 +24,15 @@ trait Model
      */
     function model(array $vars = [], $template = null)
     {
-        $model = $this->model ?: (
-            (defined('static::VIEW_MODEL') && $model = constant('static::VIEW_MODEL')) ? new $model : new Mvc5Model
+        !$template && defined('static::TEMPLATE_NAME')
+            && $template = constant('static::TEMPLATE_NAME');
+
+        $template && $vars[Arg::TEMPLATE_MODEL] = $template;
+
+        return $this->model ? $this->model->with($vars) : (
+            (defined('static::VIEW_MODEL') && $model = constant('static::VIEW_MODEL'))
+                ? new $model($vars) : new Mvc5Model($vars)
         );
-
-        !$template && $template = defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null;
-
-        $template && $model->template($template);
-
-        $vars && $model->vars($vars);
-
-        return $model;
     }
 
     /**
