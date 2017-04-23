@@ -49,7 +49,7 @@ trait Generator
      * @param array $path
      * @return array
      */
-    protected function append(Route $route, array $path)
+    protected function append($route, array $path)
     {
         $path[] = $route;
         return $path;
@@ -84,7 +84,7 @@ trait Generator
     }
 
     /**
-     * @param array|string $name
+     * @param array $name
      * @param array $path
      * @param Route $parent
      * @return Route
@@ -95,7 +95,7 @@ trait Generator
     }
 
     /**
-     * @param array $host
+     * @param array|string $host
      * @param array $params
      * @return string
      */

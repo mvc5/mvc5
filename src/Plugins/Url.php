@@ -6,6 +6,7 @@
 namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
+use Mvc5\Http\Uri;
 
 trait Url
 {
@@ -18,7 +19,7 @@ trait Url
     protected abstract function call($name, array $args = [], callable $callback = null);
 
     /**
-     * @param array|null|string $route
+     * @param array|null|string|Uri $route
      * @param array|string $query
      * @param string $fragment
      * @param array $options

@@ -41,10 +41,8 @@ class Render
      */
     protected function response(Response $response)
     {
-        $response->body() instanceof Template
-            && $response = $response->with(Arg::BODY, $this->render($response->body()));
-
-        return $response;
+        return $response->body() instanceof Template ?
+            $response->with(Arg::BODY, $this->render($response->body())) : $response;
     }
 
     /**

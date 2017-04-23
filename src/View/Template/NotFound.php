@@ -5,19 +5,12 @@
 
 namespace Mvc5\View\Template;
 
-use Mvc5\Exception\Base;
-use Mvc5\Exception\Throwable;
+use Mvc5\Exception\Runtime;
 use Mvc5\Model\Template;
 
 class NotFound
-    extends \RuntimeException
-    implements Throwable
+    extends Runtime
 {
-    /**
-     *
-     */
-    use Base;
-
     /**
      * @param $file
      * @return mixed
