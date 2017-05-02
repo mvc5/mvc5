@@ -7,20 +7,19 @@ namespace Mvc5\Route\Match;
 
 use Mvc5\Arg;
 use Mvc5\Http\Request;
-use Mvc5\Plugin;
 use Mvc5\Route\Route;
 
 class Middleware
 {
     /**
-     *
-     */
-    use Plugin;
-
-    /**
      * @var string
      */
     protected $placeholder = Arg::CONTROLLER;
+
+    /**
+     * @var callable
+     */
+    protected $service;
 
     /**
      * @param callable $service
@@ -41,7 +40,7 @@ class Middleware
      */
     protected function middleware($controller, array $middleware = null)
     {
-        return $middleware ? ($this->service)(Arg::MIDDLEWARE, [$this->stack($controller, $middleware)]) : null;
+        return $middleware ? ($this->service)(Arg::MIDDLEWARE, [Arg::STACK => $this->stack($controller, $middleware)]) : null;
     }
 
     /**

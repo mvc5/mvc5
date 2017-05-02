@@ -25,7 +25,7 @@ class Context
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        _Context::bind($this->service());
+        _Context::bind($this->service);
 
         return $next($request, $response);
     }

@@ -8,9 +8,9 @@ namespace Mvc5;
 class Middleware
 {
     /**
-     *
+     * @var Service\Service
      */
-    use Plugin;
+    protected $service;
 
     /**
      * @var array
@@ -18,11 +18,24 @@ class Middleware
     protected $stack;
 
     /**
+     * @param Service\Service $service
      * @param array $stack
      */
-    function __construct(array $stack = [])
+    function __construct(Service\Service $service, array $stack = [])
     {
+        $this->service = $service;
         $this->stack = $stack;
+    }
+
+    /**
+     * @param $middleware
+     * @param Http\Request $request
+     * @param Http\Response $response
+     * @return mixed
+     */
+    protected function call($middleware, $request, $response)
+    {
+        return $this->service->call($middleware, [$request, $response, $this->next()]);
     }
 
     /**
@@ -31,7 +44,7 @@ class Middleware
     protected function next()
     {
         return function($request, $response) {
-            return ($next = next($this->stack)) ? $this->call($next, [$request, $response, $this->next()]) : $response;
+            return ($middleware = next($this->stack)) ? $this->call($middleware, $request, $response) : $response;
         };
     }
 
@@ -42,6 +55,6 @@ class Middleware
      */
     function __invoke($request, $response)
     {
-        return $this->stack ? $this->call(reset($this->stack), [$request, $response, $this->next()]) : $response;
+        return $this->stack ? $this->call(reset($this->stack), $request, $response) : $response;
     }
 }

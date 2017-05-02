@@ -6,14 +6,14 @@
 namespace Mvc5\Route;
 
 use Mvc5\Http\Request;
-use Mvc5\Plugin;
+use Mvc5\Service\Service;
 
 class Match
 {
     /**
-     *
+     * @var Service
      */
-    use Plugin;
+    protected $service;
 
     /**
      * @var array
@@ -21,11 +21,24 @@ class Match
     protected $stack;
 
     /**
+     * @param Service $service
      * @param array $stack
      */
-    function __construct(array $stack = [])
+    function __construct(Service $service, array $stack = [])
     {
+        $this->service = $service;
         $this->stack = $stack;
+    }
+
+    /**
+     * @param $match
+     * @param Route $route
+     * @param Request $request
+     * @return mixed
+     */
+    protected function call($match, $route, $request)
+    {
+        return $this->service->call($match, [$route, $request, $this->next()]);
     }
 
     /**
@@ -34,7 +47,7 @@ class Match
     protected function next()
     {
         return function($route, $request) {
-            return ($next = next($this->stack)) ? $this->call($next, [$route, $request, $this->next()]) : $request;
+            return ($match = next($this->stack)) ? $this->call($match, $route, $request) : $request;
         };
     }
 
@@ -46,6 +59,6 @@ class Match
      */
     function __invoke($route, $request)
     {
-        return $this->stack ? $this->call(reset($this->stack), [$route, $request, $this->next()]) : $request;
+        return $this->stack ? $this->call(reset($this->stack), $route, $request) : $request;
     }
 }

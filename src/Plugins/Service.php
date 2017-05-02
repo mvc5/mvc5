@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Plugin;
+use Mvc5\Service\Plugin;
 use Mvc5\Service\Service as _Service;
 
 trait Service

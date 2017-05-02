@@ -6,7 +6,6 @@
 namespace Mvc5\Service\Config;
 
 use Mvc5\Config\Config;
-use Mvc5\Config\Configuration;
 
 trait Container
 {
@@ -16,50 +15,38 @@ trait Container
     use Config;
 
     /**
-     * @var array|Configuration
+     * @var array|mixed
      */
     protected $container = [];
 
     /**
-     * @var array|Configuration
+     * @var array|mixed
      */
     protected $services = [];
 
     /**
-     * @param array|Configuration|null $config
-     * @return array|Configuration|null
+    * @return array|mixed
      */
-    function config($config = null)
+    function config()
     {
-        return null !== $config ? $this->config = $config : $this->config;
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @return mixed
-     */
-    function configure($name, $value)
-    {
-        return $this->services[$name] = $value;
+        return $this->config;
     }
 
     /**
      * @param string $name
      * @return array|callable|null|object|string
      */
-    function configured($name)
+    protected function configured($name)
     {
         return $this->services[$name] ?? null;
     }
 
     /**
-     * @param array|Configuration $config
-     * @return array|Configuration
+     * @return array|mixed
      */
-    function container($config = null)
+    function container()
     {
-        return null !== $config ? $this->container = $config : $this->container;
+        return $this->container;
     }
 
     /**
@@ -132,12 +119,11 @@ trait Container
     }
 
     /**
-     * @param array|\ArrayAccess $config
-     * @return array|\ArrayAccess
+     * @return array|mixed
      */
-    function services($config = null)
+    function services()
     {
-        return null !== $config ? $this->services = $config : $this->services;
+        return $this->services;
     }
 
     /**

@@ -9,39 +9,22 @@ interface Manager
     extends Container, Service
 {
     /**
-     * @param array|\ArrayAccess|null $config
-     * @return array|\ArrayAccess|null
+     * @return array|mixed
      */
-    function config($config = null);
+    function config();
 
     /**
-     * @param string $name
-     * @param mixed $value
-     * @return mixed
+     * @return array|mixed
      */
-    function configure($name, $value);
+    function container();
 
     /**
-     * @param string $name
-     * @return array|callable|null|object|string
+     * @return array|mixed
      */
-    function configured($name);
+    function events();
 
     /**
-     * @param array|\ArrayAccess|null $config
-     * @return array|\ArrayAccess|null
+     * @return array|mixed
      */
-    function container($config = null);
-
-    /**
-     * @param array|\ArrayAccess|null|\Traversable $config
-     * @return array|\ArrayAccess|null|\Traversable
-     */
-    function events($config = null);
-
-    /**
-     * @param array|\ArrayAccess|null $config
-     * @return array|\ArrayAccess|null
-     */
-    function services($config = null);
+    function services();
 }
