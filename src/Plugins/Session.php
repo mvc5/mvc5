@@ -20,12 +20,10 @@ trait Session
 
     /**
      * @param $name
-     * @return _Session
+     * @return mixed|_Session
      */
     protected function session($name = null)
     {
-        return !($session = $this->plugin(Arg::SESSION)) || !$name ? $session : (
-            is_array($session) ? (isset($session[$name]) ? $session[$name] : null) : $session->get($name)
-        );
+        return !($session = $this->plugin(Arg::SESSION)) || null === $name ? $session : ($session[$name] ?? null);
     }
 }

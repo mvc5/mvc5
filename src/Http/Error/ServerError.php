@@ -6,16 +6,16 @@
 namespace Mvc5\Http\Error;
 
 use Mvc5\Arg;
-use Mvc5\Http\Config\Error as _Error;
-use Mvc5\Http\Error;
+use Mvc5\Http\Config\Error;
+use Mvc5\Http\Error as HttpError;
 
 class ServerError
-    implements Error
+    implements HttpError
 {
     /**
      *
      */
-    use _Error;
+    use Error;
 
     /**
      * @param array $config

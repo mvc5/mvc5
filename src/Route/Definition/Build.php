@@ -74,7 +74,7 @@ trait Build
     /**
      * @param Route $route
      * @param $host
-     * @return array|mixed|\Mvc5\Config\Base
+     * @return Route
      */
     protected function host(Route $route, $host)
     {
