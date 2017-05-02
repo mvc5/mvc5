@@ -7,7 +7,7 @@ namespace Mvc5\Response;
 
 use Mvc5\Arg;
 use Mvc5\Event\Event;
-use Mvc5\Event\Signal;
+use Mvc5\Event\EventModel;
 use Mvc5\Http\Request as HttpRequest;
 use Mvc5\Http\Response as HttpResponse;
 
@@ -17,7 +17,7 @@ class Dispatch
     /**
      *
      */
-    use Signal;
+    use EventModel;
 
     /**
      * @var HttpRequest
@@ -37,10 +37,8 @@ class Dispatch
     function __construct($event, HttpRequest $request = null, HttpResponse $response = null)
     {
         $this->event = $event;
-
-        $request && $this->request = $request;
-
-        $response && $this->response = $response;
+        $this->request = $request;
+        $this->response = $response;
     }
 
     /**
