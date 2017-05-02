@@ -7,7 +7,7 @@ namespace Mvc5\Resolver;
 
 use Mvc5\Arg;
 use Mvc5\Event\Event;
-use Mvc5\Event\Signal;
+use Mvc5\Event\EventModel;
 use Mvc5\Resolvable;
 
 class Dispatch
@@ -16,7 +16,7 @@ class Dispatch
     /**
      *
      */
-    use Signal;
+    use EventModel;
 
     /**
      *
