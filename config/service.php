@@ -3,6 +3,7 @@
  *
  */
 
+use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Config;
 use Mvc5\Plugin\GlobalVar;
 use Mvc5\Plugin\Hydrator;
@@ -11,7 +12,6 @@ use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
 use Mvc5\Plugin\Response;
-use Mvc5\Plugin\Service;
 use Mvc5\Plugin\Session;
 use Mvc5\Plugin\Shared;
 
@@ -20,20 +20,18 @@ return [
     'cookie'               => new Shared('cookie', [Mvc5\Cookie\Config::class, new GlobalVar('_COOKIE'), new Param('cookie')]),
     'controller\action'    => [Mvc5\Controller\Action::class, new Link],
     'error\controller'     => [Mvc5\Request\Error\Controller::class, new Plugin('error\model')],
-    'error\model'          => [Mvc5\Request\Error\Model::class, 'error'],
+    'error\model'          => [Mvc5\Request\Error\ViewModel::class, 'error'],
     'event\model'          => Mvc5\Event::class,
     'exception\controller' => [Mvc5\Request\Exception\Controller::class, new Plugin('exception\layout')],
     'exception\error'      => [Mvc5\Request\Exception::class, 'exception', 'exception\controller'],
-    'exception\layout'     => [Mvc5\Layout::class, 'template' => 'exception'],
+    'exception\layout'     => [Mvc5\ViewLayout::class, 'template' => 'exception'],
     'exception\log'        => ['log', 'throw_exception' => false],
     'exception\response'   => new Response('exception\response'),
-    'factory'              => new Service(null),
-    'layout'               => [Mvc5\Layout::class, 'template' => 'layout'],
+    'layout'               => [Mvc5\ViewLayout::class, 'template' => 'layout'],
     'log'                  => Mvc5\Log\Logger::class,
     'log\error'            => Mvc5\Log\Error::class,
     'log\exception'        => Mvc5\Log\Exception::class,
-    'manager'              => new Plugin(null),
-    'middleware'           => new Service(Mvc5\Middleware::class),
+    'middleware'           => [Mvc5\Middleware::class, 'service' => new Link],
     'Mvc5\Service\Service' => new Link,
     'render'               => new Shared('view\renderer'),
     'request'              => Mvc5\Request\Config::class,
@@ -49,7 +47,7 @@ return [
     'response\version'     => Mvc5\Response\Version::class,
     'route\dispatch'       => [Mvc5\Route\Dispatch::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')],
     'route\generator'      => Mvc5\Route\Generator::class,
-    'route\match'          => new Service(Mvc5\Route\Match::class, [new Param('middleware.route\match')]),
+    'route\match'          => [Mvc5\Route\Match::class, new Link, new Param('middleware.route\match')],
     'route\match\action'   => Mvc5\Route\Match\Action::class,
     'route\match\host'     => Mvc5\Route\Match\Host::class,
     'route\match\merge'    => Mvc5\Route\Match\Merge::class,
@@ -65,12 +63,15 @@ return [
     'session\container'    => new Plugin(Mvc5\Session\Container::class, ['session' => new Plugin('session')], ['start' => []]),
     'session\global'       => new Hydrator(Mvc5\Session\Config::class, ['start' => new Param('session')]),
     'session\messages'     => new Shared('session\messages', new Session('session\messages', Mvc5\Session\Messages::class)),
-    'template\render'      => new Service(Mvc5\View\Render::class, [new Param('templates'), new Param('view')]),
+    'template\render'      => [Mvc5\View\Render::class, new Link, new Plugin('view\engine'),
+        new Args(['paths' => new Param('templates'), 'directory' => new Param('view')])
+    ],
     'url'                  => new Shared('url\plugin'),
     'url\generator'        => [Mvc5\Url\Generator::class, new Param('routes')],
     'url\plugin'           => [Mvc5\Url\Plugin::class, new Shared('request'), new Plugin('url\generator')],
-    'view\layout'          => Mvc5\View\Layout::class,
-    'view\model'           => Mvc5\Model::class,
+    'view\engine'          => Mvc5\View\Engine\PhpEngine::class,
+    'view\layout'          => Mvc5\Template\Layout\Assign::class,
+    'view\model'           => Mvc5\ViewModel::class,
     'view\render'          => new Shared('template\render'),
     'view\renderer'        => [Mvc5\View\Renderer::class, new Shared('template\render')],
     'web'                  => new Response('web'),
