@@ -11,8 +11,7 @@ class Event
     /**
      *
      */
-    use Event\Model;
-    use Signal;
+    use Event\EventModel;
 
     /**
      * @var mixed

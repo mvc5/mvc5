@@ -7,7 +7,7 @@ namespace Mvc5\Log;
 
 use Mvc5\Arg;
 use Mvc5\Event\Event;
-use Mvc5\Event\Signal;
+use Mvc5\Event\EventModel;
 
 class Logger
     implements Event
@@ -15,7 +15,7 @@ class Logger
     /**
      *
      */
-    use Signal;
+    use EventModel;
 
     /**
      *

@@ -20,7 +20,7 @@ trait Model
     /**
      * @return string
      */
-    function event()
+    function name()
     {
         return $this->event ?? (defined('static::EVENT') ? constant('static::EVENT') : static::class);
     }

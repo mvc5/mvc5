@@ -6,15 +6,14 @@
 namespace Mvc5\Event;
 
 use Mvc5\Arg;
-use Mvc5\Signal as _Signal;
+use Mvc5\Signal;
 
-trait Signal
+trait EventModel
 {
     /**
      *
      */
     use Model;
-    use _Signal;
 
     /**
      * @return array
@@ -24,6 +23,17 @@ trait Signal
         return [
             Arg::EVENT => $this
         ];
+    }
+
+    /**
+     * @param callable $callable
+     * @param array $args
+     * @param callable|null $callback
+     * @return mixed
+     */
+    protected function signal(callable $callable, array $args = [], callable $callback = null)
+    {
+        return Signal::emit($callable, $args, $callback);
     }
 
     /**

@@ -10,7 +10,7 @@ interface Event
     /**
      * @return string
      */
-    function event();
+    function name();
 
     /**
      * @return bool|true

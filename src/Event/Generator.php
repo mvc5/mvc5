@@ -6,15 +6,10 @@
 namespace Mvc5\Event;
 
 use Iterator;
-use Mvc5\Signal as _Signal;
+use Mvc5\Signal;
 
 trait Generator
 {
-    /**
-     *
-     */
-    use _Signal;
-
     /**
      * @param array|callable|object|string $config
      * @return callable|null
@@ -87,6 +82,17 @@ trait Generator
     protected function result($event, $listener, array $args = [], callable $callback = null)
     {
         return $this->emit($event, $this->callable($listener), $args, $callback);
+    }
+
+    /**
+     * @param callable $callable
+     * @param array $args
+     * @param callable|null $callback
+     * @return mixed
+     */
+    protected function signal(callable $callable, array $args = [], callable $callback = null)
+    {
+        return Signal::emit($callable, $args, $callback);
     }
 
     /**
