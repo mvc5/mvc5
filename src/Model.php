@@ -6,10 +6,10 @@
 namespace Mvc5;
 
 class Model
-    implements Model\ViewModel
+    implements Config\Immutable
 {
     /**
      *
      */
-    use Model\Plugin;
+    use Config\ReadOnly;
 }

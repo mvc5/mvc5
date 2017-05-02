@@ -6,6 +6,6 @@
 namespace Mvc5\Config;
 
 interface Immutable
-    extends Base
+    extends Model
 {
 }

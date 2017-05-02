@@ -6,7 +6,7 @@
 namespace Mvc5\Config;
 
 interface Configuration
-    extends Base
+    extends Model
 {
     /**
      * @param array|string $name

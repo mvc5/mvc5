@@ -6,11 +6,11 @@
 namespace Mvc5\Http\Headers;
 
 use Mvc5\Arg;
-use Mvc5\Immutable;
+use Mvc5\Model;
 use Mvc5\Http\Headers;
 
 class Config
-    extends Immutable
+    extends Model
     implements Headers
 {
     /**

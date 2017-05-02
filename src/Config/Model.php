@@ -5,7 +5,7 @@
 
 namespace Mvc5\Config;
 
-interface Base
+interface Model
     extends \ArrayAccess, \Countable, \Iterator
 {
     /**
