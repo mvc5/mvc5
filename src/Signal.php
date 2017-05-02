@@ -8,18 +8,18 @@ namespace Mvc5;
 use ReflectionFunction;
 use ReflectionMethod;
 
-trait Signal
+final class Signal
 {
     /**
-     * @param callable|object $config
+     * @param callable $callable
      * @param array $args
      * @param callable $callback
      * @return mixed
      */
-    protected static function signal(callable $config, array $args = [], callable $callback = null)
+    static function emit(callable $callable, array $args = [], callable $callback = null)
     {
         if ($args && !is_string(key($args))) {
-            return $config(...$args);
+            return $callable(...$args);
         }
 
         $function = null;
@@ -27,20 +27,20 @@ trait Signal
         $method   = '__invoke';
         $params   = [];
 
-        if (is_string($config)) {
-            $static = explode('::', $config);
+        if (is_string($callable)) {
+            $static = explode('::', $callable);
             if (isset($static[1])) {
-                list($config, $method) = $static;
+                list($callable, $method) = $static;
             } else {
-                $params   = (new ReflectionFunction($config))->getParameters();
-                $function = $config;
+                $params   = (new ReflectionFunction($callable))->getParameters();
+                $function = $callable;
             }
         }
 
-        is_array($config) && list($config, $method) = $config;
+        is_array($callable) && list($callable, $method) = $callable;
 
-        !$function && ($function = [$config, $method])
-            && $params = (new ReflectionMethod($config, $method))->getParameters();
+        !$function && ($function = [$callable, $method])
+            && $params = (new ReflectionMethod($callable, $method))->getParameters();
 
         foreach($params as $param) {
             if (array_key_exists($param->name, $args)) {
@@ -71,7 +71,7 @@ trait Signal
 
             Exception::runtime('Missing required parameter $' . $param->name . ' for ' . (
                 is_string($function) ? $function : (
-                    (is_string($config) ? $config : get_class($config)) . '::' . $method
+                    (is_string($callable) ? $callable : get_class($callable)) . '::' . $method
                 )
             ));
         }
