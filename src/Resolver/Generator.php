@@ -6,17 +6,17 @@
 namespace Mvc5\Resolver;
 
 use Mvc5\Event\Event;
-use Mvc5\Event\Generator as _Generator;
+use Mvc5\Event\Generator as EventGenerator;
 
 trait Generator
 {
     /**
      *
      */
-    use _Generator;
+    use EventGenerator;
 
     /**
-     * @var array|\ArrayAccess
+     * @var array|mixed
      */
     protected $events = [];
 
@@ -37,16 +37,15 @@ trait Generator
      */
     protected function eventName($event)
     {
-        return is_string($event) ? $event : ($event instanceof Event ? $event->event() : get_class($event));
+        return is_string($event) ? $event : ($event instanceof Event ? $event->name() : get_class($event));
     }
 
     /**
-     * @param array|\ArrayAccess|null $config
-     * @return array|\ArrayAccess|null
+     * @return array|mixed
      */
-    function events($config = null)
+    function events()
     {
-        return null !== $config ? $this->events = $config : $this->events;
+        return $this->events;
     }
 
     /**
