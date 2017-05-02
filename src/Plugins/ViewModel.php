@@ -6,8 +6,8 @@
 namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
-use Mvc5\Model\ViewModel as _ViewModel;
-use Mvc5\Model\ViewLayout;
+use Mvc5\Template\TemplateModel;
+use Mvc5\Template\TemplateLayout;
 
 trait ViewModel
 {
@@ -15,7 +15,7 @@ trait ViewModel
      * @param array $vars
      * @param string $template
      * @param string $model
-     * @return ViewLayout
+     * @return mixed|TemplateLayout
      */
     protected function layout(array $vars = [], $template = null, $model = Arg::LAYOUT)
     {
@@ -25,7 +25,7 @@ trait ViewModel
     /**
      * @param array $vars
      * @param null|string $template
-     * @return _ViewModel|ViewLayout|mixed
+     * @return mixed|TemplateModel|TemplateLayout
      */
     protected function model(array $vars = [], $template = null)
     {
@@ -48,7 +48,7 @@ trait ViewModel
     /**
      * @param string $template
      * @param array $vars
-     * @return _ViewModel
+     * @return TemplateModel
      */
     protected function view($template = null, array $vars = [])
     {

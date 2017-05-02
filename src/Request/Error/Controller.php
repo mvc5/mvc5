@@ -8,15 +8,9 @@ namespace Mvc5\Request\Error;
 use Mvc5\Arg;
 use Mvc5\Http\Error as HttpError;
 use Mvc5\Http\Request;
-use Mvc5\View\Model as ViewModel;
 
 class Controller
 {
-    /**
-     *
-     */
-    use ViewModel;
-
     /**
      * @param ErrorModel $model
      */
@@ -32,6 +26,6 @@ class Controller
      */
     function __invoke(Request $request, HttpError $error = null)
     {
-        return $this->model([Arg::ERROR => $error ?: $request[Arg::ERROR]]);
+        return $this->model->with([Arg::ERROR => $error ?: $request[Arg::ERROR]]);
     }
 }

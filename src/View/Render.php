@@ -5,10 +5,12 @@
 
 namespace Mvc5\View;
 
-use Mvc5\Service;
+use Mvc5\Arg;
+use Mvc5\Service\Service;
+use Mvc5\ViewModel;
 
 class Render
-    implements Service, Template\Paths, View
+    implements View
 {
     /**
      *
@@ -18,20 +20,19 @@ class Render
     use Template\Render;
 
     /**
-     * @param array|\ArrayAccess $paths
-     * @param string $directory
-     * @param callable $provider
-     * @param string $extension
-     * @param string $model
-     * @param bool|false $checkFileExists
+     * @param Service $service
+     * @param ViewEngine $engine
+     * @param array $options
      */
-    function __construct($paths = [], $directory = null, callable $provider = null, $extension = null, $model = null, $checkFileExists = false)
+    function __construct(Service $service, ViewEngine $engine, array $options = [])
     {
-        $checkFileExists && $this->checkFileExists = $checkFileExists;
-        $directory && $this->directory = $directory;
-        $extension && $this->extension = $extension;
-        $model && $this->model = $model;
-        $paths && $this->path = $paths;
-        $provider && $this->provider = $provider;
+        $this->engine = $engine;
+        $this->service = $service;
+
+        $this->directory = $options['directory'] ?? null;
+        $this->extension = $options['extension'] ?? Arg::VIEW_EXTENSION;
+        $this->model = $options['model'] ?? ViewModel::class;
+        $this->paths = $options['paths'] ?? [];
+        $this->provider = $options['provider'] ?? null;
     }
 }

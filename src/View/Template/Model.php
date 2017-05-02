@@ -5,22 +5,17 @@
 
 namespace Mvc5\View\Template;
 
-use Mvc5\Model as _Model;
-use Mvc5\Model\Template;
-use Mvc5\Model\ViewModel;
-use Mvc5\Plugin;
+use Mvc5\Arg;
+use Mvc5\Service\Service;
+use Mvc5\Template\TemplateModel;
+use Mvc5\View\ViewModel;
 
 trait Model
 {
     /**
-     *
-     */
-    use Plugin;
-
-    /**
      * @var string
      */
-    protected $model = _Model::class;
+    protected $model;
 
     /**
      * @var callable|null
@@ -28,12 +23,18 @@ trait Model
     protected $provider;
 
     /**
-     * @param string $model
-     * @return callable|mixed|null|object
+     * @var Service
      */
-    protected function create($model)
+    protected $service;
+
+    /**
+     * @param string $model
+     * @param array $vars
+     * @return TemplateModel
+     */
+    protected function create($model, array $vars = [])
     {
-        return ($this->provider ? ($this->provider)($model) : null) ? : new $this->model($model);
+        return ($this->provider ? ($this->provider)($model, $vars) : null) ? : new $this->model($model, $vars);
     }
 
     /**
@@ -43,22 +44,25 @@ trait Model
     protected abstract function find($name);
 
     /**
-     * @param array|string|Template $model
+     * @param array|string|TemplateModel $model
      * @param array $vars
-     * @return Template
+     * @return TemplateModel
      */
     protected function model($model, array $vars = [])
     {
-        !$model instanceof Template
-            && $model = $this->create($model);
+        /** @var TemplateModel $model */
 
-        $vars && $model->vars($vars);
+        $model = is_string($model) ? $this->create($model, $vars) : (
+            is_array($model) ? $this->create($model + ($vars ? [Arg::VARS => $vars] : [])) : (
+                $vars ? $model->with($vars) : $model
+            )
+        );
 
-        ($path = $model->template())
-            && $model->template($this->find($path));
+        ($path = $model->template()) && ($file = $this->find($path)) && ($path !== $file)
+            && $model = $model->withTemplate($file);
 
         $model instanceof ViewModel && !$model->service()
-            && $model->service($this->service());
+            && $model = $model->withService($this->service);
 
         return $model;
     }

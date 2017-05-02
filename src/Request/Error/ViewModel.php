@@ -5,7 +5,7 @@
 
 namespace Mvc5\Request\Error;
 
-class Model
+class ViewModel
     implements ErrorModel
 {
     /**

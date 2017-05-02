@@ -5,12 +5,12 @@
 
 namespace Mvc5\View;
 
-use Mvc5\Model\Template;
+use Mvc5\Template\TemplateModel;
 
 interface View
 {
     /**
-     * @param array|string|Template $template
+     * @param array|string|TemplateModel $template
      * @param array $vars
      * @return string
      */

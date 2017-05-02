@@ -5,31 +5,36 @@
 
 namespace Mvc5\View\Template;
 
-use Mvc5\Model\Template;
+use Mvc5\Template\TemplateModel;
+use Mvc5\View\ViewEngine;
 
 trait Render
 {
     /**
      *
      */
-    use Output;
     use Traverse;
 
     /**
-     * @param array|string|Template $model
+     * @var ViewEngine
+     */
+    protected $engine;
+
+    /**
+     * @param array|string|TemplateModel $model
      * @param array $vars
-     * @return Template
+     * @return TemplateModel
      */
     protected abstract function model($model, array $vars = []);
 
     /**
-     * @param array|string|Template $template
+     * @param array|string|TemplateModel $template
      * @param array $vars
      * @return string
      */
     function render($template, array $vars = [])
     {
-        return $this->output($this->traverse($this->model($template, $vars)));
+        return $this->engine->render($this->traverse($this->model($template, $vars)));
     }
 
     /**
@@ -39,6 +44,6 @@ trait Render
      */
     function __invoke($model = null, array $vars = [])
     {
-        return !$model instanceof Template ? $model : $this->render($model, $vars);
+        return !$model instanceof TemplateModel ? $model : $this->render($model, $vars);
     }
 }

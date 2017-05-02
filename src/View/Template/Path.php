@@ -10,7 +10,7 @@ trait Path
     /**
      * @var array|\ArrayAccess
      */
-    protected $path = [];
+    protected $paths = [];
 
     /**
      * @param string $name
@@ -18,15 +18,6 @@ trait Path
      */
     protected function path($name)
     {
-        return isset($this->path[$name]) ? $this->path[$name] : null;
-    }
-
-    /**
-     * @param array|\ArrayAccess|null $paths
-     * @return array|\ArrayAccess|null
-     */
-    function paths($paths = null)
-    {
-        return null !== $paths ? $this->path = $paths : $this->path;
+        return isset($this->paths[$name]) ? $this->paths[$name] : null;
     }
 }

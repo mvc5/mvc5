@@ -6,19 +6,20 @@
 namespace Mvc5\Request\Exception;
 
 use Mvc5\Arg;
+use Mvc5\Template\TemplateModel;
 use Mvc5\Http\Request;
 
 class Controller
 {
     /**
-     * @var
+     * @var TemplateModel
      */
     protected $model;
 
     /**
-     * @param $model
+     * @param TemplateModel $model
      */
-    function __construct($model)
+    function __construct(TemplateModel $model)
     {
         $this->model = $model;
     }
@@ -29,8 +30,6 @@ class Controller
      */
     function __invoke(Request $request)
     {
-        $this->model[Arg::EXCEPTION] = $request[Arg::EXCEPTION];
-
-        return $this->model;
+        return $this->model->with(Arg::EXCEPTION, $request[Arg::EXCEPTION]);
     }
 }

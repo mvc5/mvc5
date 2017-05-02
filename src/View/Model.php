@@ -6,23 +6,21 @@
 namespace Mvc5\View;
 
 use Mvc5\Arg;
-use Mvc5\Model as Mvc5Model;
-use Mvc5\Model\ViewModel;
-use Mvc5\Model\Template;
+use Mvc5\ViewModel;
 
 trait Model
 {
     /**
-     * @var Template|ViewModel
+     * @var mixed|ViewModel
      */
     protected $model;
 
     /**
      * @param array $vars
      * @param null|string $template
-     * @return Template|ViewModel
+     * @return ViewModel|ViewModel
      */
-    function model(array $vars = [], $template = null)
+    protected function model(array $vars = [], $template = null)
     {
         !$template && defined('static::TEMPLATE_NAME')
             && $template = constant('static::TEMPLATE_NAME');
@@ -31,25 +29,16 @@ trait Model
 
         return $this->model ? $this->model->with($vars) : (
             (defined('static::VIEW_MODEL') && $model = constant('static::VIEW_MODEL'))
-                ? new $model($vars) : new Mvc5Model($vars)
+                ? new $model($vars) : new ViewModel($vars)
         );
-    }
-
-    /**
-     * @param Template|ViewModel $model
-     * @return Template|ViewModel
-     */
-    function setModel(Template $model)
-    {
-        return $this->model = $model;
     }
 
     /**
      * @param string $template
      * @param array $vars
-     * @return Template|ViewModel
+     * @return mixed|ViewModel
      */
-    function view($template = null, array $vars = [])
+    protected function view($template = null, array $vars = [])
     {
         return $this->model($vars, $template);
     }

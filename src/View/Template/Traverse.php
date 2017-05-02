@@ -5,27 +5,28 @@
 
 namespace Mvc5\View\Template;
 
-use Mvc5\Model\Template;
+use Mvc5\Template\TemplateModel;
 
 trait Traverse
 {
     /**
-     * @param array|string|Template $template
+     * @param array|string|TemplateModel $template
      * @param array $vars
      * @return string
      */
     protected abstract function render($template, array $vars = []);
 
     /**
-     * @param Template $template
-     * @return Template
+     * @param TemplateModel $template
+     * @param array $vars
+     * @return TemplateModel
      */
-    protected function traverse(Template $template)
+    protected function traverse(TemplateModel $template, array $vars = [])
     {
         foreach($template as $k => $v) {
-            $v instanceof Template && $template[$k] = $this->render($v);
+            $v instanceof TemplateModel && $vars[$k] = $this->render($v);
         }
 
-        return $template;
+        return $vars ? $template->with($vars) : $template;
     }
 }

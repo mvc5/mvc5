@@ -8,15 +8,15 @@ namespace Mvc5\Web;
 use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Model\ViewLayout;
-use Mvc5\View\Layout\Model as LayoutModel;
+use Mvc5\Template\Layout\Model;
+use Mvc5\View\ViewLayout;
 
 class Layout
 {
     /**
      *
      */
-    use LayoutModel;
+    use Model;
 
     /**
      * @var ViewLayout
@@ -37,7 +37,7 @@ class Layout
      */
     protected function response(Response $response)
     {
-        return $response->with(Arg::BODY,  $this->model($this->layout, $response->body()));
+        return $response->with(Arg::BODY,  $this->layout($this->layout, $response->body()));
     }
 
     /**
