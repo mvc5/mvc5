@@ -22,7 +22,7 @@ class Plugin
      * @param string $param
      * @param bool|false $merge
      */
-    function __construct($name, array $args = [], array $calls = [], $param = Arg::ITEM, $merge = false)
+    function __construct($name = null, array $args = [], array $calls = [], $param = Arg::ITEM, $merge = false)
     {
         $this->config = [
             Arg::ARGS  => $args,
