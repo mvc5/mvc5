@@ -30,10 +30,9 @@ trait View
      */
     protected function model(array $vars = [], $template = null, $model = null)
     {
-        !$template && defined('static::TEMPLATE_NAME')
-            && $template = constant('static::TEMPLATE_NAME');
-
         !$model && $model = defined('static::VIEW_MODEL') ? constant('static::VIEW_MODEL') : Arg::VIEW_MODEL;
+
+        !$template && defined('static::TEMPLATE') && $template = constant('static::TEMPLATE');
 
         $template && $vars[Arg::TEMPLATE_MODEL] = $template;
 

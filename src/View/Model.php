@@ -18,12 +18,11 @@ trait Model
     /**
      * @param array $vars
      * @param null|string $template
-     * @return ViewModel|ViewModel
+     * @return mixed|ViewModel
      */
     protected function model(array $vars = [], $template = null)
     {
-        !$template && defined('static::TEMPLATE_NAME')
-            && $template = constant('static::TEMPLATE_NAME');
+        !$template && defined('static::TEMPLATE') && $template = constant('static::TEMPLATE');
 
         $template && $vars[Arg::TEMPLATE_MODEL] = $template;
 

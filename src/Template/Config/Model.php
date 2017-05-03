@@ -23,7 +23,7 @@ trait Model
     {
         $this->config = (is_array($template) ? $template + $vars : $vars) + array_filter([
             Arg::TEMPLATE_MODEL => is_string($template) ? $template :
-                (defined('static::TEMPLATE_NAME') ? constant('static::TEMPLATE_NAME') : null)
+                (defined('static::TEMPLATE') ? constant('static::TEMPLATE') : null)
         ]);
     }
 
