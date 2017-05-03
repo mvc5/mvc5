@@ -24,14 +24,14 @@ trait Router
     protected $match;
 
     /**
-     * @var array|Route
+     * @var array
      */
     protected $route;
 
     /**
      * @param callable $match
      * @param callable $generator
-     * @param array|Route $route
+     * @param array $route
      */
     function __construct(callable $match, callable $generator, $route)
     {
@@ -103,15 +103,9 @@ trait Router
      * @param $result
      * @return mixed|Request
      */
-    protected function result(Request $request, $result = null)
+    protected function result(Request $request, $result)
     {
-        !$result &&
-            $result = new NotFound;
-
-        $result instanceof Error
-            && $result = $request->with(Arg::ERROR, $result);
-
-        return $result;
+        return !($result instanceof Error) ? $result : $request->with(Arg::ERROR, $result);
     }
 
     /**
