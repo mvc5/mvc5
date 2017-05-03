@@ -27,6 +27,7 @@ return [
     'exception\layout'     => [Mvc5\ViewLayout::class, 'template' => 'exception'],
     'exception\log'        => ['log', 'throw_exception' => false],
     'exception\response'   => new Response('exception\response'),
+    'factory'              => new Plugin(null, [new Link]),
     'layout'               => [Mvc5\ViewLayout::class, 'template' => 'layout'],
     'log'                  => Mvc5\Log\Logger::class,
     'log\error'            => Mvc5\Log\Error::class,
