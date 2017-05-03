@@ -171,7 +171,7 @@ trait Resolver
      */
     protected function child(Child $config, array $args = [])
     {
-        return $this->provide($this->merge(clone $this->parent($config->parent()), $config), $args);
+        return $this->provide($this->merge($this->parent($config->parent()), $config), $args);
     }
 
     /**
@@ -538,7 +538,7 @@ trait Resolver
             return $this->hydrate($config, $this->make($name, $args));
         }
 
-        return $this->provide($this->merge(clone $parent, $config, $name), $args);
+        return $this->provide($this->merge($parent, $config, $name), $args);
     }
 
     /**
