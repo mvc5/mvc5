@@ -39,6 +39,7 @@ include __DIR__ . '/src/Config.php';
 include __DIR__ . '/src/Container.php';
 include __DIR__ . '/src/Event.php';
 include __DIR__ . '/src/Model.php';
+include __DIR__ . '/src/Overload.php';
 include __DIR__ . '/src/Plugins/Config.php';
 include __DIR__ . '/src/Plugins/Log.php';
 include __DIR__ . '/src/Plugins/Messages.php';
