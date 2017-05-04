@@ -8,6 +8,7 @@ namespace Mvc5\Plugin;
 use Mvc5\Arg;
 
 class Plugin
+    extends \Mvc5\Model
     implements Gem\Plugin
 {
     /**

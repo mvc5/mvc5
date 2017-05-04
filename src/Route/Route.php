@@ -5,10 +5,10 @@
 
 namespace Mvc5\Route;
 
-use Mvc5\Config\Immutable;
+use Mvc5\Config\Model;
 
 interface Route
-    extends Immutable
+    extends Model
 {
     /**
      * @param $name

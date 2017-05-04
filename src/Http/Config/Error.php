@@ -6,15 +6,9 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\ReadOnly;
 
 trait Error
 {
-    /**
-     *
-     */
-    use ReadOnly;
-
     /**
      * @return int
      */

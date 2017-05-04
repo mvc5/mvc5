@@ -6,10 +6,11 @@
 namespace Mvc5;
 
 class ViewLayout
-    implements Config\Immutable, View\ViewLayout
+    extends Model
+    implements View\ViewLayout
 {
     /**
      *
      */
-    use View\Config\Layout;
+    use View\Config\ViewLayout;
 }

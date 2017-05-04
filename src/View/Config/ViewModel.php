@@ -8,15 +8,15 @@ namespace Mvc5\View\Config;
 use Mvc5\Arg;
 use Mvc5\Service\Service;
 use Mvc5\Service\Plugin;
-use Mvc5\Template\Config\Model as Template;
+use Mvc5\Template\Config\TemplateModel;
 
-trait Model
+trait ViewModel
 {
     /**
      *
      */
     use Plugin;
-    use Template;
+    use TemplateModel;
 
     /**
      * @param array|string $template

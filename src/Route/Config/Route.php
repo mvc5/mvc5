@@ -6,15 +6,9 @@
 namespace Mvc5\Route\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\ReadOnly;
 
 trait Route
 {
-    /**
-     *
-     */
-    use ReadOnly;
-
     /**
      * @param $name
      * @return mixed

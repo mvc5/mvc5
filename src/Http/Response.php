@@ -5,10 +5,10 @@
 
 namespace Mvc5\Http;
 
-use Mvc5\Config\Immutable;
+use Mvc5\Config\Model;
 
 interface Response
-    extends Immutable
+    extends Model
 {
     /**
      * @return mixed

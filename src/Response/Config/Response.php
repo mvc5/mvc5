@@ -8,7 +8,6 @@ namespace Mvc5\Response\Config;
 use Mvc5\Arg;
 use Mvc5\Http\Cookies as HttpCookies;
 use Mvc5\Http\Cookies\Config as Cookies;
-use Mvc5\Http\Config\Response as _Response;
 use Mvc5\Http\Headers as HttpHeaders;
 use Mvc5\Http\Headers\Config as Headers;
 
@@ -17,7 +16,7 @@ trait Response
     /**
      *
      */
-    use _Response;
+    use \Mvc5\Http\Config\Response;
 
     /**
      * @param null $body

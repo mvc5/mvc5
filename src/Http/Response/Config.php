@@ -6,10 +6,11 @@
 namespace Mvc5\Http\Response;
 
 use Mvc5\Http\Config\Response;
-use Mvc5\Http\Response as HttpResponse;
+use Mvc5\Model;
 
 class Config
-    implements HttpResponse
+    extends Model
+    implements \Mvc5\Http\Response
 {
     /**
      *

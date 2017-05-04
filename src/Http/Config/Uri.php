@@ -6,23 +6,9 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\ReadOnly;
 
 trait Uri
 {
-    /**
-     *
-     */
-    use ReadOnly;
-
-    /**
-     * @param array|string|mixed $config
-     */
-    function __construct($config = [])
-    {
-        $this->config = is_array($config) ? $config : parse_url((string) $config);
-    }
-
     /**
      * @return string
      */

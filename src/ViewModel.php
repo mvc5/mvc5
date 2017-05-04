@@ -6,10 +6,11 @@
 namespace Mvc5;
 
 class ViewModel
-    implements Config\Immutable, View\ViewModel
+    extends Model
+    implements View\ViewModel
 {
     /**
      *
      */
-    use View\Config\Model;
+    use View\Config\ViewModel;
 }

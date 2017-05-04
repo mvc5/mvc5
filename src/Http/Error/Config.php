@@ -6,10 +6,11 @@
 namespace Mvc5\Http\Error;
 
 use Mvc5\Http\Config\Error;
-use Mvc5\Http\Error as HttpError;
+use Mvc5\Model;
 
 class Config
-    implements HttpError
+    extends Model
+    implements \Mvc5\Http\Error
 {
     /**
      *

@@ -5,13 +5,14 @@
 
 namespace Mvc5\Template;
 
-use Mvc5\Config\Immutable;
+use Mvc5\Model;
 
 class Layout
-    implements Immutable, TemplateLayout
+    extends Model
+    implements TemplateLayout
 {
     /**
      *
      */
-    use Config\Layout;
+    use Config\TemplateLayout;
 }

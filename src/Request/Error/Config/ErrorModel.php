@@ -6,14 +6,14 @@
 namespace Mvc5\Request\Error\Config;
 
 use Mvc5\Arg;
-use Mvc5\View\Config\Model;
+use Mvc5\View\Config\ViewModel;
 
 trait ErrorModel
 {
     /**
      *
      */
-    use Model;
+    use ViewModel;
 
     /**
      * @return int

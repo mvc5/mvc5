@@ -7,12 +7,12 @@ namespace Mvc5\Template\Config;
 
 use Mvc5\Arg;
 
-trait Layout
+trait TemplateLayout
 {
     /**
      *
      */
-    use Model;
+    use TemplateModel;
 
     /**
      * @return null|string

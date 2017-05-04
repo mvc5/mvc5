@@ -6,15 +6,9 @@
 namespace Mvc5\Template\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\ReadOnly;
 
-trait Model
+trait TemplateModel
 {
-    /**
-     *
-     */
-    use ReadOnly;
-
     /**
      * @param array|string $template
      * @param array $vars

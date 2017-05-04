@@ -7,12 +7,12 @@ namespace Mvc5\View\Config;
 
 use Mvc5\Arg;
 
-trait Layout
+trait ViewLayout
 {
     /**
      *
      */
-    use Model;
+    use ViewModel;
 
     /**
      * @return null|string

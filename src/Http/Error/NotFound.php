@@ -7,10 +7,11 @@ namespace Mvc5\Http\Error;
 
 use Mvc5\Arg;
 use Mvc5\Http\Config\Error;
-use Mvc5\Http\Error as HttpError;
+use Mvc5\Model;
 
 class NotFound
-    implements HttpError
+    extends Model
+    implements \Mvc5\Http\Error
 {
     /**
      *
