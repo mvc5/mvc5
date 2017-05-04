@@ -5,8 +5,10 @@
 
 namespace Mvc5\Template;
 
+use Mvc5\Config\Immutable;
+
 class Model
-    implements TemplateModel
+    implements Immutable, TemplateModel
 {
     /**
      *

@@ -6,7 +6,7 @@
 namespace Mvc5;
 
 class ViewLayout
-    implements View\ViewLayout
+    implements Config\Immutable, View\ViewLayout
 {
     /**
      *

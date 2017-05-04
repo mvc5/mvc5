@@ -5,10 +5,8 @@
 
 namespace Mvc5\Template;
 
-use Mvc5\Config\Immutable;
-
 interface TemplateModel
-    extends Immutable
+    extends \Mvc5\Config\Model
 {
     /**
      * @return null|string
