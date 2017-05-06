@@ -33,6 +33,5 @@ class Render
         $this->extension = $options['extension'] ?? Arg::VIEW_EXTENSION;
         $this->model = $options['model'] ?? ViewModel::class;
         $this->paths = $options['paths'] ?? [];
-        $this->provider = $options['provider'] ?? null;
     }
 }

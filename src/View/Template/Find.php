@@ -31,8 +31,8 @@ trait Find
     protected function find($name)
     {
         return $this->path($name) ?: (
-            (!$name || !$this->directory || false !== strpos($name, '.'))
-                ? $name : $this->directory . DIRECTORY_SEPARATOR . $name . '.' . $this->extension
+            (!$name || !$this->directory || false !== strpos($name, '.')) ? $name :
+                $this->directory . (DIRECTORY_SEPARATOR === $name[0] ? $name : DIRECTORY_SEPARATOR . $name) . '.' . $this->extension
         );
     }
 }

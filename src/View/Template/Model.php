@@ -18,23 +18,18 @@ trait Model
     protected $model;
 
     /**
-     * @var callable|null
-     */
-    protected $provider;
-
-    /**
      * @var Service
      */
     protected $service;
 
     /**
      * @param string $model
-     * @param array $vars
      * @return TemplateModel
      */
-    protected function create($model, array $vars = [])
+    protected function create($model)
     {
-        return ($this->provider ? ($this->provider)($model, $vars) : null) ? : new $this->model($model, $vars);
+        return (!is_string($model) || DIRECTORY_SEPARATOR !== $model[0] ? ($this->service)($model) : null) ?:
+            new $this->model($model);
     }
 
     /**
@@ -52,14 +47,13 @@ trait Model
     {
         /** @var TemplateModel $model */
 
-        $model = is_string($model) ? $this->create($model, $vars) : (
-            is_array($model) ? $this->create($model + ($vars ? [Arg::VARS => $vars] : [])) : (
-                $vars ? $model->with($vars) : $model
-            )
-        );
+        !($model instanceof TemplateModel)
+            && $model = $this->create($model);
 
         ($path = $model->template()) && ($file = $this->find($path)) && ($path !== $file)
-            && $model = $model->withTemplate($file);
+            && $vars[Arg::TEMPLATE_MODEL] = $file;
+
+        $vars && $model = $model->with($vars);
 
         $model instanceof ViewModel && !$model->service()
             && $model = $model->withService($this->service);
