@@ -6,15 +6,9 @@
 namespace Mvc5\Session\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
 
 trait Messages
 {
-    /**
-     *
-     */
-    use Config;
-
     /**
      * @var array
      */

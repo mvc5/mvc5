@@ -5,8 +5,6 @@
 
 namespace Mvc5;
 
-use Throwable;
-
 class Web
 {
     /**
@@ -33,7 +31,7 @@ class Web
 
             return $this->app->call(Arg::WEB);
 
-        } catch(Throwable $exception) {
+        } catch(\Throwable $exception) {
 
             return $this->app->call(Arg::EXCEPTION_RESPONSE, [Arg::EXCEPTION => $exception]);
         }

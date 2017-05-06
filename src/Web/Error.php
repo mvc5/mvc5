@@ -7,14 +7,13 @@ namespace Mvc5\Web;
 
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Request\Error\Error as _Error;
 
 class Error
 {
     /**
      *
      */
-    use _Error;
+    use \Mvc5\Request\Error\Error;
 
     /**
      * @param Request $request

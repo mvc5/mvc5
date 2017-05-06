@@ -7,7 +7,7 @@ namespace Mvc5\Request\Service;
 
 use Mvc5\Arg;
 use Mvc5\Config\Configuration;
-use Mvc5\Http\Request as HttpRequest;
+use Mvc5\Http\Request;
 
 trait Service
 {
@@ -25,19 +25,19 @@ trait Service
     }
 
     /**
-     * @param HttpRequest $request
-     * @return HttpRequest
+     * @param Request $request
+     * @return Request
      */
-    protected function service(HttpRequest $request)
+    protected function service(Request $request)
     {
         return $this->config[Arg::REQUEST] = $request;
     }
 
     /**
-     * @param HttpRequest $request
-     * @return HttpRequest
+     * @param Request $request
+     * @return Request
      */
-    function __invoke(HttpRequest $request)
+    function __invoke(Request $request)
     {
         return $this->service($request);
     }

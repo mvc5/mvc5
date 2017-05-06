@@ -6,15 +6,9 @@
 namespace Mvc5\Cookie\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\Config;
 
 trait Cookies
 {
-    /**
-     *
-     */
-    use Config;
-
     /**
      * @var array
      */

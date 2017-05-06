@@ -5,7 +5,6 @@
 
 namespace Mvc5\Event;
 
-use Iterator;
 use Mvc5\Signal;
 
 trait Generator
@@ -29,7 +28,7 @@ trait Generator
     }
 
     /**
-     * @param array|string|Iterator $event
+     * @param array|string|\Iterator $event
      * @param array $args
      * @param callable $callback
      * @return mixed|null
@@ -58,22 +57,22 @@ trait Generator
     /**
      * @param Event|object|string $event
      * @param array $args
-     * @return array|Iterator|null
+     * @return array|\Iterator|null
      */
     protected abstract function iterator($event, array $args = []);
 
     /**
-     * @param array|Event|object|string|Iterator $event
+     * @param array|Event|object|string|\Iterator $event
      * @param array $args
-     * @return array|Iterator
+     * @return array|\Iterator
      */
     protected function queue($event, array $args = [])
     {
-        return is_array($event) || $event instanceof Iterator ? $event : $this->iterator($event, $args);
+        return is_array($event) || $event instanceof \Iterator ? $event : $this->iterator($event, $args);
     }
 
     /**
-     * @param array|Event|object|Iterator $event
+     * @param array|Event|object|\Iterator $event
      * @param $listener
      * @param array $args
      * @param callable $callback
@@ -96,7 +95,7 @@ trait Generator
     }
 
     /**
-     * @param array|Iterator $queue
+     * @param array|\Iterator $queue
      * @return mixed|null
      */
     protected function start(&$queue)
@@ -111,7 +110,7 @@ trait Generator
     }
 
     /**
-     * @param array|Iterator $queue
+     * @param array|\Iterator $queue
      * @return mixed|null
      */
     protected function step(&$queue)

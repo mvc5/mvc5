@@ -7,14 +7,13 @@ namespace Mvc5\Web;
 
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Response\Status\Status as _Status;
 
 class Status
 {
     /**
      *
      */
-    use _Status;
+    use \Mvc5\Response\Status\Status;
 
     /**
      * @param Request $request

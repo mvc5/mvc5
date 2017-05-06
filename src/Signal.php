@@ -5,9 +5,6 @@
 
 namespace Mvc5;
 
-use ReflectionFunction;
-use ReflectionMethod;
-
 final class Signal
 {
     /**
@@ -32,7 +29,7 @@ final class Signal
             if (isset($static[1])) {
                 list($callable, $method) = $static;
             } else {
-                $params   = (new ReflectionFunction($callable))->getParameters();
+                $params   = (new \ReflectionFunction($callable))->getParameters();
                 $function = $callable;
             }
         }
@@ -40,7 +37,7 @@ final class Signal
         is_array($callable) && list($callable, $method) = $callable;
 
         !$function && ($function = [$callable, $method])
-            && $params = (new ReflectionMethod($callable, $method))->getParameters();
+            && $params = (new \ReflectionMethod($callable, $method))->getParameters();
 
         foreach($params as $param) {
             if (array_key_exists($param->name, $args)) {

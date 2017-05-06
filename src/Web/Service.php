@@ -7,14 +7,13 @@ namespace Mvc5\Web;
 
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Request\Service\Service as _Service;
 
 class Service
 {
     /**
      *
      */
-    use _Service;
+    use \Mvc5\Request\Service\Service;
 
     /**
      * @param Request $request

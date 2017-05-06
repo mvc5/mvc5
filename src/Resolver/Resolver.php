@@ -5,7 +5,6 @@
 
 namespace Mvc5\Resolver;
 
-use Closure;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Plugin\Gem\Args;
@@ -116,14 +115,14 @@ trait Resolver
     }
 
     /**
-     * @param Closure $callback
+     * @param \Closure $callback
      * @param object $object
      * @param bool $scoped
-     * @return Closure
+     * @return \Closure
      */
-    protected function bind(Closure $callback, $object, $scoped)
+    protected function bind(\Closure $callback, $object, $scoped)
     {
-        return Closure::bind($callback, $object, $scoped ? $object : null);
+        return \Closure::bind($callback, $object, $scoped ? $object : null);
     }
 
     /**
@@ -161,7 +160,7 @@ trait Resolver
             return is_string($config[0]) ? $config : [$this->resolve($config[0]), $config[1]];
         }
 
-        return $config instanceof Closure ? $config : $this->listener($this->resolve($config));
+        return $config instanceof \Closure ? $config : $this->listener($this->resolve($config));
     }
 
     /**
@@ -490,7 +489,7 @@ trait Resolver
             return $this->pluginArray(array_shift($config), $args + $this->args($config), $callback, $previous);
         }
 
-        if ($config instanceof Closure) {
+        if ($config instanceof \Closure) {
             return $this->invoke($this->scoped($config), $args);
         }
 
@@ -635,11 +634,11 @@ trait Resolver
     }
 
     /**
-     * @param Closure $callback
+     * @param \Closure $callback
      * @param bool $scoped
-     * @return Closure
+     * @return \Closure
      */
-    protected function scoped(Closure $callback, $scoped = false)
+    protected function scoped(\Closure $callback, $scoped = false)
     {
         return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope, $scoped) : $callback;
     }

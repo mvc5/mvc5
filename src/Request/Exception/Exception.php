@@ -6,6 +6,7 @@
 namespace Mvc5\Request\Exception;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error;
 use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\Request;
 use Throwable;
@@ -18,18 +19,25 @@ trait Exception
     protected $controller;
 
     /**
+     * @var mixed|Error
+     */
+    protected $error;
+
+    /**
      * @var
      */
     protected $name;
 
     /**
-     * @param $name
-     * @param $controller
+     * @param string $name
+     * @param mixed|callable $controller
+     * @param Error $error
      */
-    function __construct($name, $controller)
+    function __construct($name, $controller, Error $error = null)
     {
         $this->controller = $controller;
-        $this->name       = $name;
+        $this->error = $error ?: new ServerError;
+        $this->name = $name;
     }
 
     /**
@@ -43,7 +51,7 @@ trait Exception
             Arg::CONTROLLER => $this->controller,
             Arg::EXCEPTION => $exception,
             Arg::NAME => $this->name,
-            Arg::ERROR => new ServerError
+            Arg::ERROR => $this->error
         ]);
     }
 }

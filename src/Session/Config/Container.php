@@ -5,36 +5,29 @@
 
 namespace Mvc5\Session\Config;
 
-use Mvc5\Config\Overload;
 use Mvc5\Session\Model;
-use Mvc5\Session\Session as _Session;
+use Mvc5\Session\Session;
 
 trait Container
 {
     /**
-     *
-     */
-    use Overload;
-
-    /**
      * @var string
      */
-    protected $label = Model::class;
+    protected $label;
 
     /**
-     * @var _Session
+     * @var Session
      */
     protected $session;
 
     /**
-     * @param _Session $session
+     * @param Session $session
      * @param string $label
      */
-    function __construct(_Session $session, $label = null)
+    function __construct(Session $session, $label = null)
     {
+        $this->label = $label ?? Model::class;
         $this->session = $session;
-
-        $label && $this->label = $label;
     }
 
     /**

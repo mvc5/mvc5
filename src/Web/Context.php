@@ -7,15 +7,15 @@ namespace Mvc5\Web;
 
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Plugins\Service as _Service;
-use Mvc5\Service\Context as _Context;
+use Mvc5\Plugins\Service;
+use Mvc5\Service\Context as ServiceContext;
 
 class Context
 {
     /**
      *
      */
-    use _Service;
+    use Service;
 
     /**
      * @param Request $request
@@ -25,7 +25,7 @@ class Context
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        _Context::bind($this->service);
+        ServiceContext::bind($this->service);
 
         return $next($request, $response);
     }

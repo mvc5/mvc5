@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Service\Service as _Service;
+use Mvc5\Service\Service;
 
 /**
  * Creates an object with a Plugins container and sets the object as the scope of the anonymous functions. If the
@@ -25,11 +25,11 @@ class Scope
 
     /**
      * @param string $name
-     * @param _Service $service
+     * @param Service $service
      * @param array $args
      * @return callable|null|object
      */
-    function scope($name, _Service $service, array $args)
+    function scope($name, Service $service, array $args)
     {
         $plugin = $service->plugin($name, $args);
 

@@ -7,7 +7,7 @@ namespace Mvc5\Resolver;
 
 use Mvc5\Exception;
 
-class Builder
+final class Builder
     extends \ReflectionClass
 {
     /**
