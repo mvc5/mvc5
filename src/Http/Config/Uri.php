@@ -10,6 +10,14 @@ use Mvc5\Arg;
 trait Uri
 {
     /**
+     * @param array|string|mixed $config
+     */
+    function __construct($config = [])
+    {
+        $this->config = is_array($config) ? $config : parse_url((string) $config);
+    }
+
+    /**
      * @return string
      */
     function fragment()
