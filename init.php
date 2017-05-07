@@ -61,6 +61,7 @@ include __DIR__ . '/src/Http/Request.php';
 include __DIR__ . '/src/Http/Response.php';
 include __DIR__ . '/src/Http/Config/Cookies.php';
 include __DIR__ . '/src/Http/Config/Error.php';
+include __DIR__ . '/src/Http/Config/Headers.php';
 include __DIR__ . '/src/Http/Config/Uri.php';
 include __DIR__ . '/src/Http/Config/Request.php';
 include __DIR__ . '/src/Http/Config/Response.php';
