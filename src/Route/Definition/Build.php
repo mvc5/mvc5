@@ -55,6 +55,7 @@ trait Build
      */
     protected function definition(Route $route, $compile = true)
     {
+        /** @var Route $route */
         $route = $this->host($route, $route[Arg::HOST]);
 
         if (!isset($route[Arg::PATH])) {
