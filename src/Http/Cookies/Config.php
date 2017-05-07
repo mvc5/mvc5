@@ -16,14 +16,4 @@ class Config
      *
      */
     use Cookies;
-
-    /**
-     * @param array $cookies
-     * @param array $defaults
-     */
-    function __construct(array $cookies = [], array $defaults = [])
-    {
-        $this->config = $cookies;
-        $this->defaults = $defaults + $this->defaults;
-    }
 }
