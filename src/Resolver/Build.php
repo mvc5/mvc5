@@ -87,12 +87,6 @@ trait Build
     }
 
     /**
-     * @param string $name
-     * @return array|callable|null|object|string
-     */
-    abstract function configured($name);
-
-    /**
      * @param $name
      * @param array $config
      * @param array $args
@@ -113,14 +107,6 @@ trait Build
     {
         return Builder::create($name, $args, $this);
     }
-
-    /**
-     * @param string $config
-     * @param array $args
-     * @param callable|null $callback
-     * @return array|callable|null|object|string
-     */
-    abstract function plugin($config, array $args = [], callable $callback = null);
 
     /**
      * @param $name

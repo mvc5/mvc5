@@ -8,18 +8,6 @@ namespace Mvc5\Config;
 trait ArrayAccess
 {
     /**
-     * @param string $name
-     * @return mixed
-     */
-    abstract function get($name);
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    abstract function has($name);
-
-    /**
      * @param mixed $name
      * @return bool
      */
@@ -54,17 +42,4 @@ trait ArrayAccess
     {
         $this->remove($name);
     }
-
-    /**
-     * @param string $name
-     * @return void
-     */
-    abstract function remove($name);
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @return mixed
-     */
-    abstract function set($name, $value);
 }
