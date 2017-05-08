@@ -11,14 +11,6 @@ use Mvc5\Http\Uri;
 trait Url
 {
     /**
-     * @param array|callable|object|string $name
-     * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
-     */
-    protected abstract function call($name, array $args = [], callable $callback = null);
-
-    /**
      * @param array|null|string|Uri $route
      * @param array|string $query
      * @param string $fragment

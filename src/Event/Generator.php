@@ -10,12 +10,6 @@ use Mvc5\Signal;
 trait Generator
 {
     /**
-     * @param array|callable|object|string $config
-     * @return callable|null
-     */
-    protected abstract function callable($config) : callable;
-
-    /**
      * @param callable|Event|string $event
      * @param callable $listener
      * @param array $args
@@ -53,13 +47,6 @@ trait Generator
             $this->step($queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
         );
     }
-
-    /**
-     * @param Event|object|string $event
-     * @param array $args
-     * @return array|\Iterator|null
-     */
-    protected abstract function iterator($event, array $args = []);
 
     /**
      * @param array|Event|object|string|\Iterator $event

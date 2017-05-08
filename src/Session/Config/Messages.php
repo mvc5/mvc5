@@ -12,6 +12,11 @@ trait Messages
     /**
      * @var array
      */
+    protected $config = [];
+
+    /**
+     * @var array
+     */
     protected $new = [];
 
     /**

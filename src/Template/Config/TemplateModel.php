@@ -10,6 +10,11 @@ use Mvc5\Arg;
 trait TemplateModel
 {
     /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
      * @param array|string $template
      * @param array $vars
      */

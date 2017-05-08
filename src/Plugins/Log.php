@@ -10,14 +10,6 @@ use Mvc5\Arg;
 trait Log
 {
     /**
-     * @param array|callable|object|string $name
-     * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
-     */
-    protected abstract function call($name, array $args = [], callable $callback = null);
-
-    /**
      * @param $message
      * @param array $context
      * @param $level

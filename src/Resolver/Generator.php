@@ -66,11 +66,4 @@ trait Generator
     {
         return $this->events[$name] ?? Unresolvable::plugin($name);
     }
-
-    /**
-     * @param $config
-     * @param array $args
-     * @return array|callable|null|object|string
-     */
-    protected abstract function resolve($config, array $args = []);
 }

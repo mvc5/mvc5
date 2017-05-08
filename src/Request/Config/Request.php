@@ -6,7 +6,6 @@
 namespace Mvc5\Request\Config;
 
 use Mvc5\Arg;
-use Mvc5\Http\Config\Request as HttpRequest;
 use Mvc5\Http\Error;
 use Mvc5\Route\Route;
 
@@ -15,7 +14,7 @@ trait Request
     /**
      *
      */
-    use HttpRequest;
+    use \Mvc5\Http\Config\Request;
 
     /**
      * @param $name

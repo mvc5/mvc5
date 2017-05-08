@@ -33,12 +33,6 @@ trait Model
     }
 
     /**
-     * @param $name
-     * @return string
-     */
-    protected abstract function find($name);
-
-    /**
      * @param array|string|TemplateModel $model
      * @param array $vars
      * @return TemplateModel

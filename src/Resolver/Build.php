@@ -123,18 +123,6 @@ trait Build
     abstract function plugin($config, array $args = [], callable $callback = null);
 
     /**
-     * @param $config
-     * @param array $args
-     * @return array|callable|null|object|string
-     */
-    protected abstract function resolve($config, array $args = []);
-
-    /**
-     * @return bool
-     */
-    protected abstract function strict();
-
-    /**
      * @param $name
      * @param $config
      * @param array $args

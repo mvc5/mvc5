@@ -21,13 +21,6 @@ trait Render
     protected $engine;
 
     /**
-     * @param array|string|TemplateModel $model
-     * @param array $vars
-     * @return TemplateModel
-     */
-    protected abstract function model($model, array $vars = []);
-
-    /**
      * @param array|string|TemplateModel $template
      * @param array $vars
      * @return string

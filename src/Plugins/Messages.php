@@ -46,14 +46,6 @@ trait Messages
     }
 
     /**
-     * @param string $name
-     * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
-     */
-    protected abstract function plugin($name, array $args = [], callable $callback = null);
-
-    /**
      * @param string $message
      * @param string $name
      */

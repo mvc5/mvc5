@@ -19,6 +19,11 @@ trait Response
     use \Mvc5\Http\Config\Response;
 
     /**
+     * @var array|mixed
+     */
+    protected $config = [];
+
+    /**
      * @param null $body
      * @param string $status
      * @param array $headers

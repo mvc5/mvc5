@@ -12,6 +12,11 @@ trait Cookies
     /**
      * @var array
      */
+    protected $config = [];
+
+    /**
+     * @var array
+     */
     protected $defaults = [
         Arg::EXPIRE    => 0,
         Arg::PATH      => '/',

@@ -11,6 +11,11 @@ use Mvc5\Session\Session;
 trait Container
 {
     /**
+     * @var Model
+     */
+    protected $config;
+
+    /**
      * @var string
      */
     protected $label;

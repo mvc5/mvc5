@@ -10,13 +10,6 @@ use Mvc5\Template\TemplateModel;
 trait Traverse
 {
     /**
-     * @param array|string|TemplateModel $template
-     * @param array $vars
-     * @return string
-     */
-    protected abstract function render($template, array $vars = []);
-
-    /**
      * @param TemplateModel $template
      * @param array $vars
      * @return TemplateModel
