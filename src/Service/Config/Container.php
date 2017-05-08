@@ -5,14 +5,12 @@
 
 namespace Mvc5\Service\Config;
 
-use Mvc5\Config\Config;
-
 trait Container
 {
     /**
-     *
+     * @var array|mixed
      */
-    use Config;
+    protected $config = [];
 
     /**
      * @var array|mixed
