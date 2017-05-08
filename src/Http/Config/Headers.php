@@ -10,12 +10,16 @@ use Mvc5\Arg;
 trait Headers
 {
     /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
      * @param array $headers
      */
     function __construct(array $headers = [])
     {
-        $headers = array_change_key_case($headers);
-        parent::__construct(isset($headers[Arg::HOST]) ? [Arg::HOST => $headers[Arg::HOST]] + $headers : $headers);
+        $this->set($headers);
     }
 
     /**
@@ -24,7 +28,7 @@ trait Headers
      */
     function get($name)
     {
-        return parent::get(strtolower($name));
+        return $this->config[strtolower($name)] ?? null;
     }
 
     /**
@@ -33,49 +37,32 @@ trait Headers
      */
     function has($name)
     {
-        return parent::has(strtolower($name));
+        return isset($this->config[strtolower($name)]);
+    }
+
+    /**
+     * @param array|string $name
+     * @return void
+     */
+    function remove($name)
+    {
+        foreach(array_change_key_case((array) (is_string($name) ? strtolower($name) : $name)) as $key) {
+            unset($this->config[$key]);
+        }
     }
 
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return self|mixed
+     * @return mixed
      */
-    function with($name, $value = null)
+    function set($name, $value = null)
     {
-        /** @var \Mvc5\Model $this */
-        if (is_string($name)) {
-            $name = strtolower($name);
-            $new = clone $this;
+        $headers = array_change_key_case(is_string($name) ? [$name => $value] : (array) $name);
 
-            Arg::HOST !== $name ? $new->config[$name] = $value
-                : $new->config = [Arg::HOST => $value] + $new->config;
+        $this->config = !isset($headers[Arg::HOST]) ? $headers + $this->config :
+            [Arg::HOST => $headers[Arg::HOST]] + $headers + $this->config;
 
-            return $new;
-        }
-
-        $name = array_change_key_case($name, CASE_LOWER);
-
-        $new = clone $this;
-
-        if (isset($name[Arg::HOST])) {
-            $new->config = [Arg::HOST => $name[Arg::HOST]] + $name + $this->config;
-            return $new;
-        }
-
-        foreach($name as $key => $value) {
-            $new->config[$key] = $value;
-        }
-
-        return $new;
-    }
-
-    /**
-     * @param string $name
-     * @return self|mixed
-     */
-    function without($name)
-    {
-        return parent::without(is_array($name) ? array_change_key_case($name, CASE_LOWER) : strtolower($name));
+        return is_string($name) ? $value : $name;
     }
 }

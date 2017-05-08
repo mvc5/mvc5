@@ -15,5 +15,8 @@ class Config
     /**
      *
      */
-    use Headers;
+    use Headers {
+        remove as protected;
+        set as protected;
+    }
 }
