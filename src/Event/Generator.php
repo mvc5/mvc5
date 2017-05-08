@@ -10,6 +10,12 @@ use Mvc5\Signal;
 trait Generator
 {
     /**
+     * @param array|callable|object|string $config
+     * @return callable|null
+     */
+    protected abstract function callable($config) : callable;
+
+    /**
      * @param callable|Event|string $event
      * @param callable $listener
      * @param array $args
