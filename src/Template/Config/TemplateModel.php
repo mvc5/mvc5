@@ -20,6 +20,15 @@ trait TemplateModel
      */
     function __construct($template = null, array $vars = [])
     {
+        $this->configure($template, $vars);
+    }
+
+    /**
+     * @param null $template
+     * @param array $vars
+     */
+    protected function configure($template = null, array $vars = [])
+    {
         $this->config = (is_array($template) ? $template + $vars : $vars) + array_filter([
             Arg::TEMPLATE_MODEL => is_string($template) ? $template :
                 (defined('static::TEMPLATE') ? constant('static::TEMPLATE') : null)

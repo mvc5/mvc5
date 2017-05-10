@@ -10,11 +10,6 @@ use Mvc5\Arg;
 trait TemplateLayout
 {
     /**
-     *
-     */
-    use TemplateModel;
-
-    /**
      * @return null|string
      */
     function model()

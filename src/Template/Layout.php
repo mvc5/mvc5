@@ -15,4 +15,5 @@ class Layout
      *
      */
     use Config\TemplateLayout;
+    use Config\TemplateModel;
 }
