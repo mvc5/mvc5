@@ -12,7 +12,7 @@ class Exception
     /**
      *
      */
-    use Exception\Exception;
+    use Exception\Generator;
 
     /**
      * @var string

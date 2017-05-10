@@ -5,7 +5,7 @@
 
 namespace Mvc5\Resolver;
 
-use Mvc5\Exception\Base;
+use Mvc5\Exception\Exception;
 use Mvc5\Exception\Throwable;
 
 class Unresolvable
@@ -15,7 +15,7 @@ class Unresolvable
     /**
      *
      */
-    use Base;
+    use Exception;
 
     /**
      * @param $message

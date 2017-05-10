@@ -12,5 +12,5 @@ class Domain
     /**
      *
      */
-    use Base;
+    use Exception;
 }

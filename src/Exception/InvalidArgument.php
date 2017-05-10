@@ -12,5 +12,5 @@ class InvalidArgument
     /**
      *
      */
-    use Base;
+    use Exception;
 }

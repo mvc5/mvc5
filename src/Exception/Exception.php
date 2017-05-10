@@ -5,81 +5,63 @@
 
 namespace Mvc5\Exception;
 
+use Mvc5\Arg;
+
 trait Exception
 {
     /**
-     *
-     */
-    use Base;
-
-    /**
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param mixed|\Throwable $exception
      * @param int $offset
-     * @return mixed
-     * @throws \InvalidArgumentException
+     * @return \Throwable
      */
-    static function domain($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    protected static function backtrace(\Throwable $exception, $offset = 2)
     {
-        return static::raise(static::create(static::DOMAIN, [$message, $code, $previous], $offset));
+        $offset && ($origin = $exception->getTrace()[$offset]) && isset($origin[Arg::FILE])
+            && ($exception->file = $origin[Arg::FILE]) && ($exception->line = $origin[Arg::LINE]);
+
+        return static::offset($exception, $offset);
     }
 
     /**
-     * @param string $message
-     * @param int $code
-     * @param int $severity
-     * @param string $file
-     * @param int $line
-     * @param \Throwable|null $previous
+     * @param string $exception
+     * @param array|string $params
      * @param int $offset
-     * @return mixed
-     * @throws \ErrorException
+     * @return \Throwable
      */
-    static function errorException(
-        $message = '', $code = 0, $severity = E_ERROR, $file = __FILE__, $line = __LINE__, \Throwable $previous = null, $offset = 2
-    ) {
-        return static::raise(static::offset(
-            static::instance(static::ERROR_EXCEPTION, [$message, $code, $severity, $file, $line, $previous]), $offset
-        ));
+    protected static function create($exception, $params = [], $offset = 2)
+    {
+        return static::backtrace(static::instance($exception, (array) $params), $offset);
     }
 
     /**
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
-     * @param int $offset
-     * @return mixed
-     * @throws \Exception
+     * @param string $exception
+     * @param array $params
+     * @return \Throwable
      */
-    static function exception($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    protected static function instance($exception, array $params = [])
     {
-        return static::raise(static::create(static::EXCEPTION, [$message, $code, $previous], $offset));
+        return new $exception(...$params);
     }
 
     /**
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
+     * @param $exception
      * @param int $offset
-     * @return mixed
-     * @throws \InvalidArgumentException
+     * @return \Throwable
      */
-    static function invalidArgument($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    protected static function offset($exception, $offset = 1)
     {
-        return static::raise(static::create(static::INVALID_ARGUMENT, [$message, $code, $previous], $offset));
+        $offset && $exception->offset = $offset;
+
+        return $exception;
     }
 
     /**
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
-     * @param int $offset
+     * @param $exception
      * @return mixed
-     * @throws \RuntimeException
+     * @throws \Throwable
      */
-    static function runtime($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function raise(\Throwable $exception)
     {
-        return static::raise(static::create(static::RUNTIME, [$message, $code, $previous], $offset));
+        throw $exception;
     }
 }

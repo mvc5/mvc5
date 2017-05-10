@@ -12,5 +12,5 @@ class Runtime
     /**
      *
      */
-    use Base;
+    use Exception;
 }

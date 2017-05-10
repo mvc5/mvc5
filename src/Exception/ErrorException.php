@@ -12,7 +12,7 @@ class ErrorException
     /**
      *
      */
-    use Base;
+    use Exception;
 
     /**
      * @param $severity
