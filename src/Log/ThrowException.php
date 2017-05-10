@@ -5,9 +5,9 @@
 
 namespace Mvc5\Log;
 
-use Mvc5\Exception as _Exception;
+use Mvc5\Exception;
 
-class Exception
+class ThrowException
 {
     /**
      * @param \Throwable|mixed|null $exception
@@ -19,10 +19,10 @@ class Exception
     function __invoke($exception = null, $message = null, $throw_exception = false)
     {
         $throw_exception && $message instanceof \Throwable
-            && _Exception::raise($message);
+            && Exception::raise($message);
 
         $throw_exception && $exception instanceof \Throwable
-            && _Exception::raise($exception);
+            && Exception::raise($exception);
 
         return $exception ?: $message;
     }

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Log;
 
-class Error
+class ErrorLog
 {
     /**
      * @var string
