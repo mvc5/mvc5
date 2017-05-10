@@ -6,31 +6,31 @@
 namespace Mvc5\Request\Service;
 
 use Mvc5\Arg;
-use Mvc5\Config\Configuration;
+use Mvc5\Config\Model;
 use Mvc5\Http\Request;
 
 trait Service
 {
     /**
-     * @var Configuration
+     * @var Model
      */
-    protected $config;
+    protected $service;
 
     /**
-     * @param Configuration $config
+     * @param Model $service
      */
-    function __construct(Configuration $config)
+    function __construct(Model $service)
     {
-        $this->config = $config;
+        $this->service = $service;
     }
 
     /**
      * @param Request $request
      * @return Request
      */
-    protected function service(Request $request)
+    protected function share(Request $request)
     {
-        return $this->config[Arg::REQUEST] = $request;
+        return $this->service[Arg::REQUEST] = $request;
     }
 
     /**
@@ -39,6 +39,6 @@ trait Service
      */
     function __invoke(Request $request)
     {
-        return $this->service($request);
+        return $this->share($request);
     }
 }
