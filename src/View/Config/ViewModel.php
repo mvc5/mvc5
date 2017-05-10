@@ -5,6 +5,7 @@
 
 namespace Mvc5\View\Config;
 
+use Mvc5\Arg;
 use Mvc5\Service\Service;
 use Mvc5\Service\Plugin;
 use Mvc5\Template\Config\TemplateModel;
@@ -24,7 +25,11 @@ trait ViewModel
      */
     function __construct($template = null, array $vars = [], Service $service = null)
     {
-        $this->configure($template, $vars);
+        $this->config = (is_array($template) ? $template + $vars : $vars) + array_filter([
+            Arg::TEMPLATE_MODEL => is_string($template) ? $template :
+                (defined('static::TEMPLATE') ? constant('static::TEMPLATE') : null)
+        ]);
+
         $this->service = $service;
     }
 
