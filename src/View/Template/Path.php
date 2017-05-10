@@ -18,6 +18,6 @@ trait Path
      */
     protected function path($name)
     {
-        return isset($this->paths[$name]) ? $this->paths[$name] : null;
+        return $this->paths[$name] ?? null;
     }
 }

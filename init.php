@@ -129,7 +129,7 @@ include __DIR__ . '/src/Request/Error/ErrorModel.php';
 include __DIR__ . '/src/Request/Error/ViewModel.php';
 include __DIR__ . '/src/Request/Exception/Controller.php';
 include __DIR__ . '/src/Request/Exception/Exception.php';
-include __DIR__ . '/src/Request/Service/Service.php';
+include __DIR__ . '/src/Request/Service/Container.php';
 include __DIR__ . '/src/Request/Service/Share.php';
 include __DIR__ . '/src/Request/Request.php';
 include __DIR__ . '/src/Request/Config.php';

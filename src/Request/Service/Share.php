@@ -10,5 +10,5 @@ class Share
     /**
      *
      */
-    use Service;
+    use Container;
 }

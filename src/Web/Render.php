@@ -27,22 +27,13 @@ class Render
     }
 
     /**
-     * @param $body
-     * @return string
-     */
-    protected function render($body)
-    {
-        return $this->view->render($body);
-    }
-
-    /**
      * @param Response $response
      * @return Response
      */
     protected function response(Response $response)
     {
         return $response->body() instanceof TemplateModel ?
-            $response->with(Arg::BODY, $this->render($response->body())) : $response;
+            $response->with(Arg::BODY, $this->view->render($response->body())) : $response;
     }
 
     /**

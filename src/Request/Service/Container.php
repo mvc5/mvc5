@@ -9,19 +9,19 @@ use Mvc5\Arg;
 use Mvc5\Config\Model;
 use Mvc5\Http\Request;
 
-trait Service
+trait Container
 {
     /**
      * @var Model
      */
-    protected $service;
+    protected $container;
 
     /**
-     * @param Model $service
+     * @param Model $container
      */
-    function __construct(Model $service)
+    function __construct(Model $container)
     {
-        $this->service = $service;
+        $this->container = $container;
     }
 
     /**
@@ -30,7 +30,7 @@ trait Service
      */
     protected function share(Request $request)
     {
-        return $this->service[Arg::REQUEST] = $request;
+        return $this->container[Arg::REQUEST] = $request;
     }
 
     /**
