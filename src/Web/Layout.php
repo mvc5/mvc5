@@ -8,28 +8,13 @@ namespace Mvc5\Web;
 use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Template\Layout\Model;
-use Mvc5\View\ViewLayout;
 
 class Layout
 {
     /**
      *
      */
-    use Model;
-
-    /**
-     * @var ViewLayout
-     */
-    protected $layout;
-
-    /**
-     * @param ViewLayout $layout
-     */
-    function __construct(ViewLayout $layout)
-    {
-        $this->layout = $layout;
-    }
+    use \Mvc5\Template\Layout\Layout;
 
     /**
      * @param Response $response

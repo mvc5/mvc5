@@ -71,7 +71,7 @@ return [
     'url\generator'        => [Mvc5\Url\Generator::class, new Param('routes')],
     'url\plugin'           => [Mvc5\Url\Plugin::class, new Shared('request'), new Plugin('url\generator')],
     'view\engine'          => Mvc5\View\Engine\PhpEngine::class,
-    'view\layout'          => Mvc5\Template\Layout\Assign::class,
+    'view\layout'          => [Mvc5\Template\Layout\Assign::class, new Plugin('layout')],
     'view\model'           => Mvc5\ViewModel::class,
     'view\render'          => new Shared('template\render'),
     'view\renderer'        => [Mvc5\View\Renderer::class, new Shared('template\render')],

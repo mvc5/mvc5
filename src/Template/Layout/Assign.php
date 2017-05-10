@@ -10,5 +10,5 @@ class Assign
     /**
      *
      */
-    use Model;
+    use Layout;
 }

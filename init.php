@@ -98,7 +98,7 @@ include __DIR__ . '/src/Log/ThrowException.php';
 include __DIR__ . '/src/Log/Logger.php';
 include __DIR__ . '/src/Template/Config/TemplateModel.php';
 include __DIR__ . '/src/Template/Config/TemplateLayout.php';
-include __DIR__ . '/src/Template/Layout/Model.php';
+include __DIR__ . '/src/Template/Layout/Layout.php';
 include __DIR__ . '/src/Template/Layout/Assign.php';
 include __DIR__ . '/src/Template/TemplateModel.php';
 include __DIR__ . '/src/Template/TemplateLayout.php';

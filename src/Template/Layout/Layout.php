@@ -7,17 +7,21 @@ namespace Mvc5\Template\Layout;
 
 use Mvc5\Template\TemplateLayout;
 use Mvc5\Template\TemplateModel;
+use Mvc5\View\ViewLayout;
 
-trait Model
+trait Layout
 {
     /**
-     * @param TemplateLayout $layout
-     * @param $model
-     * @return mixed|TemplateModel|TemplateLayout
+     * @var ViewLayout
      */
-    protected function layout(TemplateLayout $layout, $model = null)
+    protected $layout;
+
+    /**
+     * @param ViewLayout $layout
+     */
+    function __construct(ViewLayout $layout)
     {
-        return !$model instanceof TemplateModel || $model instanceof TemplateLayout ? $model : $layout->withModel($model);
+        $this->layout = $layout;
     }
 
     /**
@@ -25,8 +29,17 @@ trait Model
      * @param $model
      * @return mixed|TemplateModel|TemplateLayout
      */
-    function __invoke(TemplateLayout $layout, $model = null)
+    protected function layout(TemplateLayout $layout, $model)
     {
-        return $this->layout($layout, $model);
+        return !$model instanceof TemplateModel || $model instanceof TemplateLayout ? $model : $layout->withModel($model);
+    }
+
+    /**
+     * @param $model
+     * @return mixed|TemplateModel|TemplateLayout
+     */
+    function __invoke($model = null)
+    {
+        return $this->layout($this->layout, $model);
     }
 }
