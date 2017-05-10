@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Resolver;
+namespace Mvc5\Service;
 
 use Mvc5\Exception;
 
