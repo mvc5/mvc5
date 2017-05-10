@@ -23,6 +23,6 @@ class Service
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        return $next($this->service($request), $response);
+        return $next($this->share($request), $response);
     }
 }
