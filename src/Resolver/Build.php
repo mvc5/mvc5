@@ -12,6 +12,11 @@ use Mvc5\Service\Manager;
 trait Build
 {
     /**
+     * @var bool
+     */
+    protected $strict = false;
+
+    /**
      * @param array $config
      * @param array $args
      * @param callable $callback
@@ -32,7 +37,7 @@ trait Build
     protected function callback($name, $config = null, array $args = [], callable $callback = null)
     {
         return $callback && !class_exists($name) ? $callback($name) : (
-            $config || !$this->strict() || $this->configured($name) ? $this->make($name, $args) : null
+            $config || !$this->strict || $this->configured($name) ? $this->make($name, $args) : null
         );
     }
 

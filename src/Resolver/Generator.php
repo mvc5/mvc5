@@ -59,6 +59,17 @@ trait Generator
     }
 
     /**
+     * @param $plugin
+     * @return callable|null
+     */
+    protected function listener($plugin)
+    {
+        return !$plugin instanceof Event ? $plugin : function(...$args) use ($plugin) {
+            return $this->event($plugin, $this->variadic($args));
+        };
+    }
+
+    /**
      * @param string $name
      * @return array|\Traversable|null
      */
@@ -66,4 +77,22 @@ trait Generator
     {
         return $this->events[$name] ?? Unresolvable::plugin($name);
     }
+
+    /**
+     * @param array|object|string|\Traversable $event
+     * @param array $args
+     * @param callable $callback
+     * @return mixed|null
+     */
+    function trigger($event, array $args = [], callable $callback = null)
+    {
+        return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
+    }
+
+    /**
+     * @param string $name
+     * @param array $args
+     * @return array|callable|null|object|string
+     */
+    abstract function __invoke($name, array $args = []);
 }

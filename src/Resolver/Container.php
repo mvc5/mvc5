@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Service\Config;
+namespace Mvc5\Resolver;
 
 trait Container
 {
@@ -65,11 +65,11 @@ trait Container
 
     /**
      * @param string $name
-     * @return object|null
+     * @return mixed
      */
     function get($name)
     {
-        return $this->stored($name);
+        return $this->stored($name) ?? $this($name);
     }
 
     /**
@@ -78,7 +78,7 @@ trait Container
      */
     function has($name)
     {
-        return isset($this->container[$name]);
+        return isset($this->container[$name]) || isset($this->services[$name]);
     }
 
     /**
@@ -144,6 +144,29 @@ trait Container
 
     /**
      * @param string $name
+     * @param callable|null|object $service
+     * @return callable|null|object
+     */
+    protected function share($name, $service = null)
+    {
+        null !== $service
+            && $this->set($name, $service);
+
+        return $service;
+    }
+
+    /**
+     * @param $name
+     * @param null $config
+     * @return callable|mixed|null|object
+     */
+    function shared($name, $config = null)
+    {
+        return $this->stored($name) ?? $this->share($name, $this->plugin($config ?? $name));
+    }
+
+    /**
+     * @param string $name
      * @return mixed
      */
     protected function stored($name)
@@ -160,17 +183,9 @@ trait Container
     }
 
     /**
-     *
+     * @param string $name
+     * @param array $args
+     * @return array|callable|null|object|string
      */
-    function __clone()
-    {
-        is_object($this->config) &&
-            $this->config = clone $this->config;
-
-        is_object($this->container) &&
-            $this->container = clone $this->container;
-
-        is_object($this->services) &&
-            $this->services = clone $this->services;
-    }
+    abstract function __invoke($name, array $args = []);
 }

@@ -6,7 +6,6 @@
 namespace Mvc5\Resolver;
 
 use Mvc5\Arg;
-use Mvc5\Event\Event;
 use Mvc5\Plugin\Gem\Args;
 use Mvc5\Plugin\Gem\Call;
 use Mvc5\Plugin\Gem\Calls;
@@ -29,7 +28,6 @@ use Mvc5\Plugin\Gem\Shared;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
-use Mvc5\Service\Config\Container;
 
 trait Resolver
 {
@@ -39,6 +37,7 @@ trait Resolver
     use Build;
     use Container;
     use Generator;
+    use Service;
 
     /**
      * @var callable
@@ -49,11 +48,6 @@ trait Resolver
      * @var object
      */
     protected $scope;
-
-    /**
-     * @var bool
-     */
-    protected $strict = false;
 
     /**
      * @param array|\ArrayAccess $config
@@ -126,44 +120,6 @@ trait Resolver
     }
 
     /**
-     * @param array|callable|object|string $config
-     * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
-     */
-    function call($config, array $args = [], callable $callback = null)
-    {
-        if (is_string($config)) {
-            return $this->transmit(explode(Arg::CALL_SEPARATOR, $config), $args, $callback);
-        }
-
-        if ($config instanceof Event) {
-            return $this->event($config, $args, $callback);
-        }
-
-        return $this->invoke($config instanceof Resolvable ? $this->resolve($config) : $config, $args, $callback);
-    }
-
-    /**
-     * @param array|callable|object|string $config
-     * @return callable|null
-     */
-    protected function callable($config) : callable
-    {
-        if (is_string($config)) {
-            return function(...$args) use($config) {
-                return $this->call($config, $this->variadic($args));
-            };
-        }
-
-        if (is_array($config)) {
-            return is_string($config[0]) ? $config : [$this->resolve($config[0]), $config[1]];
-        }
-
-        return $config instanceof \Closure ? $config : $this->listener($this->resolve($config));
-    }
-
-    /**
      * @param Child $config
      * @param array $args
      * @return array|callable|object|string
@@ -171,15 +127,6 @@ trait Resolver
     protected function child(Child $config, array $args = [])
     {
         return $this->provide($this->merge($this->parent($config->parent()), $config), $args);
-    }
-
-    /**
-     * @param $name
-     * @return callable|mixed|object
-     */
-    protected function fallback($name)
-    {
-        return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?: Unresolvable::plugin($name);
     }
 
     /**
@@ -324,24 +271,6 @@ trait Resolver
     }
 
     /**
-     * @param string $name
-     * @return mixed
-     */
-    function get($name)
-    {
-        return $this->stored($name) ?? $this($name);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    function has($name)
-    {
-        return isset($this->container[$name]) || isset($this->services[$name]);
-    }
-
-    /**
      * @param Plugin $config
      * @param object $service
      * @return object
@@ -385,38 +314,6 @@ trait Resolver
         }
 
         return $service;
-    }
-
-    /**
-     * @param array|callable|object|string $name
-     * @return callable|null
-     */
-    protected function invokable($name)
-    {
-        return Arg::CALL === $name[0] ? substr($name, 1) :
-            $this->listener($this->plugin($name, [], $this) ?: $this->fallback($name));
-    }
-
-    /**
-     * @param array|callable|object|string $config
-     * @param array $args
-     * @param callable $callback
-     * @return array|callable|object|string
-     */
-    protected function invoke($config, array $args = [], callable $callback = null)
-    {
-        return $this->signal($config, $args, $callback ?? $this);
-    }
-
-    /**
-     * @param $plugin
-     * @return callable|null
-     */
-    protected function listener($plugin)
-    {
-        return !$plugin instanceof Event ? $plugin : function(...$args) use ($plugin) {
-            return $this->event($plugin, $this->variadic($args));
-        };
     }
 
     /**
@@ -549,34 +446,6 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
-     * @param array $config
-     * @param array $args
-     * @param callable|null $callback
-     * @return array|callable|object|string
-     */
-    protected function relay($plugin, array $config = [], array $args = [], callable $callback = null)
-    {
-        return !$config ? $this->invoke($plugin, $args, $callback) :
-            $this->repeat($plugin, array_shift($config), $config, $args, $callback);
-    }
-
-    /**
-     * @param $plugin
-     * @param $name
-     * @param array $config
-     * @param array $args
-     * @param callable|null $callback
-     * @return array|callable|object|string
-     */
-    protected function repeat($plugin, $name, array $config = [], array $args = [], callable $callback = null)
-    {
-        return !$config ? $this->invoke([$plugin, $name], $args, $callback) : $this->repeat(
-            $this->invoke([$plugin, $name], $args, $callback), array_shift($config), $config, $args, $callback
-        );
-    }
-
-    /**
      * @param $config
      * @param array $args
      * @param callable $callback
@@ -612,19 +481,6 @@ trait Resolver
     }
 
     /**
-     * @param $config
-     * @param array $args
-     * @param callable $callback
-     * @return mixed|callable
-     */
-    protected function solve($config, array $args = [], callable $callback = null)
-    {
-        return $config instanceof Gem ? $this->gem($config, $args) : (
-            $callback ? $callback($config, $args) : $this->resolver($config, $args)
-        );
-    }
-
-    /**
      * @param object $scope
      * @return object
      */
@@ -644,64 +500,24 @@ trait Resolver
     }
 
     /**
+     * @param $config
+     * @param array $args
+     * @param callable $callback
+     * @return mixed|callable
+     */
+    protected function solve($config, array $args = [], callable $callback = null)
+    {
+        return $config instanceof Gem ? $this->gem($config, $args) : (
+            $callback ? $callback($config, $args) : $this->resolver($config, $args)
+        );
+    }
+
+    /**
      * @return string
      */
     function serialize()
     {
         return serialize([$this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict]);
-    }
-
-    /**
-     * @param string $name
-     * @param callable|null|object $service
-     * @return callable|null|object
-     */
-    protected function share($name, $service = null)
-    {
-        null !== $service
-            && $this->set($name, $service);
-
-        return $service;
-    }
-
-    /**
-     * @param $name
-     * @param null $config
-     * @return callable|mixed|null|object
-     */
-    function shared($name, $config = null)
-    {
-        return $this->stored($name) ?? $this->share($name, $this->plugin($config ?? $name));
-    }
-
-    /**
-     * @return bool
-     */
-    protected function strict()
-    {
-        return $this->strict;
-    }
-
-    /**
-     * @param array $config
-     * @param array $args
-     * @param callable|null $callback
-     * @return array|callable|object|string
-     */
-    protected function transmit(array $config = [], array $args = [], callable $callback = null)
-    {
-        return $this->relay($this->invokable(array_shift($config)), $config, $args, $callback);
-    }
-
-    /**
-     * @param array|object|string|\Traversable $event
-     * @param array $args
-     * @param callable $callback
-     * @return mixed|null
-     */
-    function trigger($event, array $args = [], callable $callback = null)
-    {
-        return $this->event($event instanceof Event ? $event : $this($event) ?? $event, $args, $callback);
     }
 
     /**
