@@ -8,6 +8,7 @@ namespace Mvc5\Resolver;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Resolvable;
+use Mvc5\Signal;
 
 trait Service
 {
@@ -76,7 +77,7 @@ trait Service
      */
     protected function invoke($config, array $args = [], callable $callback = null)
     {
-        return $this->signal($config, $args, $callback ?? $this);
+        return Signal::emit($config, $args, $callback ?? $this);
     }
 
     /**
