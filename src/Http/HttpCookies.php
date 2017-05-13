@@ -3,17 +3,16 @@
  *
  */
 
-namespace Mvc5\Http\Cookies;
+namespace Mvc5\Http;
 
-use Mvc5\Http\Cookies;
 use Mvc5\Model;
 
-class Config
+class HttpCookies
     extends Model
     implements Cookies
 {
     /**
      *
      */
-    use \Mvc5\Http\Config\Cookies;
+    use Config\Cookies;
 }

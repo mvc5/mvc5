@@ -3,19 +3,18 @@
  *
  */
 
-namespace Mvc5\Http\Headers;
+namespace Mvc5\Http;
 
-use Mvc5\Http\Config\Headers;
 use Mvc5\Model;
 
-class Config
+class HttpHeaders
     extends Model
-    implements \Mvc5\Http\Headers
+    implements Headers
 {
     /**
      *
      */
-    use Headers {
+    use Config\Headers {
         remove as protected;
         set as protected;
     }

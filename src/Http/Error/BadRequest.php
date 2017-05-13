@@ -6,9 +6,10 @@
 namespace Mvc5\Http\Error;
 
 use Mvc5\Arg;
+use Mvc5\Http\HttpError;
 
 class BadRequest
-    extends Error
+    extends HttpError
 {
     /**
      * @param array $config

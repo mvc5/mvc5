@@ -7,9 +7,9 @@ namespace Mvc5\Response\Config;
 
 use Mvc5\Arg;
 use Mvc5\Http\Cookies;
-use Mvc5\Http\Cookies\Config as HttpCookies;
 use Mvc5\Http\Headers;
-use Mvc5\Http\Headers\Config as HttpHeaders;
+use Mvc5\Http\HttpCookies;
+use Mvc5\Http\HttpHeaders;
 
 trait Response
 {

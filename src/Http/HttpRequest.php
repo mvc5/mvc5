@@ -3,17 +3,16 @@
  *
  */
 
-namespace Mvc5\Http\Request;
+namespace Mvc5\Http;
 
-use Mvc5\Http\Request;
 use Mvc5\Model;
 
-class Config
+class HttpRequest
     extends Model
     implements Request
 {
     /**
      *
      */
-    use \Mvc5\Http\Config\Request;
+    use Config\Request;
 }

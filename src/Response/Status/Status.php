@@ -9,15 +9,10 @@ use Mvc5\Arg;
 use Mvc5\Http\Error;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Http\Status\ReasonPhrase;
+use Mvc5\Http\StatusCode;
 
 trait Status
 {
-    /**
-     *
-     */
-    use ReasonPhrase;
-
     /**
      * @param Error $error
      * @param Response $response
@@ -27,7 +22,7 @@ trait Status
     {
         return $response->with([
             Arg::STATUS => $error->status(),
-            Arg::REASON => $this->statusReasonPhrase($error->status())
+            Arg::REASON => StatusCode::reasonPhrase($error->status())
         ]);
     }
 
@@ -47,7 +42,7 @@ trait Status
 
         /** @var Response $response */
         !$response->reason() &&
-            $response = $response->with(Arg::REASON, $this->statusReasonPhrase($response->status()));
+            $response = $response->with(Arg::REASON, StatusCode::reasonPhrase($response->status()));
 
         return $response;
     }
