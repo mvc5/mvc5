@@ -5,14 +5,11 @@
 
 namespace Mvc5\Response;
 
-use Mvc5\Http\Cookies;
-use Mvc5\Http\Headers;
-
 interface Response
     extends \Mvc5\Http\Response
 {
     /**
-     * @return Cookies
+     * @return \Mvc5\Http\Cookies
      */
     function cookies();
 
@@ -29,7 +26,7 @@ interface Response
     function withCookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
-     * @param array|Cookies $cookies
+     * @param array|\Mvc5\Http\Cookies $cookies
      * @return mixed|self
      */
     function withCookies($cookies);
@@ -42,7 +39,7 @@ interface Response
     function withHeader($name, $value);
 
     /**
-     * @param array|Headers $headers
+     * @param array|\Mvc5\Http\Headers $headers
      * @return mixed|self
      */
     function withHeaders($headers);

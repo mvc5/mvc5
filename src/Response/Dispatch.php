@@ -8,8 +8,8 @@ namespace Mvc5\Response;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
-use Mvc5\Http\Request as HttpRequest;
-use Mvc5\Http\Response as HttpResponse;
+use Mvc5\Http\Request;
+use Mvc5\Http\Response;
 
 class Dispatch
     implements Event
@@ -20,21 +20,21 @@ class Dispatch
     use EventModel;
 
     /**
-     * @var HttpRequest
+     * @var Request
      */
     protected $request;
 
     /**
-     * @var HttpResponse
+     * @var Response
      */
     protected $response;
 
     /**
      * @param $event
-     * @param HttpRequest $request
-     * @param HttpResponse $response
+     * @param Request $request
+     * @param Response $response
      */
-    function __construct($event, HttpRequest $request = null, HttpResponse $response = null)
+    function __construct($event, Request $request = null, Response $response = null)
     {
         $this->event = $event;
         $this->request = $request;
@@ -65,11 +65,11 @@ class Dispatch
     {
         $result = $this->signal($callable, $this->args() + $args, $callback);
 
-        if ($result instanceof HttpRequest) {
+        if ($result instanceof Request) {
             return $this->request = $result;
         }
 
-        if ($result instanceof HttpResponse) {
+        if ($result instanceof Response) {
             return $this->response = $result;
         }
 

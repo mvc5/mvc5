@@ -5,8 +5,6 @@
 
 namespace Mvc5\View;
 
-use Mvc5\Template\TemplateModel;
-
 class Renderer
 {
     /**
@@ -23,7 +21,7 @@ class Renderer
     }
 
     /**
-     * @param array|string|TemplateModel $model
+     * @param array|string|\Mvc5\Template\TemplateModel $model
      * @param array $vars
      * @return string
      */

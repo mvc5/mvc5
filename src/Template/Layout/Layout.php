@@ -7,19 +7,18 @@ namespace Mvc5\Template\Layout;
 
 use Mvc5\Template\TemplateLayout;
 use Mvc5\Template\TemplateModel;
-use Mvc5\View\ViewLayout;
 
 trait Layout
 {
     /**
-     * @var ViewLayout
+     * @var TemplateLayout
      */
     protected $layout;
 
     /**
-     * @param ViewLayout $layout
+     * @param TemplateLayout $layout
      */
-    function __construct(ViewLayout $layout)
+    function __construct(TemplateLayout $layout)
     {
         $this->layout = $layout;
     }

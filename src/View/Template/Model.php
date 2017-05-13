@@ -6,7 +6,6 @@
 namespace Mvc5\View\Template;
 
 use Mvc5\Arg;
-use Mvc5\Service\Service;
 use Mvc5\Template\TemplateModel;
 use Mvc5\View\ViewModel;
 
@@ -18,7 +17,7 @@ trait Model
     protected $model;
 
     /**
-     * @var Service
+     * @var \Mvc5\Service\Service
      */
     protected $service;
 

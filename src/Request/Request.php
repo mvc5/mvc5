@@ -5,14 +5,8 @@
 
 namespace Mvc5\Request;
 
-use Mvc5\Cookie\Cookies;
-use Mvc5\Http\Error as HttpError;
-use Mvc5\Http\Request as HttpRequest;
-use Mvc5\Session\Session;
-use Mvc5\Route\Route;
-
 interface Request
-    extends HttpRequest
+    extends \Mvc5\Http\Request
 {
     /**
      * @param $name
@@ -43,7 +37,7 @@ interface Request
     function cookie($name);
 
     /**
-     * @return array|Cookies
+     * @return array|\Mvc5\Http\Cookies
      */
     function cookies();
 
@@ -55,7 +49,7 @@ interface Request
     function data($name = null, $default = null);
 
     /**
-     * @return HttpError|mixed
+     * @return \Mvc5\Http\Error|mixed
      */
     function error();
 
@@ -130,7 +124,7 @@ interface Request
     function query();
 
     /**
-     * @return Route
+     * @return \Mvc5\Route\Route
      */
     function route();
 
@@ -149,7 +143,7 @@ interface Request
     /**
      * @param $name
      * @param null $default
-     * @return array|mixed|Session
+     * @return array|mixed|\Mvc5\Session\Session
      */
     function session($name = null, $default = null);
 

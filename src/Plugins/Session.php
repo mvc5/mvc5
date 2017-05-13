@@ -6,13 +6,12 @@
 namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
-use Mvc5\Session\Session as _Session;
 
 trait Session
 {
     /**
      * @param $name
-     * @return mixed|_Session
+     * @return \Mvc5\Session\Session|mixed
      */
     protected function session($name = null)
     {

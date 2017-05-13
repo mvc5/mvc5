@@ -6,10 +6,10 @@
 namespace Mvc5\Response\Config;
 
 use Mvc5\Arg;
-use Mvc5\Http\Cookies as HttpCookies;
-use Mvc5\Http\Cookies\Config as Cookies;
-use Mvc5\Http\Headers as HttpHeaders;
-use Mvc5\Http\Headers\Config as Headers;
+use Mvc5\Http\Cookies;
+use Mvc5\Http\Cookies\Config as HttpCookies;
+use Mvc5\Http\Headers;
+use Mvc5\Http\Headers\Config as HttpHeaders;
 
 trait Response
 {
@@ -32,12 +32,12 @@ trait Response
     function __construct($body = null, $status = null, $headers = [], array $config = [])
     {
         !isset($config[Arg::COOKIES]) &&
-            $config[Arg::COOKIES] = new Cookies;
+            $config[Arg::COOKIES] = new HttpCookies;
 
-        !($config[Arg::COOKIES] instanceof HttpCookies) &&
-            $config[Arg::COOKIES] = new Cookies($config[Arg::COOKIES]);
+        !($config[Arg::COOKIES] instanceof Cookies) &&
+            $config[Arg::COOKIES] = new HttpCookies($config[Arg::COOKIES]);
 
-        $config[Arg::HEADERS] = $headers instanceof HttpHeaders ? $headers : new Headers($headers);
+        $config[Arg::HEADERS] = $headers instanceof Headers ? $headers : new HttpHeaders($headers);
         $config[Arg::STATUS] = $status;
         $config[Arg::BODY] = $body;
 
@@ -45,7 +45,7 @@ trait Response
     }
 
     /**
-     * @return HttpCookies
+     * @return Cookies
      */
     function cookies()
     {
@@ -69,11 +69,11 @@ trait Response
 
     /**
      * @param $cookies
-     * @return HttpCookies|self|mixed
+     * @return self|mixed
      */
     function withCookies($cookies)
     {
-        return $this->with(Arg::COOKIES, $cookies instanceof HttpCookies ? $cookies : new Cookies($cookies));
+        return $this->with(Arg::COOKIES, $cookies instanceof Cookies ? $cookies : new HttpCookies($cookies));
     }
 
     /**
@@ -88,17 +88,17 @@ trait Response
 
     /**
      * @param $headers
-     * @return self|mixed|Headers
+     * @return self|mixed
      */
     function withHeaders($headers)
     {
-        return $this->with(Arg::HEADERS, $headers instanceof HttpHeaders ? $headers : new Headers($headers));
+        return $this->with(Arg::HEADERS, $headers instanceof Headers ? $headers : new HttpHeaders($headers));
     }
 
     /**
      * @param $status
      * @param $reason
-     * @return self|mixed|string
+     * @return self|mixed
      */
     function withStatus($status, $reason = '')
     {
@@ -107,7 +107,7 @@ trait Response
 
     /**
      * @param $version
-     * @return self|mixed|string
+     * @return self|mixed
      */
     function withVersion($version)
     {

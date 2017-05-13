@@ -6,12 +6,11 @@
 namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
-use Mvc5\Http\Uri;
 
 trait Url
 {
     /**
-     * @param array|null|string|Uri $route
+     * @param array|null|string|\Mvc5\Http\Uri $route
      * @param array|string $query
      * @param string $fragment
      * @param array $options

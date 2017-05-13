@@ -6,8 +6,6 @@
 namespace Mvc5\Request\Config;
 
 use Mvc5\Arg;
-use Mvc5\Http\Error;
-use Mvc5\Route\Route;
 
 trait Request
 {
@@ -78,7 +76,7 @@ trait Request
     }
 
     /**
-     * @return Error
+     * @return \Mvc5\Http\Error
      */
     function error()
     {
@@ -195,7 +193,7 @@ trait Request
     }
 
     /**
-     * @return Route
+     * @return \Mvc5\Route\Route
      */
     function route()
     {

@@ -6,8 +6,6 @@
 namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
-use Mvc5\Template\TemplateModel;
-use Mvc5\Template\TemplateLayout;
 
 trait View
 {
@@ -15,7 +13,7 @@ trait View
      * @param array $vars
      * @param string $template
      * @param string $model
-     * @return mixed|TemplateLayout
+     * @return \Mvc5\Template\TemplateLayout|mixed
      */
     protected function layout(array $vars = [], $template = null, $model = Arg::LAYOUT)
     {
@@ -26,7 +24,7 @@ trait View
      * @param array $vars
      * @param null|string $template
      * @param $model
-     * @return mixed|TemplateModel|TemplateLayout
+     * @return \Mvc5\Template\TemplateModel|\Mvc5\Template\TemplateLayout|mixed
      */
     protected function model(array $vars = [], $template = null, $model = null)
     {
@@ -50,7 +48,7 @@ trait View
     /**
      * @param string $template
      * @param array $vars
-     * @return TemplateModel
+     * @return \Mvc5\Template\TemplateModel|mixed
      */
     protected function view($template = null, array $vars = [])
     {

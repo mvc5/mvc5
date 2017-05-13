@@ -9,7 +9,6 @@ use Mvc5\Arg;
 use Mvc5\Http\Error;
 use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\Request;
-use Throwable;
 
 trait Exception
 {
@@ -42,10 +41,10 @@ trait Exception
 
     /**
      * @param Request $request
-     * @param Throwable $exception
+     * @param \Throwable $exception
      * @return Request
      */
-    function __invoke(Request $request, Throwable $exception)
+    function __invoke(Request $request, \Throwable $exception)
     {
         return $request->with([
             Arg::CONTROLLER => $this->controller,

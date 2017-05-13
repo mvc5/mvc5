@@ -6,24 +6,24 @@
 namespace Mvc5\Response\Send;
 
 use Mvc5\Arg;
-use Mvc5\Http\Response as HttpResponse;
+use Mvc5\Http\Response;
 use Mvc5\Response\Emitter;
 
 trait Send
 {
     /**
-     * @param HttpResponse $response
+     * @param Response $response
      */
-    protected function body(HttpResponse $response)
+    protected function body(Response $response)
     {
         $this->emit($response->body());
     }
 
     /**
-     * @param HttpResponse $response
+     * @param Response $response
      * @return array|mixed
      */
-    protected function cookies(HttpResponse $response)
+    protected function cookies(Response $response)
     {
         return $response[Arg::COOKIES] ?? [];
     }
@@ -37,10 +37,10 @@ trait Send
     }
 
     /**
-     * @param HttpResponse $response
+     * @param Response $response
      * @return void
      */
-    protected function headers(HttpResponse $response)
+    protected function headers(Response $response)
     {
         if (headers_sent()) {
             return;
@@ -60,10 +60,10 @@ trait Send
     }
 
     /**
-     * @param HttpResponse $response
-     * @return HttpResponse
+     * @param Response $response
+     * @return Response
      */
-    protected function send(HttpResponse $response)
+    protected function send(Response $response)
     {
         $this->headers($response);
         $this->body($response);
@@ -71,10 +71,10 @@ trait Send
     }
 
     /**
-     * @param HttpResponse $response
-     * @return HttpResponse
+     * @param Response $response
+     * @return Response
      */
-    function __invoke(HttpResponse $response)
+    function __invoke(Response $response)
     {
         return $this->send($response);
     }
