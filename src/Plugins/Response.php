@@ -13,7 +13,7 @@ trait Response
      * @param $data
      * @param int $status
      * @param array $headers
-     * @return \Mvc5\Response\Json|mixed
+     * @return \Mvc5\Response\JsonResponse|mixed
      */
     protected function json($data, $status = 200, array $headers = [])
     {
@@ -25,7 +25,7 @@ trait Response
      * @param int $status
      * @param array $headers
      * @param array $config
-     * @return \Mvc5\Response\Redirect|mixed
+     * @return \Mvc5\Response\RedirectResponse|mixed
      */
     protected function redirect($url, $status = 302, array $headers = [], array $config = [])
     {

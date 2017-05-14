@@ -5,8 +5,8 @@
 
 namespace Mvc5\Response;
 
-class Redirect
-    extends Config
+class RedirectResponse
+    extends HttpResponse
 {
     /**
      * @param $url

@@ -7,7 +7,7 @@ namespace Mvc5\Request;
 
 use Mvc5\Model;
 
-class Config
+class HttpRequest
     extends Model
     implements Request
 {

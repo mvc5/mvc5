@@ -7,7 +7,7 @@ namespace Mvc5\Response;
 
 use Mvc5\Model;
 
-class Config
+class HttpResponse
     extends Model
     implements Response
 {

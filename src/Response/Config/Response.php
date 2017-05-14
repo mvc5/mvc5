@@ -62,7 +62,7 @@ trait Response
      * @param bool|true  $httponly
      * @return self|mixed
      */
-    function withCookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
         return $this->withCookies($this->cookies()->withCookie($name, $value, $expire, $path, $domain, $secure, $httponly));
     }

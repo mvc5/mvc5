@@ -23,7 +23,7 @@ interface Response
      * @param bool|false   $httponly
      * @return mixed|self
      */
-    function withCookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
+    function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
      * @param array|\Mvc5\Http\Cookies $cookies
