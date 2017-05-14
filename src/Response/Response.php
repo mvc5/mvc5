@@ -9,7 +9,7 @@ interface Response
     extends \Mvc5\Http\Response
 {
     /**
-     * @return \Mvc5\Http\Cookies
+     * @return \Mvc5\Cookie\Cookies
      */
     function cookies();
 
@@ -26,7 +26,7 @@ interface Response
     function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
-     * @param array|\Mvc5\Http\Cookies $cookies
+     * @param array|\Mvc5\Cookie\Cookies $cookies
      * @return mixed|self
      */
     function withCookies($cookies);

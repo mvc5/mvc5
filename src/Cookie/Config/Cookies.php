@@ -29,9 +29,9 @@ trait Cookies
      * @param array $cookies
      * @param array $defaults
      */
-    function __construct(array $cookies = null, array $defaults = [])
+    function __construct(array $cookies = [], array $defaults = [])
     {
-        $this->config = $cookies ?? $_COOKIE;
+        $this->config = $cookies;
         $this->defaults = $defaults + $this->defaults;
     }
 
@@ -48,13 +48,13 @@ trait Cookies
     protected function cookie($name, $value, $expire, $path, $domain, $secure, $httponly)
     {
         return [
-            $name,
-            $value,
-            $expire   ?? $this->defaults[Arg::EXPIRE],
-            $path     ?? $this->defaults[Arg::PATH],
-            $domain   ?? $this->defaults[Arg::DOMAIN],
-            $secure   ?? $this->defaults[Arg::SECURE],
-            $httponly ?? $this->defaults[Arg::HTTP_ONLY]
+            Arg::NAME      => $name,
+            Arg::VALUE     => $value,
+            Arg::EXPIRE    => $expire ?? $this->defaults[Arg::EXPIRE],
+            Arg::PATH      => $path ?? $this->defaults[Arg::PATH],
+            Arg::DOMAIN    => $domain ?? $this->defaults[Arg::DOMAIN],
+            Arg::SECURE    => $secure ?? $this->defaults[Arg::SECURE],
+            Arg::HTTP_ONLY => $httponly ?? $this->defaults[Arg::HTTP_ONLY]
         ];
     }
 
@@ -64,11 +64,10 @@ trait Cookies
      * @param string     $domain
      * @param bool|false $secure
      * @param bool|true  $httponly
-     * @return bool
      */
     function remove($name, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->set($name, '', 946706400, $path, $domain, $secure, $httponly);
+        $this->set($name, '', 946706400, $path, $domain, $secure, $httponly);
     }
 
     /**
@@ -79,20 +78,12 @@ trait Cookies
      * @param string     $domain
      * @param bool|false $secure
      * @param bool|true  $httponly
-     * @return bool
+     * @return mixed
      */
     function set($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->setCookie($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly));
-    }
-
-    /**
-     * @param array $cookie
-     * @return bool
-     */
-    protected function setCookie(array $cookie)
-    {
-        return \setcookie(...array_values($cookie));
+        $this->config[$name] = $this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly);
+        return $value;
     }
 
     /**
@@ -105,10 +96,11 @@ trait Cookies
      * @param bool|true  $httponly
      * @return self|mixed
      */
-    function with($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function with($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        $this->set($name, $value, $expire, $path, $domain, $secure, $httponly);
-        return $this;
+        $new = clone $this;
+        $new->set($name, $value, $expire, $path, $domain, $secure, $httponly);
+        return $new;
     }
 
     /**
@@ -121,7 +113,8 @@ trait Cookies
      */
     function without($name, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        $this->remove($name, $path, $domain, $secure, $httponly);
-        return $this;
+        $new = clone $this;
+        $new->remove($name, $path, $domain, $secure, $httponly);
+        return $new;
     }
 }

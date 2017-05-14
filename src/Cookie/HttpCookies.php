@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Http;
+namespace Mvc5\Cookie;
 
 use Mvc5\Model;
 
@@ -14,5 +14,8 @@ class HttpCookies
     /**
      *
      */
-    use Config\Cookies;
+    use Config\Cookies {
+        remove as protected;
+        set as protected;
+    }
 }

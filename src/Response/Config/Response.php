@@ -6,9 +6,9 @@
 namespace Mvc5\Response\Config;
 
 use Mvc5\Arg;
-use Mvc5\Http\Cookies;
+use Mvc5\Cookie\Cookies;
+use Mvc5\Cookie\HttpCookies;
 use Mvc5\Http\Headers;
-use Mvc5\Http\HttpCookies;
 use Mvc5\Http\HttpHeaders;
 
 trait Response
@@ -64,7 +64,7 @@ trait Response
      */
     function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->withCookies($this->cookies()->withCookie($name, $value, $expire, $path, $domain, $secure, $httponly));
+        return $this->withCookies($this->cookies()->with($name, $value, $expire, $path, $domain, $secure, $httponly));
     }
 
     /**

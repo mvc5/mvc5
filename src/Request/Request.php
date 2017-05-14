@@ -37,7 +37,7 @@ interface Request
     function cookie($name);
 
     /**
-     * @return array|\Mvc5\Http\Cookies
+     * @return array|\Mvc5\Cookie\Cookies
      */
     function cookies();
 
