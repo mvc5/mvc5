@@ -68,7 +68,7 @@ trait Cookies
      * @param bool|true  $httponly
      * @return self|mixed
      */
-    function withCookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
         return $this->with($name, $this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly));
     }
@@ -83,6 +83,6 @@ trait Cookies
      */
     function withoutCookie($name, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->with($name, $this->cookie($name, false, 946706400, $path, $domain, $secure, $httponly));
+        return $this->withCookie($name, '', 946706400, $path, $domain, $secure, $httponly);
     }
 }

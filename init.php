@@ -52,7 +52,7 @@ include __DIR__ . '/src/Plugins/User.php';
 include __DIR__ . '/src/Plugins/View.php';
 include __DIR__ . '/src/Cookie/Cookies.php';
 include __DIR__ . '/src/Cookie/Config/Cookies.php';
-include __DIR__ . '/src/Cookie/Config.php';
+include __DIR__ . '/src/Cookie/PHPCookies.php';
 include __DIR__ . '/src/Http/Cookies.php';
 include __DIR__ . '/src/Http/Error.php';
 include __DIR__ . '/src/Http/Headers.php';

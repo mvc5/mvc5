@@ -5,7 +5,7 @@
 
 namespace Mvc5\Cookie;
 
-class Config
+class PHPCookies
     extends \Mvc5\Config
     implements Cookies
 {

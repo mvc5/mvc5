@@ -20,7 +20,7 @@ interface Cookies
      * @param bool|true  $httponly
      * @return string
      */
-    function withCookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
+    function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
 
     /**
      * @param string     $name

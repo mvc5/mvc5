@@ -29,9 +29,9 @@ trait Cookies
      * @param array $cookies
      * @param array $defaults
      */
-    function __construct(array $cookies = [], array $defaults = [])
+    function __construct(array $cookies = null, array $defaults = [])
     {
-        $this->config = $cookies;
+        $this->config = $cookies ?? $_COOKIE;
         $this->defaults = $defaults + $this->defaults;
     }
 
@@ -68,7 +68,7 @@ trait Cookies
      */
     function remove($name, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        return $this->setCookie($this->cookie($name, '', 946706400, $path, $domain, $secure, $httponly));
+        return $this->set($name, '', 946706400, $path, $domain, $secure, $httponly);
     }
 
     /**
@@ -81,7 +81,7 @@ trait Cookies
      * @param bool|true  $httponly
      * @return bool
      */
-    function set($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function set($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
         return $this->setCookie($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly));
     }
@@ -93,5 +93,35 @@ trait Cookies
     protected function setCookie(array $cookie)
     {
         return \setcookie(...$cookie);
+    }
+
+    /**
+     * @param string     $name
+     * @param string     $value
+     * @param int        $expire
+     * @param string     $path
+     * @param string     $domain
+     * @param bool|false $secure
+     * @param bool|true  $httponly
+     * @return self|mixed
+     */
+    function with($name, $value = null, $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    {
+        $this->set($name, $value, $expire, $path, $domain, $secure, $httponly);
+        return $this;
+    }
+
+    /**
+     * @param string     $name
+     * @param string     $path
+     * @param string     $domain
+     * @param bool|false $secure
+     * @param bool|true  $httponly
+     * @return self|mixed
+     */
+    function without($name, $path = null, $domain = null, $secure = null, $httponly = null)
+    {
+        $this->remove($name, $path, $domain, $secure, $httponly);
+        return $this;
     }
 }
