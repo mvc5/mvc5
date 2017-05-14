@@ -92,7 +92,7 @@ trait Cookies
      */
     protected function setCookie(array $cookie)
     {
-        return \setcookie(...$cookie);
+        return \setcookie(...array_values($cookie));
     }
 
     /**

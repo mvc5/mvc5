@@ -175,6 +175,7 @@ trait Generator
      */
     protected function path(array $segment, $params, $path = '')
     {
+        /** @var Route $route */
         foreach($segment as $route) {
             $path .= Compiler::compile($route->tokens(), $params, $route->defaults(), $this->wildcard($route));
         }
