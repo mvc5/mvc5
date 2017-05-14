@@ -8,7 +8,6 @@ namespace Mvc5\Session\Config;
 use Mvc5\Arg;
 use Mvc5\Config\ArrayAccess;
 use Mvc5\Config\PropertyAccess;
-use Mvc5\Cookie\Cookies;
 
 trait Session
 {
@@ -17,19 +16,6 @@ trait Session
      */
     use ArrayAccess;
     use PropertyAccess;
-
-    /**
-     * @var Cookies
-     */
-    protected $cookies;
-
-    /**
-     * @param Cookies $cookies
-     */
-    function __construct(Cookies $cookies = null)
-    {
-        $this->cookies = $cookies;
-    }
 
     /**
      *
@@ -161,9 +147,7 @@ trait Session
      */
     protected function removeSessionCookie($name, array $params = [])
     {
-        $this->cookies ?
-            $this->cookies->remove($name, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE])
-                : setcookie($name, '', 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
+        setcookie($name, '', 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
     }
 
     /**

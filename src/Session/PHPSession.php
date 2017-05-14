@@ -5,7 +5,7 @@
 
 namespace Mvc5\Session;
 
-class Config
+class PHPSession
     implements Session
 {
     /**

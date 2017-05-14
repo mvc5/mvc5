@@ -62,7 +62,7 @@ return [
     'service\resolver'     => Mvc5\Resolver\Dispatch::class,
     'session'              => new Shared('session', 'session\global'),
     'session\container'    => new Plugin(Mvc5\Session\Container::class, ['session' => new Plugin('session')], ['start' => []]),
-    'session\global'       => new Hydrator(Mvc5\Session\Config::class, ['start' => new Param('session')]),
+    'session\global'       => new Hydrator(Mvc5\Session\PHPSession::class, ['start' => new Param('session')]),
     'session\messages'     => new Shared('session\messages', new Session('session\messages', Mvc5\Session\Messages::class)),
     'template\render'      => [Mvc5\View\Render::class, new Link, new Plugin('view\engine'),
         new Args(['paths' => new Param('templates'), 'directory' => new Param('view')])
