@@ -13,7 +13,7 @@ class Version
     /**
      *
      */
-    use \Mvc5\Response\Version\Version;
+    use \Mvc5\Response\Service\Version;
 
     /**
      * @param Request $request

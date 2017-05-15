@@ -10,5 +10,5 @@ class Status
     /**
      *
      */
-    use Status\Status;
+    use Service\Status;
 }

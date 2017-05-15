@@ -3,7 +3,7 @@
  *
  */
 
-namespace Mvc5\Response\Send;
+namespace Mvc5\Response\Service;
 
 use Mvc5\Arg;
 use Mvc5\Http\Response;

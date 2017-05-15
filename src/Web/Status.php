@@ -13,7 +13,7 @@ class Status
     /**
      *
      */
-    use \Mvc5\Response\Status\Status;
+    use \Mvc5\Response\Service\Status;
 
     /**
      * @param Request $request

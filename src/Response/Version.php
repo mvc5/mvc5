@@ -10,5 +10,5 @@ class Version
     /**
      *
      */
-    use Version\Version;
+    use Service\Version;
 }

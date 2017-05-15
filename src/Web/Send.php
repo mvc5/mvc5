@@ -13,7 +13,7 @@ class Send
     /**
      *
      */
-    use \Mvc5\Response\Send\Send;
+    use \Mvc5\Response\Service\Send;
 
     /**
      * @param Request $request

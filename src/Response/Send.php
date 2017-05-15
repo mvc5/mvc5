@@ -10,5 +10,5 @@ class Send
     /**
      *
      */
-    use Send\Send;
+    use Service\Send;
 }
