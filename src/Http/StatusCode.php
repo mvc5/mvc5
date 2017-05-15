@@ -10,7 +10,7 @@ final class StatusCode
     /**
      * @var array
      */
-    static $reasonPhrase = [
+    protected static $reasonPhrase = [
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',

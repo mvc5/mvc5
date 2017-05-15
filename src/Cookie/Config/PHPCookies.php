@@ -34,7 +34,7 @@ trait PHPCookies
      */
     function set($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
     {
-        \setcookie(...array_values($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly)));
+        setcookie(...array_values($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly)));
         return $value;
     }
 
