@@ -5,8 +5,8 @@
 
 namespace Mvc5\Exception;
 
-class Domain
-    extends \DomainException
+class RuntimeException
+    extends \RuntimeException
     implements Throwable
 {
     /**

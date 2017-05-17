@@ -17,7 +17,7 @@ class Exception
     /**
      * @var string
      */
-    const DOMAIN = Exception\Domain::class;
+    const DOMAIN = Exception\DomainException::class;
 
     /**
      * @var string
@@ -32,10 +32,10 @@ class Exception
     /**
      * @var string
      */
-    const INVALID_ARGUMENT = Exception\InvalidArgument::class;
+    const INVALID_ARGUMENT = Exception\InvalidArgumentException::class;
 
     /**
      * @var string
      */
-    const RUNTIME = Exception\Runtime::class;
+    const RUNTIME = Exception\RuntimeException::class;
 }

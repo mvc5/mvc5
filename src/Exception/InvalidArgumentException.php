@@ -5,7 +5,7 @@
 
 namespace Mvc5\Exception;
 
-class InvalidArgument
+class InvalidArgumentException
     extends \InvalidArgumentException
     implements Throwable
 {

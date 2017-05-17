@@ -5,18 +5,11 @@
 
 namespace Mvc5\Resolver;
 
-use Mvc5\Exception\Exception;
-use Mvc5\Exception\Throwable;
+use Mvc5\Exception\RuntimeException;
 
 class Unresolvable
-    extends \RuntimeException
-    implements Throwable
+    extends RuntimeException
 {
-    /**
-     *
-     */
-    use Exception;
-
     /**
      * @param $message
      * @return string
