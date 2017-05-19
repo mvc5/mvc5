@@ -57,12 +57,7 @@ class Plugin
 
         $this->params[$this->name] = (array) $request[Arg::PARAMS];
 
-        $parent = $request[Arg::PARENT];
-
-        while($parent && $name = $parent[Arg::NAME]) {
-            $this->params[$name] = $parent[Arg::PARAMS];
-            $parent = $parent[Arg::PARENT];
-        }
+        $this->parent($request, $request[Arg::PARENT]);
     }
 
     /**
@@ -153,6 +148,19 @@ class Plugin
     protected function options($query, $fragment, array $options = [])
     {
         return [Arg::FRAGMENT => $fragment, Arg::QUERY => $query] + $options;
+    }
+
+    /**
+     * @param $request
+     * @param $parent
+     * @return mixed
+     */
+    protected function parent($request, $parent)
+    {
+        ($name = $parent[Arg::NAME]) &&
+            $this->params[$name] = $parent[Arg::PARAMS];
+
+        return $request && $request !== $parent ? $this->parent($parent, $parent[Arg::PARENT]) : null;
     }
 
     /**
