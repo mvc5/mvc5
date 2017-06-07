@@ -156,7 +156,7 @@ trait Container
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $config
      * @return callable|mixed|null|object
      */
@@ -183,7 +183,7 @@ trait Container
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $args
      * @return array|callable|null|object|string
      */

@@ -22,7 +22,7 @@ interface Service
     function param($name);
 
     /**
-     * @param string $name
+     * @param $name
      * @param callable $callback
      * @param array $args
      * @return callable|mixed|null|object

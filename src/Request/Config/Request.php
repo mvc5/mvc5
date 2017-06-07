@@ -66,7 +66,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return mixed
      */
@@ -92,7 +92,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return string
      */
     function header($name)
@@ -141,7 +141,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return mixed
      */
@@ -209,7 +209,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return array|\ArrayAccess
      */
@@ -219,7 +219,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return array|\ArrayAccess
      */
@@ -245,7 +245,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return mixed
      */

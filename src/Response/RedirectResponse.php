@@ -9,7 +9,7 @@ class RedirectResponse
     extends HttpResponse
 {
     /**
-     * @param $url
+     * @param string $url
      * @param int $status
      * @param array $headers
      * @param array $config

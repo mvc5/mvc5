@@ -22,7 +22,7 @@ trait Model
     protected $service;
 
     /**
-     * @param string $model
+     * @param array|string $model
      * @return TemplateModel
      */
     protected function create($model)
@@ -38,8 +38,6 @@ trait Model
      */
     protected function model($model, array $vars = [])
     {
-        /** @var TemplateModel $model */
-
         !($model instanceof TemplateModel)
             && $model = $this->create($model);
 

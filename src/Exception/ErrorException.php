@@ -15,10 +15,10 @@ class ErrorException
     use Exception;
 
     /**
-     * @param $severity
-     * @param $message
-     * @param $file
-     * @param $line
+     * @param int $severity
+     * @param string $message
+     * @param string $file
+     * @param int $line
      * @return bool
      * @codeCoverageIgnore
      */

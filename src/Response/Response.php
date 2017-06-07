@@ -33,7 +33,7 @@ interface Response
 
     /**
      * @param string $name
-     * @param string $value
+     * @param array|string $value
      * @return mixed|self
      */
     function withHeader($name, $value);

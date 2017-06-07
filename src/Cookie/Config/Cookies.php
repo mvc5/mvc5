@@ -36,13 +36,13 @@ trait Cookies
     }
 
     /**
-     * @param $name
-     * @param $value
-     * @param $expire
-     * @param $path
-     * @param $domain
-     * @param $secure
-     * @param $httponly
+     * @param string $name
+     * @param string $value
+     * @param int $expire
+     * @param string $path
+     * @param string $domain
+     * @param bool $secure
+     * @param bool $httponly
      * @return array
      */
     protected function cookie($name, $value, $expire, $path, $domain, $secure, $httponly)

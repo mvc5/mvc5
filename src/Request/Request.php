@@ -9,7 +9,7 @@ interface Request
     extends \Mvc5\Http\Request
 {
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return mixed
      */
@@ -31,7 +31,7 @@ interface Request
     function controller();
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     function cookie($name);
@@ -42,7 +42,7 @@ interface Request
     function cookies();
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return array|mixed
      */
@@ -90,7 +90,7 @@ interface Request
     function name();
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return mixed
      */
@@ -112,7 +112,7 @@ interface Request
     function port();
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return array|mixed
      */
@@ -134,14 +134,14 @@ interface Request
     function scheme();
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return array|mixed
      */
     function server($name = null, $default = null);
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $default
      * @return array|mixed|\Mvc5\Session\Session
      */

@@ -38,7 +38,7 @@ trait View
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object

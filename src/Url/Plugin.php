@@ -157,7 +157,7 @@ class Plugin
      */
     protected function parent($request, $parent)
     {
-        ($name = $parent[Arg::NAME]) &&
+        $parent && ($name = $parent[Arg::NAME]) &&
             $this->params[$name] = $parent[Arg::PARAMS];
 
         return $request && $request !== $parent ? $this->parent($parent, $parent[Arg::PARENT]) : null;

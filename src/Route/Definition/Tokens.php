@@ -30,8 +30,8 @@ trait Tokens
     ];
 
     /**
-     * @param $name
-     * @param $constraint
+     * @param string $name
+     * @param string $constraint
      * @param array $constraints
      * @return mixed|string
      */

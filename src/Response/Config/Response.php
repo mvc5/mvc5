@@ -25,7 +25,7 @@ trait Response
 
     /**
      * @param null $body
-     * @param string $status
+     * @param int $status
      * @param array $headers
      * @param array $config
      */
@@ -96,8 +96,8 @@ trait Response
     }
 
     /**
-     * @param $status
-     * @param $reason
+     * @param int $status
+     * @param string $reason
      * @return self|mixed
      */
     function withStatus($status, $reason = '')
@@ -106,7 +106,7 @@ trait Response
     }
 
     /**
-     * @param $version
+     * @param string $version
      * @return self|mixed
      */
     function withVersion($version)

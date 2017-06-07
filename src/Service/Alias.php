@@ -21,7 +21,7 @@ final class Alias
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
     function __invoke($name)

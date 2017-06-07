@@ -30,7 +30,7 @@ class Dispatch
     protected $response;
 
     /**
-     * @param $event
+     * @param string $event
      * @param Request $request
      * @param Response $response
      */

@@ -11,7 +11,7 @@ interface Route
     extends Model
 {
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     function action($name = null);

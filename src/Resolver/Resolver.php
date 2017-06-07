@@ -366,7 +366,7 @@ trait Resolver
     }
 
     /**
-     * @param string $config
+     * @param $config
      * @param array $args
      * @param callable|null $callback
      * @param null|string $previous
@@ -397,7 +397,7 @@ trait Resolver
      * @param $config
      * @param array $args
      * @param callable|null $callback
-     * @param null $previous
+     * @param null|string $previous
      * @return array|callable|null|object|string
      */
     protected function pluginArray($config, array $args = [], callable $callback = null, $previous = null)
@@ -586,7 +586,7 @@ trait Resolver
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $args
      * @return array|callable|null|object|string
      */

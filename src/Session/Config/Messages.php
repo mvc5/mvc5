@@ -38,7 +38,7 @@ trait Messages
     }
 
     /**
-     * @param string|array $message
+     * @param array|string $message
      * @param string $name
      * @param string $type
      * @return array
@@ -49,7 +49,7 @@ trait Messages
     }
 
     /**
-     * @param string|array $message
+     * @param array|string $message
      * @param string $name
      * @return array
      */
@@ -59,7 +59,7 @@ trait Messages
     }
 
     /**
-     * @param string|array $message
+     * @param array|string $message
      * @param string $name
      * @return array
      */
@@ -118,7 +118,7 @@ trait Messages
     }
 
     /**
-     * @param string|array $message
+     * @param array|string $message
      * @param string $name
      * @return array
      */
@@ -128,8 +128,8 @@ trait Messages
     }
 
     /**
-     * @param $type
-     * @return mixed
+     * @param string $type
+     * @return string
      */
     protected function type($type)
     {
@@ -145,7 +145,7 @@ trait Messages
     }
 
     /**
-     * @param string|array $message
+     * @param array|string $message
      * @param string $name
      * @return array
      */

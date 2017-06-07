@@ -34,7 +34,7 @@ trait Response
 
     /**
      * @param null $body
-     * @param string $status
+     * @param int $status
      * @param array $headers
      * @param array $config
      * @@return \Mvc5\Response\Response|mixed

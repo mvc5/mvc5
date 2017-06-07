@@ -12,7 +12,7 @@ trait Optional
 {
     /**
      * @param Route $route
-     * @param $name
+     * @param string $name
      * @return bool
      */
     protected function optional(Route $route, $name)

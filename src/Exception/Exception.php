@@ -44,7 +44,7 @@ trait Exception
     }
 
     /**
-     * @param $exception
+     * @param \Throwable $exception
      * @param int $offset
      * @return \Throwable
      */

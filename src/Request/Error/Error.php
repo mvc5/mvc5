@@ -21,7 +21,7 @@ trait Error
     protected $name;
 
     /**
-     * @param $name
+     * @param string $name
      * @param $controller
      */
     function __construct($name, $controller)

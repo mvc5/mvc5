@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Route
 {
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     function action($name = null)

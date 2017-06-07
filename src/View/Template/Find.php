@@ -25,7 +25,7 @@ trait Find
     protected $extension = Arg::VIEW_EXTENSION;
 
     /**
-     * @param $name
+     * @param string $name
      * @return string
      */
     protected function find($name)

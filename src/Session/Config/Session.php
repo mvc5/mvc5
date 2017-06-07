@@ -142,7 +142,7 @@ trait Session
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $params
      */
     protected function removeSessionCookie($name, array $params = [])

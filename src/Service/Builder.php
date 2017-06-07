@@ -26,7 +26,7 @@ final class Builder
     protected $params;
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $args
      * @param callable $callback
      * @return object
@@ -86,7 +86,7 @@ final class Builder
      * @param \ReflectionMethod|null $method
      * @return array|\ReflectionParameter[]
      */
-    protected function constructorParams($method)
+    protected function constructorParams($method = null)
     {
         return $method ? $method->getParameters() : [];
     }
@@ -100,7 +100,7 @@ final class Builder
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return self
      */
     static function reflectionClass($name)

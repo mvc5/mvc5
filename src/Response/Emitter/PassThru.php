@@ -15,7 +15,7 @@ class PassThru
     protected $command;
 
     /**
-     * @param $command
+     * @param string $command
      */
     function __construct($command)
     {

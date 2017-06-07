@@ -51,7 +51,7 @@ trait Service
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return callable|mixed|object
      */
     protected function fallback($name)
@@ -60,7 +60,7 @@ trait Service
     }
 
     /**
-     * @param array|callable|object|string $name
+     * @param string $name
      * @return callable|null
      */
     protected function invokable($name)
@@ -120,7 +120,7 @@ trait Service
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $args
      * @return array|callable|null|object|string
      */

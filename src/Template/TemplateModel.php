@@ -19,7 +19,7 @@ interface TemplateModel
     function vars();
 
     /**
-     * @param $template
+     * @param string $template
      * @return mixed|static
      */
     function withTemplate($template);

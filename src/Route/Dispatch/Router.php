@@ -70,7 +70,7 @@ trait Router
 
     /**
      * @param Route $route
-     * @param $name
+     * @param int|string $name
      * @return string
      */
     protected function key(Route $route, $name)
@@ -89,11 +89,11 @@ trait Router
     }
 
     /**
-     * @param $name
-     * @param $parent
+     * @param null|string $name
+     * @param string $parent
      * @return string
      */
-    protected function name($name, $parent)
+    protected function name($name, $parent = null)
     {
         return !$parent ? $name : $parent . Arg::SEPARATOR . $name;
     }
@@ -131,7 +131,7 @@ trait Router
     /**
      * @param Route $route
      * @param Request $request
-     * @param string $name
+     * @param int|string $name
      * @return mixed|Request
      */
     protected function step(Route $route, Request $request, $name)
