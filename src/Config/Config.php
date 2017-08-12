@@ -10,22 +10,10 @@ trait Config
     /**
      *
      */
+    use Base;
     use ArrayAccess;
     use Iterator;
     use PropertyAccess;
-
-    /**
-     * @var array|Configuration
-     */
-    protected $config = [];
-
-    /**
-     * @param array $config
-     */
-    function __construct($config = [])
-    {
-        $this->config = $config;
-    }
 
     /**
      * @param string $name
