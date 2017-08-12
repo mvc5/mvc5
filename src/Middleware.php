@@ -19,42 +19,89 @@ class Middleware
 
     /**
      * @param Service\Service $service
-     * @param array $stack
+     * @param array|\Iterator $stack
      */
-    function __construct(Service\Service $service, array $stack = [])
+    function __construct(Service\Service $service, $stack = [])
     {
         $this->service = $service;
         $this->stack = $stack;
     }
 
     /**
+     * @param array $args
+     * @return array
+     */
+    protected function args(array $args)
+    {
+        $args[] = $this->callable();
+        return $args;
+    }
+
+    /**
      * @param $middleware
-     * @param Http\Request $request
-     * @param Http\Response $response
+     * @param array $args
      * @return mixed
      */
-    protected function call($middleware, $request, $response)
+    protected function call($middleware, $args)
     {
-        return $this->service->call($middleware, [$request, $response, $this->next()]);
+        return $this->service->call($middleware, $this->args($args));
     }
 
     /**
      * @return \Closure
      */
-    protected function next()
+    protected function callable()
     {
-        return function($request, $response) {
-            return ($middleware = next($this->stack)) ? $this->call($middleware, $request, $response) : $response;
+        return function(...$args) {
+            return ($middleware = $this->next($this->stack)) ? $this->call($middleware, $args) : $this->end($args);
         };
     }
 
     /**
-     * @param Http\Request $request
-     * @param Http\Response $response
-     * @return callable|mixed|null|object|Http\Response
+     * @param array $args
+     * @return mixed|null
      */
-    function __invoke($request, $response)
+    protected function end(array $args)
     {
-        return $this->stack ? $this->call(reset($this->stack), $request, $response) : $response;
+        return $args ? end($args) : null;
+    }
+
+    /**
+     * @param array|\Iterator $stack
+     * @return mixed
+     */
+    protected function next(&$stack)
+    {
+        if (is_array($stack)) {
+            return next($stack);
+        }
+
+        $stack->next();
+
+        return $stack->current();
+    }
+
+    /**
+     * @param array|\Iterator $stack
+     * @return mixed
+     */
+    protected function reset(&$stack)
+    {
+        if (is_array($stack)) {
+            return reset($stack);
+        }
+
+        $stack->rewind();
+
+        return $stack->current();
+    }
+
+    /**
+     * @param array ...$params
+     * @return mixed
+     */
+    function __invoke(...$params)
+    {
+        return $this->stack ? $this->call($this->reset($this->stack), $params) : $this->end($params);
     }
 }
