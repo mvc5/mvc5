@@ -68,6 +68,7 @@ include __DIR__ . '/src/Http/Config/Request.php';
 include __DIR__ . '/src/Http/Config/Response.php';
 include __DIR__ . '/src/Http/HttpError.php';
 include __DIR__ . '/src/Http/HttpHeaders.php';
+include __DIR__ . '/src/Http/HttpMiddleware.php';
 include __DIR__ . '/src/Http/HttpRequest.php';
 include __DIR__ . '/src/Http/HttpResponse.php';
 include __DIR__ . '/src/Http/HttpUri.php';
