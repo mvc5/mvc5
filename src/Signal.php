@@ -42,8 +42,7 @@ final class Signal
         foreach($params as $param) {
             if ($param->isVariadic()) {
                 $matched = array_merge(
-                    $matched ? $matched : [],
-                    (Arg::ARGV === $param->name ? [new Plugin\SignalArgs($args)] : array_values($args))
+                    $matched, (Arg::ARGV === $param->name ? [new Plugin\SignalArgs($args)] : array_values($args))
                 );
                 break;
             }
