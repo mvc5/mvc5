@@ -83,7 +83,7 @@ trait Middleware
     /**
      * @return mixed
      */
-    protected function reset()
+    protected function rewind()
     {
         if (is_array($this->stack)) {
             return reset($this->stack);
@@ -100,6 +100,6 @@ trait Middleware
      */
     function __invoke(...$args)
     {
-        return $this->stack ? $this->call($this->reset(), $args) : $this->end($args);
+        return $this->stack ? $this->call($this->rewind(), $args) : $this->end($args);
     }
 }

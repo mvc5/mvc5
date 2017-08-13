@@ -21,6 +21,6 @@ class HttpMiddleware
      */
     function __invoke($request, $response)
     {
-        return $this->stack ? $this->call($this->reset(), [$request, $response]) : $this->end([$request, $response]);
+        return $this->stack ? $this->call($this->rewind(), [$request, $response]) : $this->end([$request, $response]);
     }
 }
