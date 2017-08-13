@@ -81,7 +81,7 @@ return [
     'web\controller'       => [Mvc5\Web\Controller::class, new Link],
     'web\error'            => [Mvc5\Web\Error::class, 'error', 'error\controller'],
     'web\layout'           => [Mvc5\Web\Layout::class, new Plugin('layout')],
-    'web\middleware'       => ['middleware', 'stack' => new Param('middleware.web')],
+    'web\middleware'       => ['http\middleware', 'stack' => new Param('middleware.web')],
     'web\render'           => [Mvc5\Web\Render::class, new Shared('template\render')],
     'web\route'            => [Mvc5\Web\Route::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')],
     'web\send'             => Mvc5\Web\Send::class,
