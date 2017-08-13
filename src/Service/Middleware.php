@@ -53,7 +53,7 @@ trait Middleware
     protected function callable()
     {
         return function(...$args) {
-            return ($middleware = $this->next($this->stack)) ? $this->call($middleware, $args) : $this->end($args);
+            return ($middleware = $this->next()) ? $this->call($middleware, $args) : $this->end($args);
         };
     }
 
@@ -67,33 +67,31 @@ trait Middleware
     }
 
     /**
-     * @param array|\Iterator $stack
      * @return mixed
      */
-    protected function next(&$stack)
+    protected function next()
     {
-        if (is_array($stack)) {
-            return next($stack);
+        if (is_array($this->stack)) {
+            return next($this->stack);
         }
 
-        $stack->next();
+        $this->stack->next();
 
-        return $stack->current();
+        return $this->stack->current();
     }
 
     /**
-     * @param array|\Iterator $stack
      * @return mixed
      */
-    protected function reset(&$stack)
+    protected function reset()
     {
-        if (is_array($stack)) {
-            return reset($stack);
+        if (is_array($this->stack)) {
+            return reset($this->stack);
         }
 
-        $stack->rewind();
+        $this->stack->rewind();
 
-        return $stack->current();
+        return $this->stack->current();
     }
 
     /**
@@ -102,6 +100,6 @@ trait Middleware
      */
     function __invoke(...$args)
     {
-        return $this->stack ? $this->call($this->reset($this->stack), $args) : $this->end($args);
+        return $this->stack ? $this->call($this->reset(), $args) : $this->end($args);
     }
 }
