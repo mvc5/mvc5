@@ -38,8 +38,8 @@ trait Service
     protected function callable($config) : callable
     {
         if (is_string($config)) {
-            return function(...$args) use($config) {
-                return $this->call($config, $this->variadic($args));
+            return function(...$argv) use($config) {
+                return $this->call($config, $this->variadic($argv));
             };
         }
 

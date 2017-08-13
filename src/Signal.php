@@ -40,13 +40,22 @@ final class Signal
             && $params = (new \ReflectionMethod($callable, $method))->getParameters();
 
         foreach($params as $param) {
+            if ($param->isVariadic()) {
+                $matched = array_merge(
+                    $matched ? $matched : [],
+                    (Arg::ARGV === $param->name ? [new Plugin\SignalArgs($args)] : array_values($args))
+                );
+                break;
+            }
+
             if (array_key_exists($param->name, $args)) {
                 $matched[] = $args[$param->name];
+                unset($args[$param->name]);
                 continue;
             }
 
-            if (Arg::ARGS === $param->name) {
-                $matched[] = $param->isVariadic() ? new Plugin\SignalArgs($args) : $args;
+            if (Arg::ARGV === $param->name) {
+                $matched[] = $args;
                 continue;
             }
 

@@ -227,16 +227,16 @@ trait Resolver
         }
 
         if ($config instanceof Invoke) {
-            return function(...$args) use ($config) {
+            return function(...$argv) use ($config) {
                 return $this->call(
-                    $this->resolve($config->config()), $this->vars($this->variadic($args), $config->args())
+                    $this->resolve($config->config()), $this->vars($this->variadic($argv), $config->args())
                 );
             };
         }
 
         if ($config instanceof Invokable) {
-            return function(...$args) use ($config) {
-                return $this->resolve($config->config(), $this->vars($this->variadic($args), $config->args()));
+            return function(...$argv) use ($config) {
+                return $this->resolve($config->config(), $this->vars($this->variadic($argv), $config->args()));
             };
         }
 

@@ -16,11 +16,11 @@ class Action
 
     /**
      * @param $controller
-     * @param array $args
+     * @param array $argv
      * @return mixed
      */
-    function __invoke($controller = null, array $args = [])
+    function __invoke($controller = null, array $argv = [])
     {
-        return $controller ? $this->call($controller, $args) : null;
+        return $controller ? $this->call($controller, $argv) : null;
     }
 }

@@ -10,6 +10,7 @@ interface Arg
     const ABSOLUTE = 'absolute';
     const ACTION = 'action';
     const ARGS = 'args';
+    const ARGV = 'argv';
     const ATTRIBUTES = 'attributes';
     const BODY = 'body';
     const CALL = '@';
@@ -50,6 +51,7 @@ interface Arg
     const HEADERS = 'headers';
     const HOST = 'host';
     const HTTP_OK = 200;
+    const HTTP_MIDDLEWARE = 'http\middleware';
     const HTTP_ONLY = 'httponly';
     const INDEX = '#';
     const INFO = 'info';
