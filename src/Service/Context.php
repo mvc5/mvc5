@@ -43,6 +43,16 @@ final class Context
     }
 
     /**
+     * @param $name
+     * @param array $args
+     * @return mixed
+     */
+    static function __callStatic($name, array $args)
+    {
+        return static::service()->call($name, $args);
+    }
+
+    /**
      * @param Service $service
      */
     function __invoke(Service $service)
