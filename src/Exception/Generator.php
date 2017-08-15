@@ -39,7 +39,7 @@ trait Generator
     static function errorException(
         $message = '', $code = 0, $severity = E_ERROR, $file = __FILE__, $line = __LINE__, \Throwable $previous = null, $offset = 2
     ) {
-        return static::raise(static::offset(
+        return static::raise(static::origin(
             static::instance(static::ERROR_EXCEPTION, [$message, $code, $severity, $file, $line, $previous]), $offset
         ));
     }
@@ -81,5 +81,16 @@ trait Generator
     static function runtime($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
     {
         return static::raise(static::create(static::RUNTIME, [$message, $code, $previous], $offset));
+    }
+
+    /**
+     * @param $name
+     * @param array $args
+     * @return mixed
+     * @throws \Throwable
+     */
+    static function __callStatic($name, array $args)
+    {
+        return static::raise(static::create($name, $args));
     }
 }

@@ -16,10 +16,8 @@ trait Exception
      */
     protected static function backtrace(\Throwable $exception, $offset = 2)
     {
-        $offset && ($origin = $exception->getTrace()[$offset]) && isset($origin[Arg::FILE])
-            && ($exception->file = $origin[Arg::FILE]) && ($exception->line = $origin[Arg::LINE]);
-
-        return static::offset($exception, $offset);
+        return static::origin(
+            $exception, $offset, $offset && ($origin = $exception->getTrace()[$offset]) ? $origin : []);
     }
 
     /**
@@ -46,13 +44,30 @@ trait Exception
     /**
      * @param \Throwable $exception
      * @param int $offset
+     * @param array $origin
      * @return \Throwable
      */
-    protected static function offset($exception, $offset = 1)
+    protected static function origin($exception, $offset = 1, array $origin = [])
     {
-        $offset && $exception->offset = $offset;
+        if (!$exception instanceof \Error) {
+            if (!empty($origin[Arg::FILE])) {
+                $exception->file = $origin[Arg::FILE];
+                $exception->line = $origin[Arg::LINE];
+            }
+            $offset && $exception->offset = $offset;
+            return $exception;
+        }
 
-        return $exception;
+        return (new class extends \Error {
+            function __invoke(\Throwable $error, $offset, array $origin) {
+                if (!empty($origin[Arg::FILE])) {
+                    $error->file = $origin[Arg::FILE];
+                    $error->line = $origin[Arg::LINE];
+                }
+                $offset && $error->offset = $offset;
+                return $error;
+            }
+        })($exception, $offset, $origin);
     }
 
     /**
