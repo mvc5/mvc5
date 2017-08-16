@@ -39,19 +39,40 @@ trait Generator
     }
 
     /**
-     * @param $listener
      * @param $event
      * @param $queue
      * @param $args
      * @param $callback
-     * @param null $result
+     * @param $result
+     * @param $current
      * @return null
      */
-    protected function iterate($listener, $event, &$queue, $args, $callback, $result = null)
+    protected function iterate($event, $queue, $args, $callback, $result, callable $current)
     {
-        return !$listener || ($event instanceof Event && $event->stopped()) ? $result : $this->iterate(
-            $this->step($queue), $event, $queue, $args, $callback, $this->result($event, $listener, $args, $callback)
+        return $this->stopped($event, $queue) ? $result : $this->loop(
+            $event, $queue, $args, $callback, $this->result($event, $current($queue), $args, $callback, $result)
         );
+    }
+
+    /**
+     * @param $event
+     * @param $queue
+     * @param $args
+     * @param $callback
+     * @param $result
+     * @return null
+     */
+    protected function loop($event, &$queue, $args, $callback, $result)
+    {
+        return $this->iterate($event, $queue, $args, $callback, $result, function(&$queue) {
+            if (! $queue instanceof \Iterator) {
+                return next($queue);
+            }
+
+            $queue->next();
+
+            return $queue->current();
+        });
     }
 
     /**
@@ -69,11 +90,12 @@ trait Generator
      * @param $listener
      * @param array $args
      * @param callable $callback
+     * @param $result
      * @return mixed
      */
-    protected function result($event, $listener, array $args = [], callable $callback = null)
+    protected function result($event, $listener, array $args = [], callable $callback = null, $result = null)
     {
-        return $this->emit($event, $this->callable($listener), $args, $callback);
+        return !$listener ? $result : $this->emit($event, $this->callable($listener), $args, $callback);
     }
 
     /**
@@ -93,28 +115,19 @@ trait Generator
      */
     protected function start(&$queue)
     {
-        if (is_array($queue)) {
-            return reset($queue);
-        }
-
-        $queue->rewind();
-
-        return $queue->current();
+        $queue instanceof \Iterator ? $queue->rewind() : reset($queue);
+        return $queue;
     }
 
     /**
+     * @param $event
      * @param array|\Iterator $queue
-     * @return mixed|null
+     * @return bool
      */
-    protected function step(&$queue)
+    protected function stopped($event, $queue)
     {
-        if (is_array($queue)) {
-            return next($queue);
-        }
-
-        $queue->next();
-
-        return $queue->current();
+        return ($event instanceof Event && $event->stopped()) ||
+            ($queue instanceof \Iterator ? !$queue->valid() : null === key($queue));
     }
 
     /**
@@ -126,6 +139,8 @@ trait Generator
      */
     protected function traverse($event, $queue, $args, $callback)
     {
-        return $this->iterate($this->start($queue), $event, $queue, $args, $callback);
+        return $this->iterate($event, $this->start($queue), $args, $callback, null, function(&$queue) {
+            return $queue instanceof \Iterator ? $queue->current() : current($queue);
+        });
     }
 }
