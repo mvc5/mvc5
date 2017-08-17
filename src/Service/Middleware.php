@@ -15,16 +15,16 @@ trait Middleware
     /**
      * @var array|\Iterator
      */
-    protected $stack;
+    protected $config;
 
     /**
      * @param Service $service
-     * @param array|\Iterator $stack
+     * @param array|\Iterator $config
      */
-    function __construct(Service $service, $stack = [])
+    function __construct(Service $service, $config = [])
     {
         $this->service = $service;
-        $this->stack = $stack;
+        $this->config = $config;
     }
 
     /**
@@ -33,7 +33,7 @@ trait Middleware
      */
     protected function args(array $args)
     {
-        $args[] = $this->callable();
+        $args[] = $this->delegate();
         return $args;
     }
 
@@ -48,9 +48,9 @@ trait Middleware
     }
 
     /**
-     * @return \Closure
+     * @return mixed
      */
-    protected function callable()
+    protected function delegate()
     {
         return function(...$args) {
             return ($middleware = $this->next()) ? $this->call($middleware, $args) : $this->end($args);
@@ -71,13 +71,12 @@ trait Middleware
      */
     protected function next()
     {
-        if (is_array($this->stack)) {
-            return next($this->stack);
+        if ($this->config instanceof \Iterator) {
+            $this->config->next();
+            return $this->config->current();
         }
 
-        $this->stack->next();
-
-        return $this->stack->current();
+        return next($this->config);
     }
 
     /**
@@ -85,13 +84,12 @@ trait Middleware
      */
     protected function rewind()
     {
-        if (is_array($this->stack)) {
-            return reset($this->stack);
+        if ($this->config instanceof \Iterator) {
+            $this->config->rewind();
+            return $this->config->current();
         }
 
-        $this->stack->rewind();
-
-        return $this->stack->current();
+        return reset($this->config);
     }
 
     /**
@@ -100,6 +98,6 @@ trait Middleware
      */
     function __invoke(...$args)
     {
-        return $this->stack ? $this->call($this->rewind(), $args) : $this->end($args);
+        return $this->config ? $this->call($this->rewind(), $args) : $this->end($args);
     }
 }

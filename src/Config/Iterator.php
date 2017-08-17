@@ -12,7 +12,6 @@ trait Iterator
      */
     function count()
     {
-        /** @var Config $this */
         return count($this->config);
     }
 
@@ -21,8 +20,7 @@ trait Iterator
      */
     function current()
     {
-        /** @var Config $this */
-        return is_array($this->config) ? current($this->config) : $this->config->current();
+        return $this->config instanceof \Iterator ? $this->config->current() : current($this->config);
     }
 
     /**
@@ -30,8 +28,7 @@ trait Iterator
      */
     function key()
     {
-        /** @var Config $this */
-        return is_array($this->config) ? key($this->config) : $this->config->key();
+        return $this->config instanceof \Iterator ? $this->config->key() : key($this->config);
     }
 
     /**
@@ -39,8 +36,7 @@ trait Iterator
      */
     function next()
     {
-        /** @var Config $this */
-        is_array($this->config) ? next($this->config) : $this->config->next();
+        $this->config instanceof \Iterator ? $this->config->next() : next($this->config);
     }
 
     /**
@@ -48,8 +44,7 @@ trait Iterator
      */
     function rewind()
     {
-        /** @var Config $this */
-        is_array($this->config) ? reset($this->config) : $this->config->rewind();
+        $this->config instanceof \Iterator ? $this->config->rewind() : reset($this->config);
     }
 
     /**
@@ -57,7 +52,6 @@ trait Iterator
      */
     function valid()
     {
-        /** @var Config $this */
-        return is_array($this->config) ? null !== $this->key() : $this->config->valid();
+        return $this->config instanceof \Iterator ? $this->config->valid() : null !== key($this->config);
     }
 }

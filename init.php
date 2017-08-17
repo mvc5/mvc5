@@ -254,5 +254,6 @@ include __DIR__ . '/src/Web/Service.php';
 include __DIR__ . '/src/Web/Status.php';
 include __DIR__ . '/src/Web/Version.php';
 include __DIR__ . '/src/App.php';
+include __DIR__ . '/src/Iterator.php';
 include __DIR__ . '/src/Web.php';
 include __DIR__ . '/src/Middleware.php';

@@ -109,7 +109,6 @@ interface Arg
     const SEVERITY_CRITICAL = 2;
     const SHARED = 'shared';
     const SPLIT = 'split';
-    const STACK = 'stack';
     const STATUS = 'status';
     const STRICT = 'strict';
     const SUCCESS = 'success';

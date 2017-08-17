@@ -65,13 +65,12 @@ trait Generator
     protected function loop($event, &$queue, $args, $callback, $result)
     {
         return $this->iterate($event, $queue, $args, $callback, $result, function(&$queue) {
-            if (! $queue instanceof \Iterator) {
-                return next($queue);
+            if ($queue instanceof \Iterator) {
+                $queue->next();
+                return $queue->current();
             }
 
-            $queue->next();
-
-            return $queue->current();
+            return next($queue);
         });
     }
 

@@ -60,7 +60,7 @@ trait Container
      */
     function current()
     {
-        return is_array($this->container) ? current($this->container) : $this->container->current();
+        return $this->container instanceof \Iterator ? $this->container->current() : current($this->container);
     }
 
     /**
@@ -86,7 +86,7 @@ trait Container
      */
     function key()
     {
-        return is_array($this->container) ? key($this->container) : $this->container->key();
+        return $this->container instanceof \Iterator ? $this->container->key() : key($this->container);
     }
 
     /**
@@ -94,7 +94,7 @@ trait Container
      */
     function next()
     {
-        is_array($this->container) ? next($this->container) : $this->container->next();
+        $this->container instanceof \Iterator ? $this->container->next() : next($this->container);
     }
 
     /**
@@ -113,7 +113,7 @@ trait Container
      */
     function rewind()
     {
-        is_array($this->container) ? reset($this->container) : $this->container->rewind();
+        $this->container instanceof \Iterator ? $this->container->rewind() : reset($this->container);
     }
 
     /**
@@ -179,7 +179,7 @@ trait Container
      */
     function valid()
     {
-        return is_array($this->container) ? null !== $this->key() : $this->container->valid();
+        return $this->container instanceof \Iterator ? $this->container->valid() : null !== key($this->container);
     }
 
     /**
