@@ -35,9 +35,7 @@ class Controller
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        $result = $this->action(
-            $request[Arg::CONTROLLER], [Arg::REQUEST => $request, Arg::RESPONSE => $response, Arg::NEXT => $next]
-        );
+        $result = $this->action($request[Arg::CONTROLLER], [Arg::REQUEST => $request, Arg::RESPONSE => $response]);
 
         if ($result instanceof Response) {
             return $next($request, $result);
