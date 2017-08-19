@@ -28,23 +28,13 @@ trait Middleware
     }
 
     /**
-     * @param array $args
-     * @return array
-     */
-    protected function args(array $args)
-    {
-        $args[] = $this->delegate();
-        return $args;
-    }
-
-    /**
      * @param $middleware
      * @param array $args
      * @return mixed
      */
-    protected function call($middleware, $args)
+    protected function call($middleware, array $args = [])
     {
-        return $this->service->call($middleware, $this->args($args));
+        return $this->service->call($middleware, array_merge($args, [$this->delegate()]));
     }
 
     /**
