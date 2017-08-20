@@ -21,6 +21,6 @@ class HttpMiddleware
      */
     function __invoke($request, $response)
     {
-        return $this->config ? $this->call($this->rewind(), [$request, $response]) : $this->end([$request, $response]);
+        return $this->call($this->rewind(), [$request, $response]);
     }
 }

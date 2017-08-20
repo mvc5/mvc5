@@ -34,7 +34,7 @@ trait Middleware
      */
     protected function call($middleware, array $args = [])
     {
-        return $this->service->call($middleware, array_merge($args, [$this->delegate()]));
+        return $middleware ? $this->service->call($middleware, array_merge($args, [$this->delegate()])) : $this->end($args);
     }
 
     /**
@@ -43,7 +43,7 @@ trait Middleware
     protected function delegate()
     {
         return function(...$args) {
-            return ($middleware = $this->next()) ? $this->call($middleware, $args) : $this->end($args);
+            return $this->call($this->next(), $args);
         };
     }
 
@@ -88,6 +88,6 @@ trait Middleware
      */
     function __invoke(...$args)
     {
-        return $this->config ? $this->call($this->rewind(), $args) : $this->end($args);
+        return $this->call($this->rewind(), $args);
     }
 }
