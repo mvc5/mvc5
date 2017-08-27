@@ -31,7 +31,7 @@ final class Builder
      * @param callable $callback
      * @return object
      */
-    static function create($name, array $args, callable $callback)
+    static function create(string $name, array $args, callable $callback)
     {
         $class = static::reflectionClass($name);
 
@@ -86,7 +86,7 @@ final class Builder
      * @param \ReflectionMethod|null $method
      * @return array|\ReflectionParameter[]
      */
-    protected function constructorParams($method = null)
+    protected function constructorParams(\ReflectionMethod $method = null)
     {
         return $method ? $method->getParameters() : [];
     }
@@ -103,7 +103,7 @@ final class Builder
      * @param string $name
      * @return self
      */
-    static function reflectionClass($name)
+    static function reflectionClass(string $name)
     {
         return static::$class[$name] ?? (static::$class[$name] = new self($name));
     }

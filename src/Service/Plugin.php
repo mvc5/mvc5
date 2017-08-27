@@ -27,13 +27,13 @@ trait Plugin
      * @param string $name
      * @return mixed
      */
-    protected function param($name)
+    protected function param(string $name)
     {
         return $this->service->param($name);
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
@@ -48,7 +48,7 @@ trait Plugin
      * @param $config
      * @return mixed
      */
-    protected function shared($name, $config = null)
+    protected function shared(string $name, $config = null)
     {
         return $this->service->shared($name, $config);
     }

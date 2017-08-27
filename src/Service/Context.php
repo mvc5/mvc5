@@ -49,13 +49,13 @@ final class Context
      * @param string $name
      * @return mixed
      */
-    static function param($name)
+    static function param(string $name)
     {
         return static::service()->param($name);
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
@@ -78,7 +78,7 @@ final class Context
      * @param array $args
      * @return mixed
      */
-    static function __callStatic($name, array $args)
+    static function __callStatic(string $name, array $args)
     {
         return static::call($name, $args);
     }

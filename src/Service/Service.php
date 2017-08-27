@@ -19,7 +19,7 @@ interface Service
      * @param string $name
      * @return mixed
      */
-    function param($name);
+    function param(string $name);
 
     /**
      * @param $name
@@ -34,7 +34,7 @@ interface Service
      * @param $config
      * @return callable|mixed|null|object
      */
-    function shared($name, $config = null);
+    function shared(string $name, $config = null);
 
     /**
      * @param array|object|string|\Traversable $event

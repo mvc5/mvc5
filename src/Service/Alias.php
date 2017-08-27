@@ -24,7 +24,7 @@ final class Alias
      * @param string $name
      * @return bool
      */
-    function __invoke($name)
+    function __invoke(string $name)
     {
         return isset($this->alias[$name]) && class_alias($this->alias[$name], $name, true);
     }

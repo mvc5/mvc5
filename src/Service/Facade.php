@@ -22,13 +22,13 @@ trait Facade
      * @param string $name
      * @return mixed
      */
-    protected static function param($name)
+    protected static function param(string $name)
     {
         return static::service()->param($name);
     }
 
     /**
-     * @param string $name
+     * @param $name
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
@@ -51,7 +51,7 @@ trait Facade
      * @param $config
      * @return callable|mixed|null|object
      */
-    protected static function shared($name, $config = null)
+    protected static function shared(string $name, $config = null)
     {
         return static::service()->shared($name, $config);
     }
