@@ -17,7 +17,7 @@ class PassThru
     /**
      * @param string $command
      */
-    function __construct($command)
+    function __construct(string $command)
     {
         $this->command = $command;
     }

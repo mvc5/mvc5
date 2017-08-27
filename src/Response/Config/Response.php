@@ -26,10 +26,10 @@ trait Response
     /**
      * @param null $body
      * @param int $status
-     * @param array $headers
+     * @param array|Headers $headers
      * @param array $config
      */
-    function __construct($body = null, $status = null, $headers = [], array $config = [])
+    function __construct($body = null, int $status = null, $headers = [], array $config = [])
     {
         !isset($config[Arg::COOKIES]) &&
             $config[Arg::COOKIES] = new HttpCookies;
@@ -68,7 +68,7 @@ trait Response
     }
 
     /**
-     * @param $cookies
+     * @param array|Cookies $cookies
      * @return self|mixed
      */
     function withCookies($cookies)
@@ -87,7 +87,7 @@ trait Response
     }
 
     /**
-     * @param $headers
+     * @param array|Headers $headers
      * @return self|mixed
      */
     function withHeaders($headers)

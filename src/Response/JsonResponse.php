@@ -18,7 +18,7 @@ class JsonResponse
      * @param int $status
      * @param array $headers
      */
-    function __construct($data, $status = 200, array $headers = [])
+    function __construct($data, int $status = 200, array $headers = [])
     {
         parent::__construct(
             json_encode($data, static::ENCODE_OPTIONS), $status, $headers + ['Content-Type' => 'application/json']

@@ -25,11 +25,11 @@ class ReadFile
     protected $useIncludePath;
 
     /**
-     * @param $filename
+     * @param string $filename
      * @param bool|false $use_include_path
      * @param null|resource $context
      */
-    function __construct($filename, $use_include_path = false, $context = null)
+    function __construct(string $filename, bool $use_include_path = false, resource $context = null)
     {
         $this->context        = $context;
         $this->filename       = $filename;

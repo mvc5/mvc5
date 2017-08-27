@@ -34,7 +34,7 @@ class Dispatch
      * @param Request $request
      * @param Response $response
      */
-    function __construct($event, Request $request = null, Response $response = null)
+    function __construct(string $event, Request $request = null, Response $response = null)
     {
         $this->event = $event;
         $this->request = $request;
