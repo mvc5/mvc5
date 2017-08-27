@@ -13,7 +13,7 @@ trait Session
      * @param $name
      * @return \Mvc5\Session\Session|mixed
      */
-    protected function session($name = null)
+    protected function session(string $name = null)
     {
         return !($session = $this->plugin(Arg::SESSION)) || null === $name ? $session : ($session[$name] ?? null);
     }

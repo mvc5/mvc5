@@ -15,7 +15,7 @@ trait Log
      * @param int $level
      * @return mixed
      */
-    protected function log($message, array $context = [], $level = Arg::SEVERITY_CRITICAL)
+    protected function log($message, array $context = [], int $level = Arg::SEVERITY_CRITICAL)
     {
         return $this->call(Arg::LOG, [Arg::LEVEL => $level, Arg::MESSAGE => $message, Arg::CONTEXT => $context]);
     }

@@ -15,7 +15,7 @@ trait Response
      * @param array $headers
      * @return \Mvc5\Response\JsonResponse|mixed
      */
-    protected function json($data, $status = 200, array $headers = [])
+    protected function json($data, int $status = 200, array $headers = [])
     {
         return $this->plugin(Arg::RESPONSE_JSON, [$data, $status, $headers]);
     }
@@ -27,7 +27,7 @@ trait Response
      * @param array $config
      * @return \Mvc5\Response\RedirectResponse|mixed
      */
-    protected function redirect($url, $status = 302, array $headers = [], array $config = [])
+    protected function redirect($url, int $status = 302, array $headers = [], array $config = [])
     {
         return $this->plugin(Arg::RESPONSE_REDIRECT, [$url, $status, $headers, $config]);
     }
@@ -39,7 +39,7 @@ trait Response
      * @param array $config
      * @@return \Mvc5\Response\Response|mixed
      */
-    protected function response($body = null, $status = null, $headers = [], array $config = [])
+    protected function response($body = null, int $status = null, $headers = [], array $config = [])
     {
         return $this->plugin(Arg::RESPONSE, [$body, $status, $headers, $config]);
     }

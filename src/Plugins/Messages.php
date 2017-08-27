@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Messages
 {
     /**
-     * @param string $message
+     * @param array|string $message
      * @param string $name
      */
     protected function danger($message, $name = Arg::INDEX)
@@ -19,7 +19,7 @@ trait Messages
     }
 
     /**
-     * @param string $message
+     * @param array|string $message
      * @param string $name
      */
     protected function info($message, $name = Arg::INDEX)
@@ -28,7 +28,7 @@ trait Messages
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return array
      */
     protected function message($name = Arg::INDEX)
@@ -45,7 +45,7 @@ trait Messages
     }
 
     /**
-     * @param string $message
+     * @param array|string $message
      * @param string $name
      */
     protected function success($message, $name = Arg::INDEX)
@@ -54,7 +54,7 @@ trait Messages
     }
 
     /**
-     * @param string $message
+     * @param array|string $message
      * @param string $name
      */
     protected function warning($message, $name = Arg::INDEX)
