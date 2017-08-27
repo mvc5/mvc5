@@ -53,7 +53,7 @@ trait Session
      * @param bool $remove_session_cookie
      * @return bool
      */
-    function destroy($remove_session_cookie = true)
+    function destroy(bool $remove_session_cookie = true)
     {
         $remove_session_cookie &&
             $this->removeSessionCookie($this->name(), session_get_cookie_params());
@@ -83,7 +83,7 @@ trait Session
      * @param string $id
      * @return string
      */
-    function id($id = null)
+    function id(string $id = null)
     {
         return null !== $id ? session_id($id) : session_id();
     }
@@ -100,7 +100,7 @@ trait Session
      * @param string $name
      * @return string
      */
-    function name($name = null)
+    function name(string $name = null)
     {
         return null !== $name ? session_name($name) : session_name();
     }
@@ -125,7 +125,7 @@ trait Session
     /**
      * @param bool|false $delete_old_session
      */
-    function regenerate($delete_old_session = false)
+    function regenerate(bool $delete_old_session = false)
     {
         session_regenerate_id($delete_old_session);
     }
@@ -145,7 +145,7 @@ trait Session
      * @param string $name
      * @param array $params
      */
-    protected function removeSessionCookie($name, array $params = [])
+    protected function removeSessionCookie(string $name, array $params = [])
     {
         setcookie($name, '', 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
     }

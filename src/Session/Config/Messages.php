@@ -43,7 +43,7 @@ trait Messages
      * @param string $type
      * @return array
      */
-    protected function add($message, $name, $type)
+    protected function add($message, string $name, string $type)
     {
         return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $this->type($type)]);
     }
@@ -53,7 +53,7 @@ trait Messages
      * @param string $name
      * @return array
      */
-    function danger($message, $name = Arg::INDEX)
+    function danger($message, string $name = Arg::INDEX)
     {
         return $this->add($message, $name, Arg::DANGER);
     }
@@ -63,7 +63,7 @@ trait Messages
      * @param string $name
      * @return array
      */
-    function info($message, $name = Arg::INDEX)
+    function info($message, string $name = Arg::INDEX)
     {
         return $this->add($message, $name, Arg::INFO);
     }
@@ -72,7 +72,7 @@ trait Messages
      * @param string $name
      * @return array
      */
-    function message($name = Arg::INDEX)
+    function message(string $name = Arg::INDEX)
     {
         ($message = $this->get($name))
             && $this->remove($name);
@@ -122,7 +122,7 @@ trait Messages
      * @param string $name
      * @return array
      */
-    function success($message, $name = Arg::INDEX)
+    function success($message, string $name = Arg::INDEX)
     {
         return $this->add($message, $name, Arg::SUCCESS);
     }
@@ -131,7 +131,7 @@ trait Messages
      * @param string $type
      * @return string
      */
-    protected function type($type)
+    protected function type(string $type)
     {
         return $this->types[$type] ?? $type;
     }
@@ -149,7 +149,7 @@ trait Messages
      * @param string $name
      * @return array
      */
-    function warning($message, $name = Arg::INDEX)
+    function warning($message, string $name = Arg::INDEX)
     {
         return $this->add($message, $name, Arg::WARNING);
     }
@@ -158,7 +158,7 @@ trait Messages
      * @param string $name
      * @return array
      */
-    function __invoke($name = Arg::INDEX)
+    function __invoke(string $name = Arg::INDEX)
     {
         return $this->message($name);
     }

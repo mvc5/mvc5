@@ -24,24 +24,24 @@ interface Session
      * @param bool|true $remove_session_cookie
      * @return bool
      */
-    function destroy($remove_session_cookie = true);
+    function destroy(bool $remove_session_cookie = true);
 
     /**
      * @param string $id
      * @return string
      */
-    function id($id = null);
+    function id(string $id = null);
 
     /**
      * @param string $name
      * @return string
      */
-    function name($name = null);
+    function name(string $name = null);
 
     /**
      * @param bool|false $delete_old_session
      */
-    function regenerate($delete_old_session = false);
+    function regenerate(bool $delete_old_session = false);
 
     /**
      * @param array $options

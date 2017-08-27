@@ -29,7 +29,7 @@ trait Container
      * @param Session $session
      * @param string $label
      */
-    function __construct(Session $session, $label = null)
+    function __construct(Session $session, string $label = null)
     {
         $this->label = $label ?? Model::class;
         $this->session = $session;
@@ -55,7 +55,7 @@ trait Container
      * @param bool|true $remove_session_cookie
      * @return bool
      */
-    function destroy($remove_session_cookie = true)
+    function destroy(bool $remove_session_cookie = true)
     {
         return $this->session->destroy($remove_session_cookie);
     }
@@ -64,7 +64,7 @@ trait Container
      * @param string $id
      * @return string
      */
-    function id($id = null)
+    function id(string $id = null)
     {
         return $this->session->id($id);
     }
@@ -81,7 +81,7 @@ trait Container
      * @param string $name
      * @return string
      */
-    function name($name = null)
+    function name(string $name = null)
     {
         return $this->session->name($name);
     }
@@ -89,7 +89,7 @@ trait Container
     /**
      * @param bool|false $delete_old_session
      */
-    function regenerate($delete_old_session = false)
+    function regenerate(bool $delete_old_session = false)
     {
         $this->session->regenerate($delete_old_session);
     }
