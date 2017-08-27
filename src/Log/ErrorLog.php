@@ -27,7 +27,7 @@ class ErrorLog
      * @param string $destination
      * @param string $extra_headers
      */
-    function __construct($message_type = 0, $destination = '', $extra_headers = '')
+    function __construct(int $message_type = 0, string $destination = '', string $extra_headers = '')
     {
         $this->destination   = $destination;
         $this->extra_headers = $extra_headers;

@@ -35,7 +35,7 @@ class Logger
     /**
      * @param bool|false $throw_exception
      */
-    function __construct($throw_exception = false)
+    function __construct(bool $throw_exception = false)
     {
         $this->throw_exception = $throw_exception;
     }

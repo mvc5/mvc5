@@ -16,7 +16,7 @@ class ThrowException
      * @return \Throwable|mixed|null
      * @throws \Throwable
      */
-    function __invoke($exception = null, $message = null, $throw_exception = false)
+    function __invoke($exception = null, $message = null, bool $throw_exception = false)
     {
         $throw_exception && $message instanceof \Throwable
             && Exception::raise($message);
