@@ -77,11 +77,11 @@ final class StatusCode
     ];
 
     /**
-     * @param $status
-     * @return string
+     * @param int $status
+     * @return null|string
      */
-    static function reasonPhrase($status)
+    static function reasonPhrase(int $status)
     {
-        return static::$reasonPhrase[$status];
+        return static::$reasonPhrase[$status] ?? null;
     }
 }
