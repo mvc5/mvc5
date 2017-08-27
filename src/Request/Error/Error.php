@@ -11,20 +11,20 @@ use Mvc5\Http\Request;
 trait Error
 {
     /**
-     * @var
+     * @var mixed
      */
     protected $controller;
 
     /**
-     * @var
+     * @var string
      */
     protected $name;
 
     /**
      * @param string $name
-     * @param $controller
+     * @param mixed $controller
      */
-    function __construct($name, $controller)
+    function __construct(string $name, $controller)
     {
         $this->controller = $controller;
         $this->name       = $name;

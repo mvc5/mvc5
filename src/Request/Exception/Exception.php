@@ -13,7 +13,7 @@ use Mvc5\Http\Request;
 trait Exception
 {
     /**
-     * @var
+     * @var mixed|callable
      */
     protected $controller;
 
@@ -23,7 +23,7 @@ trait Exception
     protected $error;
 
     /**
-     * @var
+     * @var string
      */
     protected $name;
 
@@ -32,7 +32,7 @@ trait Exception
      * @param mixed|callable $controller
      * @param Error $error
      */
-    function __construct($name, $controller, Error $error = null)
+    function __construct(string $name, $controller, Error $error = null)
     {
         $this->controller = $controller;
         $this->error = $error ?: new ServerError;

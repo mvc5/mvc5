@@ -13,7 +13,7 @@ interface Request
      * @param null $default
      * @return mixed
      */
-    function arg($name, $default = null);
+    function arg(string $name, $default = null);
 
     /**
      * @return array
@@ -34,7 +34,7 @@ interface Request
      * @param string $name
      * @return mixed
      */
-    function cookie($name);
+    function cookie(string $name);
 
     /**
      * @return array|\Mvc5\Cookie\Cookies
@@ -46,7 +46,7 @@ interface Request
      * @param null $default
      * @return array|mixed
      */
-    function data($name = null, $default = null);
+    function data(string $name = null, $default = null);
 
     /**
      * @return \Mvc5\Http\Error|mixed
@@ -62,7 +62,7 @@ interface Request
      * @param string $name
      * @return string
      */
-    function header($name);
+    function header(string $name);
 
     /**
      * @return string
@@ -94,7 +94,7 @@ interface Request
      * @param null $default
      * @return mixed
      */
-    function param($name, $default = null);
+    function param(string $name, $default = null);
 
     /**
      * @return array
@@ -116,7 +116,7 @@ interface Request
      * @param null $default
      * @return array|mixed
      */
-    function post($name = null, $default = null);
+    function post(string $name = null, $default = null);
 
     /**
      * @return string
@@ -138,14 +138,14 @@ interface Request
      * @param null $default
      * @return array|mixed
      */
-    function server($name = null, $default = null);
+    function server(string $name = null, $default = null);
 
     /**
      * @param string $name
      * @param null $default
      * @return array|mixed|\Mvc5\Session\Session
      */
-    function session($name = null, $default = null);
+    function session(string $name = null, $default = null);
 
     /**
      * @return mixed
@@ -162,7 +162,7 @@ interface Request
      * @param null $default
      * @return mixed
      */
-    function var($name, $default = null);
+    function var(string $name, $default = null);
 
     /**
      * @return array
