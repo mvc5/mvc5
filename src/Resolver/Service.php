@@ -104,7 +104,7 @@ trait Service
     protected function repeat($plugin, string $method, array $name = [], array $args = [], callable $callback = null)
     {
         return !$name ? $this->invoke([$plugin, $method], $args, $callback) : $this->repeat(
-            $this->invoke([$plugin, $method], $args, $callback), array_shift($name), $name, $args, $callback
+            $this->invoke([$plugin, $method], [], $callback), array_shift($name), $name, $args, $callback
         );
     }
 
