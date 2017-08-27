@@ -61,26 +61,26 @@ class Plugin
     }
 
     /**
-     * @param array|Uri $config
+     * @param array|Uri $uri
      * @param array $options
      * @return array|Uri
      */
-    protected function absolute($config, array $options = [])
+    protected function absolute($uri, array $options = [])
     {
-        if (!$this->absolute && empty($config[Arg::ABSOLUTE])) {
-            return $config;
+        if (!$this->absolute && empty($uri[Arg::ABSOLUTE])) {
+            return $uri;
         }
 
-        !isset($config[Arg::SCHEME]) &&
+        !isset($uri[Arg::SCHEME]) &&
             $options[Arg::SCHEME] = $this->uri[Arg::SCHEME];
 
-        !isset($config[Arg::PORT]) &&
+        !isset($uri[Arg::PORT]) &&
             $options[Arg::PORT] = $this->uri[Arg::PORT];
 
-        !isset($config[Arg::HOST]) &&
+        !isset($uri[Arg::HOST]) &&
             $options[Arg::HOST] = $this->uri[Arg::HOST];
 
-        return !$options ? $config : ($config instanceof Uri ? $config->with($options) : $options + $config);
+        return !$options ? $uri : ($uri instanceof Uri ? $uri->with($options) : $options + $uri);
     }
 
     /**

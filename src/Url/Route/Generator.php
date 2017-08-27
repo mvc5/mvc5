@@ -49,7 +49,7 @@ trait Generator
      * @param array $path
      * @return array
      */
-    protected function append($route, array $path)
+    protected function append(Route $route, array $path)
     {
         $path[] = $route;
         return $path;
@@ -60,7 +60,7 @@ trait Generator
      * @param array|Route $route
      * @return Route
      */
-    protected function child($parent, $route)
+    protected function child(Route $parent, $route)
     {
         return $route ? $this->merge($parent, $this->route($route)) : null;
     }
@@ -69,16 +69,16 @@ trait Generator
      * @param string $name
      * @return array|Route
      */
-    protected function config($name)
+    protected function config(string $name)
     {
-        return $name ? ($this->route[$name] ?? null) : null;
+        return $this->route[$name] ?? null;
     }
 
     /**
      * @param string $name
      * @return Route
      */
-    protected function construct($name)
+    protected function construct(string $name)
     {
         return $this->generated[$name] ?? $this->generated[$name] = $this->generate(explode(Arg::SEPARATOR, $name));
     }
@@ -109,7 +109,7 @@ trait Generator
      * @param Route $parent
      * @return Route
      */
-    protected function match($name, Route $parent = null)
+    protected function match(string $name, Route $parent = null)
     {
         return $parent ? $this->child($parent, $parent->child($name)) : $this->route($this->config($name));
     }
@@ -140,7 +140,7 @@ trait Generator
      * @param array $path
      * @return Route
      */
-    protected function next(Route $route, $name, $path)
+    protected function next(Route $route, array $name, array $path)
     {
         return $name ? $this->generate($name, $path, $route) : $route->with(Arg::PATH, $path);
     }
@@ -151,7 +151,7 @@ trait Generator
      * @param array $options
      * @return array
      */
-    protected function options(Route $route, $params, array $options)
+    protected function options(Route $route, array $params, array $options)
     {
         !isset($options[Arg::SCHEME])
             && $options[Arg::SCHEME] = $route->scheme();
@@ -169,11 +169,11 @@ trait Generator
 
     /**
      * @param array $segment
-     * @param $params
+     * @param array $params
      * @param string $path
      * @return string
      */
-    protected function path(array $segment, $params, $path = '')
+    protected function path(array $segment, array $params, string $path = '')
     {
         /** @var Route $route */
         foreach($segment as $route) {
@@ -189,7 +189,7 @@ trait Generator
      * @param array $path
      * @return null|Route
      */
-    protected function resolve($route, $name, $path)
+    protected function resolve($route, array $name, array $path)
     {
         return $route ? $this->next($route, $name, $this->append($route, $path)) : null;
     }
@@ -209,7 +209,7 @@ trait Generator
      * @param array $options
      * @return null|Uri
      */
-    protected function uri($route, array $params = [], array $options = [])
+    protected function uri(Route $route = null, array $params = [], array $options = [])
     {
         return $route ? $this->uri->with($this->options($route, $params, $options)) : null;
     }
@@ -220,7 +220,7 @@ trait Generator
      */
     protected function wildcard(Route $route)
     {
-        return !$route->wildcard() ? null : function($path, array $params = []) {
+        return !$route->wildcard() ? null : function(string $path, array $params = []) {
             foreach($params as $key => $value) {
                 null !== $value && $path .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
             }
@@ -235,7 +235,7 @@ trait Generator
      * @param array $options
      * @return string
      */
-    function __invoke($name, array $params = [], array $options = [])
+    function __invoke(string $name, array $params = [], array $options = [])
     {
         return $this->uri($this->construct($name), $params, $options);
     }
