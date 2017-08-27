@@ -22,7 +22,7 @@ class ErrorException
      * @return bool
      * @codeCoverageIgnore
      */
-    static function handler($severity, $message, $file, $line)
+    static function handler(int $severity, string $message, string $file, int $line)
     {
         if (!ini_get('display_errors') ||
             in_array($severity, [E_DEPRECATED, E_USER_DEPRECATED]) || 'cli' === php_sapi_name()) {

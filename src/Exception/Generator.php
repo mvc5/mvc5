@@ -20,7 +20,7 @@ trait Generator
      * @return mixed
      * @throws \InvalidArgumentException
      */
-    static function domain($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function domain(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
         return static::raise(static::create(static::DOMAIN, [$message, $code, $previous], $offset));
     }
@@ -37,7 +37,8 @@ trait Generator
      * @throws \ErrorException
      */
     static function errorException(
-        $message = '', $code = 0, $severity = E_ERROR, $file = __FILE__, $line = __LINE__, \Throwable $previous = null, $offset = 2
+        string $message = '', int $code = 0, int $severity = E_ERROR,
+        string $file = __FILE__, int $line = __LINE__, \Throwable $previous = null, int $offset = 2
     ) {
         return static::raise(static::origin(
             static::instance(static::ERROR_EXCEPTION, [$message, $code, $severity, $file, $line, $previous]), $offset
@@ -52,7 +53,7 @@ trait Generator
      * @return mixed
      * @throws \Exception
      */
-    static function exception($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function exception(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
         return static::raise(static::create(static::EXCEPTION, [$message, $code, $previous], $offset));
     }
@@ -65,7 +66,7 @@ trait Generator
      * @return mixed
      * @throws \InvalidArgumentException
      */
-    static function invalidArgument($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function invalidArgument(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
         return static::raise(static::create(static::INVALID_ARGUMENT, [$message, $code, $previous], $offset));
     }
@@ -78,7 +79,7 @@ trait Generator
      * @return mixed
      * @throws \RuntimeException
      */
-    static function runtime($message = '', $code = 0, \Throwable $previous = null, $offset = 2)
+    static function runtime(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
         return static::raise(static::create(static::RUNTIME, [$message, $code, $previous], $offset));
     }
@@ -89,7 +90,7 @@ trait Generator
      * @return mixed
      * @throws \Throwable
      */
-    static function __callStatic($name, array $args)
+    static function __callStatic(string $name, array $args)
     {
         return static::raise(static::create($name, $args));
     }
