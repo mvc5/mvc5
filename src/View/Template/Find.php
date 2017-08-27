@@ -28,7 +28,7 @@ trait Find
      * @param string $name
      * @return string
      */
-    protected function find($name)
+    protected function find(string $name)
     {
         return $this->path($name) ?: (
             (!$name || !$this->directory || false !== strpos($name, '.')) ? $name :

@@ -20,7 +20,7 @@ trait Model
      * @param null|string $template
      * @return mixed|ViewModel
      */
-    protected function model(array $vars = [], $template = null)
+    protected function model(array $vars = [], string $template = null)
     {
         !$template && defined('static::TEMPLATE') && $template = constant('static::TEMPLATE');
 
@@ -37,7 +37,7 @@ trait Model
      * @param array $vars
      * @return mixed|ViewModel
      */
-    protected function view($template = null, array $vars = [])
+    protected function view(string $template = null, array $vars = [])
     {
         return $this->model($vars, $template);
     }

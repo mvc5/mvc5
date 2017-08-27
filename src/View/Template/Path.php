@@ -16,7 +16,7 @@ trait Path
      * @param string $name
      * @return string
      */
-    protected function path($name)
+    protected function path(string $name)
     {
         return $this->paths[$name] ?? null;
     }

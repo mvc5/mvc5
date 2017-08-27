@@ -23,9 +23,9 @@ interface ViewModel
     function withService(Service $service);
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $args
      * @return mixed
      */
-    function __call($name, array $args = []);
+    function __call(string $name, array $args = []);
 }

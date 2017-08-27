@@ -57,7 +57,7 @@ trait ViewModel
      * @param array $args
      * @return mixed
      */
-    function __call($name, array $args = [])
+    function __call(string $name, array $args = [])
     {
         return $this->service->call($name, $args);
     }
