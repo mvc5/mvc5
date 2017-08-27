@@ -45,7 +45,7 @@ trait Router
      * @param null|Route $route
      * @return Route
      */
-    protected function child(Route $route, $parent)
+    protected function child(Route $route, Route $parent = null)
     {
         return $route->with(Arg::PARENT, $parent);
     }
@@ -63,7 +63,7 @@ trait Router
      * @param Request $request
      * @return mixed|Request
      */
-    protected function dispatch($request)
+    protected function dispatch(Request $request)
     {
         return $this->result($request, $this->traverse($this->route, $request));
     }
@@ -75,7 +75,7 @@ trait Router
      */
     protected function key(Route $route, $name)
     {
-        return is_string($name) ? $name : $route->name();
+        return is_string($name) ? $name : (string) $route->name();
     }
 
     /**
@@ -83,7 +83,7 @@ trait Router
      * @param Request $request
      * @return mixed|Request
      */
-    protected function match($route, $request)
+    protected function match(Route $route, Request $request)
     {
         return ($this->match)($route, $request);
     }
@@ -93,7 +93,7 @@ trait Router
      * @param string $parent
      * @return string
      */
-    protected function name($name, $parent = null)
+    protected function name(string $name, string $parent = null)
     {
         return !$parent ? $name : $parent . Arg::SEPARATOR . $name;
     }
@@ -113,7 +113,7 @@ trait Router
      * @param Request $request
      * @return mixed|Request
      */
-    protected function route($route, $request)
+    protected function route(Route $route, Request $request)
     {
         return $this->solve($this->match($route, $request));
     }
@@ -147,7 +147,7 @@ trait Router
      * @param null|Route $parent
      * @return mixed|Request
      */
-    protected function traverse($routes, $request, $parent = null)
+    protected function traverse($routes, Request $request, Route $parent = null)
     {
         foreach($routes as $name => $route) {
             if ($match = $this->step($this->child($this->definition($route), $parent), $request, $name)) {

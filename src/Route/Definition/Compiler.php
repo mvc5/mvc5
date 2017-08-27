@@ -22,7 +22,7 @@ class Compiler
      * @return string
      * @throws \InvalidArgumentException
      */
-    static function compile(array $tokens, array &$params, array $defaults = null, callable $wildcard = null)
+    static function compile(array $tokens, array &$params, array $defaults = [], callable $wildcard = null)
     {
         $current = [
             'is_optional' => false,
@@ -111,6 +111,6 @@ class Compiler
      */
     function __invoke(array $tokens, array $params, array $defaults = null, callable $wildcard = null)
     {
-        return $this->compile($tokens, $params, $defaults, $wildcard);
+        return $this->compile($tokens, $params, (array) $defaults, $wildcard);
     }
 }

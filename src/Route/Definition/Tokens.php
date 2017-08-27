@@ -35,7 +35,7 @@ trait Tokens
      * @param array $constraints
      * @return mixed|string
      */
-    protected function constraint($name, $constraint, array $constraints)
+    protected function constraint(string $name, string $constraint, array $constraints)
     {
         return $constraint ? $constraint : (isset($constraints[$name]) ? $constraints[$name] : '[^/]+');
     }
@@ -44,35 +44,35 @@ trait Tokens
      * @param string $expr
      * @return mixed|string
      */
-    protected function expression($expr)
+    protected function expression(string $expr)
     {
         return ':' === $expr[0] && isset($this->expressions[$n = substr($expr, 1)]) ? $this->expressions[$n] : $expr;
     }
 
     /**
-     * @param string $route
+     * @param string $path
      * @param array $constraints
      * @return array
      * @throws \RuntimeException
      */
-    protected function tokens($route, array $constraints = [])
+    protected function tokens(string $path, array $constraints = [])
     {
         $currentPos = 0;
-        $length     = strlen($route);
+        $length     = strlen($path);
         $level      = 0;
         $token      = '(\G(?P<literal>[^{}\[\]]*)(?P<token>[{}\[\]]|$))';
         $tokens     = [];
         $variable   = '(\G\s*(?P<name>[a-zA-Z0-9_]++)?\s*(?(1):)?\s*(?P<constraint>[^{}]*(?:\{(?-1)\}[^{}]*)*)?)';
 
         while($currentPos < $length) {
-            preg_match($token, $route, $match, 0, $currentPos);
+            preg_match($token, $path, $match, 0, $currentPos);
 
             $currentPos += strlen($match[0]);
 
             '' !== $match['literal'] && $tokens[] = ['literal', $match['literal']];
 
             if ('{' === $match['token']) {
-                preg_match($variable, $route, $match, 0, $currentPos);
+                preg_match($variable, $path, $match, 0, $currentPos);
 
                 $currentPos += strlen($match[0]);
 

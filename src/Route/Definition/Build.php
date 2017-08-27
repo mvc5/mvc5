@@ -23,7 +23,7 @@ trait Build
      * @param bool $compile
      * @return Route
      */
-    protected function build($route, $compile = true)
+    protected function build($route, bool $compile = true)
     {
         return $this->definition($this->create($route), $compile);
     }
@@ -43,7 +43,7 @@ trait Build
      * @param string $class
      * @return Route
      */
-    protected function createDefault($route = [], $class = Config::class)
+    protected function createDefault($route = [], string $class = Config::class)
     {
         return new $class($route);
     }
@@ -53,7 +53,7 @@ trait Build
      * @param bool $compile
      * @return array|Route
      */
-    protected function definition(Route $route, $compile = true)
+    protected function definition(Route $route, bool $compile = true)
     {
         /** @var Route $route */
         $route = $this->host($route, $route[Arg::HOST]);

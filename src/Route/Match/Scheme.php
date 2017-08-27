@@ -14,12 +14,12 @@ class Scheme
 {
     /**
      * @param Request $request
-     * @param $scheme
+     * @param array $scheme
      * @return bool
      */
-    protected function match(Request $request, $scheme)
+    protected function match(Request $request, array $scheme)
     {
-        return !$scheme || in_array($request[Arg::URI][Arg::SCHEME], (array) $scheme);
+        return !$scheme || in_array($request[Arg::URI][Arg::SCHEME], $scheme);
     }
 
     /**
@@ -30,6 +30,6 @@ class Scheme
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $this->match($request, $route->scheme()) ? $next($route, $request) : new BadRequest;
+        return $this->match($request, (array) $route->scheme()) ? $next($route, $request) : new BadRequest;
     }
 }

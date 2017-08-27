@@ -14,13 +14,13 @@ interface Route
      * @param string $name
      * @return mixed
      */
-    function action($name = null);
+    function action(string $name = null);
 
     /**
      * @param string $name
      * @return self
      */
-    function child($name);
+    function child(string $name);
 
     /**
      * @return self[]

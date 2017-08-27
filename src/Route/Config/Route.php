@@ -13,7 +13,7 @@ trait Route
      * @param string $name
      * @return mixed
      */
-    function action($name = null)
+    function action(string $name = null)
     {
         return null === $name ? $this[Arg::ACTION] : ($this->get(Arg::ACTION)[$name] ?? null);
     }
@@ -22,7 +22,7 @@ trait Route
      * @param string $name
      * @return self
      */
-    function child($name)
+    function child(string $name)
     {
         return $this->get(Arg::CHILDREN)[$name] ?? null;
     }

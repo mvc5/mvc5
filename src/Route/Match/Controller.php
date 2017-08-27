@@ -45,9 +45,9 @@ class Controller
      * @param array $options
      * @return null|string
      */
-    protected function action($params, $options)
+    protected function action(array $params, array $options)
     {
-        return $params[$options[Arg::ACTION]] ?? null;
+        return $params[$options[Arg::ACTION]] ?? '';
     }
 
     /**
@@ -55,17 +55,17 @@ class Controller
      * @param array $options
      * @return null|string
      */
-    protected function controller($params, $options)
+    protected function controller(array $params, array $options)
     {
-        return $params[$options[Arg::CONTROLLER]] ?? null;
+        return $params[$options[Arg::CONTROLLER]] ?? '';
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $options
      * @return string
      */
-    protected function format($name, $options)
+    protected function format(string $name, array $options)
     {
         return $options[Arg::STRICT] ? $this->replace($name, $options) : $this->uppercase($name, $options);
     }
@@ -76,16 +76,16 @@ class Controller
      * @param array $replacement
      * @return bool
      */
-    protected function invalid($action, $controller, $replacement)
+    protected function invalid(string $action, string $controller, array $replacement)
     {
         return !$this->valid($controller, $replacement) || (!$this->valid($action, $replacement) && $action);
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
-    protected function load($name)
+    protected function load(string $name)
     {
         return $this->loader ? ($this->loader)($name) : class_exists($name);
     }
@@ -95,7 +95,7 @@ class Controller
      * @param $controller
      * @return mixed
      */
-    protected function match($name, $controller)
+    protected function match(string $name, $controller)
     {
         return $controller ? (true === $controller ? $name : $controller) : null;
     }
@@ -106,7 +106,7 @@ class Controller
      * @param array $options
      * @return string
      */
-    protected function name($action, $controller, array $options)
+    protected function name(string $action = null, string $controller = null, array $options = [])
     {
         return $options[Arg::PREFIX] . $controller
             . ($action ? $options[Arg::SPLIT] . $action : '') . $options[Arg::SUFFIX];
@@ -126,7 +126,7 @@ class Controller
      * @param array $options
      * @return string
      */
-    protected function replace($name, $options)
+    protected function replace(string $name, array $options)
     {
         return str_replace($this->separator($options), $this->replacement($options), $name);
     }
@@ -154,7 +154,7 @@ class Controller
      * @param array $options
      * @return string
      */
-    protected function uppercase($name, array $options)
+    protected function uppercase(string $name, array $options)
     {
         foreach($options[Arg::SEPARATORS] as $separator => $replacement) {
             $name = str_replace(' ', $replacement, ucwords(str_replace($separator, ' ', $name)));
@@ -168,7 +168,7 @@ class Controller
      * @param array $replacement
      * @return bool
      */
-    protected function valid($name, array $replacement)
+    protected function valid(string $name, array $replacement)
     {
         return $name && str_replace($replacement, '', $name);
     }

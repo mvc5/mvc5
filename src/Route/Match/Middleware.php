@@ -23,9 +23,9 @@ class Middleware
 
     /**
      * @param callable $service
-     * @param $placeholder
+     * @param string $placeholder
      */
-    function __construct(callable $service, $placeholder = Arg::CONTROLLER)
+    function __construct(callable $service, string $placeholder = Arg::CONTROLLER)
     {
         $this->placeholder = $placeholder;
         $this->service = $service;

@@ -32,7 +32,7 @@ class Wildcard
      * @param array $parts
      * @return array
      */
-    protected function match($params, $options, $parts)
+    protected function match(array $params, array $options, array $parts)
     {
         return ($n = count($parts)) % 2 ? $params : $this->set($this->remove($params, $options), $parts, $n);
     }
@@ -60,7 +60,7 @@ class Wildcard
      * @param $options
      * @return array
      */
-    protected function parts($params, $options)
+    protected function parts(array $params, array $options)
     {
         return isset($params[$options[Arg::WILDCARD]]) ? explode(Arg::SEPARATOR, $params[$options[Arg::WILDCARD]]) : [];
     }
@@ -70,7 +70,7 @@ class Wildcard
      * @param $options
      * @return mixed
      */
-    protected function remove($params, $options)
+    protected function remove(array $params, array $options)
     {
         unset($params[$options[Arg::WILDCARD]]);
 
@@ -93,7 +93,7 @@ class Wildcard
      * @param int $n
      * @return array
      */
-    protected function set(array $params, array $parts, $n)
+    protected function set(array $params, array $parts, int $n)
     {
         for($i = 0; $i < $n; $i += 2) {
             if (isset($params[$parts[$i]])) {

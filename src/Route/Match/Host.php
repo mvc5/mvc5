@@ -36,11 +36,11 @@ class Host
     /**
      * @param Route $route
      * @param Request $request
-     * @param $host
+     * @param string $host
      * @param callable $next
      * @return NotFound|null|Request
      */
-    protected function name(Route $route, Request $request, $host, callable $next)
+    protected function name(Route $route, Request $request, string $host, callable $next)
     {
         return $host === $request[Arg::URI][Arg::HOST] ? $next($route, $request) : $this->notFound($route);
     }
@@ -49,7 +49,7 @@ class Host
      * @param Route $route
      * @return NotFound|null
      */
-    protected function notFound($route)
+    protected function notFound(Route $route)
     {
         return $this->optional($route, Arg::HOST) ? null : new NotFound;
     }
@@ -57,11 +57,11 @@ class Host
     /**
      * @param $route
      * @param Request $request
-     * @param $host
+     * @param array $host
      * @param callable $next
      * @return NotFound|null|Request
      */
-    protected function regex(Route $route, Request $request, $host, callable $next)
+    protected function regex(Route $route, Request $request, array $host, callable $next)
     {
         if (!preg_match('(\G' . $host[Arg::REGEX] . ')', (string) $request[Arg::URI][Arg::HOST], $match)) {
             return $this->notFound($route);
