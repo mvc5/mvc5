@@ -38,19 +38,20 @@ trait Cookies
     /**
      * @param string $name
      * @param string $value
-     * @param int $expire
+     * @param int|null|string $expire
      * @param string $path
      * @param string $domain
      * @param bool $secure
      * @param bool $httponly
      * @return array
      */
-    protected function cookie($name, $value, $expire, $path, $domain, $secure, $httponly)
+    protected function cookie($name, $value, $expire = null,
+                              string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         return [
-            Arg::NAME      => $name,
-            Arg::VALUE     => $value,
-            Arg::EXPIRE    => $expire ?? $this->defaults[Arg::EXPIRE],
+            Arg::NAME      => (string) $name,
+            Arg::VALUE     => (string) $value,
+            Arg::EXPIRE    => (int) (is_string($expire = $expire ?? $this->defaults[Arg::EXPIRE]) ? strtotime($expire) : $expire),
             Arg::PATH      => $path ?? $this->defaults[Arg::PATH],
             Arg::DOMAIN    => $domain ?? $this->defaults[Arg::DOMAIN],
             Arg::SECURE    => $secure ?? $this->defaults[Arg::SECURE],
@@ -59,44 +60,46 @@ trait Cookies
     }
 
     /**
-     * @param string     $name
-     * @param string     $path
-     * @param string     $domain
-     * @param bool|false $secure
-     * @param bool|true  $httponly
+     * @param string $name
+     * @param null|string $path
+     * @param null|string $domain
+     * @param bool|false  $secure
+     * @param bool|true $httponly
      */
-    function remove($name, $path = null, $domain = null, $secure = null, $httponly = null)
+    function remove($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         $this->set($name, '', 946706400, $path, $domain, $secure, $httponly);
     }
 
     /**
-     * @param string     $name
-     * @param string     $value
-     * @param int        $expire
-     * @param string     $path
-     * @param string     $domain
+     * @param string $name
+     * @param string $value
+     * @param int|null|string $expire
+     * @param null|string $path
+     * @param null|string $domain
      * @param bool|false $secure
-     * @param bool|true  $httponly
+     * @param bool|true $httponly
      * @return mixed
      */
-    function set($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function set($name, $value = '', $expire = null,
+                 string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         $this->config[$name] = $this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly);
         return $value;
     }
 
     /**
-     * @param string     $name
-     * @param string     $value
-     * @param int        $expire
-     * @param string     $path
-     * @param string     $domain
+     * @param string $name
+     * @param string $value
+     * @param int|null|string $expire
+     * @param string $path
+     * @param string $domain
      * @param bool|false $secure
-     * @param bool|true  $httponly
+     * @param bool|true $httponly
      * @return self|mixed
      */
-    function with($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function with($name, $value = '', $expire = null,
+                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         $new = clone $this;
         $new->set($name, $value, $expire, $path, $domain, $secure, $httponly);
@@ -104,14 +107,14 @@ trait Cookies
     }
 
     /**
-     * @param string     $name
-     * @param string     $path
-     * @param string     $domain
-     * @param bool|false $secure
-     * @param bool|true  $httponly
+     * @param string      $name
+     * @param null|string $path
+     * @param null|string $domain
+     * @param bool|false  $secure
+     * @param bool|true   $httponly
      * @return self|mixed
      */
-    function without($name, $path = null, $domain = null, $secure = null, $httponly = null)
+    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         $new = clone $this;
         $new->remove($name, $path, $domain, $secure, $httponly);
