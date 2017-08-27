@@ -73,7 +73,7 @@ trait Generator
      * @param string $name
      * @return array|\Traversable|null
      */
-    protected function listeners($name)
+    protected function listeners(string $name)
     {
         return $this->events[$name] ?? Unresolvable::plugin($name);
     }
@@ -90,9 +90,9 @@ trait Generator
     }
 
     /**
-     * @param string $name
+     * @param $plugin
      * @param array $args
      * @return array|callable|null|object|string
      */
-    abstract function __invoke($name, array $args = []);
+    abstract function __invoke($plugin, array $args = []);
 }

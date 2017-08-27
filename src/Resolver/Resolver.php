@@ -55,7 +55,7 @@ trait Resolver
      * @param object $scope
      * @param bool $strict
      */
-    function __construct($config = null, callable $provider = null, $scope = null, $strict = false)
+    function __construct($config = null, callable $provider = null, $scope = null, bool $strict = false)
     {
         $config && $this->config = $config;
 
@@ -136,7 +136,7 @@ trait Resolver
      * @param $param
      * @return mixed
      */
-    protected function filter($value, $filters = [], array $args = [], $param = null)
+    protected function filter($value, $filters = [], array $args = [], string $param = null)
     {
         $result = $value;
 
@@ -172,75 +172,75 @@ trait Resolver
     }
 
     /**
-     * @param $config
+     * @param Gem $gem
      * @param array $args
      * @return mixed|callable
      */
-    protected function gem($config, array $args = [])
+    protected function gem(Gem $gem, array $args = [])
     {
-        if ($config instanceof Factory) {
-            return $this->invoke($this->child($config, $args));
+        if ($gem instanceof Factory) {
+            return $this->invoke($this->child($gem, $args));
         }
 
-        if ($config instanceof Calls) {
-            return $this->hydrate($config, $this->resolve($config->name(), $args));
+        if ($gem instanceof Calls) {
+            return $this->hydrate($gem, $this->resolve($gem->name(), $args));
         }
 
-        if ($config instanceof Child) {
-            return $this->child($config, $args);
+        if ($gem instanceof Child) {
+            return $this->child($gem, $args);
         }
 
-        if ($config instanceof Plugin) {
-            return $this->provide($config, $args);
+        if ($gem instanceof Plugin) {
+            return $this->provide($gem, $args);
         }
 
-        if ($config instanceof Shared) {
-            return $this->shared($config->name(), $config->config());
+        if ($gem instanceof Shared) {
+            return $this->shared($gem->name(), $gem->config());
         }
 
-        if ($config instanceof Param) {
-            return $this->resolve($this->param($config->name()), $args);
+        if ($gem instanceof Param) {
+            return $this->resolve($this->param($gem->name()), $args);
         }
 
-        if ($config instanceof Call) {
-            return $this->call($this->resolve($config->config()), $this->vars($args, $config->args()));
+        if ($gem instanceof Call) {
+            return $this->call($this->resolve($gem->config()), $this->vars($args, $gem->args()));
         }
 
-        if ($config instanceof Args) {
-            return $this->args($config->config());
+        if ($gem instanceof Args) {
+            return $this->args($gem->config());
         }
 
-        if ($config instanceof Config) {
+        if ($gem instanceof Config) {
             return $this->config();
         }
 
-        if ($config instanceof Link) {
+        if ($gem instanceof Link) {
             return $this;
         }
 
-        if ($config instanceof Filter) {
-            return $this->filterable($config, $this->vars($args, $config->args()));
+        if ($gem instanceof Filter) {
+            return $this->filterable($gem, $this->vars($args, $gem->args()));
         }
 
-        if ($config instanceof Plug) {
-            return $this->configured($config->name());
+        if ($gem instanceof Plug) {
+            return $this->configured($gem->name());
         }
 
-        if ($config instanceof Invoke) {
-            return function(...$argv) use ($config) {
+        if ($gem instanceof Invoke) {
+            return function(...$argv) use ($gem) {
                 return $this->call(
-                    $this->resolve($config->config()), $this->vars($this->variadic($argv), $config->args())
+                    $this->resolve($gem->config()), $this->vars($this->variadic($argv), $gem->args())
                 );
             };
         }
 
-        if ($config instanceof Invokable) {
-            return function(...$argv) use ($config) {
-                return $this->resolve($config->config(), $this->vars($this->variadic($argv), $config->args()));
+        if ($gem instanceof Invokable) {
+            return function(...$argv) use ($gem) {
+                return $this->resolve($gem->config(), $this->vars($this->variadic($argv), $gem->args()));
             };
         }
 
-        if ($config instanceof FileInclude) {
+        if ($gem instanceof FileInclude) {
             /** @var callable $include */
             $include = new class() {
                 function __invoke($file) {
@@ -248,36 +248,36 @@ trait Resolver
                 }
             };
 
-            return $include($this->resolve($config->config()));
+            return $include($this->resolve($gem->config()));
         }
 
-        if ($config instanceof Copy) {
-            return clone $this->resolve($config->config(), $args);
+        if ($gem instanceof Copy) {
+            return clone $this->resolve($gem->config(), $args);
         }
 
-        if ($config instanceof Value) {
-            return $config->config();
+        if ($gem instanceof Value) {
+            return $gem->config();
         }
 
-        if ($config instanceof Scoped) {
-            return $this->scoped($config->closure(), $config->scoped());
+        if ($gem instanceof Scoped) {
+            return $this->scoped($gem->closure(), $gem->scoped());
         }
 
-        if ($config instanceof Provide) {
-            return ($this->provider() ?: new Unresolvable)($config->config(), $this->vars($args, $config->args()));
+        if ($gem instanceof Provide) {
+            return ($this->provider() ?: new Unresolvable)($gem->config(), $this->vars($args, $gem->args()));
         }
 
-        return Unresolvable::plugin($config);
+        return Unresolvable::plugin($gem);
     }
 
     /**
-     * @param Plugin $config
+     * @param Plugin $plugin
      * @param object $service
      * @return object
      */
-    protected function hydrate(Plugin $config, $service)
+    protected function hydrate(Plugin $plugin, $service)
     {
-        foreach($config->calls() as $method => $args) {
+        foreach($plugin->calls() as $method => $args) {
             if (is_string($method)) {
                 if (Arg::INDEX == $method[0]) {
                     $service[substr($method, 1)] = $this->resolve($args);
@@ -295,7 +295,7 @@ trait Resolver
 
             if (is_array($args)) {
                 $method = array_shift($args);
-                $param  = $config->param();
+                $param  = $plugin->param();
 
                 if (is_string($method) && Arg::PROPERTY == $method[0]) {
                     $param  = substr($method, 1);
@@ -323,7 +323,7 @@ trait Resolver
      * @param array $config
      * @return Plugin
      */
-    protected function merge(Plugin $parent, Plugin $child, $name = null, array $config = [])
+    protected function merge(Plugin $parent, Plugin $child, string $name = null, array $config = [])
     {
         !$parent->name() &&
             $config[Arg::NAME] = $name ?? $this->resolve($child->name());
@@ -344,7 +344,7 @@ trait Resolver
      * @param string $name
      * @return mixed
      */
-    function param($name)
+    function param(string $name)
     {
         $name  = explode(Arg::CALL_SEPARATOR, $name);
         $value = $this->config()[array_shift($name)];
@@ -357,84 +357,84 @@ trait Resolver
     }
 
     /**
-     * @param $config
+     * @param $plugin
      * @return array|callable|Plugin|null|object|string
      */
-    protected function parent($config)
+    protected function parent(string $plugin)
     {
-        return $this->configured($this->resolve($config));
+        return $this->configured($this->resolve($plugin));
     }
 
     /**
-     * @param $config
+     * @param $plugin
      * @param array $args
      * @param callable|null $callback
      * @param null|string $previous
      * @return array|callable|null|object|string
      */
-    function plugin($config, array $args = [], callable $callback = null, $previous = null)
+    function plugin($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
-        if (!$config) {
-            return $config;
+        if (!$plugin) {
+            return $plugin;
         }
 
-        if (is_string($config)) {
-            return $this->build(explode(Arg::SERVICE_SEPARATOR, $config), $args, $callback);
+        if (is_string($plugin)) {
+            return $this->build(explode(Arg::SERVICE_SEPARATOR, $plugin), $args, $callback);
         }
 
-        if (is_array($config)) {
-            return $this->pluginArray(array_shift($config), $args + $this->args($config), $callback, $previous);
+        if (is_array($plugin)) {
+            return $this->pluginArray(array_shift($plugin), $args + $this->args($plugin), $callback, $previous);
         }
 
-        if ($config instanceof \Closure) {
-            return $this->invoke($this->scoped($config), $args);
+        if ($plugin instanceof \Closure) {
+            return $this->invoke($this->scoped($plugin), $args);
         }
 
-        return $this->resolve($config, $args);
+        return $this->resolve($plugin, $args);
     }
 
     /**
-     * @param $config
+     * @param $plugin
      * @param array $args
      * @param callable|null $callback
      * @param null|string $previous
      * @return array|callable|null|object|string
      */
-    protected function pluginArray($config, array $args = [], callable $callback = null, $previous = null)
+    protected function pluginArray($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
-        return $previous && $previous === $config ?
-            $this->callback($config, true, $args, $callback) : $this->plugin($config, $args, $callback);
+        return $previous && $previous === $plugin ?
+            $this->callback($plugin, true, $args, $callback) : $this->plugin($plugin, $args, $callback);
     }
 
     /**
-     * @param Plugin $config
+     * @param Plugin $plugin
      * @param array $args
      * @return callable|null|object
      */
-    protected function provide(Plugin $config, array $args = [])
+    protected function provide(Plugin $plugin, array $args = [])
     {
-        $name   = $this->resolve($config->name());
+        $name   = $this->resolve($plugin->name());
         $parent = $this->configured($name);
 
-        $args && is_string(key($args)) && $config->args() && $args += $this->args($config->args());
+        $args && is_string(key($args)) && $plugin->args() && $args += $this->args($plugin->args());
 
-        !$args && $args = $this->args($config->args());
+        !$args && $args = $this->args($plugin->args());
 
         if (!$parent) {
-            return $this->hydrate($config, $this->combine(explode(Arg::SERVICE_SEPARATOR, $name), $args));
+            return $this->hydrate($plugin, $this->combine(explode(Arg::SERVICE_SEPARATOR, $name), $args));
         }
 
         if (!$parent instanceof Plugin) {
             return $this->hydrate(
-                $config, $name === $parent ? $this->make($name, $args) : $this->plugin($this->resolve($parent), $args)
+                $plugin, $name === $parent ? $this->make($name, $args) : $this->plugin($this->resolve($parent), $args)
             );
         }
 
         if ($name === $parent->name()) {
-            return $this->hydrate($config, $this->make($name, $args));
+            return $this->hydrate($plugin, $this->make($name, $args));
         }
 
-        return $this->provide($this->merge($parent, $config, $name), $args);
+        return $this->provide($this->merge($parent, $plugin, $name), $args);
     }
 
     /**
@@ -446,38 +446,38 @@ trait Resolver
     }
 
     /**
-     * @param $config
+     * @param $plugin
      * @param array $args
      * @param callable $callback
      * @param int $c
      * @return array|callable|Plugin|null|object|Resolvable|string
      */
-    protected function resolvable($config, array $args = [], callable $callback = null, $c = 0)
+    protected function resolvable($plugin, array $args = [], callable $callback = null, int $c = 0)
     {
-        return !$config instanceof Resolvable ? $config : (
-            $c > Arg::MAX_RECURSION ? Unresolvable::plugin($config) :
-                $this->resolvable($this->solve($config, $args, $callback), $args, $callback, ++$c)
+        return !$plugin instanceof Resolvable ? $plugin : (
+            $c > Arg::MAX_RECURSION ? Unresolvable::plugin($plugin) :
+                $this->resolvable($this->solve($plugin, $args, $callback), $args, $callback, ++$c)
         );
     }
 
     /**
-     * @param $config
+     * @param $plugin
      * @param array $args
      * @return array|callable|Plugin|null|object|Resolvable|string
      */
-    protected function resolve($config, array $args = [])
+    protected function resolve($plugin, array $args = [])
     {
-        return $this->resolvable($config, $args);
+        return $this->resolvable($plugin, $args);
     }
 
     /**
-     * @param $config
+     * @param $plugin
      * @param array $args
      * @return callable|mixed|null|object
      */
-    protected function resolver($config, array $args = [])
+    protected function resolver($plugin, array $args = [])
     {
-        return $this->call($this->provider() ?: Arg::SERVICE_RESOLVER, [$config, $args]);
+        return $this->call($this->provider() ?: Arg::SERVICE_RESOLVER, [$plugin, $args]);
     }
 
     /**
@@ -494,21 +494,21 @@ trait Resolver
      * @param bool $scoped
      * @return \Closure
      */
-    protected function scoped(\Closure $callback, $scoped = false)
+    protected function scoped(\Closure $callback, bool $scoped = false)
     {
         return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope, $scoped) : $callback;
     }
 
     /**
-     * @param $config
+     * @param $plugin
      * @param array $args
      * @param callable $callback
      * @return mixed|callable
      */
-    protected function solve($config, array $args = [], callable $callback = null)
+    protected function solve($plugin, array $args = [], callable $callback = null)
     {
-        return $config instanceof Gem ? $this->gem($config, $args) : (
-            $callback ? $callback($config, $args) : $this->resolver($config, $args)
+        return $plugin instanceof Gem ? $this->gem($plugin, $args) : (
+            $callback ? $callback($plugin, $args) : $this->resolver($plugin, $args)
         );
     }
 
@@ -586,12 +586,12 @@ trait Resolver
     }
 
     /**
-     * @param $name
+     * @param $plugin
      * @param array $args
      * @return array|callable|null|object|string
      */
-    function __invoke($name, array $args = [])
+    function __invoke($plugin, array $args = [])
     {
-        return $this->plugin($name, $args, $this->provider() ?? function(){});
+        return $this->plugin($plugin, $args, $this->provider() ?? function(){});
     }
 }

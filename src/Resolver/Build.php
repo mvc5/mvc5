@@ -17,14 +17,14 @@ trait Build
     protected $strict = false;
 
     /**
-     * @param array $config
+     * @param array $name
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    protected function build(array $config, array $args = [], callable $callback = null)
+    protected function build(array $name, array $args = [], callable $callback = null)
     {
-        return $this->compose($this->create(array_shift($config), $args, $callback), $config, $args, $callback);
+        return $this->compose($this->create(array_shift($name), $args, $callback), $name, $args, $callback);
     }
 
     /**
@@ -34,7 +34,7 @@ trait Build
      * @param callable|null $callback
      * @return callable|object
      */
-    protected function callback($name, $config = null, array $args = [], callable $callback = null)
+    protected function callback(string $name, $config = null, array $args = [], callable $callback = null)
     {
         return $callback && !class_exists($name) ? $callback($name) : (
             $config || !$this->strict || $this->configured($name) ? $this->make($name, $args) : null
@@ -42,38 +42,38 @@ trait Build
     }
 
     /**
-     * @param array $config
+     * @param array $name
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    protected function combine(array $config, array $args = [], callable $callback = null)
+    protected function combine(array $name, array $args = [], callable $callback = null)
     {
-        return $this->compose($this->first(array_shift($config), $config, $args, $callback), $config, $args, $callback);
+        return $this->compose($this->first(array_shift($name), $name, $args, $callback), $name, $args, $callback);
     }
 
     /**
      * @param $plugin
-     * @param array $config
+     * @param array $name
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    protected function compose($plugin, array $config = [], array $args = [], callable $callback = null)
+    protected function compose($plugin, array $name = [], array $args = [], callable $callback = null)
     {
-        return !$config ? $plugin : $this->compose(
-            $this->composite($plugin, array_shift($config), $args, $callback), $config, $args, $callback
+        return !$name ? $plugin : $this->compose(
+            $this->composite($plugin, array_shift($name), $args, $callback), $name, $args, $callback
         );
     }
 
     /**
      * @param $plugin
-     * @param $name
+     * @param string $name
      * @param array $args
      * @param callable|null $callback
      * @return array|callable|null|object|string
      */
-    protected function composite($plugin, $name, array $args = [], callable $callback = null)
+    protected function composite($plugin, string $name, array $args = [], callable $callback = null)
     {
         return $plugin instanceof Manager ? $plugin->plugin($name, $args, $callback) : (
             $plugin instanceof Container ? $this->plugin($plugin[$name], $args, $callback) :
@@ -82,26 +82,26 @@ trait Build
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    protected function create($name, array $args = [], callable $callback = null)
+    protected function create(string $name, array $args = [], callable $callback = null)
     {
         return $this->unique($name, $this->configured($name), $args, $callback);
     }
 
     /**
-     * @param $name
-     * @param array $config
+     * @param string $plugin
+     * @param array $name
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    protected function first($name, array $config, array $args = [], callable $callback = null)
+    protected function first(string $plugin, array $name, array $args = [], callable $callback = null)
     {
-        return !$config ? $this->callback($name, null, $args, $callback) : $this->create($name, $args, $callback);
+        return !$name ? $this->callback($plugin, null, $args, $callback) : $this->create($plugin, $args, $callback);
     }
 
     /**
@@ -109,28 +109,28 @@ trait Build
      * @param array $args
      * @return callable|object
      */
-    protected function make($name, array $args = [])
+    protected function make(string $name, array $args = [])
     {
         return Builder::create($name, $args, $this);
     }
 
     /**
      * @param $name
-     * @param $config
+     * @param $plugin
      * @param array $args
      * @param callable $callback
      * @return callable|object
      */
-    protected function unique($name, $config, array $args = [], callable $callback = null)
+    protected function unique(string $name, $plugin, array $args = [], callable $callback = null)
     {
-        return $config && $name !== $config ?
-            $this->plugin($config, $args, $callback, $name) : $this->callback($name, $config, $args, $callback);
+        return $plugin && $name !== $plugin ?
+            $this->plugin($plugin, $args, $callback, $name) : $this->callback($name, $plugin, $args, $callback);
     }
 
     /**
-     * @param string $name
+     * @param $plugin
      * @param array $args
      * @return array|callable|null|object|string
      */
-    abstract function __invoke($name, array $args = []);
+    abstract function __invoke($plugin, array $args = []);
 }

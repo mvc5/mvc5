@@ -13,116 +13,116 @@ use Mvc5\Signal;
 trait Service
 {
     /**
-     * @param array|callable|object|string $config
+     * @param array|callable|object|string $plugin
      * @param array $args
      * @param callable $callback
      * @return callable|mixed|null|object
      */
-    function call($config, array $args = [], callable $callback = null)
+    function call($plugin, array $args = [], callable $callback = null)
     {
-        if (is_string($config)) {
-            return $this->transmit(explode(Arg::CALL_SEPARATOR, $config), $args, $callback);
+        if (is_string($plugin)) {
+            return $this->transmit(explode(Arg::CALL_SEPARATOR, $plugin), $args, $callback);
         }
 
-        if ($config instanceof Event) {
-            return $this->event($config, $args, $callback);
+        if ($plugin instanceof Event) {
+            return $this->event($plugin, $args, $callback);
         }
 
-        return $this->invoke($config instanceof Resolvable ? $this->resolve($config) : $config, $args, $callback);
+        return $this->invoke($plugin instanceof Resolvable ? $this->resolve($plugin) : $plugin, $args, $callback);
     }
 
     /**
-     * @param array|callable|object|string $config
+     * @param array|callable|object|string $plugin
      * @return callable|null
      */
-    protected function callable($config) : callable
+    protected function callable($plugin) : callable
     {
-        if (is_string($config)) {
-            return function(...$argv) use($config) {
-                return $this->call($config, $this->variadic($argv));
+        if (is_string($plugin)) {
+            return function(...$argv) use($plugin) {
+                return $this->call($plugin, $this->variadic($argv));
             };
         }
 
-        if (is_array($config)) {
-            return is_string($config[0]) ? $config : [$this->resolve($config[0]), $config[1]];
+        if (is_array($plugin)) {
+            return is_string($plugin[0]) ? $plugin : [$this->resolve($plugin[0]), $plugin[1]];
         }
 
-        return $config instanceof \Closure ? $config : $this->listener($this->resolve($config));
+        return $plugin instanceof \Closure ? $plugin : $this->listener($this->resolve($plugin));
     }
 
     /**
      * @param string $name
      * @return callable|mixed|object
      */
-    protected function fallback($name)
+    protected function fallback(string $name)
     {
         return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?: Unresolvable::plugin($name);
     }
 
     /**
-     * @param string $name
+     * @param callable|object|string $plugin
      * @return callable|null
      */
-    protected function invokable($name)
+    protected function invokable($plugin)
     {
-        return Arg::CALL === $name[0] ? substr($name, 1) :
-            $this->listener($this->plugin($name, [], $this) ?: $this->fallback($name));
+        return Arg::CALL === $plugin[0] ? substr($plugin, 1) :
+            $this->listener($this->plugin($plugin, [], $this) ?: $this->fallback($plugin));
     }
 
     /**
-     * @param array|callable|object|string $config
+     * @param array|callable|object|string $plugin
      * @param array $args
      * @param callable $callback
      * @return array|callable|object|string
      */
-    protected function invoke($config, array $args = [], callable $callback = null)
+    protected function invoke($plugin, array $args = [], callable $callback = null)
     {
-        return Signal::emit($config, $args, $callback ?? $this);
+        return Signal::emit($plugin, $args, $callback ?? $this);
     }
 
     /**
      * @param $plugin
-     * @param array $config
+     * @param array $name
      * @param array $args
      * @param callable|null $callback
      * @return array|callable|object|string
      */
-    protected function relay($plugin, array $config = [], array $args = [], callable $callback = null)
+    protected function relay($plugin, array $name = [], array $args = [], callable $callback = null)
     {
-        return !$config ? $this->invoke($plugin, $args, $callback) :
-            $this->repeat($plugin, array_shift($config), $config, $args, $callback);
+        return !$name ? $this->invoke($plugin, $args, $callback) :
+            $this->repeat($plugin, array_shift($name), $name, $args, $callback);
     }
 
     /**
      * @param $plugin
-     * @param $name
-     * @param array $config
+     * @param string $method
+     * @param array $name
      * @param array $args
      * @param callable|null $callback
      * @return array|callable|object|string
      */
-    protected function repeat($plugin, $name, array $config = [], array $args = [], callable $callback = null)
+    protected function repeat($plugin, string $method, array $name = [], array $args = [], callable $callback = null)
     {
-        return !$config ? $this->invoke([$plugin, $name], $args, $callback) : $this->repeat(
-            $this->invoke([$plugin, $name], $args, $callback), array_shift($config), $config, $args, $callback
+        return !$name ? $this->invoke([$plugin, $method], $args, $callback) : $this->repeat(
+            $this->invoke([$plugin, $method], $args, $callback), array_shift($name), $name, $args, $callback
         );
     }
 
     /**
-     * @param array $config
+     * @param string[] $name
      * @param array $args
      * @param callable|null $callback
      * @return array|callable|object|string
      */
-    protected function transmit(array $config = [], array $args = [], callable $callback = null)
+    protected function transmit(array $name, array $args = [], callable $callback = null)
     {
-        return $this->relay($this->invokable(array_shift($config)), $config, $args, $callback);
+        return $this->relay($this->invokable(array_shift($name)), $name, $args, $callback);
     }
 
     /**
-     * @param $name
+     * @param $plugin
      * @param array $args
      * @return array|callable|null|object|string
      */
-    abstract function __invoke($name, array $args = []);
+    abstract function __invoke($plugin, array $args = []);
 }

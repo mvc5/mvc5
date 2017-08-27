@@ -34,7 +34,7 @@ trait Container
      * @param string $name
      * @return array|callable|null|object|string
      */
-    protected function configured($name)
+    protected function configured(string $name)
     {
         return $this->services[$name] ?? null;
     }
@@ -147,7 +147,7 @@ trait Container
      * @param callable|null|object $service
      * @return callable|null|object
      */
-    protected function share($name, $service = null)
+    protected function share(string $name, $service = null)
     {
         null !== $service
             && $this->set($name, $service);
@@ -157,19 +157,19 @@ trait Container
 
     /**
      * @param string $name
-     * @param null $config
+     * @param null $plugin
      * @return callable|mixed|null|object
      */
-    function shared($name, $config = null)
+    function shared(string $name, $plugin = null)
     {
-        return $this->stored($name) ?? $this->share($name, $this->plugin($config ?? $name));
+        return $this->stored($name) ?? $this->share($name, $this->plugin($plugin ?? $name));
     }
 
     /**
      * @param string $name
      * @return mixed
      */
-    protected function stored($name)
+    protected function stored(string $name)
     {
         return $this->container[$name] ?? null;
     }
@@ -183,9 +183,9 @@ trait Container
     }
 
     /**
-     * @param $name
+     * @param $plugin
      * @param array $args
      * @return array|callable|null|object|string
      */
-    abstract function __invoke($name, array $args = []);
+    abstract function __invoke($plugin, array $args = []);
 }
