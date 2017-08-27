@@ -46,7 +46,7 @@ trait TemplateModel
      * @param string $template
      * @return mixed|static
      */
-    function withTemplate($template)
+    function withTemplate(string $template)
     {
         return $this->with(Arg::TEMPLATE_MODEL, $template);
     }
