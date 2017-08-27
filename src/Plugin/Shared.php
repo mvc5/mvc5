@@ -15,10 +15,10 @@ class Shared
     use Config\Name;
 
     /**
-     * @param $name
-     * @param null $config
+     * @param string $name
+     * @param $config
      */
-    function __construct($name, $config = null)
+    function __construct(string $name, $config = null)
     {
         $this->config = $config;
         $this->name   = $name;

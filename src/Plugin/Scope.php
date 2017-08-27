@@ -15,10 +15,10 @@ class Scope
     extends Call
 {
     /**
-     * @param $name
+     * @param string $name
      * @param array $args
      */
-    function __construct($name, array $args)
+    function __construct(string $name, array $args)
     {
         parent::__construct([$this, 'scope'], [$name, new Link, new Args($args)]);
     }
@@ -29,7 +29,7 @@ class Scope
      * @param array $args
      * @return callable|null|object
      */
-    function scope($name, Service $service, array $args)
+    function scope(string $name, Service $service, array $args)
     {
         $plugin = $service->plugin($name, $args);
 

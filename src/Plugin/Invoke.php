@@ -15,7 +15,7 @@ class Invoke
     use Config\Config;
 
     /**
-     * @param string|array $config
+     * @param $config
      * @param array $args
      */
     function __construct($config, array $args = [])

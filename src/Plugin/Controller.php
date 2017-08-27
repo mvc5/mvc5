@@ -16,11 +16,11 @@ class Controller
     use Config\Child;
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param array $args
      * @param array $calls
      */
-    function __construct($name, array $args = [], array $calls = [])
+    function __construct(string $name = null, array $args = [], array $calls = [])
     {
         $this->config = [
             Arg::ARGS   => $args,

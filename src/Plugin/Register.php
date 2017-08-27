@@ -6,7 +6,6 @@
 namespace Mvc5\Plugin;
 
 use Mvc5\Arg;
-use Mvc5\Resolvable;
 use Mvc5\Service\Service;
 
 class Register
@@ -14,10 +13,10 @@ class Register
 {
     /**
      * @param string $name
-     * @param string $service
-     * @param mixed|null|Resolvable $plugin
+     * @param mixed $service
+     * @param $plugin
      */
-    function __construct($name, $service, $plugin = null)
+    function __construct(string $name, $service, $plugin = null)
     {
         parent::__construct(
             [$this, 'register'], [new Link, [Arg::NAME => $name, Arg::SERVICE => $service, Arg::PLUGIN => $plugin]]

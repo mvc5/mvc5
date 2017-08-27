@@ -9,11 +9,11 @@ class ScopedCall
     extends Call
 {
     /**
-     * @param $config
+     * @param callable $callable
      * @param array $args
      */
-    function __construct($config, array $args = [])
+    function __construct(callable $callable, array $args = [])
     {
-        parent::__construct(new Scoped($config), $args);
+        parent::__construct(new Scoped($callable), $args);
     }
 }

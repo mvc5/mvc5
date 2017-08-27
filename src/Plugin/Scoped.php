@@ -22,7 +22,7 @@ class Scoped
      * @param $callable
      * @param bool|true $scoped
      */
-    function __construct(callable $callable, $scoped = true)
+    function __construct(callable $callable, bool $scoped = true)
     {
         $this->callable = $callable;
         $this->scoped = $scoped;
@@ -33,7 +33,7 @@ class Scoped
      */
     function closure()
     {
-        return $this->fromCallable($this->callable);
+        return ($this->callable)();
     }
 
     /**
@@ -42,14 +42,5 @@ class Scoped
     function scoped()
     {
         return $this->scoped;
-    }
-
-    /**
-     * @param callable $callable
-     * @return \Closure
-     */
-    protected function fromCallable($callable)
-    {
-        return $callable();
     }
 }

@@ -17,8 +17,8 @@ class Plugins
 
     /**
      * @param array|\ArrayAccess $services
-     * @param $provider
-     * @param $scope
+     * @param object|bool $provider
+     * @param object|bool $scope
      * @param array $calls
      */
     function __construct($services = [], $provider = true, $scope = true, array $calls = [])

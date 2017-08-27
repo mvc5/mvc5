@@ -10,12 +10,12 @@ trait Args
     /**
      * @var array
      */
-    protected $args;
+    protected $args = [];
 
     /**
      * @param $args
      */
-    function __construct($args)
+    function __construct(array $args)
     {
         $this->args = $args;
     }

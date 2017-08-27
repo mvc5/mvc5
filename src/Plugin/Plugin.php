@@ -16,19 +16,19 @@ class Plugin
     use Config\Plugin;
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param array $args
      * @param array $calls
-     * @param string $param
+     * @param null|string $param
      * @param bool|false $merge
      */
-    function __construct($name = null, array $args = [], array $calls = [], $param = Arg::ITEM, $merge = false)
+    function __construct(string $name = null, array $args = [], array $calls = [], string $param = null, bool $merge = false)
     {
         $this->config = [
             Arg::ARGS  => $args,
             Arg::CALLS => $calls,
             Arg::NAME  => $name,
-            Arg::PARAM => $param ? $param : Arg::ITEM,
+            Arg::PARAM => $param ?? Arg::ITEM,
             Arg::MERGE => $merge
         ];
     }

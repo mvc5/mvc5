@@ -16,9 +16,9 @@ class Factory
     use Config\Child;
 
     /**
-     * @param string $name
+     * @param null|string $name
      */
-    function __construct($name)
+    function __construct(string $name = null)
     {
         $this->config = [
             Arg::NAME   => $name,

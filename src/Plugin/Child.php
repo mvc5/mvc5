@@ -16,11 +16,11 @@ class Child
     use Config\Child;
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param string $parent
      * @param array $args
      */
-    function __construct($name, $parent, array $args = [])
+    function __construct(string $name = null, string $parent, array $args = [])
     {
         $this->config = [
             Arg::ARGS   => $args,

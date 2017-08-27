@@ -15,7 +15,7 @@ trait Name
     /**
      * @param string $name
      */
-    function __construct($name)
+    function __construct(string $name)
     {
         $this->name = $name;
     }
