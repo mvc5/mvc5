@@ -47,8 +47,14 @@ final class Builder
         $params  = $class->params();
 
         foreach($params as $param) {
+            if ($param->isVariadic()) {
+                $matched = array_merge($matched, array_values($args));
+                break;
+            }
+
             if (array_key_exists($param->name, $args)) {
                 $matched[] = $args[$param->name];
+                unset($args[$param->name]);
                 continue;
             }
 
