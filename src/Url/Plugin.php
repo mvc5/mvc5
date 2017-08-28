@@ -114,7 +114,7 @@ class Plugin
      * @param array $options
      * @return Uri
      */
-    protected function generate($name, $params, $options)
+    protected function generate(string $name, array $params, array $options)
     {
         return $name[0] === Arg::SEPARATOR ? null : ($this->generator)($name, $this->params($name, $params), $options);
     }
@@ -124,7 +124,7 @@ class Plugin
      * @param string $name
      * @return array
      */
-    protected function match($pos, $name)
+    protected function match($pos, string $name)
     {
         return !$pos ? [] : $this->params[$name = substr($name, 0, $pos)] ??
             $this->match(strrpos($name, Arg::SEPARATOR), $name);
@@ -168,7 +168,7 @@ class Plugin
      * @param array $params
      * @return array
      */
-    protected function params($name, array $params)
+    protected function params(string $name, array $params)
     {
         return $params + ($this->params[$name] ?? $this->match(strrpos($name, Arg::SEPARATOR), $name));
     }
