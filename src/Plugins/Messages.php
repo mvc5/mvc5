@@ -13,7 +13,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function danger($message, $name = Arg::INDEX)
+    protected function danger($message, string $name = Arg::INDEX)
     {
         $this->messages()->danger($message, $name);
     }
@@ -22,7 +22,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function info($message, $name = Arg::INDEX)
+    protected function info($message, string $name = Arg::INDEX)
     {
         $this->messages()->info($message, $name);
     }
@@ -31,7 +31,7 @@ trait Messages
      * @param string $name
      * @return array
      */
-    protected function message($name = Arg::INDEX)
+    protected function message(string $name = Arg::INDEX)
     {
         return $this->messages()->message($name);
     }
@@ -48,7 +48,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function success($message, $name = Arg::INDEX)
+    protected function success($message, string $name = Arg::INDEX)
     {
         $this->messages()->success($message, $name);
     }
@@ -57,7 +57,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function warning($message, $name = Arg::INDEX)
+    protected function warning($message, string $name = Arg::INDEX)
     {
         $this->messages()->warning($message, $name);
     }

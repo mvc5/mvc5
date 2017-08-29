@@ -10,16 +10,16 @@ use Mvc5\Signal;
 trait Generator
 {
     /**
-     * @param array|callable|object|string $config
-     * @return callable|null
+     * @param mixed $listener
+     * @return callable
      */
-    protected abstract function callable($config) : callable;
+    protected abstract function callable($listener) : callable;
 
     /**
-     * @param callable|Event|string $event
+     * @param array|Event|\Iterator|object|string $event
      * @param callable $listener
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     protected function emit($event, callable $listener, array $args = [], callable $callback = null)
@@ -28,10 +28,10 @@ trait Generator
     }
 
     /**
-     * @param array|string|\Iterator $event
+     * @param array|Event|\Iterator|object|string $event
      * @param array $args
-     * @param callable $callback
-     * @return mixed|null
+     * @param callable|null $callback
+     * @return mixed
      */
     protected function generate($event, array $args = [], callable $callback = null)
     {
@@ -39,15 +39,15 @@ trait Generator
     }
 
     /**
-     * @param $event
-     * @param $queue
-     * @param $args
-     * @param $callback
-     * @param $result
-     * @param $current
-     * @return null
+     * @param array|Event|\Iterator|object|string $event
+     * @param array|\Iterator $queue
+     * @param array $args
+     * @param callable $callback
+     * @param mixed $result
+     * @param callable $current
+     * @return mixed
      */
-    protected function iterate($event, $queue, $args, $callback, $result, callable $current)
+    protected function iterate($event, $queue, array $args, callable $callback, $result, callable $current)
     {
         return $this->stopped($event, $queue) ? $result : $this->loop(
             $event, $queue, $args, $callback, $this->result($event, $current($queue), $args, $callback, $result)
@@ -55,14 +55,14 @@ trait Generator
     }
 
     /**
-     * @param $event
-     * @param $queue
-     * @param $args
-     * @param $callback
-     * @param $result
-     * @return null
+     * @param array|Event|\Iterator|object|string $event
+     * @param array|\Iterator $queue
+     * @param array $args
+     * @param callable $callback
+     * @param mixed $result
+     * @return mixed
      */
-    protected function loop($event, &$queue, $args, $callback, $result)
+    protected function loop($event, &$queue, array $args, callable $callback, $result)
     {
         return $this->iterate($event, $queue, $args, $callback, $result, function(&$queue) {
             if ($queue instanceof \Iterator) {
@@ -75,7 +75,7 @@ trait Generator
     }
 
     /**
-     * @param array|Event|object|string|\Iterator $event
+     * @param array|Event|\Iterator|object|string $event
      * @param array $args
      * @return array|\Iterator
      */
@@ -85,8 +85,8 @@ trait Generator
     }
 
     /**
-     * @param array|Event|object|\Iterator $event
-     * @param $listener
+     * @param array|Event|\Iterator|object|string $event
+     * @param mixed $listener
      * @param array $args
      * @param callable $callback
      * @param $result
@@ -119,7 +119,7 @@ trait Generator
     }
 
     /**
-     * @param $event
+     * @param Event|mixed $event
      * @param array|\Iterator $queue
      * @return bool
      */
@@ -130,13 +130,13 @@ trait Generator
     }
 
     /**
-     * @param $event
-     * @param $queue
-     * @param $args
-     * @param $callback
+     * @param array|Event|\Iterator|object|string $event
+     * @param array|\Iterator $queue
+     * @param array $args
+     * @param callable $callback
      * @return null
      */
-    protected function traverse($event, $queue, $args, $callback)
+    protected function traverse($event, $queue, array $args, callable $callback)
     {
         return $this->iterate($event, $this->start($queue), $args, $callback, null, function(&$queue) {
             return $queue instanceof \Iterator ? $queue->current() : current($queue);

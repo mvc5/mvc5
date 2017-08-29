@@ -20,7 +20,7 @@ trait Build
      * @param array $name
      * @param array $args
      * @param callable $callback
-     * @return callable|object
+     * @return mixed
      */
     protected function build(array $name, array $args = [], callable $callback = null)
     {
@@ -28,11 +28,11 @@ trait Build
     }
 
     /**
-     * @param $name
-     * @param $config
+     * @param string $name
+     * @param mixed $config
      * @param array $args
      * @param callable|null $callback
-     * @return callable|object
+     * @return mixed
      */
     protected function callback(string $name, $config = null, array $args = [], callable $callback = null)
     {
@@ -45,7 +45,7 @@ trait Build
      * @param array $name
      * @param array $args
      * @param callable $callback
-     * @return callable|object
+     * @return mixed
      */
     protected function combine(array $name, array $args = [], callable $callback = null)
     {
@@ -53,11 +53,11 @@ trait Build
     }
 
     /**
-     * @param $plugin
+     * @param mixed $plugin
      * @param array $name
      * @param array $args
-     * @param callable $callback
-     * @return callable|object
+     * @param callable|null $callback
+     * @return mixed
      */
     protected function compose($plugin, array $name = [], array $args = [], callable $callback = null)
     {
@@ -67,11 +67,11 @@ trait Build
     }
 
     /**
-     * @param $plugin
+     * @param mixed $plugin
      * @param string $name
      * @param array $args
      * @param callable|null $callback
-     * @return array|callable|null|object|string
+     * @return mixed
      */
     protected function composite($plugin, string $name, array $args = [], callable $callback = null)
     {
@@ -85,7 +85,7 @@ trait Build
      * @param string $name
      * @param array $args
      * @param callable $callback
-     * @return callable|object
+     * @return mixed
      */
     protected function create(string $name, array $args = [], callable $callback = null)
     {
@@ -97,7 +97,7 @@ trait Build
      * @param array $name
      * @param array $args
      * @param callable $callback
-     * @return callable|object
+     * @return mixed
      */
     protected function first(string $plugin, array $name, array $args = [], callable $callback = null)
     {
@@ -107,7 +107,7 @@ trait Build
     /**
      * @param string $name
      * @param array $args
-     * @return callable|object
+     * @return mixed
      */
     protected function make(string $name, array $args = [])
     {
@@ -115,11 +115,11 @@ trait Build
     }
 
     /**
-     * @param $name
-     * @param $plugin
+     * @param string $name
+     * @param mixed $plugin
      * @param array $args
-     * @param callable $callback
-     * @return callable|object
+     * @param callable|null $callback
+     * @return mixed
      */
     protected function unique(string $name, $plugin, array $args = [], callable $callback = null)
     {
@@ -128,9 +128,9 @@ trait Build
     }
 
     /**
-     * @param $plugin
+     * @param mixed $plugin
      * @param array $args
-     * @return array|callable|null|object|string
+     * @return mixed
      */
     abstract function __invoke($plugin, array $args = []);
 }

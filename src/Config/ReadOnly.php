@@ -16,9 +16,9 @@ trait ReadOnly
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @param mixed $value
-     * @return mixed $value
+     * @return void
      * @throws \Exception
      */
     function offsetSet($name, $value)
@@ -27,7 +27,8 @@ trait ReadOnly
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
+     * @return void
      * @throws \Exception
      */
     function offsetUnset($name)
@@ -36,9 +37,9 @@ trait ReadOnly
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @param mixed $value
-     * @return mixed
+     * @return void
      * @throws \Exception
      */
     function __set($name, $value)
@@ -47,7 +48,8 @@ trait ReadOnly
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
+     * @return void
      * @throws \Exception
      */
     function __unset($name)

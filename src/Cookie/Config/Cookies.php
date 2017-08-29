@@ -41,8 +41,8 @@ trait Cookies
      * @param int|null|string $expire
      * @param string $path
      * @param string $domain
-     * @param bool $secure
-     * @param bool $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return array
      */
     protected function cookie($name, $value, $expire = null,
@@ -51,7 +51,7 @@ trait Cookies
         return [
             Arg::NAME      => (string) $name,
             Arg::VALUE     => (string) $value,
-            Arg::EXPIRE    => (int) (is_string($expire = $expire ?? $this->defaults[Arg::EXPIRE]) ? strtotime($expire) : $expire),
+            Arg::EXPIRE    => (int) (is_string($expire ?? $expire = $this->defaults[Arg::EXPIRE]) ? strtotime($expire) : $expire),
             Arg::PATH      => $path ?? $this->defaults[Arg::PATH],
             Arg::DOMAIN    => $domain ?? $this->defaults[Arg::DOMAIN],
             Arg::SECURE    => $secure ?? $this->defaults[Arg::SECURE],
@@ -63,8 +63,8 @@ trait Cookies
      * @param string $name
      * @param null|string $path
      * @param null|string $domain
-     * @param bool|false  $secure
-     * @param bool|true $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      */
     function remove($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
@@ -77,8 +77,8 @@ trait Cookies
      * @param int|null|string $expire
      * @param null|string $path
      * @param null|string $domain
-     * @param bool|false $secure
-     * @param bool|true $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return mixed
      */
     function set($name, $value = '', $expire = null,
@@ -94,8 +94,8 @@ trait Cookies
      * @param int|null|string $expire
      * @param string $path
      * @param string $domain
-     * @param bool|false $secure
-     * @param bool|true $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return self|mixed
      */
     function with($name, $value = '', $expire = null,
@@ -107,11 +107,11 @@ trait Cookies
     }
 
     /**
-     * @param string      $name
+     * @param string $name
      * @param null|string $path
      * @param null|string $domain
-     * @param bool|false  $secure
-     * @param bool|true   $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return self|mixed
      */
     function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)

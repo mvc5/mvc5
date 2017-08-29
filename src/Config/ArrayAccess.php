@@ -8,7 +8,7 @@ namespace Mvc5\Config;
 trait ArrayAccess
 {
     /**
-     * @param mixed $name
+     * @param string $name
      * @return bool
      */
     function offsetExists($name)
@@ -17,7 +17,7 @@ trait ArrayAccess
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return mixed
      */
     function offsetGet($name)
@@ -26,9 +26,9 @@ trait ArrayAccess
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @param mixed $value
-     * @return mixed $value
+     * @return mixed
      */
     function offsetSet($name, $value)
     {
@@ -36,7 +36,7 @@ trait ArrayAccess
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
     function offsetUnset($name)
     {

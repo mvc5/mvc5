@@ -8,8 +8,8 @@ namespace Mvc5\Config;
 interface Scope
 {
     /**
-     * @param null|object $scope
-     * @return null|object
+     * @param bool|null|object $scope
+     * @return bool|null|object
      */
     function scope($scope = null);
 }

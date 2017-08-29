@@ -21,7 +21,7 @@ class Host
     /**
      * @param Route $route
      * @param Request $request
-     * @param $host
+     * @param array|string $host
      * @param callable $next
      * @return NotFound|null|Request
      */
@@ -55,7 +55,7 @@ class Host
     }
 
     /**
-     * @param $route
+     * @param Route $route
      * @param Request $request
      * @param array $host
      * @param callable $next

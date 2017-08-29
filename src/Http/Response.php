@@ -31,7 +31,7 @@ interface Response
     function status();
 
     /**
-     * @return int
+     * @return string
      */
     function version();
 }

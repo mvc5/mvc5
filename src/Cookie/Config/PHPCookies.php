@@ -28,8 +28,8 @@ trait PHPCookies
      * @param int|null|string $expire
      * @param null|string $path
      * @param null|string $domain
-     * @param bool|false $secure
-     * @param bool|true $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return mixed
      */
     function set($name, $value = '', $expire = null,
@@ -45,8 +45,8 @@ trait PHPCookies
      * @param int|null|string $expire
      * @param null|string $path
      * @param null|string $domain
-     * @param bool|false $secure
-     * @param bool|true $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return self|mixed
      */
     function with($name, $value = '', $expire = null,
@@ -60,8 +60,8 @@ trait PHPCookies
      * @param string $name
      * @param null|string $path
      * @param null|string $domain
-     * @param bool|false $secure
-     * @param bool|true $httponly
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return self|mixed
      */
     function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)

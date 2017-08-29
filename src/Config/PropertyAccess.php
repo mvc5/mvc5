@@ -8,7 +8,7 @@ namespace Mvc5\Config;
 trait PropertyAccess
 {
     /**
-     * @param mixed $name
+     * @param string $name
      * @return mixed
      */
     function __get($name)
@@ -17,7 +17,7 @@ trait PropertyAccess
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return bool
      */
     function __isset($name)
@@ -26,7 +26,7 @@ trait PropertyAccess
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @param mixed $value
      * @return mixed
      */
@@ -36,7 +36,8 @@ trait PropertyAccess
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
+     * @return void
      */
     function __unset($name)
     {

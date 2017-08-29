@@ -12,6 +12,11 @@ use Mvc5\Http\Request;
 class Controller
 {
     /**
+     * @var ErrorModel
+     */
+    protected $model;
+
+    /**
      * @param ErrorModel $model
      */
     function __construct(ErrorModel $model)

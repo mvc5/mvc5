@@ -42,7 +42,7 @@ trait Response
     }
 
     /**
-     * @return int
+     * @return string
      */
     function version()
     {

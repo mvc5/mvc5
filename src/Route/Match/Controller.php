@@ -71,8 +71,8 @@ class Controller
     }
 
     /**
-     * @param $action
-     * @param $controller
+     * @param string $action
+     * @param string $controller
      * @param array $replacement
      * @return bool
      */
@@ -91,7 +91,7 @@ class Controller
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param $controller
      * @return mixed
      */
@@ -101,8 +101,8 @@ class Controller
     }
 
     /**
-     * @param $action
-     * @param $controller
+     * @param string $action
+     * @param string $controller
      * @param array $options
      * @return string
      */

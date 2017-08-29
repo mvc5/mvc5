@@ -31,7 +31,7 @@ interface Request
     function uri();
 
     /**
-     * @return int
+     * @return string
      */
     function version();
 }

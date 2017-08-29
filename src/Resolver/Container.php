@@ -13,7 +13,7 @@ trait Container
     protected $config = [];
 
     /**
-     * @var array|mixed
+     * @var array|\Iterator|mixed
      */
     protected $container = [];
 
@@ -32,7 +32,7 @@ trait Container
 
     /**
      * @param string $name
-     * @return array|callable|null|object|string
+     * @return mixed
      */
     protected function configured(string $name)
     {
@@ -40,7 +40,7 @@ trait Container
     }
 
     /**
-     * @return array|mixed
+     * @return array|\Iterator|mixed
      */
     function container()
     {
@@ -90,7 +90,7 @@ trait Container
     }
 
     /**
-     *
+     * @return void
      */
     function next()
     {
@@ -109,7 +109,7 @@ trait Container
     }
 
     /**
-     *
+     * @return void
      */
     function rewind()
     {

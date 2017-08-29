@@ -32,7 +32,7 @@ class Middleware
     }
 
     /**
-     * @param $controller
+     * @param mixed|callable $controller
      * @param array|null $middleware
      * @return callable|mixed|null|object
      */
@@ -42,7 +42,7 @@ class Middleware
     }
 
     /**
-     * @param $controller
+     * @param mixed|callable $controller
      * @param array|null $middleware
      * @return callable|mixed|null|object
      */

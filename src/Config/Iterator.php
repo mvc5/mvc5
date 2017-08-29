@@ -32,7 +32,7 @@ trait Iterator
     }
 
     /**
-     *
+     * @return void
      */
     function next()
     {
@@ -40,7 +40,7 @@ trait Iterator
     }
 
     /**
-     *
+     * @return void
      */
     function rewind()
     {

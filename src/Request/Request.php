@@ -10,7 +10,7 @@ interface Request
 {
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return mixed
      */
     function arg(string $name, $default = null);
@@ -26,13 +26,13 @@ interface Request
     function clientAddress();
 
     /**
-     * @return array|callable|mixed|null|object|string
+     * @return mixed|callable
      */
     function controller();
 
     /**
      * @param string $name
-     * @return mixed
+     * @return array|\ArrayAccess
      */
     function cookie(string $name);
 
@@ -43,7 +43,7 @@ interface Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return array|mixed
      */
     function data(string $name = null, $default = null);
@@ -60,7 +60,7 @@ interface Request
 
     /**
      * @param string $name
-     * @return string
+     * @return array|string
      */
     function header(string $name);
 
@@ -91,7 +91,7 @@ interface Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return mixed
      */
     function param(string $name, $default = null);
@@ -113,7 +113,7 @@ interface Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return array|mixed
      */
     function post(string $name = null, $default = null);
@@ -135,14 +135,14 @@ interface Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return array|mixed
      */
     function server(string $name = null, $default = null);
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return array|mixed|\Mvc5\Session\Session
      */
     function session(string $name = null, $default = null);
@@ -158,8 +158,8 @@ interface Request
     function userAgent();
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string $name
+     * @param mixed $default
      * @return mixed
      */
     function var(string $name, $default = null);

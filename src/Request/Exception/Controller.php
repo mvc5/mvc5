@@ -26,7 +26,7 @@ class Controller
 
     /**
      * @param Request $request
-     * @return mixed
+     * @return TemplateModel
      */
     function __invoke(Request $request)
     {

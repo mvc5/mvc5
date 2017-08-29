@@ -56,8 +56,8 @@ class Wildcard
     }
 
     /**
-     * @param $params
-     * @param $options
+     * @param array $params
+     * @param array $options
      * @return array
      */
     protected function parts(array $params, array $options)
@@ -66,9 +66,9 @@ class Wildcard
     }
 
     /**
-     * @param $params
-     * @param $options
-     * @return mixed
+     * @param array $params
+     * @param array $options
+     * @return array
      */
     protected function remove(array $params, array $options)
     {

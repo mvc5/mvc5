@@ -15,8 +15,8 @@ trait Request
     use \Mvc5\Http\Config\Request;
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string $name
+     * @param mixed $default
      * @return mixed
      */
     function arg(string $name, $default = null)
@@ -67,7 +67,7 @@ trait Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return mixed
      */
     function data(string $name = null, $default = null)
@@ -76,7 +76,7 @@ trait Request
     }
 
     /**
-     * @return \Mvc5\Http\Error
+     * @return null|\Mvc5\Http\Error
      */
     function error()
     {
@@ -93,7 +93,7 @@ trait Request
 
     /**
      * @param string $name
-     * @return string
+     * @return array|string
      */
     function header(string $name)
     {
@@ -142,7 +142,7 @@ trait Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return mixed
      */
     function param(string $name, $default = null)
@@ -176,7 +176,7 @@ trait Request
 
     /**
      * @param $name
-     * @param null $default
+     * @param mixed $default
      * @return array
      */
     function post(string $name = null, $default = null)
@@ -210,7 +210,7 @@ trait Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return array|\ArrayAccess
      */
     function server(string $name = null, $default = null)
@@ -220,7 +220,7 @@ trait Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return array|\ArrayAccess
      */
     function session(string $name = null, $default = null)
@@ -246,7 +246,7 @@ trait Request
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed $default
      * @return mixed
      */
     function var(string $name, $default = null)

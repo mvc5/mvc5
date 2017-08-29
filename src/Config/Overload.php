@@ -22,7 +22,7 @@ trait Overload
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return mixed
      */
     function &offsetGet($name)
@@ -31,7 +31,7 @@ trait Overload
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return mixed
      */
     function &__get($name)

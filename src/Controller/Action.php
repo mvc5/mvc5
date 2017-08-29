@@ -15,7 +15,7 @@ class Action
     use Service;
 
     /**
-     * @param $controller
+     * @param mixed $controller
      * @param array $argv
      * @return mixed
      */

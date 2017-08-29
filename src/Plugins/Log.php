@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Log
 {
     /**
-     * @param $message
+     * @param mixed $message
      * @param array $context
      * @param int $level
      * @return mixed
