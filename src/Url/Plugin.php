@@ -47,7 +47,7 @@ class Plugin
      * @param callable $assembler
      * @param bool|false $absolute
      */
-    function __construct(Request $request, callable $generator, callable $assembler = null, $absolute = false)
+    function __construct(Request $request, callable $generator, callable $assembler = null, bool $absolute = false)
     {
         $this->absolute = $absolute;
         $this->assembler = $assembler ?: new Assemble;
@@ -90,19 +90,19 @@ class Plugin
      * @param array $options
      * @return mixed
      */
-    protected function assemble($route, $query = '', $fragment = '', array $options = [])
+    protected function assemble($route, $query = '', string $fragment = '', array $options = [])
     {
         return $route ? ($this->assembler)($route, $query, $fragment, $options) : null;
     }
 
     /**
-     * @param array|string|Uri $route
+     * @param null|string|string[]|Uri $route
      * @param array|string $query
      * @param string $fragment
      * @param array $options
      * @return null|string
      */
-    protected function create($route, $query = '', $fragment = '', array $options = [])
+    protected function create($route, $query = '', string $fragment = '', array $options = [])
     {
         return $route instanceof Uri ? $this->uri($route) :
             $this->uri($this->route((array) $route, $this->options($query, $fragment, $options)));
@@ -124,10 +124,10 @@ class Plugin
      * @param string $name
      * @return array
      */
-    protected function match($pos, string $name)
+    protected function match(int $pos, string $name)
     {
         return !$pos ? [] : $this->params[$name = substr($name, 0, $pos)] ??
-            $this->match(strrpos($name, Arg::SEPARATOR), $name);
+            $this->match((int) strrpos($name, Arg::SEPARATOR), $name);
     }
 
     /**
@@ -140,22 +140,22 @@ class Plugin
     }
 
     /**
-     * @param string $query
+     * @param array|string $query
      * @param string $fragment
      * @param array $options
      * @return array
      */
-    protected function options($query, $fragment, array $options = [])
+    protected function options($query, string $fragment, array $options = [])
     {
         return [Arg::FRAGMENT => $fragment, Arg::QUERY => $query] + $options;
     }
 
     /**
-     * @param $request
-     * @param $parent
+     * @param null|Request $request
+     * @param null|Request $parent
      * @return mixed
      */
-    protected function parent($request, $parent)
+    protected function parent(Request $request = null, Request $parent = null)
     {
         $parent && ($name = $parent[Arg::NAME]) &&
             $this->params[$name] = $parent[Arg::PARAMS];
@@ -170,15 +170,15 @@ class Plugin
      */
     protected function params(string $name, array $params)
     {
-        return $params + ($this->params[$name] ?? $this->match(strrpos($name, Arg::SEPARATOR), $name));
+        return $params + ($this->params[$name] ?? $this->match((int) strrpos($name, Arg::SEPARATOR), $name));
     }
 
     /**
-     * @param array $route
+     * @param string[] $route
      * @param array $options
      * @return Uri|null
      */
-    protected function route(array $route, $options)
+    protected function route(array $route, array $options)
     {
         return $this->generate($this->name(array_shift($route)), $route, $options);
     }
@@ -193,13 +193,13 @@ class Plugin
     }
 
     /**
-     * @param array|string $route
+     * @param null|string|string[]|Uri $route
      * @param array|string $query
      * @param string $fragment
      * @param array $options
      * @return string
      */
-    function __invoke($route = null, $query = '', $fragment = '', array $options = [])
+    function __invoke($route = null, $query = '', string $fragment = '', array $options = [])
     {
         return $this->create($route, $query, $fragment, $options) ?:
             $this->assemble($route, $query, $fragment, $this->absolute($options));

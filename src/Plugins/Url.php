@@ -16,7 +16,7 @@ trait Url
      * @param array $options
      * @return string
      */
-    protected function url($route = null, $query = '', $fragment = '', array $options = [])
+    protected function url($route = null, $query = '', string $fragment = '', array $options = [])
     {
         return $this->call(Arg::URL, [$route, $query, $fragment, $options]);
     }
