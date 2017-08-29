@@ -23,7 +23,7 @@ interface Response
      * @param bool|false   $httponly
      * @return mixed|self
      */
-    function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null);
+    function withCookie($name, $value = '', $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
 
     /**
      * @param array|\Mvc5\Cookie\Cookies $cookies
@@ -55,5 +55,5 @@ interface Response
      * @param string $version
      * @return mixed|self
      */
-    function withVersion($version);
+    function withVersion(string $version);
 }

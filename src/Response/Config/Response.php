@@ -19,13 +19,13 @@ trait Response
     use \Mvc5\Http\Config\Response;
 
     /**
-     * @var array|mixed
+     * @var array
      */
     protected $config = [];
 
     /**
-     * @param null $body
-     * @param int $status
+     * @param mixed $body
+     * @param int|null $status
      * @param array|Headers $headers
      * @param array $config
      */
@@ -53,16 +53,17 @@ trait Response
     }
 
     /**
-     * @param string     $name
-     * @param string     $value
-     * @param int        $expire
-     * @param string     $path
-     * @param string     $domain
-     * @param bool|false $secure
-     * @param bool|true  $httponly
+     * @param string $name
+     * @param string $value
+     * @param int|null $expire
+     * @param null|string $path
+     * @param null|string $domain
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return self|mixed
      */
-    function withCookie($name, $value = '', $expire = null, $path = null, $domain = null, $secure = null, $httponly = null)
+    function withCookie($name, $value = '', $expire = null,
+                        string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         return $this->withCookies($this->cookies()->with($name, $value, $expire, $path, $domain, $secure, $httponly));
     }
@@ -83,7 +84,7 @@ trait Response
      */
     function withHeader($name, $value)
     {
-        return $this->with(Arg::HEADERS, $this->headers()->with($name, $value));
+        return $this->with(Arg::HEADERS, $this->headers()->with((string) $name, $value));
     }
 
     /**
@@ -102,14 +103,14 @@ trait Response
      */
     function withStatus($status, $reason = '')
     {
-        return $this->with([Arg::STATUS => $status, Arg::REASON => $reason]);
+        return $this->with([Arg::STATUS => (int) $status, Arg::REASON => (string) $reason]);
     }
 
     /**
      * @param string $version
      * @return self|mixed
      */
-    function withVersion($version)
+    function withVersion(string $version)
     {
         return $this->with(Arg::VERSION, $version);
     }
