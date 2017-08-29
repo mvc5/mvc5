@@ -28,7 +28,7 @@ class Unresolvable
      */
     final static function plugin($plugin)
     {
-        return static::raise(static::create(static::class, static::formatMessage($plugin)));
+        return static::raise(static::create(static::class, [static::formatMessage($plugin)]));
     }
 
     /**

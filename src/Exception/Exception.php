@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Exception
 {
     /**
-     * @param mixed|\Throwable $exception
+     * @param \Throwable $exception
      * @param int $offset
      * @return \Throwable
      */
@@ -26,9 +26,9 @@ trait Exception
      * @param int $offset
      * @return \Throwable
      */
-    protected static function create($exception, $args = [], int $offset = 2)
+    protected static function create(string $exception, array $args = [], int $offset = 2)
     {
-        return static::backtrace(static::instance($exception, (array) $args), $offset);
+        return static::backtrace(static::instance($exception, $args), $offset);
     }
 
     /**
@@ -36,7 +36,7 @@ trait Exception
      * @param array $args
      * @return \Throwable
      */
-    protected static function instance($exception, array $args = []) : \Throwable
+    protected static function instance(string $exception, array $args = []) : \Throwable
     {
         return new $exception(...$args);
     }
@@ -59,7 +59,7 @@ trait Exception
         }
 
         return (new class extends \Error {
-            function __invoke(\Throwable $error, $offset, array $origin) {
+            function __invoke(\Throwable $error, int $offset, array $origin) {
                 if (!empty($origin[Arg::FILE])) {
                     $error->file = $origin[Arg::FILE];
                     $error->line = $origin[Arg::LINE];
