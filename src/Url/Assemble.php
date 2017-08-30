@@ -39,104 +39,104 @@ class Assemble
     ];
 
     /**
-     * @param $host
+     * @param null|string $host
      * @param int|null $port
-     * @param string $user
-     * @param string $password
+     * @param null|string $user
+     * @param null|string $password
      * @return string
      */
-    static function authority($host, $port = null, $user = '', $password = '')
+    static function authority(string $host = null, int $port = null, string $user = null, string $password = null)
     {
         return static::user($user, $password, '@') . static::host($host) . static::port($port, ':');
     }
 
     /**
-     * @param string $scheme
-     * @param string $authority
-     * @param string $path
-     * @param string $query
-     * @param string $fragment
+     * @param null|string $scheme
+     * @param null|string $authority
+     * @param null|string $path
+     * @param null|string $query
+     * @param null|string $fragment
      * @return string
      */
-    static function compile($scheme, $authority, $path, $query, $fragment)
+    static function compile(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null)
     {
         return ($scheme ? $scheme . ':' : '') . ($scheme || $authority ? '//' : '') . $authority .
             $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
     }
 
     /**
-     * @param string $value
+     * @param null|string $value
      * @param array $unreserved
-     * @return string
+     * @return null|string
      */
-    static function encode($value, array $unreserved = [])
+    static function encode(string $value = null, array $unreserved = [])
     {
-        return $value ? strtr(rawurlencode($value), $unreserved ?: static::UNRESERVED) : (string) $value;
+        return $value ? strtr(rawurlencode($value), $unreserved ?: static::UNRESERVED) : $value;
     }
 
     /**
-     * @param string $value
-     * @return string
+     * @param null|string $fragment
+     * @return null|string
      */
-    static function fragment($value)
+    static function fragment(string $fragment = null)
     {
-        return static::encode($value, static::FRAGMENT);
+        return static::encode($fragment, static::FRAGMENT);
     }
 
     /**
-     * @param string $host
-     * @return string
+     * @param null|string $host
+     * @return null|string
      */
-    static function host($host)
+    static function host(string $host = null)
     {
-        return static::encode(strtolower($host));
+        return static::encode(strtolower((string) $host));
     }
 
     /**
-     * @param string $path
-     * @return string
+     * @param null|string $path
+     * @return null|string
      */
-    static function path($path)
+    static function path(string $path = null)
     {
         return static::encode($path, static::PATH);
     }
 
     /**
-     * @param string $port
-     * @param string $prefix
-     * @return string
+     * @param int|null $port
+     * @param null|string $prefix
+     * @return null|string
      */
-    static function port($port, $prefix = '')
+    static function port(int $port = null, string $prefix = null)
     {
-        return $port && 80 != $port && 443 != $port ? $prefix . (int) $port : null;
+        return $port && 80 != $port && 443 != $port ? $prefix . $port : null;
     }
 
     /**
-     * @param array|string $query
-     * @return string
+     * @param array|null|string $query
+     * @return null|string
      */
     static function query($query)
     {
-        return !$query ? $query : (is_string($query) ? static::encode($query, static::QUERY_STRING) : strtr(
+        return is_array($query) ? strtr(
             http_build_query($query, '', Arg::QUERY_SEPARATOR, \PHP_QUERY_RFC3986), static::QUERY
-        ));
+        ) : static::encode($query, static::QUERY_STRING);
     }
 
     /**
-     * @param string $scheme
-     * @return string
+     * @param null|string $scheme
+     * @return null|string
      */
-    static function scheme($scheme)
+    static function scheme(string $scheme = null)
     {
-        return strtolower($scheme);
+        return $scheme ? strtolower($scheme) : $scheme;
     }
 
     /**
-     * @param string|Uri $path
-     * @param array|string $query
+     * @param null|string|Uri $path
+     * @param array|null|string $query
      * @return string
      */
-    static function target($path = '', $query = '')
+    static function target($path = null, $query = null)
     {
         return $path instanceof Uri ? static::url($path->path() ?: '/', $path->query()) :
             static::url($path ?: '/', $query);
@@ -159,18 +159,18 @@ class Assemble
 
     /**
      * @param string $path
-     * @param array|string $query
-     * @param string $fragment
+     * @param array|null|string $query
+     * @param null|string $fragment
      * @param array $options
      * @return string
      */
-    static function url($path, $query = '', $fragment = '', array $options = [])
+    static function url(string $path, $query = null, string $fragment = null, array $options = [])
     {
         return static::compile(
-            static::scheme($options[Arg::SCHEME] ?? ''),
+            static::scheme($options[Arg::SCHEME] ?? null),
             static::authority(
-                $options[Arg::HOST] ?? '', $options[Arg::PORT] ?? null,
-                    $options[Arg::USER] ?? '', $options[Arg::PASS] ?? ''
+                $options[Arg::HOST] ?? null, $options[Arg::PORT] ?? null,
+                    $options[Arg::USER] ?? null, $options[Arg::PASS] ?? null
             ),
             static::path($path),
             static::query($query),
@@ -179,24 +179,24 @@ class Assemble
     }
 
     /**
-     * @param string $user
-     * @param string $password
-     * @param string $suffix
-     * @return string
+     * @param null|string $user
+     * @param null|string $password
+     * @param null|string $suffix
+     * @return null|string
      */
-    static function user($user, $password = '', $suffix = '')
+    static function user(string $user = null, string $password = null, string $suffix = null)
     {
-        return $user ? static::encode($user . ($password ? ':' . $password : '')) . $suffix  : '';
+        return $user ? static::encode($user . ($password ? ':' . $password : '')) . $suffix : $user;
     }
 
     /**
      * @param string|Uri $path
-     * @param string $query
-     * @param string $fragment
+     * @param array|null|string $query
+     * @param null|string $fragment
      * @param array $options
      * @return string
      */
-    function __invoke($path, $query = '', $fragment = '', array $options = [])
+    function __invoke($path, $query = null, string $fragment = null, array $options = [])
     {
         return $path instanceof Uri ? static::uri($path) : static::url($path, $query, $fragment, $options);
     }

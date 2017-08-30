@@ -36,7 +36,7 @@ trait Generator
 
     /**
      * @param array|\ArrayAccess $route
-     * @param Uri $uri
+     * @param null|Uri $uri
      */
     function __construct($route, Uri $uri = null)
     {
@@ -86,10 +86,10 @@ trait Generator
     /**
      * @param array $name
      * @param array $path
-     * @param Route $parent
+     * @param null|Route $parent
      * @return Route
      */
-    protected function generate(array $name, array $path = [], $parent = null)
+    protected function generate(array $name, array $path = [], Route $parent = null)
     {
         return $this->resolve($this->match(array_shift($name), $parent), $name, $path);
     }
@@ -106,7 +106,7 @@ trait Generator
 
     /**
      * @param string $name
-     * @param Route $parent
+     * @param null|Route $parent
      * @return Route
      */
     protected function match(string $name, Route $parent = null)

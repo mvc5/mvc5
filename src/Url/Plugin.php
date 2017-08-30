@@ -44,7 +44,7 @@ class Plugin
     /**
      * @param Request $request
      * @param callable $generator
-     * @param callable $assembler
+     * @param callable|null $assembler
      * @param bool|false $absolute
      */
     function __construct(Request $request, callable $generator, callable $assembler = null, bool $absolute = false)
@@ -85,24 +85,24 @@ class Plugin
 
     /**
      * @param string|Uri $route
-     * @param array|string $query
-     * @param string $fragment
+     * @param array|null|string $query
+     * @param null|string $fragment
      * @param array $options
      * @return mixed
      */
-    protected function assemble($route, $query = '', string $fragment = '', array $options = [])
+    protected function assemble($route, $query = null, string $fragment = null, array $options = [])
     {
         return $route ? ($this->assembler)($route, $query, $fragment, $options) : null;
     }
 
     /**
      * @param null|string|string[]|Uri $route
-     * @param array|string $query
-     * @param string $fragment
+     * @param array|null|string $query
+     * @param null|string $fragment
      * @param array $options
      * @return null|string
      */
-    protected function create($route, $query = '', string $fragment = '', array $options = [])
+    protected function create($route, $query = null, string $fragment = null, array $options = [])
     {
         return $route instanceof Uri ? $this->uri($route) :
             $this->uri($this->route((array) $route, $this->options($query, $fragment, $options)));
@@ -112,7 +112,7 @@ class Plugin
      * @param string $name
      * @param array $params
      * @param array $options
-     * @return Uri
+     * @return null|Uri
      */
     protected function generate(string $name, array $params, array $options)
     {
@@ -141,11 +141,11 @@ class Plugin
 
     /**
      * @param array|string $query
-     * @param string $fragment
+     * @param null|string $fragment
      * @param array $options
      * @return array
      */
-    protected function options($query, string $fragment, array $options = [])
+    protected function options($query, string $fragment = null, array $options = [])
     {
         return [Arg::FRAGMENT => $fragment, Arg::QUERY => $query] + $options;
     }
@@ -194,12 +194,12 @@ class Plugin
 
     /**
      * @param null|string|string[]|Uri $route
-     * @param array|string $query
-     * @param string $fragment
+     * @param array|null|string $query
+     * @param null|string $fragment
      * @param array $options
      * @return string
      */
-    function __invoke($route = null, $query = '', string $fragment = '', array $options = [])
+    function __invoke($route = null, $query = null, string $fragment = null, array $options = [])
     {
         return $this->create($route, $query, $fragment, $options) ?:
             $this->assemble($route, $query, $fragment, $this->absolute($options));
