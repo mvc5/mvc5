@@ -51,8 +51,8 @@ trait Resolver
 
     /**
      * @param array|\ArrayAccess $config
-     * @param callable $provider
-     * @param object $scope
+     * @param callable|null $provider
+     * @param bool|null|object $scope
      * @param bool $strict
      */
     function __construct($config = null, callable $provider = null, $scope = null, bool $strict = false)
@@ -448,7 +448,7 @@ trait Resolver
     /**
      * @param $plugin
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @param int $c
      * @return array|callable|Plugin|null|object|Resolvable|string
      */
@@ -502,7 +502,7 @@ trait Resolver
     /**
      * @param $plugin
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed|callable
      */
     protected function solve($plugin, array $args = [], callable $callback = null)

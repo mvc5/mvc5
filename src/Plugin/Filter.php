@@ -28,7 +28,7 @@ class Filter
      * @param $config
      * @param array|\Traversable $filter
      * @param array $args
-     * @param string $param
+     * @param null|string $param
      */
     function __construct($config, $filter = [], array $args = [], string $param = null)
     {

@@ -19,9 +19,9 @@ trait ViewModel
     use TemplateModel;
 
     /**
-     * @param array|string $template
+     * @param array|null|string $template
      * @param array $vars
-     * @param Service $service
+     * @param null|Service $service
      */
     function __construct($template = null, array $vars = [], Service $service = null)
     {

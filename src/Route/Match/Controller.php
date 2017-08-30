@@ -101,8 +101,8 @@ class Controller
     }
 
     /**
-     * @param string $action
-     * @param string $controller
+     * @param null|string $action
+     * @param null|string $controller
      * @param array $options
      * @return string
      */
@@ -177,7 +177,7 @@ class Controller
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request|NotFound
+     * @return null|NotFound|Request
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

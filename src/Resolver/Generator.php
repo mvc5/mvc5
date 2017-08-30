@@ -23,7 +23,7 @@ trait Generator
     /**
      * @param array|object|string|\Traversable $event
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed|null
      */
     protected function event($event, array $args = [], callable $callback = null)
@@ -81,7 +81,7 @@ trait Generator
     /**
      * @param array|object|string|\Traversable $event
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed|null
      */
     function trigger($event, array $args = [], callable $callback = null)

@@ -39,8 +39,8 @@ trait Cookies
      * @param string $name
      * @param string $value
      * @param int|null|string $expire
-     * @param string $path
-     * @param string $domain
+     * @param null|string $path
+     * @param null|string $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return array
@@ -92,8 +92,8 @@ trait Cookies
      * @param string $name
      * @param string $value
      * @param int|null|string $expire
-     * @param string $path
-     * @param string $domain
+     * @param null|string $path
+     * @param null|string $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return self|mixed

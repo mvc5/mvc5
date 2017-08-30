@@ -21,7 +21,7 @@ trait Response
     }
 
     /**
-     * @param $url
+     * @param array|string|\Mvc5\Http\Uri $url
      * @param int $status
      * @param array $headers
      * @param array $config
@@ -33,8 +33,8 @@ trait Response
     }
 
     /**
-     * @param null $body
-     * @param int $status
+     * @param mixed $body
+     * @param int|null $status
      * @param array $headers
      * @param array $config
      * @@return \Mvc5\Response\Response|mixed

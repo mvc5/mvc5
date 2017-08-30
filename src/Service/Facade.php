@@ -10,7 +10,7 @@ trait Facade
     /**
      * @param array|callable|object|string $name
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return callable|mixed|null|object
      */
     protected static function call($name, array $args = [], callable $callback = null)
@@ -30,7 +30,7 @@ trait Facade
     /**
      * @param $name
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return callable|mixed|null|object
      */
     protected static function plugin($name, array $args = [], callable $callback = null)
@@ -59,7 +59,7 @@ trait Facade
     /**
      * @param array|object|string|\Traversable $event
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed|null
      */
     protected static function trigger($event, array $args = [], callable $callback = null)

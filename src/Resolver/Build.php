@@ -19,7 +19,7 @@ trait Build
     /**
      * @param array $name
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     protected function build(array $name, array $args = [], callable $callback = null)
@@ -44,7 +44,7 @@ trait Build
     /**
      * @param array $name
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     protected function combine(array $name, array $args = [], callable $callback = null)
@@ -84,7 +84,7 @@ trait Build
     /**
      * @param string $name
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     protected function create(string $name, array $args = [], callable $callback = null)
@@ -96,7 +96,7 @@ trait Build
      * @param string $plugin
      * @param array $name
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     protected function first(string $plugin, array $name, array $args = [], callable $callback = null)

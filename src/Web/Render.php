@@ -14,7 +14,7 @@ use Mvc5\View\View;
 class Render
 {
     /**
-     * @param View
+     * @var View
      */
     protected $view;
 

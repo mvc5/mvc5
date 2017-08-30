@@ -14,7 +14,7 @@ interface Shared
     function name();
 
     /**
-     * @return string
+     * @return mixed
      */
     function config();
 }

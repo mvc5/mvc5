@@ -37,8 +37,8 @@ final class Context
     /**
      * @param array|callable|object|string $name
      * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
+     * @param callable|null $callback
+     * @return mixed
      */
     static function call($name, array $args = [], callable $callback = null)
     {
@@ -57,8 +57,8 @@ final class Context
     /**
      * @param $name
      * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
+     * @param callable|null $callback
+     * @return mixed
      */
     static function plugin($name, array $args = [], callable $callback = null)
     {
@@ -74,7 +74,7 @@ final class Context
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $args
      * @return mixed
      */

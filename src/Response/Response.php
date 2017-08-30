@@ -15,12 +15,12 @@ interface Response
 
     /**
      * @param array|string $name
-     * @param string       $value
-     * @param int          $expire
-     * @param string       $path
-     * @param string       $domain
-     * @param bool|false   $secure
-     * @param bool|false   $httponly
+     * @param string $value
+     * @param int $expire
+     * @param null|string $path
+     * @param null|string $domain
+     * @param bool|null $secure
+     * @param bool|null $httponly
      * @return mixed|self
      */
     function withCookie($name, $value = '', $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);

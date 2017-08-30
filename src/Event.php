@@ -42,7 +42,7 @@ class Event
     /**
      * @param callable $callable
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)

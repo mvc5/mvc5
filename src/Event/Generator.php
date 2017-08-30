@@ -88,8 +88,8 @@ trait Generator
      * @param array|Event|\Iterator|object|string $event
      * @param mixed $listener
      * @param array $args
-     * @param callable $callback
-     * @param $result
+     * @param callable|null $callback
+     * @param mixed $result
      * @return mixed
      */
     protected function result($event, $listener, array $args = [], callable $callback = null, $result = null)

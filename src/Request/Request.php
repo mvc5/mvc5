@@ -42,7 +42,7 @@ interface Request
     function cookies();
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param mixed $default
      * @return array|mixed
      */
@@ -112,7 +112,7 @@ interface Request
     function port();
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param mixed $default
      * @return array|mixed
      */
@@ -134,14 +134,14 @@ interface Request
     function scheme();
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param mixed $default
      * @return array|mixed
      */
     function server(string $name = null, $default = null);
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param mixed $default
      * @return array|mixed|\Mvc5\Session\Session
      */

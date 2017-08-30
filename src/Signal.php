@@ -10,7 +10,7 @@ final class Signal
     /**
      * @param callable $callable
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     static function emit(callable $callable, array $args = [], callable $callback = null)

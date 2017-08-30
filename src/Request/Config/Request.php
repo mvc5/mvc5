@@ -66,7 +66,7 @@ trait Request
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param mixed $default
      * @return mixed
      */
@@ -175,7 +175,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param null|string $name
      * @param mixed $default
      * @return array
      */
@@ -209,7 +209,7 @@ trait Request
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param mixed $default
      * @return array|\ArrayAccess
      */
@@ -219,7 +219,7 @@ trait Request
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @param mixed $default
      * @return array|\ArrayAccess
      */

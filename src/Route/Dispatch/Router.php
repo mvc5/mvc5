@@ -41,8 +41,8 @@ trait Router
     }
 
     /**
-     * @param Route $parent
-     * @param null|Route $route
+     * @param Route $route
+     * @param null|Route $parent
      * @return Route
      */
     protected function child(Route $route, Route $parent = null)
@@ -89,8 +89,8 @@ trait Router
     }
 
     /**
-     * @param null|string $name
-     * @param string $parent
+     * @param string $name
+     * @param null|string $parent
      * @return string
      */
     protected function name(string $name, string $parent = null)

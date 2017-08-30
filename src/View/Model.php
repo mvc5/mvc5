@@ -33,7 +33,7 @@ trait Model
     }
 
     /**
-     * @param string $template
+     * @param null|string $template
      * @param array $vars
      * @return mixed|ViewModel
      */

@@ -18,7 +18,7 @@ class Compiler
      * @param array $tokens
      * @param array $params
      * @param array $defaults
-     * @param callable $wildcard
+     * @param callable|null $wildcard
      * @return string
      * @throws \InvalidArgumentException
      */
@@ -104,8 +104,8 @@ class Compiler
     /**
      * @param array $tokens
      * @param array $params
-     * @param array $defaults
-     * @param callable $wildcard
+     * @param array|null $defaults
+     * @param callable|null $wildcard
      * @return string
      * @throws \InvalidArgumentException
      */

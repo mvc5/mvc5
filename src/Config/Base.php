@@ -8,7 +8,7 @@ namespace Mvc5\Config;
 trait Base
 {
     /**
-     * @var array|\Iterator|mixed
+     * @var array|Configuration|\Iterator|mixed
      */
     protected $config = [];
 

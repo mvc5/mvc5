@@ -43,8 +43,8 @@ class Middleware
 
     /**
      * @param mixed|callable $controller
-     * @param array|null $middleware
-     * @return callable|mixed|null|object
+     * @param array $middleware
+     * @return array
      */
     protected function stack($controller, array $middleware)
     {

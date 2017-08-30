@@ -10,8 +10,8 @@ interface Service
     /**
      * @param array|callable|object|string $config
      * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
+     * @param callable|null $callback
+     * @return mixed
      */
     function call($config, array $args = [], callable $callback = null);
 
@@ -23,24 +23,24 @@ interface Service
 
     /**
      * @param $name
-     * @param callable $callback
      * @param array $args
-     * @return callable|mixed|null|object
+     * @param callable|null $callback
+     * @return mixed
      */
     function plugin($name, array $args = [], callable $callback = null);
 
     /**
      * @param string $name
-     * @param $config
-     * @return callable|mixed|null|object
+     * @param mixed $config
+     * @return mixed
      */
     function shared(string $name, $config = null);
 
     /**
      * @param array|object|string|\Traversable $event
      * @param array $args
-     * @param callable $callback
-     * @return mixed|null
+     * @param callable|null $callback
+     * @return mixed
      */
     function trigger($event, array $args = [], callable $callback = null);
 }

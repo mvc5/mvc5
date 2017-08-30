@@ -80,7 +80,7 @@ trait Session
     }
 
     /**
-     * @param string $id
+     * @param null|string $id
      * @return string
      */
     function id(string $id = null)
@@ -97,7 +97,7 @@ trait Session
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @return string
      */
     function name(string $name = null)

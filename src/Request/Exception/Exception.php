@@ -30,7 +30,7 @@ trait Exception
     /**
      * @param string $name
      * @param mixed|callable $controller
-     * @param Error $error
+     * @param Error|null $error
      */
     function __construct(string $name, $controller, Error $error = null)
     {

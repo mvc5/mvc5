@@ -22,7 +22,7 @@ trait Exception
 
     /**
      * @param string $exception
-     * @param array|string $args
+     * @param array $args
      * @param int $offset
      * @return \Throwable
      */

@@ -16,7 +16,7 @@ interface Error
     function code();
 
     /**
-     * @return int
+     * @return string
      */
     function description();
 

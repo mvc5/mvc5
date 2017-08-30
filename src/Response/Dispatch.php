@@ -31,8 +31,8 @@ class Dispatch
 
     /**
      * @param string $event
-     * @param Request $request
-     * @param Response $response
+     * @param null|Request $request
+     * @param null|Response $response
      */
     function __construct(string $event, Request $request = null, Response $response = null)
     {
@@ -58,7 +58,7 @@ class Dispatch
     /**
      * @param callable $callable
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return mixed
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)

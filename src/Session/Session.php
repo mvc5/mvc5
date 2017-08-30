@@ -27,13 +27,13 @@ interface Session
     function destroy(bool $remove_session_cookie = true);
 
     /**
-     * @param string $id
+     * @param null|string $id
      * @return string
      */
     function id(string $id = null);
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @return string
      */
     function name(string $name = null);

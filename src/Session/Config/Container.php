@@ -27,7 +27,7 @@ trait Container
 
     /**
      * @param Session $session
-     * @param string $label
+     * @param null|string $label
      */
     function __construct(Session $session, string $label = null)
     {
@@ -61,7 +61,7 @@ trait Container
     }
 
     /**
-     * @param string $id
+     * @param null|string $id
      * @return string
      */
     function id(string $id = null)
@@ -78,7 +78,7 @@ trait Container
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      * @return string
      */
     function name(string $name = null)

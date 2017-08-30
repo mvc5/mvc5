@@ -31,7 +31,7 @@ class Method
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request|MethodNotAllowed
+     * @return MethodNotAllowed|null|Request
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

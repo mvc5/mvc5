@@ -11,7 +11,7 @@ interface Route
     extends Model
 {
     /**
-     * @param string $name
+     * @param null|string $name
      * @return mixed
      */
     function action(string $name = null);
@@ -23,7 +23,7 @@ interface Route
     function child(string $name);
 
     /**
-     * @return self[]
+     * @return array|\Iterator
      */
     function children();
 

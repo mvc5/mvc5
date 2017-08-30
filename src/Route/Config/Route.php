@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Route
 {
     /**
-     * @param string $name
+     * @param null|string $name
      * @return mixed
      */
     function action(string $name = null)
@@ -20,7 +20,7 @@ trait Route
 
     /**
      * @param string $name
-     * @return self
+     * @return array|\Mvc5\Route\Route|null
      */
     function child(string $name)
     {
@@ -28,7 +28,7 @@ trait Route
     }
 
     /**
-     * @return self[]
+     * @return array|\Iterator
      */
     function children()
     {

@@ -22,7 +22,7 @@ class Path
      * @param string $path
      * @param int $offset
      * @param callable $next
-     * @return Request
+     * @return null|Request
      */
     protected function match(Route $route, Request $request, string $path, int $offset, callable $next)
     {

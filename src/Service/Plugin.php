@@ -15,8 +15,8 @@ trait Plugin
     /**
      * @param array|callable|object|string $name
      * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
+     * @param callable|null $callback
+     * @return mixed
      */
     protected function call($name, array $args = [], callable $callback = null)
     {
@@ -35,8 +35,8 @@ trait Plugin
     /**
      * @param $name
      * @param array $args
-     * @param callable $callback
-     * @return callable|mixed|null|object
+     * @param callable|null $callback
+     * @return mixed
      */
     protected function plugin($name, array $args = [], callable $callback = null)
     {
@@ -45,7 +45,7 @@ trait Plugin
 
     /**
      * @param string $name
-     * @param $config
+     * @param mixed $config
      * @return mixed
      */
     protected function shared(string $name, $config = null)
@@ -56,8 +56,8 @@ trait Plugin
     /**
      * @param array|object|string|\Traversable $event
      * @param array $args
-     * @param callable $callback
-     * @return mixed|null
+     * @param callable|null $callback
+     * @return mixed
      */
     protected function trigger($event, array $args = [], callable $callback = null)
     {

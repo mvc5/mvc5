@@ -15,7 +15,7 @@ trait Service
     /**
      * @param array|callable|object|string $plugin
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return callable|mixed|null|object
      */
     function call($plugin, array $args = [], callable $callback = null)
@@ -33,7 +33,7 @@ trait Service
 
     /**
      * @param array|callable|object|string $plugin
-     * @return callable|null
+     * @return callable
      */
     protected function callable($plugin) : callable
     {
@@ -72,7 +72,7 @@ trait Service
     /**
      * @param array|callable|object|string $plugin
      * @param array $args
-     * @param callable $callback
+     * @param callable|null $callback
      * @return array|callable|object|string
      */
     protected function invoke($plugin, array $args = [], callable $callback = null)

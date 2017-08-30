@@ -26,7 +26,7 @@ class Controller
 
     /**
      * @param Request $request
-     * @param Error $error
+     * @param Error|null $error
      * @return mixed
      */
     function __invoke(Request $request, Error $error = null)
