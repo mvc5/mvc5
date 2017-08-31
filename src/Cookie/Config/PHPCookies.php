@@ -5,8 +5,6 @@
 
 namespace Mvc5\Cookie\Config;
 
-use Mvc5\Arg;
-
 trait PHPCookies
 {
     /**
@@ -15,10 +13,10 @@ trait PHPCookies
     use Cookies;
 
     /**
-     * @param array $cookies
+     * @param array|null $cookies
      * @param array $defaults
      */
-    function __construct(array $cookies = [], array $defaults = [])
+    function __construct(array $cookies = null, array $defaults = [])
     {
         $this->config = $cookies ?? $_COOKIE;
         $this->defaults = $defaults + $this->defaults;
@@ -39,7 +37,7 @@ trait PHPCookies
     {
         return [
             (string) $name, (string) $value, (int) (is_string($expire) ? strtotime($expire) : $expire),
-            $path ?? Arg::SEPARATOR, (string) $domain, $secure ?? false, $httponly ?? true
+            $path ?? '/', (string) $domain, $secure ?? false, $httponly ?? true
         ];
     }
 
