@@ -5,6 +5,8 @@
 
 namespace Mvc5\Cookie\Config;
 
+use Mvc5\Arg;
+
 trait PHPCookies
 {
     /**
@@ -32,10 +34,38 @@ trait PHPCookies
      * @param bool|null $httponly
      * @return mixed
      */
+    protected static function params($name, $value = '', $expire = null, string $path = null,
+                                     string $domain = null, bool $secure = null, bool $httponly = null)
+    {
+        return [
+            (string) $name, (string) $value, (int) (is_string($expire) ? strtotime($expire) : $expire),
+            $path ?? Arg::SEPARATOR, (string) $domain, $secure ?? false, $httponly ?? true
+        ];
+    }
+
+    /**
+     * @param array $cookie
+     * @return bool
+     */
+    static function send(array $cookie)
+    {
+        return setcookie(...static::params(...array_values($cookie)));
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     * @param int|null|string $expire
+     * @param null|string $path
+     * @param null|string $domain
+     * @param bool|null $secure
+     * @param bool|null $httponly
+     * @return mixed
+     */
     function set($name, $value = '', $expire = null,
                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
-        setcookie(...array_values($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly)));
+        $this->send($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly));
         return $value;
     }
 

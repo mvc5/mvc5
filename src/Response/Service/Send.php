@@ -6,6 +6,7 @@
 namespace Mvc5\Response\Service;
 
 use Mvc5\Arg;
+use Mvc5\Cookie\PHPCookies;
 use Mvc5\Http\Response;
 use Mvc5\Response\Emitter;
 
@@ -51,7 +52,7 @@ trait Send
         }
 
         foreach($this->cookies($response) as $cookie) {
-            setcookie(...array_values($cookie));
+            PHPCookies::send($cookie);
         }
 
         $statusLine = sprintf('HTTP/%s %s %s', $response->version(), $response->status(), $response->reason());
