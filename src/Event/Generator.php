@@ -134,7 +134,7 @@ trait Generator
      * @param array|\Iterator $queue
      * @param array $args
      * @param callable $callback
-     * @return null
+     * @return mixed
      */
     protected function traverse($event, $queue, array $args, callable $callback)
     {
