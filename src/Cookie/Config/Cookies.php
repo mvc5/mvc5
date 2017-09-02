@@ -49,8 +49,8 @@ trait Cookies
                               string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         return [
-            Arg::NAME => $name,
-            Arg::VALUE => $value,
+            Arg::NAME => (string) $name,
+            Arg::VALUE => (string) $value,
             Arg::EXPIRE => $expire ?? $this->defaults[Arg::EXPIRE],
             Arg::PATH => $path ?? $this->defaults[Arg::PATH],
             Arg::DOMAIN => $domain ?? $this->defaults[Arg::DOMAIN],
