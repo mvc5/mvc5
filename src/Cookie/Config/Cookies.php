@@ -51,7 +51,7 @@ trait Cookies
         return [
             Arg::NAME => (string) $name,
             Arg::VALUE => (string) $value,
-            Arg::EXPIRE => $expire ?? $this->defaults[Arg::EXPIRE],
+            Arg::EXPIRE => is_string($expire ?? $expire = $this->defaults[Arg::EXPIRE]) ? $expire : (int) $expire,
             Arg::PATH => $path ?? $this->defaults[Arg::PATH],
             Arg::DOMAIN => $domain ?? $this->defaults[Arg::DOMAIN],
             Arg::SECURE => $secure ?? $this->defaults[Arg::SECURE],
