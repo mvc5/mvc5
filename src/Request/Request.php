@@ -18,21 +18,21 @@ interface Request
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 
     /**
-     * @return string
+     * @return string|null
      */
     function clientAddress();
 
     /**
-     * @return mixed|callable
+     * @return callable|mixed
      */
     function controller();
 
     /**
      * @param string $name
-     * @return array|\ArrayAccess
+     * @return array|string|null
      */
     function cookie(string $name);
 
@@ -42,14 +42,14 @@ interface Request
     function cookies();
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
      * @return array|mixed
      */
     function data(string $name = null, $default = null);
 
     /**
-     * @return \Mvc5\Http\Error|mixed
+     * @return \Mvc5\Http\Error|null
      */
     function error();
 
@@ -60,32 +60,32 @@ interface Request
 
     /**
      * @param string $name
-     * @return array|string
+     * @return array|string|null
      */
     function header(string $name);
 
     /**
-     * @return string
+     * @return string|null
      */
     function host();
 
     /**
      * @return bool
      */
-    function isPost();
+    function isPost() : bool;
 
     /**
      * @return bool
      */
-    function isSecure();
+    function isSecure() : bool;
 
     /**
      * @return bool
      */
-    function isXmlHttpRequest();
+    function isXmlHttpRequest() : bool;
 
     /**
-     * @return string
+     * @return string|null
      */
     function name();
 
@@ -99,7 +99,7 @@ interface Request
     /**
      * @return array
      */
-    function params();
+    function params() : array;
 
     /**
      * @return string
@@ -107,24 +107,24 @@ interface Request
     function path();
 
     /**
-     * @return int|null|string
+     * @return int|null
      */
     function port();
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
      * @return array|mixed
      */
     function post(string $name = null, $default = null);
 
     /**
-     * @return string
+     * @return array|string|null
      */
     function query();
 
     /**
-     * @return \Mvc5\Route\Route
+     * @return \Mvc5\Route\Route|null
      */
     function route();
 
@@ -134,26 +134,26 @@ interface Request
     function scheme();
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
      * @return array|mixed
      */
     function server(string $name = null, $default = null);
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
-     * @return array|mixed|\Mvc5\Session\Session
+     * @return array|\Mvc5\Session\Session|mixed
      */
     function session(string $name = null, $default = null);
 
     /**
-     * @return mixed
+     * @return string|mixed
      */
     function user();
 
     /**
-     * @return string
+     * @return string|null
      */
     function userAgent();
 
@@ -167,5 +167,5 @@ interface Request
     /**
      * @return array
      */
-    function vars();
+    function vars() : array;
 }

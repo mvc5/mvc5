@@ -13,10 +13,10 @@ use Mvc5\Signal;
 trait Service
 {
     /**
-     * @param array|callable|object|string $plugin
+     * @param array|callable|Event|Resolvable|string $plugin
      * @param array $args
      * @param callable|null $callback
-     * @return callable|mixed|null|object
+     * @return mixed
      */
     function call($plugin, array $args = [], callable $callback = null)
     {
@@ -52,7 +52,7 @@ trait Service
 
     /**
      * @param string $name
-     * @return callable|mixed|object
+     * @return callable|mixed
      */
     protected function fallback(string $name)
     {
@@ -60,24 +60,24 @@ trait Service
     }
 
     /**
-     * @param callable|object|string $plugin
-     * @return callable|null
+     * @param string $plugin
+     * @return callable|mixed
      */
-    protected function invokable($plugin)
+    protected function invokable(string $plugin)
     {
         return Arg::CALL === $plugin[0] ? substr($plugin, 1) :
             $this->listener($this->plugin($plugin, [], $this) ?: $this->fallback($plugin));
     }
 
     /**
-     * @param array|callable|object|string $plugin
+     * @param callable $callable
      * @param array $args
      * @param callable|null $callback
-     * @return array|callable|object|string
+     * @return mixed
      */
-    protected function invoke($plugin, array $args = [], callable $callback = null)
+    protected function invoke(callable $callable, array $args = [], callable $callback = null)
     {
-        return Signal::emit($plugin, $args, $callback ?? $this);
+        return Signal::emit($callable, $args, $callback ?? $this);
     }
 
     /**
@@ -109,7 +109,7 @@ trait Service
     }
 
     /**
-     * @param string[] $name
+     * @param array $name
      * @param array $args
      * @param callable|null $callback
      * @return array|callable|object|string
@@ -120,9 +120,9 @@ trait Service
     }
 
     /**
-     * @param $plugin
+     * @param string|mixed $plugin
      * @param array $args
-     * @return array|callable|null|object|string
+     * @return mixed
      */
     abstract function __invoke($plugin, array $args = []);
 }

@@ -25,7 +25,7 @@ trait Model
      * @param array|string $model
      * @return TemplateModel
      */
-    protected function create($model)
+    protected function create($model) : TemplateModel
     {
         return (!is_string($model) || DIRECTORY_SEPARATOR !== $model[0] ? ($this->service)($model) : null) ?:
             new $this->model($model);
@@ -36,7 +36,7 @@ trait Model
      * @param array $vars
      * @return TemplateModel
      */
-    protected function model($model, array $vars = [])
+    protected function model($model, array $vars = []) : TemplateModel
     {
         !($model instanceof TemplateModel)
             && $model = $this->create($model);

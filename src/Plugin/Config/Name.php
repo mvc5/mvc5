@@ -23,7 +23,7 @@ trait Name
     /**
      * @return string
      */
-    function name()
+    function name() : string
     {
         return $this->name;
     }

@@ -27,7 +27,7 @@ trait Container
 
     /**
      * @param Session $session
-     * @param null|string $label
+     * @param string|null $label
      */
     function __construct(Session $session, string $label = null)
     {
@@ -55,13 +55,13 @@ trait Container
      * @param bool|true $remove_session_cookie
      * @return bool
      */
-    function destroy(bool $remove_session_cookie = true)
+    function destroy(bool $remove_session_cookie = true) : bool
     {
         return $this->session->destroy($remove_session_cookie);
     }
 
     /**
-     * @param null|string $id
+     * @param string|null $id
      * @return string
      */
     function id(string $id = null)
@@ -72,13 +72,13 @@ trait Container
     /**
      * @return string
      */
-    function label()
+    function label() : string
     {
         return $this->label;
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @return string
      */
     function name(string $name = null)
@@ -106,7 +106,7 @@ trait Container
      * @param array $options
      * @return bool
      */
-    function start(array $options = [])
+    function start(array $options = []) : bool
     {
         if (!$this->session->start($options)) {
             return false;
@@ -121,7 +121,7 @@ trait Container
     /**
      * @return int
      */
-    function status()
+    function status() : int
     {
         return $this->session->status();
     }
@@ -129,9 +129,9 @@ trait Container
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return self|mixed
+     * @return Session|self|mixed
      */
-    function with($name, $value = null)
+    function with($name, $value = null) : Session
     {
         $this->set($name, $value);
         return $this;
@@ -139,9 +139,9 @@ trait Container
 
     /**
      * @param array|string $name
-     * @return self|mixed
+     * @return Session|self|mixed
      */
-    function without($name)
+    function without($name) : Session
     {
         $this->remove($name);
         return $this;

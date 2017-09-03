@@ -27,15 +27,15 @@ trait PHPCookies
     /**
      * @param string $name
      * @param string $value
-     * @param int|null|string $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param int|string|null $expire
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return array
      */
     protected static function args($name, $value = '', $expire = null, string $path = null,
-                                   string $domain = null, bool $secure = null, bool $httponly = null)
+                                   string $domain = null, bool $secure = null, bool $httponly = null) : array
     {
         return [
             (string) $name, (string) $value, (int) (is_string($expire) ? strtotime($expire) : $expire),
@@ -47,7 +47,7 @@ trait PHPCookies
      * @param array $cookie
      * @return array
      */
-    protected static function named(array $cookie)
+    protected static function named(array $cookie) : array
     {
         return [
             (string) $cookie[Arg::NAME],
@@ -64,7 +64,7 @@ trait PHPCookies
      * @param array $cookie
      * @return bool
      */
-    static function send(array $cookie)
+    static function send(array $cookie) : bool
     {
         return setcookie(...(is_string(key($cookie)) ? static::named($cookie) : static::args(...$cookie)));
     }
@@ -72,9 +72,9 @@ trait PHPCookies
     /**
      * @param string $name
      * @param string $value
-     * @param int|null|string $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param int|string|null $expire
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return mixed
@@ -89,9 +89,9 @@ trait PHPCookies
     /**
      * @param string $name
      * @param string $value
-     * @param int|null|string $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param int|string|null $expire
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return self|mixed
@@ -105,8 +105,8 @@ trait PHPCookies
 
     /**
      * @param string $name
-     * @param null|string $path
-     * @param null|string $domain
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return self|mixed

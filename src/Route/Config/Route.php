@@ -10,8 +10,8 @@ use Mvc5\Arg;
 trait Route
 {
     /**
-     * @param null|string $name
-     * @return mixed
+     * @param string|null $name
+     * @return callable|mixed
      */
     function action(string $name = null)
     {
@@ -38,13 +38,13 @@ trait Route
     /**
      * @return array
      */
-    function constraints()
+    function constraints() : array
     {
-        return $this[Arg::CONSTRAINTS] ?: [];
+        return $this[Arg::CONSTRAINTS] ?? [];
     }
 
     /**
-     * @return array|callable|object|string
+     * @return callable|mixed
      */
     function controller()
     {
@@ -54,13 +54,13 @@ trait Route
     /**
      * @return array
      */
-    function defaults()
+    function defaults() : array
     {
-        return $this[Arg::DEFAULTS] ?: [];
+        return $this[Arg::DEFAULTS] ?? [];
     }
 
     /**
-     * @return null|string|string[]
+     * @return array|string|null
      */
     function host()
     {
@@ -68,7 +68,7 @@ trait Route
     }
 
     /**
-     * @return array
+     * @return array|string|null
      */
     function method()
     {
@@ -76,7 +76,7 @@ trait Route
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function name()
     {
@@ -86,13 +86,13 @@ trait Route
     /**
      * @return array
      */
-    function options()
+    function options() : array
     {
-        return $this[Arg::OPTIONS] ?: [];
+        return $this[Arg::OPTIONS] ?? [];
     }
 
     /**
-     * @return array|string
+     * @return array|string|null
      */
     function path()
     {
@@ -100,7 +100,7 @@ trait Route
     }
 
     /**
-     * @return int|null|string
+     * @return int|null
      */
     function port()
     {
@@ -108,7 +108,7 @@ trait Route
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function regex()
     {
@@ -116,7 +116,7 @@ trait Route
     }
 
     /**
-     * @return null|string|string[]
+     * @return array|string|null
      */
     function scheme()
     {
@@ -126,16 +126,16 @@ trait Route
     /**
      * @return array
      */
-    function tokens()
+    function tokens() : array
     {
-        return $this[Arg::TOKENS] ?: [];
+        return $this[Arg::TOKENS] ?? [];
     }
 
     /**
      * @return bool
      */
-    function wildcard()
+    function wildcard() : bool
     {
-        return $this[Arg::WILDCARD] ?: false;
+        return (bool) $this[Arg::WILDCARD];
     }
 }

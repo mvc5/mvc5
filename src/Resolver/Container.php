@@ -8,22 +8,22 @@ namespace Mvc5\Resolver;
 trait Container
 {
     /**
-     * @var array|mixed
+     * @var array|\ArrayAccess
      */
     protected $config = [];
 
     /**
-     * @var array|\Iterator|mixed
+     * @var array|\ArrayAccess|\Iterator
      */
     protected $container = [];
 
     /**
-     * @var array|mixed
+     * @var array|\ArrayAccess
      */
     protected $services = [];
 
     /**
-    * @return array|mixed
+    * @return array|\ArrayAccess
      */
     function config()
     {
@@ -40,7 +40,7 @@ trait Container
     }
 
     /**
-     * @return array|\Iterator|mixed
+     * @return array|\ArrayAccess|\Iterator
      */
     function container()
     {
@@ -82,7 +82,7 @@ trait Container
     }
 
     /**
-     * @return mixed
+     * @return int|string|null
      */
     function key()
     {
@@ -117,7 +117,7 @@ trait Container
     }
 
     /**
-     * @return array|mixed
+     * @return array|\ArrayAccess|\Iterator
      */
     function services()
     {
@@ -144,8 +144,8 @@ trait Container
 
     /**
      * @param string $name
-     * @param callable|null|object $service
-     * @return callable|null|object
+     * @param mixed $service
+     * @return mixed
      */
     protected function share(string $name, $service = null)
     {
@@ -157,8 +157,8 @@ trait Container
 
     /**
      * @param string $name
-     * @param null $plugin
-     * @return callable|mixed|null|object
+     * @param mixed $plugin
+     * @return mixed
      */
     function shared(string $name, $plugin = null)
     {
@@ -183,9 +183,9 @@ trait Container
     }
 
     /**
-     * @param $plugin
+     * @param string|mixed $plugin
      * @param array $args
-     * @return array|callable|null|object|string
+     * @return mixed
      */
     abstract function __invoke($plugin, array $args = []);
 }

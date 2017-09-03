@@ -12,7 +12,7 @@ class Session
 {
     /**
      * @param string $name
-     * @param $plugin
+     * @param mixed $plugin
      */
     function __construct(string $name, $plugin = null)
     {

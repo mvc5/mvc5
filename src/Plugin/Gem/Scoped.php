@@ -11,10 +11,10 @@ interface Scoped
     /**
      * @return \Closure
      */
-    function closure();
+    function closure() : \Closure;
 
     /**
      * @return bool|true
      */
-    function scoped();
+    function scoped() : bool;
 }

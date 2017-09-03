@@ -11,42 +11,42 @@ interface Uri
     extends Model
 {
     /**
-     * @return string
+     * @return string|null
      */
     function fragment();
 
     /**
-     * @return string
+     * @return string|null
      */
     function host();
 
     /**
-     * @return string
+     * @return string|null
      */
     function password();
 
     /**
-     * @return string
+     * @return string|null
      */
     function path();
 
     /**
-     * @return int
+     * @return int|null
      */
     function port();
 
     /**
-     * @return string
+     * @return array|string|null
      */
     function query();
 
     /**
-     * @return string
+     * @return string|null
      */
     function scheme();
 
     /**
-     * @return string
+     * @return string|null
      */
     function user();
 

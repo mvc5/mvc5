@@ -9,7 +9,7 @@ interface Value
     extends Gem
 {
     /**
-     * @return string
+     * @return string|mixed
      */
     function config();
 }

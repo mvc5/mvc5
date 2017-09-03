@@ -14,7 +14,7 @@ class Register
     /**
      * @param string $name
      * @param mixed $service
-     * @param $plugin
+     * @param mixed $plugin
      */
     function __construct(string $name, $service, $plugin = null)
     {
@@ -26,13 +26,13 @@ class Register
     /**
      * @param Service $plugins
      * @param array $config
-     * @return callable|null|object
+     * @return callable|object|null
      */
     function register(Service $plugins, array $config)
     {
         $service = $plugins->plugin($config[Arg::SERVICE]);
 
-        return isset($service[$config[Arg::NAME]]) ? $service[$config[Arg::NAME]] : (
+        return $service[$config[Arg::NAME]] ?? (
             isset($config[Arg::PLUGIN]) ? $service[$config[Arg::NAME]] = $plugins->plugin($config[Arg::PLUGIN]) : null
         );
     }

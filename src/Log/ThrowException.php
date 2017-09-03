@@ -10,10 +10,10 @@ use Mvc5\Exception;
 class ThrowException
 {
     /**
-     * @param \Throwable|mixed|null $exception
-     * @param \Throwable|mixed|null $message
+     * @param \Throwable|mixed $exception
+     * @param \Throwable|mixed $message
      * @param bool $throw_exception
-     * @return \Throwable|mixed|null
+     * @return \Throwable|mixed
      * @throws \Throwable
      */
     function __invoke($exception = null, $message = null, bool $throw_exception = false)

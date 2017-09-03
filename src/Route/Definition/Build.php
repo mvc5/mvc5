@@ -23,7 +23,7 @@ trait Build
      * @param bool $compile
      * @return Route
      */
-    protected function build($route, bool $compile = true)
+    protected function build($route, bool $compile = true) : Route
     {
         return $this->definition($this->create($route), $compile);
     }
@@ -32,7 +32,7 @@ trait Build
      * @param array|Route $route
      * @return Route
      */
-    protected function create($route)
+    protected function create($route) : Route
     {
         return $route instanceof Route ? $route :
             $this->createDefault($route, $route[Arg::CLASS_NAME] ?? Config::class);
@@ -43,7 +43,7 @@ trait Build
      * @param string $class
      * @return Route
      */
-    protected function createDefault($route = [], string $class = Config::class)
+    protected function createDefault($route = [], string $class = Config::class) : Route
     {
         return new $class($route);
     }
@@ -51,9 +51,9 @@ trait Build
     /**
      * @param Route $route
      * @param bool $compile
-     * @return array|Route
+     * @return Route
      */
-    protected function definition(Route $route, bool $compile = true)
+    protected function definition(Route $route, bool $compile = true) : Route
     {
         /** @var Route $route */
         $route = $this->host($route, $route[Arg::HOST]);
@@ -77,7 +77,7 @@ trait Build
      * @param $host
      * @return Route
      */
-    protected function host(Route $route, $host)
+    protected function host(Route $route, $host) : Route
     {
         if (!is_array($host)) {
             return $route;

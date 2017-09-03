@@ -11,5 +11,5 @@ interface Param
     /**
      * @return string
      */
-    function name();
+    function name() : string;
 }

@@ -6,6 +6,7 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
+use Mvc5\Url;
 
 trait Uri
 {
@@ -23,23 +24,23 @@ trait Uri
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function fragment()
     {
-        return (string) $this[Arg::FRAGMENT];
+        return $this[Arg::FRAGMENT];
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function host()
     {
-        return (string) $this[Arg::HOST];
+        return $this[Arg::HOST];
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     function password()
     {
@@ -47,11 +48,11 @@ trait Uri
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function path()
     {
-        return (string) $this[Arg::PATH];
+        return $this[Arg::PATH];
     }
 
     /**
@@ -63,7 +64,7 @@ trait Uri
     }
 
     /**
-     * @return array|string
+     * @return array|string|null
      */
     function query()
     {
@@ -71,15 +72,15 @@ trait Uri
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function scheme()
     {
-        return (string) $this[Arg::SCHEME];
+        return $this[Arg::SCHEME];
     }
 
     /**
-     * @return mixed|string
+     * @return string|null
      */
     function user()
     {
@@ -91,21 +92,7 @@ trait Uri
      */
     function __toString()
     {
-        $path     = $this->path();
-        $query    = $this->query();
-        $fragment = $this->fragment();
-
-        $user = $this->user() ? $this->user() . ($this->password() ? ':' . $this->password() : '') : '';
-
-        $scheme = $this->scheme();
-        $host   = $this->host();
-        $port   = $this->port();
-
-        ($port == 80 || $port == 443) &&
-            $port = null;
-
-        return ($scheme ? $scheme . ':' : '') . ($scheme || $host ? '//' : '') .
-            ($host ? ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') : '') .
-                $path . ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
+        /** @var \Mvc5\Http\Uri $this */
+        return Url\Assemble::uri($this);
     }
 }

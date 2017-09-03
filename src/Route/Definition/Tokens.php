@@ -33,18 +33,18 @@ trait Tokens
      * @param string $name
      * @param string $constraint
      * @param array $constraints
-     * @return mixed|string
+     * @return string
      */
-    protected function constraint(string $name, string $constraint, array $constraints)
+    protected function constraint(string $name, string $constraint, array $constraints) : string
     {
-        return $constraint ? $constraint : (isset($constraints[$name]) ? $constraints[$name] : '[^/]+');
+        return $constraint ? $constraint : ($constraints[$name] ?? '[^/]+');
     }
 
     /**
      * @param string $expr
-     * @return mixed|string
+     * @return string
      */
-    protected function expression(string $expr)
+    protected function expression(string $expr) : string
     {
         return ':' === $expr[0] && isset($this->expressions[$n = substr($expr, 1)]) ? $this->expressions[$n] : $expr;
     }
@@ -55,7 +55,7 @@ trait Tokens
      * @return array
      * @throws \RuntimeException
      */
-    protected function tokens(string $path, array $constraints = [])
+    protected function tokens(string $path, array $constraints = []) : array
     {
         $currentPos = 0;
         $length     = strlen($path);

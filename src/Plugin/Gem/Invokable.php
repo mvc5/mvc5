@@ -11,7 +11,7 @@ interface Invokable
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 
     /**
      * @return array|callable|object|Plugin|string

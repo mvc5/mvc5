@@ -11,7 +11,7 @@ interface Filter
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 
     /**
      * @return Plugin|string
@@ -24,7 +24,7 @@ interface Filter
     function filter();
 
     /**
-     * @return string
+     * @return string|null
      */
     function param();
 }

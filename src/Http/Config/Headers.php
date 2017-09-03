@@ -42,7 +42,6 @@ trait Headers
 
     /**
      * @param array|string $name
-     * @return void
      */
     function remove($name)
     {

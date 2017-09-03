@@ -31,8 +31,8 @@ class Dispatch
 
     /**
      * @param string $event
-     * @param null|Request $request
-     * @param null|Response $response
+     * @param Request|null $request
+     * @param Response|null $response
      */
     function __construct(string $event, Request $request = null, Response $response = null)
     {
@@ -44,7 +44,7 @@ class Dispatch
     /**
      * @return array
      */
-    protected function args()
+    protected function args() : array
     {
         return array_filter([
             Arg::CONTROLLER => $this->request[Arg::CONTROLLER],

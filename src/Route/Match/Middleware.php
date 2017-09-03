@@ -32,9 +32,9 @@ class Middleware
     }
 
     /**
-     * @param mixed|callable $controller
+     * @param callable|mixed $controller
      * @param array|null $middleware
-     * @return callable|mixed|null|object
+     * @return mixed
      */
     protected function middleware($controller, array $middleware = null)
     {
@@ -42,11 +42,11 @@ class Middleware
     }
 
     /**
-     * @param mixed|callable $controller
+     * @param callable|mixed $controller
      * @param array $middleware
      * @return array
      */
-    protected function stack($controller, array $middleware)
+    protected function stack($controller, array $middleware) : array
     {
         $controller && (false !== ($key = array_search($this->placeholder, $middleware, true)) ?
             $middleware[$key] = $controller : $middleware[] = $controller);
@@ -58,7 +58,7 @@ class Middleware
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request
+     * @return Request|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

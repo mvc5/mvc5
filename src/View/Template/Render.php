@@ -32,7 +32,7 @@ trait Render
     /**
      * @param $model
      * @param array $vars
-     * @return mixed
+     * @return string|mixed
      */
     function __invoke($model = null, array $vars = [])
     {

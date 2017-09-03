@@ -13,7 +13,7 @@ trait Base
     protected $config = [];
 
     /**
-     * @param array|\Iterator|mixed $config
+     * @param array|Configuration|\Iterator|mixed $config
      */
     function __construct($config = [])
     {

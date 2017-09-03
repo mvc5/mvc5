@@ -32,7 +32,7 @@ class Wildcard
      * @param array $parts
      * @return array
      */
-    protected function match(array $params, array $options, array $parts)
+    protected function match(array $params, array $options, array $parts) : array
     {
         return ($n = count($parts)) % 2 ? $params : $this->set($this->remove($params, $options), $parts, $n);
     }
@@ -41,7 +41,7 @@ class Wildcard
      * @param Route $route
      * @return array
      */
-    protected function options(Route $route)
+    protected function options(Route $route) : array
     {
         return $route[Arg::OPTIONS] ? $route[Arg::OPTIONS] + $this->options : $this->options;
     }
@@ -50,7 +50,7 @@ class Wildcard
      * @param Request $request
      * @return array
      */
-    protected function params(Request $request)
+    protected function params(Request $request) : array
     {
         return $request->get(Arg::PARAMS) ?: [];
     }
@@ -60,7 +60,7 @@ class Wildcard
      * @param array $options
      * @return array
      */
-    protected function parts(array $params, array $options)
+    protected function parts(array $params, array $options) : array
     {
         return isset($params[$options[Arg::WILDCARD]]) ? explode(Arg::SEPARATOR, $params[$options[Arg::WILDCARD]]) : [];
     }
@@ -70,7 +70,7 @@ class Wildcard
      * @param array $options
      * @return array
      */
-    protected function remove(array $params, array $options)
+    protected function remove(array $params, array $options) : array
     {
         unset($params[$options[Arg::WILDCARD]]);
 
@@ -82,7 +82,7 @@ class Wildcard
      * @param array $matched
      * @return Request
      */
-    protected function request(Request $request, array $matched = [])
+    protected function request(Request $request, array $matched = []) : Request
     {
         return $matched ? $request->with(Arg::PARAMS, $matched) : $request;
     }
@@ -93,7 +93,7 @@ class Wildcard
      * @param int $n
      * @return array
      */
-    protected function set(array $params, array $parts, int $n)
+    protected function set(array $params, array $parts, int $n) : array
     {
         for($i = 0; $i < $n; $i += 2) {
             if (isset($params[$parts[$i]])) {
@@ -110,7 +110,7 @@ class Wildcard
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request
+     * @return Request|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

@@ -10,7 +10,7 @@ class ReadFile
     implements Emitter
 {
     /**
-     * @var null|resource
+     * @var resource|null
      */
     protected $context;
 
@@ -27,7 +27,7 @@ class ReadFile
     /**
      * @param string $filename
      * @param bool|false $use_include_path
-     * @param null|resource $context
+     * @param resource|null $context
      */
     function __construct(string $filename, bool $use_include_path = false, resource $context = null)
     {

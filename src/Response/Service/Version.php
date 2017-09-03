@@ -16,7 +16,7 @@ trait Version
      * @param Response $response
      * @return Response
      */
-    protected function version(Request $request, Response $response)
+    protected function version(Request $request, Response $response) : Response
     {
         return $response->version() ? $response : $response->with(Arg::VERSION, $request->version());
     }
@@ -26,7 +26,7 @@ trait Version
      * @param Response $response
      * @return Response
      */
-    function __invoke(Request $request, Response $response)
+    function __invoke(Request $request, Response $response) : Response
     {
         return $this->version($request, $response);
     }

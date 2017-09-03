@@ -11,5 +11,5 @@ interface SessionContainer
     /**
      * @return string
      */
-    function label();
+    function label() : string;
 }

@@ -14,7 +14,7 @@ trait Path
 
     /**
      * @param string $name
-     * @return string
+     * @return string|null
      */
     protected function path(string $name)
     {

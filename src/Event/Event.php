@@ -10,15 +10,15 @@ interface Event
     /**
      * @return string
      */
-    function name();
+    function name() : string;
 
     /**
      * @return bool|true
      */
-    function stop();
+    function stop() : bool;
 
     /**
      * @return bool
      */
-    function stopped();
+    function stopped() : bool;
 }

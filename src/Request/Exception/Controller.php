@@ -28,7 +28,7 @@ class Controller
      * @param Request $request
      * @return TemplateModel
      */
-    function __invoke(Request $request)
+    function __invoke(Request $request) : TemplateModel
     {
         return $this->model->with(Arg::EXCEPTION, $request[Arg::EXCEPTION]);
     }

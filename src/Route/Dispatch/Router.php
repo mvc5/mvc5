@@ -42,10 +42,10 @@ trait Router
 
     /**
      * @param Route $route
-     * @param null|Route $parent
+     * @param Route|null $parent
      * @return Route
      */
-    protected function child(Route $route, Route $parent = null)
+    protected function child(Route $route, Route $parent = null) : Route
     {
         return $route->with(Arg::PARENT, $parent);
     }
@@ -54,14 +54,14 @@ trait Router
      * @param array|Route $route
      * @return Route
      */
-    protected function definition($route)
+    protected function definition($route) : Route
     {
         return $route instanceof Route ? $route : ($this->generator)($route);
     }
 
     /**
      * @param Request $request
-     * @return mixed|Request
+     * @return Request|mixed
      */
     protected function dispatch(Request $request)
     {
@@ -73,7 +73,7 @@ trait Router
      * @param int|string $name
      * @return string
      */
-    protected function key(Route $route, $name)
+    protected function key(Route $route, $name) : string
     {
         return is_string($name) ? $name : (string) $route->name();
     }
@@ -81,7 +81,7 @@ trait Router
     /**
      * @param Route $route
      * @param Request $request
-     * @return mixed|Request
+     * @return Request|mixed
      */
     protected function match(Route $route, Request $request)
     {
@@ -90,10 +90,10 @@ trait Router
 
     /**
      * @param string $name
-     * @param null|string $parent
+     * @param string|null $parent
      * @return string
      */
-    protected function name(string $name, string $parent = null)
+    protected function name(string $name, string $parent = null) : string
     {
         return !$parent ? $name : $parent . Arg::SEPARATOR . $name;
     }
@@ -101,7 +101,7 @@ trait Router
     /**
      * @param Request $request
      * @param $result
-     * @return mixed|Request
+     * @return Request|mixed
      */
     protected function result(Request $request, $result)
     {
@@ -111,7 +111,7 @@ trait Router
     /**
      * @param Route $route
      * @param Request $request
-     * @return mixed|Request
+     * @return Request|mixed
      */
     protected function route(Route $route, Request $request)
     {
@@ -120,7 +120,7 @@ trait Router
 
     /**
      * @param $request
-     * @return mixed|Request
+     * @return Request|mixed
      */
     protected function solve($request)
     {
@@ -132,7 +132,7 @@ trait Router
      * @param Route $route
      * @param Request $request
      * @param int|string $name
-     * @return mixed|Request
+     * @return Request|mixed
      */
     protected function step(Route $route, Request $request, $name)
     {
@@ -144,8 +144,8 @@ trait Router
     /**
      * @param array|\Iterator $routes
      * @param Request $request
-     * @param null|Route $parent
-     * @return mixed|Request
+     * @param Route|null $parent
+     * @return Request|mixed
      */
     protected function traverse($routes, Request $request, Route $parent = null)
     {
@@ -160,7 +160,7 @@ trait Router
 
     /**
      * @param Request $request
-     * @return mixed|Request
+     * @return Request|mixed
      */
     function __invoke(Request $request)
     {

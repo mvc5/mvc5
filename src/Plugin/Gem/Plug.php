@@ -11,5 +11,5 @@ interface Plug
     /**
      * @return string
      */
-    function name();
+    function name() : string;
 }

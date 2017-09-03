@@ -20,7 +20,7 @@ class Filter
     protected $filter;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $param;
 
@@ -28,7 +28,7 @@ class Filter
      * @param $config
      * @param array|\Traversable $filter
      * @param array $args
-     * @param null|string $param
+     * @param string|null $param
      */
     function __construct($config, $filter = [], array $args = [], string $param = null)
     {
@@ -47,7 +47,7 @@ class Filter
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     function param()
     {

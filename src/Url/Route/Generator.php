@@ -36,7 +36,7 @@ trait Generator
 
     /**
      * @param array|\ArrayAccess $route
-     * @param null|Uri $uri
+     * @param Uri|null $uri
      */
     function __construct($route, Uri $uri = null)
     {
@@ -49,7 +49,7 @@ trait Generator
      * @param array $path
      * @return array
      */
-    protected function append(Route $route, array $path)
+    protected function append(Route $route, array $path) : array
     {
         $path[] = $route;
         return $path;
@@ -58,7 +58,7 @@ trait Generator
     /**
      * @param Route $parent
      * @param array|Route $route
-     * @return Route
+     * @return Route|null
      */
     protected function child(Route $parent, $route)
     {
@@ -67,7 +67,7 @@ trait Generator
 
     /**
      * @param string $name
-     * @return array|Route
+     * @return array|Route|null
      */
     protected function config(string $name)
     {
@@ -76,7 +76,7 @@ trait Generator
 
     /**
      * @param string $name
-     * @return Route
+     * @return Route|null
      */
     protected function construct(string $name)
     {
@@ -86,8 +86,8 @@ trait Generator
     /**
      * @param array $name
      * @param array $path
-     * @param null|Route $parent
-     * @return Route
+     * @param Route|null $parent
+     * @return Route|null
      */
     protected function generate(array $name, array $path = [], Route $parent = null)
     {
@@ -95,9 +95,9 @@ trait Generator
     }
 
     /**
-     * @param array|string $host
+     * @param array|string|null $host
      * @param array $params
-     * @return string
+     * @return string|null
      */
     protected function hostname($host, array &$params)
     {
@@ -106,8 +106,8 @@ trait Generator
 
     /**
      * @param string $name
-     * @param null|Route $parent
-     * @return Route
+     * @param Route|null $parent
+     * @return Route|null
      */
     protected function match(string $name, Route $parent = null)
     {
@@ -120,7 +120,7 @@ trait Generator
      * @param array $config
      * @return Route
      */
-    protected function merge(Route $parent, Route $child, array $config = [])
+    protected function merge(Route $parent, Route $child, array $config = []) : Route
     {
         !$child->scheme()
             && $config[Arg::SCHEME] = $parent->scheme();
@@ -138,7 +138,7 @@ trait Generator
      * @param Route $route
      * @param array $name
      * @param array $path
-     * @return Route
+     * @return Route|null
      */
     protected function next(Route $route, array $name, array $path)
     {
@@ -151,7 +151,7 @@ trait Generator
      * @param array $options
      * @return array
      */
-    protected function options(Route $route, array $params, array $options)
+    protected function options(Route $route, array $params, array $options) : array
     {
         !isset($options[Arg::SCHEME])
             && $options[Arg::SCHEME] = $route->scheme();
@@ -173,7 +173,7 @@ trait Generator
      * @param string $path
      * @return string
      */
-    protected function path(array $segment, array $params, string $path = '')
+    protected function path(array $segment, array $params, string $path = '') : string
     {
         /** @var Route $route */
         foreach($segment as $route) {
@@ -187,7 +187,7 @@ trait Generator
      * @param array|Route $route
      * @param array $name
      * @param array $path
-     * @return null|Route
+     * @return Route|null
      */
     protected function resolve($route, array $name, array $path)
     {
@@ -207,7 +207,7 @@ trait Generator
      * @param Route|null $route
      * @param array $params
      * @param array $options
-     * @return null|Uri
+     * @return Uri|null
      */
     protected function uri(Route $route = null, array $params = [], array $options = [])
     {
@@ -233,7 +233,7 @@ trait Generator
      * @param string $name
      * @param array $params
      * @param array $options
-     * @return string
+     * @return Uri|null
      */
     function __invoke(string $name, array $params = [], array $options = [])
     {

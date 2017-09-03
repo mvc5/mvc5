@@ -9,7 +9,7 @@ interface Args
     extends Gem
 {
     /**
-     * @return array
+     * @return array|mixed
      */
     function config();
 }

@@ -5,11 +5,11 @@
 
 namespace Mvc5\Session;
 
-class PHPSession
+final class PHPSession
     implements Session
 {
     /**
      *
      */
-    use Config\Session;
+    use Config\PHPSession;
 }

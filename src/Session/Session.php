@@ -24,16 +24,16 @@ interface Session
      * @param bool|true $remove_session_cookie
      * @return bool
      */
-    function destroy(bool $remove_session_cookie = true);
+    function destroy(bool $remove_session_cookie = true) : bool;
 
     /**
-     * @param null|string $id
+     * @param string|null $id
      * @return string
      */
     function id(string $id = null);
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @return string
      */
     function name(string $name = null);
@@ -47,10 +47,10 @@ interface Session
      * @param array $options
      * @return bool
      */
-    function start(array $options = []);
+    function start(array $options = []) : bool;
 
     /**
      * @return int
      */
-    function status();
+    function status() : int;
 }

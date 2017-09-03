@@ -9,13 +9,13 @@ interface TemplateLayout
     extends TemplateModel
 {
     /**
-     * @return null|string
+     * @return string|mixed
      */
     function model();
 
     /**
      * @param $model
-     * @return mixed|static
+     * @return self|mixed
      */
     function withModel($model);
 }

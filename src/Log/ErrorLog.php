@@ -38,7 +38,7 @@ class ErrorLog
      * @param $message
      * @return bool
      */
-    function __invoke($message)
+    function __invoke($message) : bool
     {
         return error_log((string) $message, $this->message_type, $this->destination, $this->extra_headers);
     }

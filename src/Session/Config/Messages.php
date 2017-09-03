@@ -43,7 +43,7 @@ trait Messages
      * @param string $type
      * @return array
      */
-    protected function add($message, string $name, string $type)
+    protected function add($message, string $name, string $type) : array
     {
         return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $this->type($type)]);
     }
@@ -51,26 +51,24 @@ trait Messages
     /**
      * @param array|string $message
      * @param string $name
-     * @return array
      */
     function danger($message, string $name = Arg::INDEX)
     {
-        return $this->add($message, $name, Arg::DANGER);
+        $this->add($message, $name, Arg::DANGER);
     }
 
     /**
      * @param array|string $message
      * @param string $name
-     * @return array
      */
     function info($message, string $name = Arg::INDEX)
     {
-        return $this->add($message, $name, Arg::INFO);
+        $this->add($message, $name, Arg::INFO);
     }
 
     /**
      * @param string $name
-     * @return array
+     * @return array|null
      */
     function message(string $name = Arg::INDEX)
     {
@@ -82,7 +80,6 @@ trait Messages
 
     /**
      * @param array|string $name
-     * @return void
      */
     function remove($name)
     {
@@ -120,11 +117,10 @@ trait Messages
     /**
      * @param array|string $message
      * @param string $name
-     * @return array
      */
     function success($message, string $name = Arg::INDEX)
     {
-        return $this->add($message, $name, Arg::SUCCESS);
+        $this->add($message, $name, Arg::SUCCESS);
     }
 
     /**
@@ -147,16 +143,15 @@ trait Messages
     /**
      * @param array|string $message
      * @param string $name
-     * @return array
      */
     function warning($message, string $name = Arg::INDEX)
     {
-        return $this->add($message, $name, Arg::WARNING);
+        $this->add($message, $name, Arg::WARNING);
     }
 
     /**
      * @param string $name
-     * @return array
+     * @return array|null
      */
     function __invoke(string $name = Arg::INDEX)
     {

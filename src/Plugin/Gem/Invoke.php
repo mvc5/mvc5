@@ -11,7 +11,7 @@ interface Invoke
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 
     /**
      * @return string|array

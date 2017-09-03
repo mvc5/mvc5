@@ -14,7 +14,7 @@ trait Exception
      * @param int $offset
      * @return \Throwable
      */
-    protected static function backtrace(\Throwable $exception, int $offset = 2)
+    protected static function backtrace(\Throwable $exception, int $offset = 2) : \Throwable
     {
         return static::origin(
             $exception, $offset, $offset && ($origin = $exception->getTrace()[$offset]) ? $origin : []);
@@ -26,7 +26,7 @@ trait Exception
      * @param int $offset
      * @return \Throwable
      */
-    protected static function create(string $exception, array $args = [], int $offset = 2)
+    protected static function create(string $exception, array $args = [], int $offset = 2) : \Throwable
     {
         return static::backtrace(static::instance($exception, $args), $offset);
     }
@@ -47,7 +47,7 @@ trait Exception
      * @param array $origin
      * @return \Throwable
      */
-    protected static function origin(\Throwable $exception, int $offset = 1, array $origin = [])
+    protected static function origin(\Throwable $exception, int $offset = 1, array $origin = []) : \Throwable
     {
         if (!$exception instanceof \Error) {
             if (!empty($origin[Arg::FILE])) {

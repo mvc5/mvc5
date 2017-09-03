@@ -15,9 +15,9 @@ class HttpMiddleware
     use Middleware;
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @return mixed|Response
+     * @param Request|mixed $request
+     * @param Response|mixed $response
+     * @return Response|mixed
      */
     function __invoke($request, $response)
     {

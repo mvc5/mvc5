@@ -43,9 +43,9 @@ class Controller
     /**
      * @param array $params
      * @param array $options
-     * @return null|string
+     * @return string
      */
-    protected function action(array $params, array $options)
+    protected function action(array $params, array $options) : string
     {
         return $params[$options[Arg::ACTION]] ?? '';
     }
@@ -53,9 +53,9 @@ class Controller
     /**
      * @param array $params
      * @param array $options
-     * @return null|string
+     * @return string
      */
-    protected function controller(array $params, array $options)
+    protected function controller(array $params, array $options) : string
     {
         return $params[$options[Arg::CONTROLLER]] ?? '';
     }
@@ -65,7 +65,7 @@ class Controller
      * @param array $options
      * @return string
      */
-    protected function format(string $name, array $options)
+    protected function format(string $name, array $options) : string
     {
         return $options[Arg::STRICT] ? $this->replace($name, $options) : $this->uppercase($name, $options);
     }
@@ -76,7 +76,7 @@ class Controller
      * @param array $replacement
      * @return bool
      */
-    protected function invalid(string $action, string $controller, array $replacement)
+    protected function invalid(string $action, string $controller, array $replacement) : bool
     {
         return !$this->valid($controller, $replacement) || (!$this->valid($action, $replacement) && $action);
     }
@@ -101,12 +101,12 @@ class Controller
     }
 
     /**
-     * @param null|string $action
-     * @param null|string $controller
+     * @param string|null $action
+     * @param string|null $controller
      * @param array $options
      * @return string
      */
-    protected function name(string $action = null, string $controller = null, array $options = [])
+    protected function name(string $action = null, string $controller = null, array $options = []) : string
     {
         return $options[Arg::PREFIX] . $controller
             . ($action ? $options[Arg::SPLIT] . $action : '') . $options[Arg::SUFFIX];
@@ -114,9 +114,9 @@ class Controller
 
     /**
      * @param Route $route
-     * @return mixed
+     * @return array
      */
-    protected function options(Route $route)
+    protected function options(Route $route) : array
     {
         return $route->options() + $this->options;
     }
@@ -126,7 +126,7 @@ class Controller
      * @param array $options
      * @return string
      */
-    protected function replace(string $name, array $options)
+    protected function replace(string $name, array $options) : string
     {
         return str_replace($this->separator($options), $this->replacement($options), $name);
     }
@@ -135,7 +135,7 @@ class Controller
      * @param array $options
      * @return array
      */
-    protected function replacement(array $options)
+    protected function replacement(array $options) : array
     {
         return array_values($options[Arg::SEPARATORS]);
     }
@@ -144,7 +144,7 @@ class Controller
      * @param array $options
      * @return array
      */
-    protected function separator(array $options)
+    protected function separator(array $options) : array
     {
         return array_keys($options[Arg::SEPARATORS]);
     }
@@ -154,7 +154,7 @@ class Controller
      * @param array $options
      * @return string
      */
-    protected function uppercase(string $name, array $options)
+    protected function uppercase(string $name, array $options) : string
     {
         foreach($options[Arg::SEPARATORS] as $separator => $replacement) {
             $name = str_replace(' ', $replacement, ucwords(str_replace($separator, ' ', $name)));
@@ -168,7 +168,7 @@ class Controller
      * @param array $replacement
      * @return bool
      */
-    protected function valid(string $name, array $replacement)
+    protected function valid(string $name, array $replacement) : bool
     {
         return $name && str_replace($replacement, '', $name);
     }
@@ -177,7 +177,7 @@ class Controller
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return null|NotFound|Request
+     * @return NotFound|Request|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

@@ -19,9 +19,9 @@ trait ViewModel
     use TemplateModel;
 
     /**
-     * @param array|null|string $template
+     * @param array|string|null $template
      * @param array $vars
-     * @param null|Service $service
+     * @param Service|null $service
      */
     function __construct($template = null, array $vars = [], Service $service = null)
     {
@@ -34,7 +34,7 @@ trait ViewModel
     }
 
     /**
-     * @return null|Service
+     * @return Service|null
      */
     function service()
     {
@@ -43,7 +43,7 @@ trait ViewModel
 
     /**
      * @param Service $service
-     * @return mixed|static
+     * @return self|mixed
      */
     function withService(Service $service)
     {

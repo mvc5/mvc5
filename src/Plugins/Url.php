@@ -10,9 +10,9 @@ use Mvc5\Arg;
 trait Url
 {
     /**
-     * @param array|null|string|\Mvc5\Http\Uri $route
-     * @param array|null|string $query
-     * @param null|string $fragment
+     * @param array|string|\Mvc5\Http\Uri|null $route
+     * @param array|string|null $query
+     * @param string|null $fragment
      * @param array $options
      * @return string
      */

@@ -27,7 +27,7 @@ class Scope
      * @param string $name
      * @param Service $service
      * @param array $args
-     * @return callable|null|object
+     * @return callable|object|null
      */
     function scope(string $name, Service $service, array $args)
     {

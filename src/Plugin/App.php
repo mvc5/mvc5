@@ -15,8 +15,8 @@ class App
 
     /**
      * @param array|\ArrayAccess $config
-     * @param $provider
-     * @param $scope
+     * @param bool|callable $provider
+     * @param bool|object $scope
      * @param array $calls
      */
     function __construct($config = [], $provider = true, $scope = true, array $calls = [])

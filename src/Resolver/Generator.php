@@ -16,15 +16,15 @@ trait Generator
     use EventGenerator;
 
     /**
-     * @var array|mixed
+     * @var array|\ArrayAccess
      */
     protected $events = [];
 
     /**
-     * @param array|object|string|\Traversable $event
+     * @param array|\Iterator|object|string $event
      * @param array $args
      * @param callable|null $callback
-     * @return mixed|null
+     * @return mixed
      */
     protected function event($event, array $args = [], callable $callback = null)
     {
@@ -32,16 +32,16 @@ trait Generator
     }
 
     /**
-     * @param $event
+     * @param Event|object|string $event
      * @return string
      */
-    protected function eventName($event)
+    protected function eventName($event) : string
     {
         return is_string($event) ? $event : ($event instanceof Event ? $event->name() : get_class($event));
     }
 
     /**
-     * @return array|mixed
+     * @return array|\ArrayAccess
      */
     function events()
     {
@@ -51,7 +51,7 @@ trait Generator
     /**
      * @param Event|object|string $event
      * @param array $args
-     * @return array|\Traversable|null
+     * @return array|\Iterator|null
      */
     protected function iterator($event, array $args = [])
     {
@@ -59,7 +59,7 @@ trait Generator
     }
 
     /**
-     * @param $plugin
+     * @param Event|mixed $plugin
      * @return callable|null
      */
     protected function listener($plugin)
@@ -71,7 +71,7 @@ trait Generator
 
     /**
      * @param string $name
-     * @return array|\Traversable|null
+     * @return array|\Iterator
      */
     protected function listeners(string $name)
     {
@@ -79,10 +79,10 @@ trait Generator
     }
 
     /**
-     * @param array|object|string|\Traversable $event
+     * @param array|\Iterator|Event|object|string $event
      * @param array $args
      * @param callable|null $callback
-     * @return mixed|null
+     * @return mixed
      */
     function trigger($event, array $args = [], callable $callback = null)
     {
@@ -90,9 +90,9 @@ trait Generator
     }
 
     /**
-     * @param $plugin
+     * @param string|mixed $plugin
      * @param array $args
-     * @return array|callable|null|object|string
+     * @return mixed
      */
     abstract function __invoke($plugin, array $args = []);
 }

@@ -9,7 +9,7 @@ class GlobalVar
     extends Value
 {
     /**
-     * @return mixed
+     * @return array|mixed
      */
     function config()
     {

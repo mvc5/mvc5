@@ -14,7 +14,7 @@ trait Traverse
      * @param array $vars
      * @return TemplateModel
      */
-    protected function traverse(TemplateModel $template, array $vars = [])
+    protected function traverse(TemplateModel $template, array $vars = []) : TemplateModel
     {
         foreach($template as $k => $v) {
             $v instanceof TemplateModel && $vars[$k] = $this->render($v);

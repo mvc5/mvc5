@@ -24,16 +24,16 @@ class Plugins
     function __construct($services = [], $provider = true, $scope = true, array $calls = [])
     {
         parent::__construct(
-            static::APP_CLASS, [$this->plugins($services, $provider), $provider === true ? new Link : $provider, $scope], $calls
+            static::APP_CLASS, [$this->plugins($services, (bool) $provider), $provider === true ? new Link : $provider, $scope], $calls
         );
     }
 
     /**
-     * @param $services
-     * @param $provider
+     * @param array|\ArrayAccess $services
+     * @param bool $provider
      * @return Args
      */
-    protected function plugins($services, $provider)
+    protected function plugins($services, bool $provider) : Args
     {
         return new Args([Arg::SERVICES => $provider || !is_array($services) ? $services : new Args($services)]);
     }

@@ -22,7 +22,7 @@ class Method
      * @param array $method
      * @return bool
      */
-    protected function match(Request $request, array $method)
+    protected function match(Request $request, array $method) : bool
     {
         return !$method || in_array($request->method(), $method);
     }
@@ -31,7 +31,7 @@ class Method
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return MethodNotAllowed|null|Request
+     * @return MethodNotAllowed|Request|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

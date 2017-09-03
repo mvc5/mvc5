@@ -6,6 +6,7 @@
 namespace Mvc5\Cookie\Config;
 
 use Mvc5\Arg;
+use Mvc5\Cookie;
 
 trait Cookies
 {
@@ -38,15 +39,15 @@ trait Cookies
     /**
      * @param string $name
      * @param string $value
-     * @param int|null|string $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param int|string|null $expire
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return array
      */
     protected function cookie($name, $value, $expire = null,
-                              string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+                              string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : array
     {
         return [
             Arg::NAME => (string) $name,
@@ -61,8 +62,8 @@ trait Cookies
 
     /**
      * @param string $name
-     * @param null|string $path
-     * @param null|string $domain
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      */
@@ -74,9 +75,9 @@ trait Cookies
     /**
      * @param string $name
      * @param string $value
-     * @param int|null|string $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param int|string|null $expire
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return mixed
@@ -91,15 +92,15 @@ trait Cookies
     /**
      * @param string $name
      * @param string $value
-     * @param int|null|string $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param int|string|null $expire
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
-     * @return self|mixed
+     * @return Cookie\Cookies|self|mixed
      */
     function with($name, $value = '', $expire = null,
-                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
     {
         $new = clone $this;
         $new->set($name, $value, $expire, $path, $domain, $secure, $httponly);
@@ -108,13 +109,13 @@ trait Cookies
 
     /**
      * @param string $name
-     * @param null|string $path
-     * @param null|string $domain
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
-     * @return self|mixed
+     * @return Cookie\Cookies|self|mixed
      */
-    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
     {
         $new = clone $this;
         $new->remove($name, $path, $domain, $secure, $httponly);

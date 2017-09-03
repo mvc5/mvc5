@@ -34,7 +34,7 @@ trait Error
      * @param Request $request
      * @return Request
      */
-    protected function request(Request $request)
+    protected function request(Request $request) : Request
     {
         return !$request[Arg::ERROR] ? $request :
             $request->with([Arg::CONTROLLER => $this->controller, Arg::NAME => $this->name]);
@@ -44,7 +44,7 @@ trait Error
      * @param Request $request
      * @return Request
      */
-    function __invoke(Request $request)
+    function __invoke(Request $request) : Request
     {
         return $this->request($request);
     }

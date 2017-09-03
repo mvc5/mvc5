@@ -18,7 +18,7 @@ trait EventModel
     /**
      * @return array
      */
-    protected function args()
+    protected function args() : array
     {
         return [
             Arg::EVENT => $this

@@ -16,10 +16,10 @@ class Plugin
     use Config\Plugin;
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param array $args
      * @param array $calls
-     * @param null|string $param
+     * @param string|null $param
      * @param bool|false $merge
      */
     function __construct(string $name = null, array $args = [], array $calls = [], string $param = null, bool $merge = false)

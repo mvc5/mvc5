@@ -64,7 +64,7 @@ trait Send
      * @param Response $response
      * @return Response
      */
-    protected function send(Response $response)
+    protected function send(Response $response) : Response
     {
         $this->headers($response);
         $this->body($response);
@@ -75,7 +75,7 @@ trait Send
      * @param Response $response
      * @return Response
      */
-    function __invoke(Response $response)
+    function __invoke(Response $response) : Response
     {
         return $this->send($response);
     }

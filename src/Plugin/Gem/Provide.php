@@ -11,7 +11,7 @@ interface Provide
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 
     /**
      * @return mixed

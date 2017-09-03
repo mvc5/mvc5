@@ -11,7 +11,7 @@ trait View
 {
     /**
      * @param array $vars
-     * @param null|string $template
+     * @param string|null $template
      * @param string $model
      * @return \Mvc5\Template\TemplateLayout|mixed
      */
@@ -22,8 +22,8 @@ trait View
 
     /**
      * @param array $vars
-     * @param null|string $template
-     * @param null|string $model
+     * @param string|null $template
+     * @param string|null $model
      * @return \Mvc5\Template\TemplateModel|\Mvc5\Template\TemplateLayout|mixed
      */
     protected function model(array $vars = [], string $template = null, string $model = null)
@@ -38,15 +38,15 @@ trait View
     }
 
     /**
-     * @param $name
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
-     * @return callable|mixed|null|object
+     * @return mixed
      */
-    protected abstract function plugin($name, array $args = [], callable $callback = null);
+    protected abstract function plugin($plugin, array $args = [], callable $callback = null);
 
     /**
-     * @param null|string $template
+     * @param string|null $template
      * @param array $vars
      * @return \Mvc5\Template\TemplateModel|mixed
      */

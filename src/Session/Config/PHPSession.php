@@ -8,8 +8,9 @@ namespace Mvc5\Session\Config;
 use Mvc5\Arg;
 use Mvc5\Config\ArrayAccess;
 use Mvc5\Config\PropertyAccess;
+use Mvc5\Session\Session;
 
-trait Session
+trait PHPSession
 {
     /**
      *
@@ -36,7 +37,7 @@ trait Session
     /**
      * @return int
      */
-    function count()
+    function count() : int
     {
         return count($_SESSION);
     }
@@ -53,7 +54,7 @@ trait Session
      * @param bool $remove_session_cookie
      * @return bool
      */
-    function destroy(bool $remove_session_cookie = true)
+    function destroy(bool $remove_session_cookie = true) : bool
     {
         $remove_session_cookie &&
             $this->removeSessionCookie($this->name(), session_get_cookie_params());
@@ -80,7 +81,7 @@ trait Session
     }
 
     /**
-     * @param null|string $id
+     * @param string|null $id
      * @return string
      */
     function id(string $id = null)
@@ -89,7 +90,7 @@ trait Session
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     function key()
     {
@@ -97,7 +98,7 @@ trait Session
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @return string
      */
     function name(string $name = null)
@@ -114,7 +115,7 @@ trait Session
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return mixed
      */
     function &offsetGet($name)
@@ -180,7 +181,7 @@ trait Session
      * @param array $options
      * @return bool
      */
-    function start(array $options = [])
+    function start(array $options = []) : bool
     {
         return PHP_SESSION_ACTIVE === $this->status() ?: session_start($options);
     }
@@ -188,7 +189,7 @@ trait Session
     /**
      * @return int
      */
-    function status()
+    function status() : int
     {
         return session_status();
     }
@@ -204,9 +205,9 @@ trait Session
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return self|mixed
+     * @return Session|self|mixed
      */
-    function with($name, $value = null)
+    function with($name, $value = null) : Session
     {
         $this->set($name, $value);
         return $this;
@@ -214,16 +215,16 @@ trait Session
 
     /**
      * @param array|string $name
-     * @return self|mixed
+     * @return Session|self|mixed
      */
-    function without($name)
+    function without($name) : Session
     {
         $this->remove($name);
         return $this;
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return mixed
      */
     function &__get($name)

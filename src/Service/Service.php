@@ -8,12 +8,12 @@ namespace Mvc5\Service;
 interface Service
 {
     /**
-     * @param array|callable|object|string $config
+     * @param callable|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return mixed
      */
-    function call($config, array $args = [], callable $callback = null);
+    function call($plugin, array $args = [], callable $callback = null);
 
     /**
      * @param string $name
@@ -22,12 +22,12 @@ interface Service
     function param(string $name);
 
     /**
-     * @param $name
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return mixed
      */
-    function plugin($name, array $args = [], callable $callback = null);
+    function plugin($plugin, array $args = [], callable $callback = null);
 
     /**
      * @param string $name
@@ -37,7 +37,7 @@ interface Service
     function shared(string $name, $config = null);
 
     /**
-     * @param array|object|string|\Traversable $event
+     * @param array|\Iterator|\Mvc5\Event\Event|object|string $event
      * @param array $args
      * @param callable|null $callback
      * @return mixed

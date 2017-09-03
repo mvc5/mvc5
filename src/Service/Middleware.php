@@ -38,9 +38,9 @@ trait Middleware
     }
 
     /**
-     * @return mixed
+     * @return \Closure
      */
-    protected function delegate()
+    protected function delegate() : \Closure
     {
         return function(...$args) {
             return $this->call($this->next(), $args);
@@ -49,7 +49,7 @@ trait Middleware
 
     /**
      * @param array $args
-     * @return mixed|null
+     * @return mixed
      */
     protected function end(array $args)
     {

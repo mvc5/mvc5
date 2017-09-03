@@ -16,7 +16,7 @@ class Factory
     use Config\Child;
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      */
     function __construct(string $name = null)
     {

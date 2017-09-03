@@ -28,7 +28,7 @@ trait Container
      * @param Request $request
      * @return Request
      */
-    protected function share(Request $request)
+    protected function share(Request $request) : Request
     {
         return $this->container[Arg::REQUEST] = $request;
     }
@@ -37,7 +37,7 @@ trait Container
      * @param Request $request
      * @return Request
      */
-    function __invoke(Request $request)
+    function __invoke(Request $request) : Request
     {
         return $this->share($request);
     }

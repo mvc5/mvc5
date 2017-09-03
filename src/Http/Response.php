@@ -16,7 +16,7 @@ interface Response
     function body();
 
     /**
-     * @return array|mixed
+     * @return array|Headers
      */
     function headers();
 

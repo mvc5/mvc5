@@ -15,7 +15,7 @@ trait Optional
      * @param string $name
      * @return bool
      */
-    protected function optional(Route $route, string $name)
+    protected function optional(Route $route, string $name) : bool
     {
         return in_array($name, (array) $route[Arg::OPTIONAL]);
     }

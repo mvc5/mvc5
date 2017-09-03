@@ -12,13 +12,13 @@ interface ViewModel
     extends TemplateModel
 {
     /**
-     * @return null|Service
+     * @return Service|null
      */
     function service();
 
     /**
      * @param Service $service
-     * @return mixed|static
+     * @return self|mixed
      */
     function withService(Service $service);
 

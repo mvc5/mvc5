@@ -12,7 +12,7 @@ trait Params
      * @param array $params
      * @return array
      */
-    protected function params(array $match, array $params = [])
+    protected function params(array $match, array $params = []) : array
     {
         foreach($match as $name => $value) {
             is_string($name) && $params[$name] = $value;

@@ -11,10 +11,10 @@ interface Shared
     /**
      * @return string
      */
-    function name();
+    function name() : string;
 
     /**
-     * @return mixed
+     * @return Plugin|mixed
      */
     function config();
 }

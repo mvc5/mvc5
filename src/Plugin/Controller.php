@@ -16,7 +16,7 @@ class Controller
     use Config\Child;
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param array $args
      * @param array $calls
      */

@@ -16,7 +16,7 @@ class Shared
 
     /**
      * @param string $name
-     * @param $config
+     * @param mixed $config
      */
     function __construct(string $name, $config = null)
     {

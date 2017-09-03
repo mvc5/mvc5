@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Render
 {
     /**
-     * @param mixed|string $template
+     * @param string|mixed $template
      * @param array $vars
      * @return string
      */

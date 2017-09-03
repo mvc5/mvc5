@@ -78,7 +78,7 @@ final class StatusCode
 
     /**
      * @param int $status
-     * @return null|string
+     * @return string|null
      */
     static function reasonPhrase(int $status)
     {

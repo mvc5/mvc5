@@ -29,12 +29,12 @@ trait Build
 
     /**
      * @param string $name
-     * @param mixed $config
+     * @param bool|false $config
      * @param array $args
      * @param callable|null $callback
      * @return mixed
      */
-    protected function callback(string $name, $config = null, array $args = [], callable $callback = null)
+    protected function callback(string $name, bool $config = false, array $args = [], callable $callback = null)
     {
         return $callback && !class_exists($name) ? $callback($name) : (
             $config || !$this->strict || $this->configured($name) ? $this->make($name, $args) : null
@@ -67,7 +67,7 @@ trait Build
     }
 
     /**
-     * @param mixed $plugin
+     * @param array|Container|Manager $plugin
      * @param string $name
      * @param array $args
      * @param callable|null $callback
@@ -101,7 +101,7 @@ trait Build
      */
     protected function first(string $plugin, array $name, array $args = [], callable $callback = null)
     {
-        return !$name ? $this->callback($plugin, null, $args, $callback) : $this->create($plugin, $args, $callback);
+        return !$name ? $this->callback($plugin, false, $args, $callback) : $this->create($plugin, $args, $callback);
     }
 
     /**
@@ -116,7 +116,7 @@ trait Build
 
     /**
      * @param string $name
-     * @param mixed $plugin
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return mixed
@@ -124,11 +124,11 @@ trait Build
     protected function unique(string $name, $plugin, array $args = [], callable $callback = null)
     {
         return $plugin && $name !== $plugin ?
-            $this->plugin($plugin, $args, $callback, $name) : $this->callback($name, $plugin, $args, $callback);
+            $this->plugin($plugin, $args, $callback, $name) : $this->callback($name, (bool) $plugin, $args, $callback);
     }
 
     /**
-     * @param mixed $plugin
+     * @param string|mixed $plugin
      * @param array $args
      * @return mixed
      */

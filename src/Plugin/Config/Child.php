@@ -15,7 +15,7 @@ trait Child
     use Plugin;
 
     /**
-     * @return string
+     * @return string|mixed
      */
     function parent()
     {

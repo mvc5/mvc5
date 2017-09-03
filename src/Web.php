@@ -23,7 +23,7 @@ class Web
     }
 
     /**
-     * @return callable|mixed|null|object
+     * @return mixed
      */
     function __invoke()
     {

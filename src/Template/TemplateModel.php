@@ -9,18 +9,18 @@ interface TemplateModel
     extends \Mvc5\Config\Model
 {
     /**
-     * @return null|string
+     * @return string|null
      */
     function template();
 
     /**
-     * @return array|null
+     * @return array
      */
-    function vars();
+    function vars() : array;
 
     /**
      * @param string $template
-     * @return mixed|static
+     * @return self|mixed
      */
     function withTemplate(string $template);
 }

@@ -25,7 +25,7 @@ class Response
      * @param array $args
      * @return array
      */
-    protected function eventArgs(string $event, array $args)
+    protected function eventArgs(string $event, array $args) : array
     {
         return [Arg::EVENT => $event] + $args + [
             Arg::REQUEST => new Plugin('request'), Arg::RESPONSE => new Plugin('response')

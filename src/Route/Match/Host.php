@@ -23,7 +23,7 @@ class Host
      * @param Request $request
      * @param array|string $host
      * @param callable $next
-     * @return NotFound|null|Request
+     * @return NotFound|Request|mixed
      */
     protected function match(Route $route, Request $request, $host, callable $next)
     {
@@ -38,7 +38,7 @@ class Host
      * @param Request $request
      * @param string $host
      * @param callable $next
-     * @return NotFound|null|Request
+     * @return NotFound|Request|null
      */
     protected function name(Route $route, Request $request, string $host, callable $next)
     {
@@ -59,7 +59,7 @@ class Host
      * @param Request $request
      * @param array $host
      * @param callable $next
-     * @return NotFound|null|Request
+     * @return NotFound|Request|mixed
      */
     protected function regex(Route $route, Request $request, array $host, callable $next)
     {
@@ -76,7 +76,7 @@ class Host
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request|NotFound
+     * @return Request|NotFound|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

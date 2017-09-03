@@ -22,7 +22,7 @@ class Path
      * @param string $path
      * @param int $offset
      * @param callable $next
-     * @return null|Request
+     * @return Request|mixed
      */
     protected function match(Route $route, Request $request, string $path, int $offset, callable $next)
     {
@@ -49,7 +49,7 @@ class Path
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request
+     * @return Request|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

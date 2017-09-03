@@ -17,7 +17,7 @@ trait Hydrator
     /**
      * @param string $name
      * @param array $calls
-     * @param null|string $param
+     * @param string|null $param
      */
     function __construct($name, array $calls, $param = Arg::ITEM)
     {

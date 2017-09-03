@@ -17,7 +17,7 @@ class Merge
      * @param array $config
      * @return Route
      */
-    protected function merge(Route $route, Route $parent, array $config = [])
+    protected function merge(Route $route, Route $parent, array $config = []) : Route
     {
         ($options = $parent->options()) &&
             $config[Arg::OPTIONS] = $route->options() + $options;
@@ -32,7 +32,7 @@ class Merge
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request
+     * @return Request|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

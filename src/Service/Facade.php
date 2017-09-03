@@ -8,14 +8,14 @@ namespace Mvc5\Service;
 trait Facade
 {
     /**
-     * @param array|callable|object|string $name
+     * @param callable|mixed $plugin
      * @param array $args
      * @param callable|null $callback
-     * @return callable|mixed|null|object
+     * @return mixed
      */
-    protected static function call($name, array $args = [], callable $callback = null)
+    protected static function call($plugin, array $args = [], callable $callback = null)
     {
-        return static::service()->call($name, $args, $callback);
+        return static::service()->call($plugin, $args, $callback);
     }
 
     /**
@@ -28,28 +28,28 @@ trait Facade
     }
 
     /**
-     * @param $name
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
-     * @return callable|mixed|null|object
+     * @return mixed
      */
-    protected static function plugin($name, array $args = [], callable $callback = null)
+    protected static function plugin($plugin, array $args = [], callable $callback = null)
     {
-        return static::service()->plugin($name, $args, $callback);
+        return static::service()->plugin($plugin, $args, $callback);
     }
 
     /**
      * @return callable|Manager|Service
      */
-    protected static function service()
+    protected static function service() : Service
     {
         return Context::service();
     }
 
     /**
      * @param string $name
-     * @param $config
-     * @return callable|mixed|null|object
+     * @param mixed $config
+     * @return mixed
      */
     protected static function shared(string $name, $config = null)
     {
@@ -60,7 +60,7 @@ trait Facade
      * @param array|object|string|\Traversable $event
      * @param array $args
      * @param callable|null $callback
-     * @return mixed|null
+     * @return mixed
      */
     protected static function trigger($event, array $args = [], callable $callback = null)
     {

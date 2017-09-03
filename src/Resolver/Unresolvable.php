@@ -7,32 +7,32 @@ namespace Mvc5\Resolver;
 
 use Mvc5\Exception\RuntimeException;
 
-class Unresolvable
+final class Unresolvable
     extends RuntimeException
 {
     /**
-     * @param $message
+     * @param object|string|mixed $message
      * @return string
      */
-    protected static function formatMessage($message)
+    protected static function formatMessage($message)  : string
     {
         return !$message ? '' : (
-            'Unresolvable plugin: ' . (is_object($message) ? get_class($message) : (is_string($message) ? $message : ''))
+            'Unresolvable plugin: ' . (is_object($message) ? get_class($message) : (is_string($message) ? $message : gettype($message)))
         );
     }
 
     /**
-     * @param $plugin
+     * @param object|string|mixed $plugin
      * @return mixed
      * @throws self
      */
-    final static function plugin($plugin)
+    static function plugin($plugin)
     {
         return static::raise(static::create(static::class, [static::formatMessage($plugin)]));
     }
 
     /**
-     * @param $plugin
+     * @param object|string|mixed $plugin
      * @throws self
      */
     function __invoke($plugin)

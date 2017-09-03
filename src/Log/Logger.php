@@ -28,7 +28,7 @@ class Logger
     protected $throw_exception = false;
 
     /**
-     * @var mixed|\Exception
+     * @var \Exception|mixed
      */
     protected $message;
 
@@ -43,7 +43,7 @@ class Logger
     /**
      * @return array
      */
-    protected function args()
+    protected function args() : array
     {
         return array_filter([
             Arg::EVENT           => $this,

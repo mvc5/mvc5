@@ -15,7 +15,7 @@ trait Regex
      * @param array $tokens
      * @return string
      */
-    protected function regex(array $tokens)
+    protected function regex(array $tokens) : string
     {
         $regex = '';
 

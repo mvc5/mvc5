@@ -15,12 +15,12 @@ trait Find
     use Path;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $directory;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $extension = Arg::VIEW_EXTENSION;
 
@@ -28,7 +28,7 @@ trait Find
      * @param string $name
      * @return string
      */
-    protected function find(string $name)
+    protected function find(string $name) : string
     {
         return $this->path($name) ?: (
             (!$name || !$this->directory || false !== strpos($name, '.')) ? $name :

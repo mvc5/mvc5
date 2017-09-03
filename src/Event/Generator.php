@@ -110,7 +110,7 @@ trait Generator
 
     /**
      * @param array|\Iterator $queue
-     * @return mixed|null
+     * @return array|\Iterator
      */
     protected function start(&$queue)
     {
@@ -123,7 +123,7 @@ trait Generator
      * @param array|\Iterator $queue
      * @return bool
      */
-    protected function stopped($event, $queue)
+    protected function stopped($event, $queue) : bool
     {
         return ($event instanceof Event && $event->stopped()) ||
             ($queue instanceof \Iterator ? !$queue->valid() : null === key($queue));

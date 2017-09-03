@@ -27,9 +27,9 @@ class Controller
     /**
      * @param Request $request
      * @param Error|null $error
-     * @return mixed
+     * @return ErrorModel
      */
-    function __invoke(Request $request, Error $error = null)
+    function __invoke(Request $request, Error $error = null) : ErrorModel
     {
         return $this->model->with([Arg::ERROR => $error ?: $request[Arg::ERROR]]);
     }

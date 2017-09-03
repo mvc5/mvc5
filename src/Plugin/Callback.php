@@ -19,7 +19,7 @@ class Callback
     /**
      * @return \Closure
      */
-    function closure()
+    function closure() : \Closure
     {
         return $this->callable;
     }

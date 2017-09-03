@@ -13,12 +13,12 @@ use Mvc5\Http\Request;
 trait Exception
 {
     /**
-     * @var mixed|callable
+     * @var callable|mixed
      */
     protected $controller;
 
     /**
-     * @var mixed|Error
+     * @var Error|mixed
      */
     protected $error;
 
@@ -29,7 +29,7 @@ trait Exception
 
     /**
      * @param string $name
-     * @param mixed|callable $controller
+     * @param callable|mixed $controller
      * @param Error|null $error
      */
     function __construct(string $name, $controller, Error $error = null)
@@ -44,7 +44,7 @@ trait Exception
      * @param \Throwable $exception
      * @return Request
      */
-    function __invoke(Request $request, \Throwable $exception)
+    function __invoke(Request $request, \Throwable $exception) : Request
     {
         return $request->with([
             Arg::CONTROLLER => $this->controller,

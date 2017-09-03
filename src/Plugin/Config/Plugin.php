@@ -18,7 +18,7 @@ trait Plugin
     /**
      * @return array
      */
-    function args()
+    function args() : array
     {
         return $this[Arg::ARGS] ? : [];
     }
@@ -26,7 +26,7 @@ trait Plugin
     /**
      * @return array
      */
-    function calls()
+    function calls() : array
     {
         return $this[Arg::CALLS] ? : [];
     }
@@ -34,13 +34,13 @@ trait Plugin
     /**
      * @return bool
      */
-    function merge()
+    function merge() : bool
     {
         return $this[Arg::MERGE] ? : false;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     function name()
     {
@@ -48,7 +48,7 @@ trait Plugin
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function param()
     {

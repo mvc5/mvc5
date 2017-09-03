@@ -19,7 +19,7 @@ class Version
      * @param Request $request
      * @param Response $response
      * @param callable $next
-     * @return mixed|Response
+     * @return Response|mixed
      */
     function __invoke(Request $request, Response $response, callable $next)
     {

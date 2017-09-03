@@ -27,7 +27,7 @@ trait TemplateModel
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     function template()
     {
@@ -35,16 +35,16 @@ trait TemplateModel
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    function vars()
+    function vars() : array
     {
         return $this->config;
     }
 
     /**
      * @param string $template
-     * @return mixed|static
+     * @return self|mixed
      */
     function withTemplate(string $template)
     {

@@ -31,7 +31,7 @@ class Event
     /**
      * @return array
      */
-    protected function args()
+    protected function args() : array
     {
         return array_filter([
             Arg::EVENT => $this,

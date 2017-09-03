@@ -17,7 +17,7 @@ class Scheme
      * @param array $scheme
      * @return bool
      */
-    protected function match(Request $request, array $scheme)
+    protected function match(Request $request, array $scheme) : bool
     {
         return !$scheme || in_array($request[Arg::URI][Arg::SCHEME], $scheme);
     }
@@ -26,7 +26,7 @@ class Scheme
      * @param Route $route
      * @param Request $request
      * @param callable $next
-     * @return Request|BadRequest
+     * @return Request|BadRequest|mixed
      */
     function __invoke(Route $route, Request $request, callable $next)
     {

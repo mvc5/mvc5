@@ -18,7 +18,7 @@ class Generator
     protected $class = Config::class;
 
     /**
-     * @param null|string $class
+     * @param string|null $class
      * @param array|null $expressions
      */
     function __construct(string $class = null, array $expressions = null)
@@ -29,9 +29,9 @@ class Generator
 
     /**
      * @param array|\ArrayAccess $route
-     * @return string
+     * @return Route
      */
-    protected function createDefault($route = [])
+    protected function createDefault($route = []) : Route
     {
         return new $this->class($route);
     }
@@ -41,7 +41,7 @@ class Generator
      * @param bool $compile
      * @return Route
      */
-    function __invoke($route, bool $compile = true)
+    function __invoke($route, bool $compile = true) : Route
     {
         return $this->build($route, $compile);
     }

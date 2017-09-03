@@ -21,7 +21,7 @@ trait Config
     }
 
     /**
-     * @return mixed
+     * @return string|mixed
      */
     function config()
     {

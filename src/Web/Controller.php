@@ -18,9 +18,9 @@ class Controller
     use Service;
 
     /**
-     * @param $controller
+     * @param mixed $controller
      * @param array $args
-     * @return callable|mixed|null|object
+     * @return mixed
      */
     protected function action($controller, array $args = [])
     {
@@ -31,7 +31,7 @@ class Controller
      * @param Request $request
      * @param Response $response
      * @param callable $next
-     * @return mixed|Response
+     * @return Response|mixed
      */
     function __invoke(Request $request, Response $response, callable $next)
     {

@@ -9,7 +9,7 @@ interface Child
     extends Plugin
 {
     /**
-     * @return string
+     * @return string|mixed
      */
     function parent();
 }

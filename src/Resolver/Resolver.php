@@ -52,7 +52,7 @@ trait Resolver
     /**
      * @param array|\ArrayAccess $config
      * @param callable|null $provider
-     * @param bool|null|object $scope
+     * @param bool|object|null $scope
      * @param bool $strict
      */
     function __construct($config = null, callable $provider = null, $scope = null, bool $strict = false)
@@ -76,8 +76,8 @@ trait Resolver
     }
 
     /**
-     * @param $args
-     * @return array|callable|null|object|string
+     * @param array|mixed $args
+     * @return array|mixed
      */
     protected function args($args)
     {
@@ -101,7 +101,7 @@ trait Resolver
      * @param array $parent
      * @return array
      */
-    protected function arguments(array $child, array $parent)
+    protected function arguments(array $child, array $parent) : array
     {
         return !$parent ? $child : (
             !$child ? $parent : (is_string(key($child)) ? $child + $parent : array_merge($child, $parent))
@@ -114,23 +114,23 @@ trait Resolver
      * @param bool $scoped
      * @return \Closure
      */
-    protected function bind(\Closure $callback, $object, $scoped)
+    protected function bind(\Closure $callback, $object, $scoped) : \Closure
     {
         return \Closure::bind($callback, $object, $scoped ? $object : null);
     }
 
     /**
-     * @param Child $config
+     * @param Child $child
      * @param array $args
      * @return array|callable|object|string
      */
-    protected function child(Child $config, array $args = [])
+    protected function child(Child $child, array $args = [])
     {
-        return $this->provide($this->merge($this->parent($config->parent()), $config), $args);
+        return $this->provide($this->merge($this->parent($child->parent()), $child), $args);
     }
 
     /**
-     * @param array|callable|null|object|string $value
+     * @param mixed $value
      * @param array|\Traversable $filters
      * @param array $args
      * @param $param
@@ -160,21 +160,21 @@ trait Resolver
     }
 
     /**
-     * @param Filter $config
+     * @param Filter $filter
      * @param array $args
      * @return mixed
      */
-    protected function filterable(Filter $config, array $args = [])
+    protected function filterable(Filter $filter, array $args = [])
     {
         return $this->filter(
-            $this->resolve($config->config()), $this->resolve($config->filter()), $args, $config->param()
+            $this->resolve($filter->config()), $this->resolve($filter->filter()), $args, $filter->param()
         );
     }
 
     /**
      * @param Gem $gem
      * @param array $args
-     * @return mixed|callable
+     * @return callable|mixed
      */
     protected function gem(Gem $gem, array $args = [])
     {
@@ -319,11 +319,11 @@ trait Resolver
     /**
      * @param Plugin $parent
      * @param Plugin $child
-     * @param null|string $name
+     * @param string|null $name
      * @param array $config
      * @return Plugin
      */
-    protected function merge(Plugin $parent, Plugin $child, string $name = null, array $config = [])
+    protected function merge(Plugin $parent, Plugin $child, string $name = null, array $config = []) : Plugin
     {
         !$parent->name() &&
             $config[Arg::NAME] = $name ?? $this->resolve($child->name());
@@ -357,20 +357,20 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
-     * @return array|callable|Plugin|null|object|string
+     * @param string $parent
+     * @return Plugin
      */
-    protected function parent(string $plugin)
+    protected function parent(string $parent) : Plugin
     {
-        return $this->configured($this->resolve($plugin));
+        return $this->configured($this->resolve($parent));
     }
 
     /**
      * @param $plugin
      * @param array $args
      * @param callable|null $callback
-     * @param null|string $previous
-     * @return array|callable|null|object|string
+     * @param string|null $previous
+     * @return mixed
      */
     function plugin($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
@@ -397,8 +397,8 @@ trait Resolver
      * @param $plugin
      * @param array $args
      * @param callable|null $callback
-     * @param null|string $previous
-     * @return array|callable|null|object|string
+     * @param string|null $previous
+     * @return mixed
      */
     protected function pluginArray($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
@@ -409,7 +409,7 @@ trait Resolver
     /**
      * @param Plugin $plugin
      * @param array $args
-     * @return callable|null|object
+     * @return callable|object|null
      */
     protected function provide(Plugin $plugin, array $args = [])
     {
@@ -438,7 +438,7 @@ trait Resolver
     }
 
     /**
-     * @return callable
+     * @return callable|null
      */
     protected function provider()
     {
@@ -446,11 +446,11 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
+     * @param mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @param int $c
-     * @return array|callable|Plugin|null|object|Resolvable|string
+     * @return mixed
      */
     protected function resolvable($plugin, array $args = [], callable $callback = null, int $c = 0)
     {
@@ -461,9 +461,9 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
+     * @param mixed $plugin
      * @param array $args
-     * @return array|callable|Plugin|null|object|Resolvable|string
+     * @return mixed
      */
     protected function resolve($plugin, array $args = [])
     {
@@ -473,7 +473,7 @@ trait Resolver
     /**
      * @param $plugin
      * @param array $args
-     * @return callable|mixed|null|object
+     * @return mixed
      */
     protected function resolver($plugin, array $args = [])
     {
@@ -494,7 +494,7 @@ trait Resolver
      * @param bool $scoped
      * @return \Closure
      */
-    protected function scoped(\Closure $callback, bool $scoped = false)
+    protected function scoped(\Closure $callback, bool $scoped = false) : \Closure
     {
         return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope, $scoped) : $callback;
     }
@@ -503,7 +503,7 @@ trait Resolver
      * @param $plugin
      * @param array $args
      * @param callable|null $callback
-     * @return mixed|callable
+     * @return callable|mixed
      */
     protected function solve($plugin, array $args = [], callable $callback = null)
     {
@@ -534,7 +534,7 @@ trait Resolver
      * @param array $args
      * @return array
      */
-    protected function variadic(array $args)
+    protected function variadic(array $args) : array
     {
         return $args && $args[0] instanceof SignalArgs ? $args[0]->args() : $args;
     }
@@ -544,7 +544,7 @@ trait Resolver
      * @param array $parent
      * @return array
      */
-    protected function vars(array $child = [], array $parent = [])
+    protected function vars(array $child = [], array $parent = []) : array
     {
         return $this->arguments($child, $this->args($parent));
     }
@@ -586,9 +586,9 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
+     * @param mixed $plugin
      * @param array $args
-     * @return array|callable|null|object|string
+     * @return mixed
      */
     function __invoke($plugin, array $args = [])
     {

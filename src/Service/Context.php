@@ -35,14 +35,14 @@ final class Context
     }
 
     /**
-     * @param array|callable|object|string $name
+     * @param callable|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return mixed
      */
-    static function call($name, array $args = [], callable $callback = null)
+    static function call($plugin, array $args = [], callable $callback = null)
     {
-        return static::service()->call($name, $args, $callback);
+        return static::service()->call($plugin, $args, $callback);
     }
 
     /**
@@ -55,14 +55,14 @@ final class Context
     }
 
     /**
-     * @param $name
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return mixed
      */
-    static function plugin($name, array $args = [], callable $callback = null)
+    static function plugin($plugin, array $args = [], callable $callback = null)
     {
-        return static::service()->plugin($name, $args, $callback);
+        return static::service()->plugin($plugin, $args, $callback);
     }
 
     /**

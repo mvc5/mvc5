@@ -39,35 +39,35 @@ class Assemble
     ];
 
     /**
-     * @param null|string $host
+     * @param string|null $host
      * @param int|null $port
-     * @param null|string $user
-     * @param null|string $password
+     * @param string|null $user
+     * @param string|null $password
      * @return string
      */
-    static function authority(string $host = null, int $port = null, string $user = null, string $password = null)
+    static function authority(string $host = null, int $port = null, string $user = null, string $password = null) : string
     {
         return static::user($user, $password, '@') . static::host($host) . static::port($port, ':');
     }
 
     /**
-     * @param null|string $scheme
-     * @param null|string $authority
-     * @param null|string $path
-     * @param null|string $query
-     * @param null|string $fragment
+     * @param string|null $scheme
+     * @param string|null $authority
+     * @param string|null $path
+     * @param string|null $query
+     * @param string|null $fragment
      * @return string
      */
-    static function compile(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null)
+    static function compile(string $scheme = null, string $authority = null, string $path = null, string $query = null, string $fragment = null) : string
     {
         return ($scheme ? $scheme . ':' : '') . ($scheme || $authority ? '//' : '') . $authority .
             $path . ($query ? '?' . $query : '') . ($fragment ? '#' . $fragment : '');
     }
 
     /**
-     * @param null|string $value
+     * @param string|null $value
      * @param array $unreserved
-     * @return null|string
+     * @return string|null
      */
     static function encode(string $value = null, array $unreserved = [])
     {
@@ -75,8 +75,8 @@ class Assemble
     }
 
     /**
-     * @param null|string $fragment
-     * @return null|string
+     * @param string|null $fragment
+     * @return string|null
      */
     static function fragment(string $fragment = null)
     {
@@ -84,8 +84,8 @@ class Assemble
     }
 
     /**
-     * @param null|string $host
-     * @return null|string
+     * @param string|null $host
+     * @return string|null
      */
     static function host(string $host = null)
     {
@@ -93,8 +93,8 @@ class Assemble
     }
 
     /**
-     * @param null|string $path
-     * @return null|string
+     * @param string|null $path
+     * @return string|null
      */
     static function path(string $path = null)
     {
@@ -103,8 +103,8 @@ class Assemble
 
     /**
      * @param int|null $port
-     * @param null|string $prefix
-     * @return null|string
+     * @param string|null $prefix
+     * @return string|null
      */
     static function port(int $port = null, string $prefix = null)
     {
@@ -112,8 +112,8 @@ class Assemble
     }
 
     /**
-     * @param array|null|string $query
-     * @return null|string
+     * @param array|string|null $query
+     * @return string|null
      */
     static function query($query)
     {
@@ -123,8 +123,8 @@ class Assemble
     }
 
     /**
-     * @param null|string $scheme
-     * @return null|string
+     * @param string|null $scheme
+     * @return string|null
      */
     static function scheme(string $scheme = null)
     {
@@ -132,8 +132,8 @@ class Assemble
     }
 
     /**
-     * @param null|string|Uri $path
-     * @param array|null|string $query
+     * @param string|Uri|null $path
+     * @param array|string|null $query
      * @return string
      */
     static function target($path = null, $query = null)
@@ -159,8 +159,8 @@ class Assemble
 
     /**
      * @param string $path
-     * @param array|null|string $query
-     * @param null|string $fragment
+     * @param array|string|null $query
+     * @param string|null $fragment
      * @param array $options
      * @return string
      */
@@ -179,10 +179,10 @@ class Assemble
     }
 
     /**
-     * @param null|string $user
-     * @param null|string $password
-     * @param null|string $suffix
-     * @return null|string
+     * @param string|null $user
+     * @param string|null $password
+     * @param string|null $suffix
+     * @return string|null
      */
     static function user(string $user = null, string $password = null, string $suffix = null)
     {
@@ -191,12 +191,12 @@ class Assemble
 
     /**
      * @param string|Uri $path
-     * @param array|null|string $query
-     * @param null|string $fragment
+     * @param array|string|null $query
+     * @param string|null $fragment
      * @param array $options
      * @return string
      */
-    function __invoke($path, $query = null, string $fragment = null, array $options = [])
+    function __invoke($path, $query = null, string $fragment = null, array $options = []) : string
     {
         return $path instanceof Uri ? static::uri($path) : static::url($path, $query, $fragment, $options);
     }

@@ -15,7 +15,7 @@ class Call
     use Config\Config;
 
     /**
-     * @param $config
+     * @param string|mixed $config
      * @param array $args
      */
     function __construct($config, array $args = [])

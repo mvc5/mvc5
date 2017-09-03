@@ -92,7 +92,7 @@ final class Builder
      * @param \ReflectionMethod|null $method
      * @return array|\ReflectionParameter[]
      */
-    protected function constructorParams(\ReflectionMethod $method = null)
+    protected function constructorParams(\ReflectionMethod $method = null) : array
     {
         return $method ? $method->getParameters() : [];
     }
@@ -100,7 +100,7 @@ final class Builder
     /**
      * @return \ReflectionParameter[]
      */
-    protected function params()
+    protected function params() : array
     {
         return $this->params ?? $this->params = $this->constructorParams($this->constructor());
     }
@@ -109,7 +109,7 @@ final class Builder
      * @param string $name
      * @return self
      */
-    static function reflectionClass(string $name)
+    static function reflectionClass(string $name) : self
     {
         return static::$class[$name] ?? (static::$class[$name] = new self($name));
     }

@@ -11,10 +11,10 @@ interface Call
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 
     /**
-     * @return string
+     * @return string|mixed
      */
     function config();
 }

@@ -47,7 +47,7 @@ trait Response
     /**
      * @return Cookies
      */
-    function cookies()
+    function cookies() : Cookies
     {
         return $this[Arg::COOKIES];
     }
@@ -56,8 +56,8 @@ trait Response
      * @param string $name
      * @param string $value
      * @param int|null $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return self|mixed

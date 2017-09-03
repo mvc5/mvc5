@@ -25,7 +25,7 @@ interface SessionMessages
 
     /**
      * @param string $name
-     * @return array
+     * @return array|null
      */
     function message(string $name = Arg::INDEX);
 

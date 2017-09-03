@@ -11,14 +11,14 @@ interface Route
     extends Model
 {
     /**
-     * @param null|string $name
-     * @return mixed
+     * @param string|null $name
+     * @return callable|mixed
      */
     function action(string $name = null);
 
     /**
      * @param string $name
-     * @return self
+     * @return array|Route|null
      */
     function child(string $name);
 
@@ -30,37 +30,37 @@ interface Route
     /**
      * @return array
      */
-    function constraints();
+    function constraints() : array;
 
     /**
-     * @return array|callable|object|string
+     * @return callable|mixed
      */
     function controller();
 
     /**
      * @return array
      */
-    function defaults();
+    function defaults() : array;
 
     /**
-     * @return null|string|string[]
+     * @return array|string|null
      */
     function host();
 
     /**
-     * @return null|string|string[]
+     * @return array|string|null
      */
     function method();
 
     /**
-     * @return string
+     * @return string|null
      */
     function name();
 
     /**
      * @return array
      */
-    function options();
+    function options() : array;
 
     /**
      * @return array|string
@@ -68,27 +68,27 @@ interface Route
     function path();
 
     /**
-     * @return int|null|string
+     * @return int|null
      */
     function port();
 
     /**
-     * @return string
+     * @return string|null
      */
     function regex();
 
     /**
-     * @return null|string|string[]
+     * @return array|string|null
      */
     function scheme();
 
     /**
      * @return array
      */
-    function tokens();
+    function tokens() : array;
 
     /**
      * @return bool
      */
-    function wildcard();
+    function wildcard() : bool;
 }

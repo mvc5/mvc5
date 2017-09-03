@@ -13,9 +13,9 @@ interface Cookies
     /**
      * @param string $name
      * @param string $value
-     * @param int|null|string $expire
-     * @param null|string $path
-     * @param null|string $domain
+     * @param int|string|null $expire
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return self|mixed
@@ -24,8 +24,8 @@ interface Cookies
 
     /**
      * @param string $name
-     * @param null|string $path
-     * @param null|string $domain
+     * @param string|null $path
+     * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
      * @return self|mixed

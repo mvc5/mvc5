@@ -85,10 +85,10 @@ class Plugin
 
     /**
      * @param string|Uri $route
-     * @param array|null|string $query
-     * @param null|string $fragment
+     * @param array|string|null $query
+     * @param string|null $fragment
      * @param array $options
-     * @return mixed
+     * @return string|null
      */
     protected function assemble($route, $query = null, string $fragment = null, array $options = [])
     {
@@ -96,11 +96,11 @@ class Plugin
     }
 
     /**
-     * @param null|string|string[]|Uri $route
-     * @param array|null|string $query
-     * @param null|string $fragment
+     * @param array|string|Uri|null $route
+     * @param array|string|null $query
+     * @param string|null $fragment
      * @param array $options
-     * @return null|string
+     * @return string|null
      */
     protected function create($route, $query = null, string $fragment = null, array $options = [])
     {
@@ -112,7 +112,7 @@ class Plugin
      * @param string $name
      * @param array $params
      * @param array $options
-     * @return null|Uri
+     * @return Uri|null
      */
     protected function generate(string $name, array $params, array $options)
     {
@@ -124,7 +124,7 @@ class Plugin
      * @param string $name
      * @return array
      */
-    protected function match(int $pos, string $name)
+    protected function match(int $pos, string $name) : array
     {
         return !$pos ? [] : $this->params[$name = substr($name, 0, $pos)] ??
             $this->match((int) strrpos($name, Arg::SEPARATOR), $name);
@@ -134,26 +134,26 @@ class Plugin
      * @param string $name
      * @return string
      */
-    protected function name($name)
+    protected function name($name) : string
     {
         return (string) ($name ?: $this->name);
     }
 
     /**
      * @param array|string $query
-     * @param null|string $fragment
+     * @param string|null $fragment
      * @param array $options
      * @return array
      */
-    protected function options($query, string $fragment = null, array $options = [])
+    protected function options($query, string $fragment = null, array $options = []) : array
     {
         return [Arg::FRAGMENT => $fragment, Arg::QUERY => $query] + $options;
     }
 
     /**
-     * @param null|Request $request
-     * @param null|Request $parent
-     * @return mixed
+     * @param Request|null $request
+     * @param Request|null $parent
+     * @return Request|null
      */
     protected function parent(Request $request = null, Request $parent = null)
     {
@@ -168,13 +168,13 @@ class Plugin
      * @param array $params
      * @return array
      */
-    protected function params(string $name, array $params)
+    protected function params(string $name, array $params) : array
     {
         return $params + ($this->params[$name] ?? $this->match((int) strrpos($name, Arg::SEPARATOR), $name));
     }
 
     /**
-     * @param string[] $route
+     * @param array $route
      * @param array $options
      * @return Uri|null
      */
@@ -184,8 +184,8 @@ class Plugin
     }
 
     /**
-     * @param null|Uri $uri
-     * @return null|string
+     * @param array|Uri $uri
+     * @return string|null
      */
     protected function uri($uri)
     {
@@ -193,9 +193,9 @@ class Plugin
     }
 
     /**
-     * @param null|string|string[]|Uri $route
-     * @param array|null|string $query
-     * @param null|string $fragment
+     * @param array|string|Uri|null $route
+     * @param array|string|null $query
+     * @param string|null $fragment
      * @param array $options
      * @return string
      */

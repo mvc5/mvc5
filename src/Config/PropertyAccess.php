@@ -28,7 +28,6 @@ trait PropertyAccess
     /**
      * @param string $name
      * @param mixed $value
-     * @return mixed
      */
     function __set($name, $value)
     {
@@ -37,7 +36,6 @@ trait PropertyAccess
 
     /**
      * @param string $name
-     * @return void
      */
     function __unset($name)
     {

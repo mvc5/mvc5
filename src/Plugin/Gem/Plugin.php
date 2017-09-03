@@ -13,17 +13,17 @@ interface Plugin
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 
     /**
      * @return array
      */
-    function calls();
+    function calls() : array;
 
     /**
      * @return bool
      */
-    function merge();
+    function merge() : bool;
 
     /**
      * @return Plugin|string
@@ -31,7 +31,7 @@ interface Plugin
     function name();
 
     /**
-     * @return string
+     * @return string|null
      */
     function param();
 }

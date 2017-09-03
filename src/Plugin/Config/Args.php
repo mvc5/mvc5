@@ -23,7 +23,7 @@ trait Args
     /**
      * @return array
      */
-    function args()
+    function args() : array
     {
         return $this->args;
     }

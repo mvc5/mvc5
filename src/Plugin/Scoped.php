@@ -19,7 +19,7 @@ class Scoped
     protected $scoped;
 
     /**
-     * @param $callable
+     * @param callable $callable
      * @param bool|true $scoped
      */
     function __construct(callable $callable, bool $scoped = true)
@@ -31,7 +31,7 @@ class Scoped
     /**
      * @return \Closure
      */
-    function closure()
+    function closure() : \Closure
     {
         return ($this->callable)();
     }
@@ -39,7 +39,7 @@ class Scoped
     /**
      * @return bool
      */
-    function scoped()
+    function scoped() : bool
     {
         return $this->scoped;
     }

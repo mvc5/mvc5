@@ -10,5 +10,5 @@ interface SignalArgs
     /**
      * @return array
      */
-    function args();
+    function args() : array;
 }

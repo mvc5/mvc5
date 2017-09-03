@@ -27,13 +27,13 @@ trait Request
     /**
      * @return array
      */
-    function args()
+    function args() : array
     {
-        return $this[Arg::ARGS] ?: [];
+        return $this[Arg::ARGS] ?? [];
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     function clientAddress()
     {
@@ -41,7 +41,7 @@ trait Request
     }
 
     /**
-     * @return array|callable|null|object|string
+     * @return callable|mixed
      */
     function controller()
     {
@@ -50,7 +50,7 @@ trait Request
 
     /**
      * @param $name
-     * @return array|\ArrayAccess
+     * @return array|string|null
      */
     function cookie(string $name)
     {
@@ -58,15 +58,15 @@ trait Request
     }
 
     /**
-     * @return array|\ArrayAccess
+     * @return array|\Mvc5\Cookie\Cookies
      */
     function cookies()
     {
-        return $this[Arg::COOKIES] ?: [];
+        return $this[Arg::COOKIES] ?? [];
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
      * @return mixed
      */
@@ -76,7 +76,7 @@ trait Request
     }
 
     /**
-     * @return null|\Mvc5\Http\Error
+     * @return \Mvc5\Http\Error|null
      */
     function error()
     {
@@ -93,7 +93,7 @@ trait Request
 
     /**
      * @param string $name
-     * @return array|string
+     * @return array|string|null
      */
     function header(string $name)
     {
@@ -101,7 +101,7 @@ trait Request
     }
 
     /**
-     * @return string|string[]
+     * @return string|null
      */
     function host()
     {
@@ -111,7 +111,7 @@ trait Request
     /**
      * @return bool
      */
-    function isPost()
+    function isPost() : bool
     {
         return 'POST' === $this->method();
     }
@@ -119,7 +119,7 @@ trait Request
     /**
      * @return bool
      */
-    function isSecure()
+    function isSecure() : bool
     {
         return 'https' === $this->scheme();
     }
@@ -127,13 +127,13 @@ trait Request
     /**
      * @return bool
      */
-    function isXmlHttpRequest()
+    function isXmlHttpRequest() : bool
     {
         return 'XMLHttpRequest' == $this->header('X-Requested-With');
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function name()
     {
@@ -153,9 +153,9 @@ trait Request
     /**
      * @return array
      */
-    function params()
+    function params() : array
     {
-        return $this[Arg::PARAMS] ?: [];
+        return $this[Arg::PARAMS] ?? [];
     }
 
     /**
@@ -167,7 +167,7 @@ trait Request
     }
 
     /**
-     * @return int|null|string
+     * @return int|null
      */
     function port()
     {
@@ -175,9 +175,9 @@ trait Request
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
-     * @return array
+     * @return array|mixed
      */
     function post(string $name = null, $default = null)
     {
@@ -185,15 +185,15 @@ trait Request
     }
 
     /**
-     * @return string
+     * @return array|string|null
      */
     function query()
     {
-        return $this->get(Arg::URI)[Arg::QUERY] ?? '';
+        return $this->get(Arg::URI)[Arg::QUERY] ?? null;
     }
 
     /**
-     * @return \Mvc5\Route\Route
+     * @return \Mvc5\Route\Route|null
      */
     function route()
     {
@@ -201,7 +201,7 @@ trait Request
     }
 
     /**
-     * @return string|string[]
+     * @return array|string
      */
     function scheme()
     {
@@ -209,9 +209,9 @@ trait Request
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
-     * @return array|\ArrayAccess
+     * @return array|mixed
      */
     function server(string $name = null, $default = null)
     {
@@ -219,9 +219,9 @@ trait Request
     }
 
     /**
-     * @param null|string $name
+     * @param string|null $name
      * @param mixed $default
-     * @return array|\ArrayAccess
+     * @return array|\Mvc5\Session\Session|mixed
      */
     function session(string $name = null, $default = null)
     {
@@ -229,7 +229,7 @@ trait Request
     }
 
     /**
-     * @return mixed
+     * @return string|mixed
      */
     function user()
     {
@@ -237,7 +237,7 @@ trait Request
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     function userAgent()
     {
@@ -257,7 +257,7 @@ trait Request
     /**
      * @return array
      */
-    function vars()
+    function vars() : array
     {
         return $this->params() + $this->args() + $this->data();
     }
