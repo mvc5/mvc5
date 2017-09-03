@@ -6,7 +6,6 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
-use Mvc5\Url;
 
 trait Uri
 {
@@ -92,7 +91,21 @@ trait Uri
      */
     function __toString()
     {
-        /** @var \Mvc5\Http\Uri $this */
-        return Url\Assemble::uri($this);
+        $path = $this->path();
+        $query = $this->query();
+        $fragment = $this->fragment();
+
+        $user = $this->user() ? $this->user() . ($this->password() ? ':' . $this->password() : '') : '';
+
+        $scheme = $this->scheme();
+        $host = $this->host();
+        $port = $this->port();
+
+        ($port == 80 || $port == 443) &&
+            $port = null;
+
+        return ($scheme ? $scheme . ':' : '') . ($scheme || $host ? '//' : '') .
+            ($host ? ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') : '') .
+                $path . ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
     }
 }
