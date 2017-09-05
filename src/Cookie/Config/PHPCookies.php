@@ -6,6 +6,7 @@
 namespace Mvc5\Cookie\Config;
 
 use Mvc5\Arg;
+use Mvc5\Cookie;
 
 trait PHPCookies
 {
@@ -39,7 +40,7 @@ trait PHPCookies
     {
         return [
             (string) $name, (string) $value, (int) (is_string($expire) ? strtotime($expire) : $expire),
-            $path ?? '/', (string) $domain, $secure ?? false, $httponly ?? true
+            $path ?? '/', (string) $domain, (bool) $secure, $httponly ?? true
         ];
     }
 
@@ -49,15 +50,15 @@ trait PHPCookies
      */
     protected static function named(array $cookie) : array
     {
-        return [
-            (string) $cookie[Arg::NAME],
-            (string) $cookie[Arg::VALUE],
-            (int) (($expire = $cookie[Arg::EXPIRE] ?? 0) && is_string($expire) ? strtotime($expire) : $expire),
-            $cookie[Arg::PATH] ?? '/',
-            (string) ($cookie[Arg::DOMAIN] ?? ''),
-            $cookie[Arg::SECURE] ?? false,
-            $cookie[Arg::HTTP_ONLY] ?? true
-        ];
+        return static::args(
+            $cookie[Arg::NAME],
+            $cookie[Arg::VALUE],
+            $cookie[Arg::EXPIRE] ?? null,
+            $cookie[Arg::PATH] ?? null,
+            $cookie[Arg::DOMAIN] ?? null,
+            $cookie[Arg::SECURE] ?? null,
+            $cookie[Arg::HTTP_ONLY] ?? null
+        );
     }
 
     /**
@@ -97,7 +98,7 @@ trait PHPCookies
      * @return self|mixed
      */
     function with($name, $value = '', $expire = null,
-                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
     {
         $this->set($name, $value, $expire, $path, $domain, $secure, $httponly);
         return $this;
@@ -111,7 +112,7 @@ trait PHPCookies
      * @param bool|null $httponly
      * @return self|mixed
      */
-    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
     {
         $this->remove($name, $path, $domain, $secure, $httponly);
         return $this;

@@ -97,7 +97,7 @@ trait Cookies
      * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
-     * @return Cookie\Cookies|self|mixed
+     * @return self|mixed
      */
     function with($name, $value = '', $expire = null,
                   string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
@@ -113,7 +113,7 @@ trait Cookies
      * @param string|null $domain
      * @param bool|null $secure
      * @param bool|null $httponly
-     * @return Cookie\Cookies|self|mixed
+     * @return self|mixed
      */
     function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
     {
