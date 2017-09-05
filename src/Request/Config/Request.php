@@ -49,7 +49,7 @@ trait Request
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return array|string|null
      */
     function cookie(string $name)
@@ -88,7 +88,7 @@ trait Request
      */
     function files()
     {
-        return $this[Arg::FILES] ?: [];
+        return $this[Arg::FILES] ?? [];
     }
 
     /**
@@ -159,11 +159,11 @@ trait Request
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function path()
     {
-        return $this->get(Arg::URI)[Arg::PATH] ?? '';
+        return $this->get(Arg::URI)[Arg::PATH] ?? null;
     }
 
     /**
@@ -201,11 +201,11 @@ trait Request
     }
 
     /**
-     * @return array|string
+     * @return string|null
      */
     function scheme()
     {
-        return $this->get(Arg::URI)[Arg::SCHEME] ?? '';
+        return $this->get(Arg::URI)[Arg::SCHEME] ?? null;
     }
 
     /**
@@ -215,17 +215,17 @@ trait Request
      */
     function server(string $name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::SERVER] ?: []) : ($this->get(Arg::SERVER)[$name] ?? $default);
+        return null === $name ? ($this[Arg::SERVER] ?? []) : ($this->get(Arg::SERVER)[$name] ?? $default);
     }
 
     /**
      * @param string|null $name
      * @param mixed $default
-     * @return array|\Mvc5\Session\Session|mixed
+     * @return \Mvc5\Session\Session|mixed
      */
     function session(string $name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::SESSION] ?: []) : ($this->get(Arg::SESSION)[$name] ?? $default);
+        return null === $name ? ($this[Arg::SESSION] ?? []) : ($this->get(Arg::SESSION)[$name] ?? $default);
     }
 
     /**

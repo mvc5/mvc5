@@ -102,7 +102,7 @@ interface Request
     function params() : array;
 
     /**
-     * @return string
+     * @return string|null
      */
     function path();
 
@@ -129,7 +129,7 @@ interface Request
     function route();
 
     /**
-     * @return string
+     * @return string|null
      */
     function scheme();
 
