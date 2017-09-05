@@ -25,7 +25,7 @@ class Filter
     protected $param;
 
     /**
-     * @param $config
+     * @param string|mixed $config
      * @param array|\Traversable $filter
      * @param array $args
      * @param string|null $param

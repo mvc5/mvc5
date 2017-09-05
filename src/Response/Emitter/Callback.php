@@ -23,7 +23,7 @@ class Callback
     }
 
     /**
-     * @return void
+     *
      */
     function emit()
     {

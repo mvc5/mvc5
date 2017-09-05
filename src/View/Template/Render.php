@@ -30,7 +30,7 @@ trait Render
     }
 
     /**
-     * @param $model
+     * @param TemplateModel|mixed $model
      * @param array $vars
      * @return string|mixed
      */

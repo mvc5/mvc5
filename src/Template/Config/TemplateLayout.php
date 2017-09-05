@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait TemplateLayout
 {
     /**
-     * @return string|null
+     * @return mixed
      */
     function model()
     {
@@ -18,7 +18,7 @@ trait TemplateLayout
     }
 
     /**
-     * @param $model
+     * @param mixed $model
      * @return self|mixed
      */
     function withModel($model)

@@ -105,7 +105,7 @@ trait Router
      */
     protected function result(Request $request, $result)
     {
-        return !($result instanceof Error) ? $result : $request->with(Arg::ERROR, $result);
+        return $result instanceof Error ? $request->with(Arg::ERROR, $result) : $result;
     }
 
     /**
@@ -119,7 +119,7 @@ trait Router
     }
 
     /**
-     * @param $request
+     * @param Request|mixed $request
      * @return Request|mixed
      */
     protected function solve($request)

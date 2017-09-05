@@ -25,8 +25,8 @@ trait Layout
 
     /**
      * @param TemplateLayout $layout
-     * @param $model
-     * @return TemplateModel|TemplateLayout|mixed
+     * @param TemplateModel|mixed $model
+     * @return TemplateLayout|mixed
      */
     protected function layout(TemplateLayout $layout, $model)
     {
@@ -34,8 +34,8 @@ trait Layout
     }
 
     /**
-     * @param $model
-     * @return TemplateModel|TemplateLayout|mixed
+     * @param TemplateModel|mixed $model
+     * @return TemplateLayout|mixed
      */
     function __invoke($model = null)
     {

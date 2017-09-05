@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Session
 {
     /**
-     * @param $name
+     * @param string $name
      * @return \Mvc5\Session\Session|mixed
      */
     protected function session(string $name = null)

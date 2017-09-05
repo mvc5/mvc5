@@ -22,7 +22,7 @@ trait Send
 
     /**
      * @param Response $response
-     * @return array|mixed
+     * @return array|\Traversable
      */
     protected function cookies(Response $response)
     {
@@ -39,7 +39,6 @@ trait Send
 
     /**
      * @param Response $response
-     * @return void
      */
     protected function headers(Response $response)
     {

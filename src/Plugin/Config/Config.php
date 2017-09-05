@@ -8,12 +8,12 @@ namespace Mvc5\Plugin\Config;
 trait Config
 {
     /**
-     * @var mixed
+     * @var string|mixed
      */
     protected $config;
 
     /**
-     * @param $config
+     * @param string|mixed $config
      */
     function __construct($config)
     {

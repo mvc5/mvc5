@@ -92,8 +92,8 @@ class Controller
 
     /**
      * @param string $name
-     * @param $controller
-     * @return mixed
+     * @param bool|mixed $controller
+     * @return string|mixed
      */
     protected function match(string $name, $controller)
     {

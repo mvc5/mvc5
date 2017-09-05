@@ -74,7 +74,7 @@ trait Build
 
     /**
      * @param Route $route
-     * @param $host
+     * @param array|mixed $host
      * @return Route
      */
     protected function host(Route $route, $host) : Route

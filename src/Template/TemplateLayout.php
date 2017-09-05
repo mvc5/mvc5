@@ -9,12 +9,12 @@ interface TemplateLayout
     extends TemplateModel
 {
     /**
-     * @return string|mixed
+     * @return TemplateModel|mixed
      */
     function model();
 
     /**
-     * @param $model
+     * @param TemplateModel|mixed $model
      * @return self|mixed
      */
     function withModel($model);

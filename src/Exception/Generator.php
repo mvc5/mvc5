@@ -85,7 +85,7 @@ trait Generator
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param array $args
      * @return mixed
      * @throws \Throwable

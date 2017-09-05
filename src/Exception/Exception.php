@@ -71,7 +71,7 @@ trait Exception
     }
 
     /**
-     * @param $exception
+     * @param \Throwable $exception
      * @return mixed
      * @throws \Throwable
      */

@@ -90,7 +90,7 @@ trait Container
     }
 
     /**
-     * @return void
+     *
      */
     function next()
     {
@@ -99,7 +99,6 @@ trait Container
 
     /**
      * @param array|string $name
-     * @return void
      */
     function remove($name)
     {
@@ -109,7 +108,7 @@ trait Container
     }
 
     /**
-     * @return void
+     *
      */
     function rewind()
     {

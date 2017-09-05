@@ -13,14 +13,14 @@ trait Plugin
     protected $service;
 
     /**
-     * @param array|callable|object|string $name
+     * @param callable|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return mixed
      */
-    protected function call($name, array $args = [], callable $callback = null)
+    protected function call($plugin, array $args = [], callable $callback = null)
     {
-        return $this->service->call($name, $args, $callback);
+        return $this->service->call($plugin, $args, $callback);
     }
 
     /**
@@ -33,14 +33,14 @@ trait Plugin
     }
 
     /**
-     * @param $name
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return mixed
      */
-    protected function plugin($name, array $args = [], callable $callback = null)
+    protected function plugin($plugin, array $args = [], callable $callback = null)
     {
-        return $this->service->plugin($name, $args, $callback);
+        return $this->service->plugin($plugin, $args, $callback);
     }
 
     /**

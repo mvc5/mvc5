@@ -136,7 +136,7 @@ class Assemble
      * @param array|string|null $query
      * @return string
      */
-    static function target($path = null, $query = null)
+    static function target($path = null, $query = null) : string
     {
         return $path instanceof Uri ? static::url($path->path() ?: '/', $path->query()) :
             static::url($path ?: '/', $query);
@@ -146,7 +146,7 @@ class Assemble
      * @param Uri $uri
      * @return string
      */
-    static function uri(Uri $uri)
+    static function uri(Uri $uri) : string
     {
         return static::compile(
             static::scheme($uri->scheme()),
@@ -164,7 +164,7 @@ class Assemble
      * @param array $options
      * @return string
      */
-    static function url(string $path, $query = null, string $fragment = null, array $options = [])
+    static function url(string $path, $query = null, string $fragment = null, array $options = []) : string
     {
         return static::compile(
             static::scheme($options[Arg::SCHEME] ?? null),

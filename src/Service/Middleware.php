@@ -28,7 +28,7 @@ trait Middleware
     }
 
     /**
-     * @param $middleware
+     * @param callable|mixed $middleware
      * @param array $args
      * @return mixed
      */

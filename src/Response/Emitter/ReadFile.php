@@ -37,7 +37,7 @@ class ReadFile
     }
 
     /**
-     * @return int
+     * @return int|bool
      */
     function emit()
     {

@@ -13,7 +13,7 @@ trait Args
     protected $args = [];
 
     /**
-     * @param $args
+     * @param array $args
      */
     function __construct(array $args)
     {
