@@ -133,7 +133,6 @@ trait PHPSession
 
     /**
      * @param array|string $name
-     * @return void
      */
     function remove($name)
     {
@@ -183,7 +182,7 @@ trait PHPSession
      */
     function start(array $options = []) : bool
     {
-        return PHP_SESSION_ACTIVE === $this->status() ?: session_start($options);
+        return PHP_SESSION_ACTIVE === $this->status() || session_start($options);
     }
 
     /**

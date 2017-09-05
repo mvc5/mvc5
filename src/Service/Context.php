@@ -70,7 +70,7 @@ final class Context
      */
     static function service()
     {
-        return static::$service ?: Exception::runtime('Service does not exist');
+        return static::$service ?? Exception::runtime('Service does not exist');
     }
 
     /**

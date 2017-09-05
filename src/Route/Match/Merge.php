@@ -23,7 +23,7 @@ class Merge
             $config[Arg::OPTIONS] = $route->options() + $options;
 
         ($middleware = $parent[Arg::MIDDLEWARE]) &&
-            $config[Arg::MIDDLEWARE] = array_merge($middleware, $route[Arg::MIDDLEWARE] ?: []);
+            $config[Arg::MIDDLEWARE] = array_merge($middleware, $route[Arg::MIDDLEWARE] ?? []);
 
         return $config ? $route->with($config) : $route;
     }

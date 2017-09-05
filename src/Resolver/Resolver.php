@@ -122,7 +122,7 @@ trait Resolver
     /**
      * @param Child $child
      * @param array $args
-     * @return array|callable|object|string
+     * @return mixed
      */
     protected function child(Child $child, array $args = [])
     {
@@ -133,7 +133,7 @@ trait Resolver
      * @param mixed $value
      * @param array|\Traversable $filters
      * @param array $args
-     * @param $param
+     * @param string|null $param
      * @return mixed
      */
     protected function filter($value, $filters = [], array $args = [], string $param = null)
@@ -264,7 +264,7 @@ trait Resolver
         }
 
         if ($gem instanceof Provide) {
-            return ($this->provider() ?: new Unresolvable)($gem->config(), $this->vars($args, $gem->args()));
+            return ($this->provider() ?? new Unresolvable)($gem->config(), $this->vars($args, $gem->args()));
         }
 
         return Unresolvable::plugin($gem);
@@ -366,7 +366,7 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @param string|null $previous
@@ -394,7 +394,7 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
+     * @param string|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @param string|null $previous
@@ -446,7 +446,7 @@ trait Resolver
     }
 
     /**
-     * @param mixed $plugin
+     * @param Resolvable|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @param int $c
@@ -461,7 +461,7 @@ trait Resolver
     }
 
     /**
-     * @param mixed $plugin
+     * @param Resolvable|mixed $plugin
      * @param array $args
      * @return mixed
      */
@@ -471,13 +471,13 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
+     * @param string|mixed $plugin
      * @param array $args
      * @return mixed
      */
     protected function resolver($plugin, array $args = [])
     {
-        return $this->call($this->provider() ?: Arg::SERVICE_RESOLVER, [$plugin, $args]);
+        return $this->call($this->provider() ?? Arg::SERVICE_RESOLVER, [$plugin, $args]);
     }
 
     /**
@@ -500,7 +500,7 @@ trait Resolver
     }
 
     /**
-     * @param $plugin
+     * @param Gem|mixed $plugin
      * @param array $args
      * @param callable|null $callback
      * @return callable|mixed

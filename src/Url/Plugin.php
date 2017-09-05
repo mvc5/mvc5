@@ -50,7 +50,7 @@ class Plugin
     function __construct(Request $request, callable $generator, callable $assembler = null, bool $absolute = false)
     {
         $this->absolute = $absolute;
-        $this->assembler = $assembler ?: new Assemble;
+        $this->assembler = $assembler ?? new Assemble;
         $this->generator = $generator;
         $this->name = $request[Arg::NAME];
         $this->uri = $request[Arg::URI];
@@ -136,7 +136,7 @@ class Plugin
      */
     protected function name($name) : string
     {
-        return (string) ($name ?: $this->name);
+        return (string) ($name ?? $this->name);
     }
 
     /**

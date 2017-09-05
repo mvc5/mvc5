@@ -35,7 +35,7 @@ trait Exception
     function __construct(string $name, $controller, Error $error = null)
     {
         $this->controller = $controller;
-        $this->error = $error ?: new ServerError;
+        $this->error = $error ?? new ServerError;
         $this->name = $name;
     }
 

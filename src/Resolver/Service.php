@@ -32,7 +32,7 @@ trait Service
     }
 
     /**
-     * @param array|callable|object|string $plugin
+     * @param callable|mixed $plugin
      * @return callable
      */
     protected function callable($plugin) : callable
@@ -56,7 +56,7 @@ trait Service
      */
     protected function fallback(string $name)
     {
-        return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?: Unresolvable::plugin($name);
+        return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?? Unresolvable::plugin($name);
     }
 
     /**
@@ -66,7 +66,7 @@ trait Service
     protected function invokable(string $plugin)
     {
         return Arg::CALL === $plugin[0] ? substr($plugin, 1) :
-            $this->listener($this->plugin($plugin, [], $this) ?: $this->fallback($plugin));
+            $this->listener($this->plugin($plugin, [], $this) ?? $this->fallback($plugin));
     }
 
     /**
@@ -85,7 +85,7 @@ trait Service
      * @param array $name
      * @param array $args
      * @param callable|null $callback
-     * @return array|callable|object|string
+     * @return mixed
      */
     protected function relay($plugin, array $name = [], array $args = [], callable $callback = null)
     {
@@ -99,7 +99,7 @@ trait Service
      * @param array $name
      * @param array $args
      * @param callable|null $callback
-     * @return array|callable|object|string
+     * @return mixed
      */
     protected function repeat($plugin, string $method, array $name = [], array $args = [], callable $callback = null)
     {
@@ -112,7 +112,7 @@ trait Service
      * @param array $name
      * @param array $args
      * @param callable|null $callback
-     * @return array|callable|object|string
+     * @return mixed
      */
     protected function transmit(array $name, array $args = [], callable $callback = null)
     {

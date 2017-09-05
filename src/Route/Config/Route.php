@@ -32,7 +32,7 @@ trait Route
      */
     function children()
     {
-        return $this[Arg::CHILDREN] ?: [];
+        return $this[Arg::CHILDREN] ?? [];
     }
 
     /**

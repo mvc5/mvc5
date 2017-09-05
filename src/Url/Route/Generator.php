@@ -41,7 +41,7 @@ trait Generator
     function __construct($route, Uri $uri = null)
     {
         $this->route = $route;
-        $this->uri = $uri ?: new HttpUri;
+        $this->uri = $uri ?? new HttpUri;
     }
 
     /**

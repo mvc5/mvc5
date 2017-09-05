@@ -30,7 +30,7 @@ trait Find
      */
     protected function find(string $name) : string
     {
-        return $this->path($name) ?: (
+        return $this->path($name) ?? (
             (!$name || !$this->directory || false !== strpos($name, '.')) ? $name :
                 $this->directory . (DIRECTORY_SEPARATOR === $name[0] ? $name : DIRECTORY_SEPARATOR . $name) . '.' . $this->extension
         );

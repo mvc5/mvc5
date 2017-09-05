@@ -20,7 +20,7 @@ trait Plugin
      */
     function args() : array
     {
-        return $this[Arg::ARGS] ? : [];
+        return $this[Arg::ARGS] ?? [];
     }
 
     /**
@@ -28,7 +28,7 @@ trait Plugin
      */
     function calls() : array
     {
-        return $this[Arg::CALLS] ? : [];
+        return $this[Arg::CALLS] ?? [];
     }
 
     /**
@@ -36,7 +36,7 @@ trait Plugin
      */
     function merge() : bool
     {
-        return $this[Arg::MERGE] ? : false;
+        return (bool) $this[Arg::MERGE];
     }
 
     /**

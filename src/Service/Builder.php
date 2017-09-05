@@ -85,7 +85,7 @@ final class Builder
      */
     protected function constructor()
     {
-        return $this->constructor ?? $this->constructor = (parent::getConstructor() ?: false);
+        return $this->constructor ?? $this->constructor = (parent::getConstructor() ?? false);
     }
 
     /**

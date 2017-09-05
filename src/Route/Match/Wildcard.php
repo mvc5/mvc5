@@ -52,7 +52,7 @@ class Wildcard
      */
     protected function params(Request $request) : array
     {
-        return $request->get(Arg::PARAMS) ?: [];
+        return $request->get(Arg::PARAMS) ?? [];
     }
 
     /**

@@ -31,6 +31,6 @@ class Controller
      */
     function __invoke(Request $request, Error $error = null) : ErrorModel
     {
-        return $this->model->with([Arg::ERROR => $error ?: $request[Arg::ERROR]]);
+        return $this->model->with([Arg::ERROR => $error ?? $request[Arg::ERROR]]);
     }
 }
