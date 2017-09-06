@@ -84,7 +84,7 @@ trait PHPSession
      * @param string|null $id
      * @return string
      */
-    function id(string $id = null)
+    function id(string $id = null) : string
     {
         return null !== $id ? session_id($id) : session_id();
     }
@@ -101,7 +101,7 @@ trait PHPSession
      * @param string|null $name
      * @return string
      */
-    function name(string $name = null)
+    function name(string $name = null) : string
     {
         return null !== $name ? session_name($name) : session_name();
     }
@@ -125,10 +125,11 @@ trait PHPSession
 
     /**
      * @param bool|false $delete_old_session
+     * @return bool
      */
-    function regenerate(bool $delete_old_session = false)
+    function regenerate(bool $delete_old_session = false) : bool
     {
-        session_regenerate_id($delete_old_session);
+        return session_regenerate_id($delete_old_session);
     }
 
     /**
@@ -144,10 +145,11 @@ trait PHPSession
     /**
      * @param string $name
      * @param array $params
+     * @return bool
      */
-    protected function removeSessionCookie(string $name, array $params = [])
+    protected function removeSessionCookie(string $name, array $params = []) : bool
     {
-        setcookie($name, '', 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
+        return setcookie($name, '', 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
     }
 
     /**
@@ -204,7 +206,7 @@ trait PHPSession
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return Session|self|mixed
+     * @return self|mixed
      */
     function with($name, $value = null) : Session
     {
@@ -214,7 +216,7 @@ trait PHPSession
 
     /**
      * @param array|string $name
-     * @return Session|self|mixed
+     * @return self|mixed
      */
     function without($name) : Session
     {

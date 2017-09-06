@@ -78,7 +78,7 @@ include __DIR__ . '/src/Http/Error/BadRequest.php';
 include __DIR__ . '/src/Http/Error/MethodNotAllowed.php';
 include __DIR__ . '/src/Http/Error/NotFound.php';
 include __DIR__ . '/src/Http/Error/ServerError.php';
-include __DIR__ . '/src/Response/Config/Response.php';
+include __DIR__ . '/src/Response/Config/HttpResponse.php';
 include __DIR__ . '/src/Response/Emitter.php';
 include __DIR__ . '/src/Response/Emitter/Callback.php';
 include __DIR__ . '/src/Response/Emitter/PassThru.php';

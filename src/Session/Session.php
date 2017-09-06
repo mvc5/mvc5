@@ -30,18 +30,19 @@ interface Session
      * @param string|null $id
      * @return string
      */
-    function id(string $id = null);
+    function id(string $id = null) : string;
 
     /**
      * @param string|null $name
      * @return string
      */
-    function name(string $name = null);
+    function name(string $name = null) : string;
 
     /**
      * @param bool|false $delete_old_session
+     * @return bool
      */
-    function regenerate(bool $delete_old_session = false);
+    function regenerate(bool $delete_old_session = false) : bool;
 
     /**
      * @param array $options

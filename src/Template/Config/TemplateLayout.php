@@ -6,11 +6,12 @@
 namespace Mvc5\Template\Config;
 
 use Mvc5\Arg;
+use Mvc5\Template;
 
 trait TemplateLayout
 {
     /**
-     * @return mixed
+     * @return Template\TemplateModel|mixed
      */
     function model()
     {
@@ -18,10 +19,10 @@ trait TemplateLayout
     }
 
     /**
-     * @param mixed $model
+     * @param Template\TemplateModel|mixed $model
      * @return self|mixed
      */
-    function withModel($model)
+    function withModel($model) : Template\TemplateLayout
     {
         return $this->with(Arg::CHILD_MODEL, $model);
     }

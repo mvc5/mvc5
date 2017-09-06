@@ -6,6 +6,7 @@
 namespace Mvc5\Template\Config;
 
 use Mvc5\Arg;
+use Mvc5\Template;
 
 trait TemplateModel
 {
@@ -46,7 +47,7 @@ trait TemplateModel
      * @param string $template
      * @return self|mixed
      */
-    function withTemplate(string $template)
+    function withTemplate(string $template) : Template\TemplateModel
     {
         return $this->with(Arg::TEMPLATE_MODEL, $template);
     }

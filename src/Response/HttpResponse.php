@@ -14,5 +14,5 @@ class HttpResponse
     /**
      *
      */
-    use Config\Response;
+    use Config\HttpResponse;
 }

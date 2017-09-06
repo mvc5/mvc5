@@ -64,7 +64,7 @@ trait Container
      * @param string|null $id
      * @return string
      */
-    function id(string $id = null)
+    function id(string $id = null) : string
     {
         return $this->session->id($id);
     }
@@ -81,17 +81,18 @@ trait Container
      * @param string|null $name
      * @return string
      */
-    function name(string $name = null)
+    function name(string $name = null) : string
     {
         return $this->session->name($name);
     }
 
     /**
      * @param bool|false $delete_old_session
+     * @return bool
      */
-    function regenerate(bool $delete_old_session = false)
+    function regenerate(bool $delete_old_session = false) : bool
     {
-        $this->session->regenerate($delete_old_session);
+        return $this->session->regenerate($delete_old_session);
     }
 
     /**
@@ -129,7 +130,7 @@ trait Container
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return Session|self|mixed
+     * @return self|mixed
      */
     function with($name, $value = null) : Session
     {
@@ -139,7 +140,7 @@ trait Container
 
     /**
      * @param array|string $name
-     * @return Session|self|mixed
+     * @return self|mixed
      */
     function without($name) : Session
     {

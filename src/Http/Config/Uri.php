@@ -89,7 +89,7 @@ trait Uri
     /**
      * @return string
      */
-    function __toString()
+    function __toString() : string
     {
         $path = $this->path();
         $query = $this->query();

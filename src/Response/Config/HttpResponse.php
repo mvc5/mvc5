@@ -10,8 +10,9 @@ use Mvc5\Cookie\Cookies;
 use Mvc5\Cookie\HttpCookies;
 use Mvc5\Http\Headers;
 use Mvc5\Http\HttpHeaders;
+use Mvc5\Response\Response;
 
-trait Response
+trait HttpResponse
 {
     /**
      *
@@ -63,7 +64,7 @@ trait Response
      * @return self|mixed
      */
     function withCookie($name, $value = '', $expire = null,
-                        string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+                        string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Response
     {
         return $this->withCookies($this->cookies()->with($name, $value, $expire, $path, $domain, $secure, $httponly));
     }
@@ -72,7 +73,7 @@ trait Response
      * @param array|Cookies $cookies
      * @return self|mixed
      */
-    function withCookies($cookies)
+    function withCookies($cookies) : Response
     {
         return $this->with(Arg::COOKIES, $cookies instanceof Cookies ? $cookies : new HttpCookies($cookies));
     }
@@ -82,7 +83,7 @@ trait Response
      * @param string $value
      * @return self|mixed
      */
-    function withHeader($name, $value)
+    function withHeader($name, $value) : Response
     {
         return $this->with(Arg::HEADERS, $this->headers()->with((string) $name, $value));
     }
@@ -91,7 +92,7 @@ trait Response
      * @param array|Headers $headers
      * @return self|mixed
      */
-    function withHeaders($headers)
+    function withHeaders($headers) : Response
     {
         return $this->with(Arg::HEADERS, $headers instanceof Headers ? $headers : new HttpHeaders($headers));
     }
@@ -101,7 +102,7 @@ trait Response
      * @param string $reason
      * @return self|mixed
      */
-    function withStatus($status, $reason = '')
+    function withStatus($status, $reason = '') : Response
     {
         return $this->with([Arg::STATUS => (int) $status, Arg::REASON => (string) $reason]);
     }
@@ -110,7 +111,7 @@ trait Response
      * @param string $version
      * @return self|mixed
      */
-    function withVersion(string $version)
+    function withVersion(string $version) : Response
     {
         return $this->with(Arg::VERSION, $version);
     }

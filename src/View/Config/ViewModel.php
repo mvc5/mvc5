@@ -9,6 +9,7 @@ use Mvc5\Arg;
 use Mvc5\Service\Service;
 use Mvc5\Service\Plugin;
 use Mvc5\Template\Config\TemplateModel;
+use Mvc5\View;
 
 trait ViewModel
 {
@@ -45,7 +46,7 @@ trait ViewModel
      * @param Service $service
      * @return self|mixed
      */
-    function withService(Service $service)
+    function withService(Service $service) : View\ViewModel
     {
         $new = clone $this;
         $new->service = $service;
