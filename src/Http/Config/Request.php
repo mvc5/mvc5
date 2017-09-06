@@ -6,6 +6,7 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
+use Mvc5\Http;
 
 trait Request
 {
@@ -18,7 +19,7 @@ trait Request
     }
 
     /**
-     * @return mixed
+     * @return array|Http\Headers
      */
     function headers()
     {
@@ -26,7 +27,7 @@ trait Request
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function method()
     {
@@ -34,7 +35,7 @@ trait Request
     }
 
     /**
-     * @return mixed
+     * @return string|Http\Uri|null
      */
     function uri()
     {
@@ -42,7 +43,7 @@ trait Request
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function version()
     {

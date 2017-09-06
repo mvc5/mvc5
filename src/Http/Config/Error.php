@@ -10,7 +10,7 @@ use Mvc5\Arg;
 trait Error
 {
     /**
-     * @return int
+     * @return int|null
      */
     function code()
     {
@@ -18,7 +18,7 @@ trait Error
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function description()
     {
@@ -28,13 +28,13 @@ trait Error
     /**
      * @return array
      */
-    function errors()
+    function errors() : array
     {
-        return $this[Arg::ERRORS];
+        return $this[Arg::ERRORS] ?? [];
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function message()
     {
@@ -42,7 +42,7 @@ trait Error
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     function status()
     {

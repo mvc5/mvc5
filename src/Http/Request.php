@@ -21,17 +21,17 @@ interface Request
     function headers();
 
     /**
-     * @return string
+     * @return string|null
      */
     function method();
 
     /**
-     * @return string|Uri
+     * @return string|Uri|null
      */
     function uri();
 
     /**
-     * @return string
+     * @return string|null
      */
     function version();
 }

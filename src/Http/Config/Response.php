@@ -6,6 +6,7 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
+use Mvc5\Http;
 
 trait Response
 {
@@ -18,7 +19,7 @@ trait Response
     }
 
     /**
-     * @return mixed
+     * @return array|Http\Headers
      */
     function headers()
     {
@@ -26,7 +27,7 @@ trait Response
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function reason()
     {
@@ -34,7 +35,7 @@ trait Response
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     function status()
     {
@@ -42,7 +43,7 @@ trait Response
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function version()
     {

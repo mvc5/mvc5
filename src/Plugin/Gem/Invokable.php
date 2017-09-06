@@ -14,7 +14,7 @@ interface Invokable
     function args() : array;
 
     /**
-     * @return array|callable|object|Plugin|string
+     * @return callable|mixed
      */
     function config();
 }

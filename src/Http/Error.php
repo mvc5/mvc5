@@ -11,27 +11,27 @@ interface Error
     extends Model
 {
     /**
-     * @return int
+     * @return int|null
      */
     function code();
 
     /**
-     * @return string
+     * @return string|null
      */
     function description();
 
     /**
      * @return array
      */
-    function errors();
+    function errors() : array;
 
     /**
-     * @return string
+     * @return string|null
      */
     function message();
 
     /**
-     * @return int
+     * @return int|null
      */
     function status();
 }

@@ -16,7 +16,7 @@ trait ErrorModel
     use ViewModel;
 
     /**
-     * @return int
+     * @return int|null
      */
     function code()
     {
@@ -26,13 +26,13 @@ trait ErrorModel
     /**
      * @return array
      */
-    function errors()
+    function errors() : array
     {
-        return $this[Arg::ERROR][Arg::ERRORS];
+        return $this[Arg::ERROR][Arg::ERRORS] ?? [];
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     function message()
     {

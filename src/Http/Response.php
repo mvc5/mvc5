@@ -21,17 +21,17 @@ interface Response
     function headers();
 
     /**
-     * @return string
+     * @return string|null
      */
     function reason();
 
     /**
-     * @return int
+     * @return int|null
      */
     function status();
 
     /**
-     * @return string
+     * @return string|null
      */
     function version();
 }

@@ -11,17 +11,17 @@ interface ErrorModel
     extends ViewModel
 {
     /**
-     * @return int
+     * @return int|null
      */
     function code();
 
     /**
-     * @return []
+     * @return array
      */
-    function errors();
+    function errors() : array;
 
     /**
-     * @return string
+     * @return string|null
      */
     function message();
 }
