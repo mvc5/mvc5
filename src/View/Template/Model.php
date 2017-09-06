@@ -27,7 +27,7 @@ trait Model
      */
     protected function create($model) : TemplateModel
     {
-        return (!is_string($model) || DIRECTORY_SEPARATOR !== $model[0] ? ($this->service)($model) : null) ?:
+        return (!is_string($model) || DIRECTORY_SEPARATOR !== $model[0] ? ($this->service)($model) : null) ??
             new $this->model($model);
     }
 

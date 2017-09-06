@@ -201,7 +201,7 @@ class Plugin
      */
     function __invoke($route = null, $query = null, string $fragment = null, array $options = [])
     {
-        return $this->create($route, $query, $fragment, $options) ?:
+        return $this->create($route, $query, $fragment, $options) ??
             $this->assemble($route, $query, $fragment, $this->absolute($options));
     }
 }
