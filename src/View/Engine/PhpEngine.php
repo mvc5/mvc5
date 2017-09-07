@@ -15,7 +15,7 @@ class PhpEngine
      * @param  TemplateModel $template
      * @return string
      */
-    function render(TemplateModel $template)
+    function render(TemplateModel $template) : string
     {
         return (function() {
             /** @var TemplateModel $this */

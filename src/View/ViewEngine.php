@@ -13,5 +13,5 @@ interface ViewEngine
      * @param TemplateModel $model
      * @return string
      */
-    function render(TemplateModel $model);
+    function render(TemplateModel $model) : string;
 }
