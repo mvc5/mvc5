@@ -20,7 +20,7 @@ trait PropertyAccess
      * @param string $name
      * @return bool
      */
-    function __isset($name)
+    function __isset($name) : bool
     {
         return $this->has($name);
     }

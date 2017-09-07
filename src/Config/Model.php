@@ -18,7 +18,7 @@ interface Model
      * @param string $name
      * @return bool
      */
-    function has($name);
+    function has($name) : bool;
 
     /**
      * @param array|string $name

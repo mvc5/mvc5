@@ -50,7 +50,7 @@ trait Container
     /**
      * @return int
      */
-    function count()
+    function count() : int
     {
         return count($this->container);
     }
@@ -76,7 +76,7 @@ trait Container
      * @param string $name
      * @return bool
      */
-    function has($name)
+    function has($name) : bool
     {
         return isset($this->container[$name]) || isset($this->services[$name]);
     }
@@ -176,7 +176,7 @@ trait Container
     /**
      * @return bool
      */
-    function valid()
+    function valid() : bool
     {
         return $this->container instanceof \Iterator ? $this->container->valid() : null !== key($this->container);
     }

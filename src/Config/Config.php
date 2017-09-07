@@ -28,7 +28,7 @@ trait Config
      * @param string $name
      * @return bool
      */
-    function has($name)
+    function has($name) : bool
     {
         return isset($this->config[$name]);
     }

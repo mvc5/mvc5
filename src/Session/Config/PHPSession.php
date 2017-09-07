@@ -75,7 +75,7 @@ trait PHPSession
      * @param string $name
      * @return bool
      */
-    function has($name)
+    function has($name) : bool
     {
         return isset($_SESSION[$name]);
     }
@@ -198,7 +198,7 @@ trait PHPSession
     /**
      * @return bool
      */
-    function valid()
+    function valid() : bool
     {
         return null !== $this->key();
     }

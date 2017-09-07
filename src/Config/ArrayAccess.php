@@ -11,7 +11,7 @@ trait ArrayAccess
      * @param string $name
      * @return bool
      */
-    function offsetExists($name)
+    function offsetExists($name) : bool
     {
         return $this->has($name);
     }

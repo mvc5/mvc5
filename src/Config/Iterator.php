@@ -10,7 +10,7 @@ trait Iterator
     /**
      * @return int
      */
-    function count()
+    function count() : int
     {
         return count($this->config);
     }
@@ -50,7 +50,7 @@ trait Iterator
     /**
      * @return bool
      */
-    function valid()
+    function valid() : bool
     {
         return $this->config instanceof \Iterator ? $this->config->valid() : null !== key($this->config);
     }
