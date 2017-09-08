@@ -24,7 +24,7 @@ trait Render
      * @param array $vars
      * @return string
      */
-    function render($template, array $vars = [])
+    function render($template, array $vars = []) : string
     {
         return $this->engine->render($this->traverse($this->model($template, $vars)));
     }

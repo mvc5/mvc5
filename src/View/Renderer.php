@@ -25,7 +25,7 @@ class Renderer
      * @param array $vars
      * @return string
      */
-    function __invoke($model, array $vars = [])
+    function __invoke($model, array $vars = []) : string
     {
         return $this->view->render($model, $vars);
     }

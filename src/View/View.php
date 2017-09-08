@@ -12,5 +12,5 @@ interface View
      * @param array $vars
      * @return string
      */
-    function render($template, array $vars = []);
+    function render($template, array $vars = []) : string;
 }
