@@ -120,6 +120,7 @@ include __DIR__ . '/src/View/Template/Render.php';
 include __DIR__ . '/src/View/Model.php';
 include __DIR__ . '/src/View/Render.php';
 include __DIR__ . '/src/View/Renderer.php';
+include __DIR__ . '/src/View/SharedLayout.php';
 include __DIR__ . '/src/ViewModel.php';
 include __DIR__ . '/src/ViewLayout.php';
 include __DIR__ . '/src/Request/Config/Request.php';
