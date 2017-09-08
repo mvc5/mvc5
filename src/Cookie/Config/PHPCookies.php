@@ -6,14 +6,14 @@
 namespace Mvc5\Cookie\Config;
 
 use Mvc5\Arg;
-use Mvc5\Cookie;
+use Mvc5\Cookie\Cookies;
 
 trait PHPCookies
 {
     /**
      *
      */
-    use Cookies;
+    use HttpCookies;
 
     /**
      * @param array|null $cookies
@@ -98,7 +98,7 @@ trait PHPCookies
      * @return self|mixed
      */
     function with($name, $value = '', $expire = null,
-                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
+                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookies
     {
         $this->set($name, $value, $expire, $path, $domain, $secure, $httponly);
         return $this;
@@ -112,7 +112,7 @@ trait PHPCookies
      * @param bool|null $httponly
      * @return self|mixed
      */
-    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
+    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookies
     {
         $this->remove($name, $path, $domain, $secure, $httponly);
         return $this;

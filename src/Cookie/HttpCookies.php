@@ -14,7 +14,7 @@ class HttpCookies
     /**
      *
      */
-    use Config\Cookies {
+    use Config\HttpCookies {
         remove as protected;
         set as protected;
     }

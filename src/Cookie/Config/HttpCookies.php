@@ -6,9 +6,9 @@
 namespace Mvc5\Cookie\Config;
 
 use Mvc5\Arg;
-use Mvc5\Cookie;
+use Mvc5\Cookie\Cookies;
 
-trait Cookies
+trait HttpCookies
 {
     /**
      * @var array
@@ -100,7 +100,7 @@ trait Cookies
      * @return self|mixed
      */
     function with($name, $value = '', $expire = null,
-                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
+                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookies
     {
         $new = clone $this;
         $new->set($name, $value, $expire, $path, $domain, $secure, $httponly);
@@ -115,7 +115,7 @@ trait Cookies
      * @param bool|null $httponly
      * @return self|mixed
      */
-    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookie\Cookies
+    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookies
     {
         $new = clone $this;
         $new->remove($name, $path, $domain, $secure, $httponly);
