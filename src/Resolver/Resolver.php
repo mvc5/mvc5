@@ -241,14 +241,11 @@ trait Resolver
         }
 
         if ($gem instanceof FileInclude) {
-            /** @var callable $include */
-            $include = new class() {
+            return (new class() {
                 function __invoke($file) {
                     return include $file;
                 }
-            };
-
-            return $include($this->resolve($gem->config()));
+            })($this->resolve($gem->config()));
         }
 
         if ($gem instanceof Copy) {
