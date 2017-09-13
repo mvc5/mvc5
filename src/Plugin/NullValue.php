@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class NullValue
+final class NullValue
     extends Value
 {
     /**

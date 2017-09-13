@@ -226,6 +226,8 @@ include __DIR__ . '/src/Plugin/Hydrator.php';
 include __DIR__ . '/src/Plugin/Invokable.php';
 include __DIR__ . '/src/Plugin/Invoke.php';
 include __DIR__ . '/src/Plugin/Link.php';
+include __DIR__ . '/src/Plugin/Maybe.php';
+include __DIR__ . '/src/Plugin/Nothing.php';
 include __DIR__ . '/src/Plugin/Param.php';
 include __DIR__ . '/src/Plugin/Plug.php';
 include __DIR__ . '/src/Plugin/Plugins.php';

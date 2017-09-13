@@ -5,6 +5,8 @@
 
 namespace Mvc5\Resolver;
 
+use Mvc5\Plugin\Nothing;
+
 trait Container
 {
     /**
@@ -69,7 +71,7 @@ trait Container
      */
     function get($name)
     {
-        return $this->stored($name) ?? $this($name);
+        return $this->maybe($this->stored($name) ?? $this($name));
     }
 
     /**
@@ -87,6 +89,15 @@ trait Container
     function key()
     {
         return $this->container instanceof \Iterator ? $this->container->key() : key($this->container);
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function maybe($value)
+    {
+        return $value instanceof Nothing ? null : $value;
     }
 
     /**
@@ -143,25 +154,12 @@ trait Container
 
     /**
      * @param string $name
-     * @param mixed $service
-     * @return mixed
-     */
-    protected function share(string $name, $service = null)
-    {
-        null !== $service
-            && $this->set($name, $service);
-
-        return $service;
-    }
-
-    /**
-     * @param string $name
      * @param mixed $plugin
      * @return mixed
      */
     function shared(string $name, $plugin = null)
     {
-        return $this->stored($name) ?? $this->share($name, $this->plugin($plugin ?? $name));
+        return $this->maybe($this->stored($name) ?? $this->set($name, $this->plugin($plugin ?? $name)));
     }
 
     /**

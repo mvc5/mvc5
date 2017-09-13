@@ -33,7 +33,7 @@ class Filter
     function __construct($config, $filter = [], array $args = [], string $param = null)
     {
         $this->args   = $args;
-        $this->config = $config;
+        $this->config = $this->resolvable($config);
         $this->filter = $filter;
         $this->param  = $param;
     }
@@ -52,5 +52,14 @@ class Filter
     function param()
     {
         return $this->param;
+    }
+
+    /**
+     * @param mixed $value
+     * @return Call|mixed
+     */
+    protected function resolvable($value)
+    {
+        return $value instanceof \Closure ? new Call($value) : $value;
     }
 }
