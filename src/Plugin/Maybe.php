@@ -25,4 +25,13 @@ final class Maybe
     {
         return $value ?? new Nothing;
     }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    static function nullable($value)
+    {
+        return $value instanceof Nothing ? null : $value;
+    }
 }
