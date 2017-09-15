@@ -6,14 +6,22 @@
 namespace Mvc5\Plugin;
 
 final class Nullable
-    extends Filter
+    extends Call
 {
-
     /**
-     * @param mixed $value
+     * @param string|mixed $value
      */
     function __construct($value)
     {
-        parent::__construct($value, [[Maybe::class, 'nullable']]);
+        parent::__construct([$this, '__invoke'], [$value]);
+    }
+
+    /**
+     * @param \Closure|Nothing|mixed $value
+     * @return mixed|null
+     */
+    function __invoke($value)
+    {
+        return $value instanceof Nothing ? null : $value;
     }
 }

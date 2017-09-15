@@ -6,32 +6,22 @@
 namespace Mvc5\Plugin;
 
 final class Maybe
-    extends Filter
+    extends Call
 {
-
     /**
-     * @param mixed $value
+     * @param string|mixed $value
      */
     function __construct($value)
     {
-        parent::__construct($value, [[static::class, 'nothing']]);
+        parent::__construct([$this, '__invoke'], [$value]);
     }
 
     /**
-     * @param mixed $value
-     * @return mixed
+     * @param \Closure|mixed $value
+     * @return Nothing|mixed
      */
-    static function nothing($value)
+    function __invoke($value)
     {
         return $value ?? new Nothing;
-    }
-
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    static function nullable($value)
-    {
-        return $value instanceof Nothing ? null : $value;
     }
 }
