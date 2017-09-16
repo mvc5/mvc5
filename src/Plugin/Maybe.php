@@ -9,19 +9,27 @@ final class Maybe
     extends Call
 {
     /**
-     * @param string|mixed $value
+     * @var mixed|null
      */
-    function __construct($value)
+    protected $default;
+
+    /**
+     * @param null $value
+     * @param mixed|null $default
+     */
+    function __construct($value = null, $default = null)
     {
         parent::__construct([$this, '__invoke'], [$value]);
+
+        $this->default = $default;
     }
 
     /**
-     * @param \Closure|mixed $value
+     * @param mixed|null $value
      * @return Nothing|mixed
      */
-    function __invoke($value)
+    function __invoke($value = null)
     {
-        return $value ?? new Nothing;
+        return $value ?? $this->default ?? new Nothing;
     }
 }

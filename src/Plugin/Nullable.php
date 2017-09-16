@@ -9,19 +9,27 @@ final class Nullable
     extends Call
 {
     /**
-     * @param string|mixed $value
+     * @var mixed|null
      */
-    function __construct($value)
+    protected $default;
+
+    /**
+     * @param mixed|null $value
+     * @param mixed|null $default
+     */
+    function __construct($value = null, $default = null)
     {
         parent::__construct([$this, '__invoke'], [$value]);
+
+        $this->default = $default;
     }
 
     /**
-     * @param \Closure|Nothing|mixed $value
+     * @param Nothing|mixed|null $value
      * @return mixed|null
      */
-    function __invoke($value)
+    function __invoke($value = null)
     {
-        return $value instanceof Nothing ? null : $value;
+        return $value instanceof Nothing ? $this->default : $value;
     }
 }
