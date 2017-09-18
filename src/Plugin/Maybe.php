@@ -14,7 +14,7 @@ final class Maybe
     protected $default;
 
     /**
-     * @param null $value
+     * @param mixed|null $value
      * @param mixed|null $default
      */
     function __construct($value = null, $default = null)
