@@ -471,7 +471,7 @@ trait Resolver
      * @param array $args
      * @return mixed
      */
-    function resolve($plugin, array $args = [])
+    protected function resolve($plugin, array $args = [])
     {
         return $this->resolvable($plugin, $args);
     }
