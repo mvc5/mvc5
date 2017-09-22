@@ -12,6 +12,7 @@ use Mvc5\Plugin\Gem\Calls;
 use Mvc5\Plugin\Gem\Child;
 use Mvc5\Plugin\Gem\Config;
 use Mvc5\Plugin\Gem\Copy;
+use Mvc5\Plugin\Gem\Expect;
 use Mvc5\Plugin\Gem\Factory;
 use Mvc5\Plugin\Gem\FileInclude;
 use Mvc5\Plugin\Gem\Filter;
@@ -264,6 +265,14 @@ trait Resolver
             return ($this->provider() ?? new Unresolvable)($gem->config(), $this->vars($args, $gem->args()));
         }
 
+        if ($gem instanceof Expect) {
+            try {
+                return $this->resolve($gem->plugin(), $args);
+            } catch(\Throwable $exception) {
+                return $this->resolve($gem->exception(), $gem->args($exception, $args));
+            }
+        }
+
         return Unresolvable::plugin($gem);
     }
 
@@ -462,7 +471,7 @@ trait Resolver
      * @param array $args
      * @return mixed
      */
-    protected function resolve($plugin, array $args = [])
+    function resolve($plugin, array $args = [])
     {
         return $this->resolvable($plugin, $args);
     }
