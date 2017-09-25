@@ -6,7 +6,6 @@
 namespace Mvc5\Plugin;
 
 use Mvc5\Arg;
-use Mvc5\Resolvable;
 
 final class Expect
     implements Gem\Expect
@@ -27,12 +26,12 @@ final class Expect
     protected $named = false;
 
     /**
-     * @var Resolvable
+     * @var \Mvc5\Resolvable
      */
     protected $plugin;
 
     /**
-     * @param Resolvable|mixed $plugin
+     * @param \Mvc5\Resolvable|mixed $plugin
      * @param mixed|null $exception
      * @param bool|false $named
      * @param bool|false $args
@@ -56,7 +55,7 @@ final class Expect
     }
 
     /**
-     * @return mixed|null
+     * @return \Mvc5\Resolvable|mixed
      */
     function exception()
     {
@@ -84,7 +83,7 @@ final class Expect
     }
 
     /**
-     * @return Resolvable|mixed
+     * @return \Mvc5\Resolvable|mixed
      */
     function plugin()
     {

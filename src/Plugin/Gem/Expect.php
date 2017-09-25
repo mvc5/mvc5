@@ -5,8 +5,6 @@
 
 namespace Mvc5\Plugin\Gem;
 
-use Mvc5\Resolvable;
-
 interface Expect
     extends Gem
 {
@@ -18,12 +16,12 @@ interface Expect
     function args(\Throwable $exception, array $args) : array;
 
     /**
-     * @return mixed
+     * @return \Mvc5\Resolvable|mixed
      */
     function exception();
 
     /**
-     * @return Resolvable|mixed
+     * @return \Mvc5\Resolvable|mixed
      */
     function plugin();
 }
