@@ -556,6 +556,16 @@ trait Resolver
     }
 
     /**
+     * @param mixed $plugin
+     * @param array $args
+     * @return mixed
+     */
+    function __call($plugin, array $args = [])
+    {
+        return $this->call($plugin, $args);
+    }
+
+    /**
      *
      */
     function __clone()
