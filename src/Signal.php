@@ -55,7 +55,7 @@ final class Signal
 
             if (Arg::ARGV === $param->name) {
                 $matched[] = $args;
-                continue;
+                break;
             }
 
             if ($param->isOptional()) {
