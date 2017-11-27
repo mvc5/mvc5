@@ -112,7 +112,7 @@ trait Generator
      * @param array|\Iterator $queue
      * @return array|\Iterator
      */
-    protected function start(&$queue)
+    protected function start($queue)
     {
         $queue instanceof \Iterator ? $queue->rewind() : reset($queue);
         return $queue;
@@ -138,7 +138,7 @@ trait Generator
      */
     protected function traverse($event, $queue, array $args, callable $callback)
     {
-        return $this->iterate($event, $this->start($queue), $args, $callback, null, function(&$queue) {
+        return $this->iterate($event, $this->start($queue), $args, $callback, null, function($queue) {
             return $queue instanceof \Iterator ? $queue->current() : current($queue);
         });
     }
