@@ -13,7 +13,7 @@ trait Container
     /**
      * @var Model
      */
-    protected $config;
+    protected $config = [];
 
     /**
      * @var string
