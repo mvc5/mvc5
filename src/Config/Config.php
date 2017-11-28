@@ -66,7 +66,7 @@ trait Config
      * @param mixed $value
      * @return self|mixed
      */
-    function with($name, $value = null) : Model
+    function with($name, $value = null)
     {
         $new = clone $this;
         
@@ -81,7 +81,7 @@ trait Config
      * @param array|string $name
      * @return self|mixed
      */
-    function without($name) : Model
+    function without($name)
     {
         $new = clone $this;
         
