@@ -35,7 +35,7 @@ trait Generator
      */
     protected function generate($event, array $args = [], callable $callback = null)
     {
-        return $this->iterate($event, $this->start($this->queue($event, $args)), $args, $callback);
+        return $this->iterate(null, $event, $this->start($this->queue($event, $args)), $args, $callback);
     }
 
     /**
@@ -48,31 +48,18 @@ trait Generator
     }
 
     /**
+     * @param mixed $result
      * @param array|Event|\Iterator|object|string $event
      * @param array|\Iterator $queue
      * @param array $args
      * @param callable|null $callback
-     * @param mixed $result
      * @return mixed
      */
-    protected function iterate($event, $queue, array $args, callable $callback = null, $result = null)
+    protected function iterate($result, $event, $queue, array $args, callable $callback = null)
     {
-        return $this->stopped($event, $queue) ? $result : $this->loop(
-            $event, $queue, $args, $callback, $this->result($event, $this->item($queue), $args, $callback)
+        return $this->stopped($event, $queue) ? $result : $this->iterate(
+            $this->result($event, $this->item($queue), $args, $callback), $event, $this->step($queue), $args, $callback
         );
-    }
-
-    /**
-     * @param array|Event|\Iterator|object|string $event
-     * @param array|\Iterator $queue
-     * @param array $args
-     * @param callable|null $callback
-     * @param mixed $result
-     * @return mixed
-     */
-    protected function loop($event, $queue, array $args, callable $callback = null, $result = null)
-    {
-        return $this->iterate($event, $this->step($queue), $args, $callback, $result);
     }
 
     /**
