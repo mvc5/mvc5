@@ -4,14 +4,9 @@ language: php
 
 php:
   - 7
-  - hhvm
+  - 7.1
+  - 7.2
 
-matrix:
-  exclude:
-    - php: hhvm
-  allow_failures:
-    - php: hhvm
-    
 before_script:
   - composer selfupdate
   - composer create-project mvc5/mvc5-application build --stability dev --keep-vcs
