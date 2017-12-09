@@ -1,26 +1,23 @@
----
-engines:
+version: "2"
+plugins:
   duplication:
     enabled: true
     config:
       languages:
-      - ruby
-      - javascript
-      - python
-      - php
+      - php:
   fixme:
-    enabled: true
+    enabled: false
   phpmd:
+    enabled: false
+  phan:
     enabled: true
-ratings:
-  paths:
-  - "**.inc"
-  - "**.js"
-  - "**.jsx"
-  - "**.module"
-  - "**.php"
-  - "**.py"
-  - "**.rb"
-exclude_paths:
-- config/*
-- view/*
+    config:
+        file_extensions: "php"
+        ignore-undeclared: false
+        quick: false
+        backward-compatibility-checks: false
+        dead-code-detection: true
+        directory_list: "src/"
+exclude_patterns:
+- "config/"
+- "view/"
