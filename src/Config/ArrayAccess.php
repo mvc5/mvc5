@@ -38,7 +38,7 @@ trait ArrayAccess
     /**
      * @param string $name
      */
-    function offsetUnset($name)
+    function offsetUnset($name) : void
     {
         $this->remove($name);
     }

@@ -92,7 +92,7 @@ trait Container
     /**
      *
      */
-    function next()
+    function next() : void
     {
         $this->container instanceof \Iterator ? $this->container->next() : next($this->container);
     }
@@ -110,7 +110,7 @@ trait Container
     /**
      *
      */
-    function rewind()
+    function rewind() : void
     {
         $this->container instanceof \Iterator ? $this->container->rewind() : reset($this->container);
     }
@@ -145,6 +145,7 @@ trait Container
      * @param string $name
      * @param mixed $plugin
      * @return mixed
+     * @throws \Throwable
      */
     function shared(string $name, $plugin = null)
     {

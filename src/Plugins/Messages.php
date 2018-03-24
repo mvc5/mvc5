@@ -6,6 +6,7 @@
 namespace Mvc5\Plugins;
 
 use Mvc5\Arg;
+use Mvc5\Session\SessionMessages;
 
 trait Messages
 {
@@ -13,7 +14,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function danger($message, string $name = Arg::INDEX)
+    protected function danger($message, string $name = Arg::INDEX) : void
     {
         $this->messages()->danger($message, $name);
     }
@@ -22,7 +23,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function info($message, string $name = Arg::INDEX)
+    protected function info($message, string $name = Arg::INDEX) : void
     {
         $this->messages()->info($message, $name);
     }
@@ -31,15 +32,15 @@ trait Messages
      * @param string $name
      * @return array
      */
-    protected function message(string $name = Arg::INDEX)
+    protected function message(string $name = Arg::INDEX) : array
     {
         return $this->messages()->message($name);
     }
 
     /**
-     * @return \Mvc5\Session\SessionMessages
+     * @return SessionMessages
      */
-    protected function messages()
+    protected function messages() : SessionMessages
     {
         return $this->plugin(Arg::SESSION_MESSAGES);
     }
@@ -48,7 +49,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function success($message, string $name = Arg::INDEX)
+    protected function success($message, string $name = Arg::INDEX) : void
     {
         $this->messages()->success($message, $name);
     }
@@ -57,7 +58,7 @@ trait Messages
      * @param array|string $message
      * @param string $name
      */
-    protected function warning($message, string $name = Arg::INDEX)
+    protected function warning($message, string $name = Arg::INDEX) : void
     {
         $this->messages()->warning($message, $name);
     }

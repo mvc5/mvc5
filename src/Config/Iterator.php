@@ -34,7 +34,7 @@ trait Iterator
     /**
      *
      */
-    function next()
+    function next() : void
     {
         $this->config instanceof \Iterator ? $this->config->next() : next($this->config);
     }
@@ -42,7 +42,7 @@ trait Iterator
     /**
      *
      */
-    function rewind()
+    function rewind() : void
     {
         $this->config instanceof \Iterator ? $this->config->rewind() : reset($this->config);
     }

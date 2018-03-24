@@ -14,7 +14,7 @@ trait Render
      * @param array $vars
      * @return string
      */
-    protected function render($template, array $vars = [])
+    protected function render($template, array $vars = []) : string
     {
         return $this->call(Arg::RENDER, [$template, $vars]);
     }
