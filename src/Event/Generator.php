@@ -32,6 +32,7 @@ trait Generator
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function generate($event, array $args = [], callable $callback = null)
     {
@@ -66,6 +67,7 @@ trait Generator
      * @param array|Event|\Iterator|object|string $event
      * @param array $args
      * @return array|\Iterator
+     * @throws \Throwable
      */
     protected function queue($event, array $args = [])
     {
@@ -89,6 +91,7 @@ trait Generator
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function signal(callable $callable, array $args = [], callable $callback = null)
     {

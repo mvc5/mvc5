@@ -22,6 +22,7 @@ trait Build
      * @param array|Route $route
      * @param bool $compile
      * @return Route
+     * @throws \InvalidArgumentException
      */
     protected function build($route, bool $compile = true) : Route
     {
@@ -52,6 +53,7 @@ trait Build
      * @param Route $route
      * @param bool $compile
      * @return Route
+     * @throws \InvalidArgumentException
      */
     protected function definition(Route $route, bool $compile = true) : Route
     {

@@ -28,6 +28,7 @@ class Dispatch
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)
     {

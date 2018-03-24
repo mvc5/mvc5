@@ -124,6 +124,7 @@ trait Resolver
      * @param Child $child
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     protected function child(Child $child, array $args = [])
     {
@@ -136,6 +137,7 @@ trait Resolver
      * @param array $args
      * @param string|null $param
      * @return mixed
+     * @throws \Throwable
      */
     protected function filter($value, $filters = [], array $args = [], string $param = null)
     {
@@ -164,6 +166,7 @@ trait Resolver
      * @param Filter $filter
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     protected function filterable(Filter $filter, array $args = [])
     {
@@ -176,6 +179,7 @@ trait Resolver
      * @param Gem $gem
      * @param array $args
      * @return callable|mixed
+     * @throws \Throwable
      */
     protected function gem(Gem $gem, array $args = [])
     {
@@ -280,6 +284,7 @@ trait Resolver
      * @param Plugin $plugin
      * @param object $service
      * @return object
+     * @throws \Throwable
      */
     protected function hydrate(Plugin $plugin, $service)
     {
@@ -377,6 +382,7 @@ trait Resolver
      * @param callable|null $callback
      * @param string|null $previous
      * @return mixed
+     * @throws \Throwable
      */
     function plugin($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
@@ -405,6 +411,7 @@ trait Resolver
      * @param callable|null $callback
      * @param string|null $previous
      * @return mixed
+     * @throws \Throwable
      */
     protected function pluginArray($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
@@ -416,6 +423,7 @@ trait Resolver
      * @param Plugin $plugin
      * @param array $args
      * @return callable|object|null
+     * @throws \Throwable
      */
     protected function provide(Plugin $plugin, array $args = [])
     {
@@ -457,6 +465,7 @@ trait Resolver
      * @param callable|null $callback
      * @param int $c
      * @return mixed
+     * @throws \Throwable
      */
     protected function resolvable($plugin, array $args = [], callable $callback = null, int $c = 0)
     {
@@ -470,6 +479,7 @@ trait Resolver
      * @param Resolvable|mixed $plugin
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     protected function resolve($plugin, array $args = [])
     {
@@ -510,6 +520,7 @@ trait Resolver
      * @param array $args
      * @param callable|null $callback
      * @return callable|mixed
+     * @throws \Throwable
      */
     protected function solve($plugin, array $args = [], callable $callback = null)
     {
@@ -605,6 +616,7 @@ trait Resolver
      * @param mixed $plugin
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     function __invoke($plugin, array $args = [])
     {

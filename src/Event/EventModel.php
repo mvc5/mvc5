@@ -30,6 +30,7 @@ trait EventModel
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function signal(callable $callable, array $args = [], callable $callback = null)
     {
@@ -41,6 +42,7 @@ trait EventModel
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     function __invoke(callable $callable, array $args = [], callable $callback = null)
     {

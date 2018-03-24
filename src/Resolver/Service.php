@@ -17,6 +17,7 @@ trait Service
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     function call($plugin, array $args = [], callable $callback = null)
     {
@@ -53,6 +54,7 @@ trait Service
     /**
      * @param string $name
      * @return callable|mixed
+     * @throws \Throwable
      */
     protected function fallback(string $name)
     {
@@ -62,6 +64,7 @@ trait Service
     /**
      * @param string $plugin
      * @return callable|mixed
+     * @throws \Throwable
      */
     protected function invokable(string $plugin)
     {
@@ -74,6 +77,7 @@ trait Service
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function invoke(callable $callable, array $args = [], callable $callback = null)
     {
@@ -86,6 +90,7 @@ trait Service
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function relay($plugin, array $name = [], array $args = [], callable $callback = null)
     {
@@ -100,6 +105,7 @@ trait Service
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function repeat($plugin, string $method, array $name = [], array $args = [], callable $callback = null)
     {
@@ -113,6 +119,7 @@ trait Service
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function transmit(array $name, array $args = [], callable $callback = null)
     {

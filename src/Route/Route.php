@@ -55,7 +55,7 @@ interface Route
     /**
      * @return string|null
      */
-    function name();
+    function name() : ?string;
 
     /**
      * @return array
@@ -63,19 +63,19 @@ interface Route
     function options() : array;
 
     /**
-     * @return array|string
+     * @return array|string|null
      */
     function path();
 
     /**
      * @return int|null
      */
-    function port();
+    function port() : ?int;
 
     /**
      * @return string|null
      */
-    function regex();
+    function regex() : ?string;
 
     /**
      * @return array|string|null

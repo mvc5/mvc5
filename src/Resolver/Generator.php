@@ -25,6 +25,7 @@ trait Generator
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function event($event, array $args = [], callable $callback = null)
     {
@@ -52,6 +53,7 @@ trait Generator
      * @param Event|object|string $event
      * @param array $args
      * @return array|\Iterator|null
+     * @throws \Throwable
      */
     protected function iterator($event, array $args = [])
     {
@@ -72,6 +74,7 @@ trait Generator
     /**
      * @param string $name
      * @return array|\Iterator
+     * @throws \Throwable
      */
     protected function listeners(string $name)
     {
@@ -83,6 +86,7 @@ trait Generator
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     function trigger($event, array $args = [], callable $callback = null)
     {

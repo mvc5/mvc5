@@ -21,6 +21,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function build(array $name, array $args = [], callable $callback = null)
     {
@@ -33,6 +34,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function callback(string $name, bool $config = false, array $args = [], callable $callback = null)
     {
@@ -46,6 +48,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function combine(array $name, array $args = [], callable $callback = null)
     {
@@ -58,6 +61,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function compose($plugin, array $name = [], array $args = [], callable $callback = null)
     {
@@ -72,6 +76,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function composite($plugin, string $name, array $args = [], callable $callback = null)
     {
@@ -86,6 +91,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function create(string $name, array $args = [], callable $callback = null)
     {
@@ -98,6 +104,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function first(string $plugin, array $name, array $args = [], callable $callback = null)
     {
@@ -108,6 +115,7 @@ trait Build
      * @param string $name
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     protected function make(string $name, array $args = [])
     {
@@ -120,6 +128,7 @@ trait Build
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     protected function unique(string $name, $plugin, array $args = [], callable $callback = null)
     {

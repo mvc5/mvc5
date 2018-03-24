@@ -30,6 +30,7 @@ final class Builder
      * @param array $args
      * @param callable $callback
      * @return object
+     * @throws \ReflectionException|\RuntimeException
      */
     static function create(string $name, array $args, callable $callback)
     {
@@ -107,7 +108,8 @@ final class Builder
 
     /**
      * @param string $name
-     * @return self
+     * @return Builder
+     * @throws \ReflectionException
      */
     static function reflectionClass(string $name) : self
     {

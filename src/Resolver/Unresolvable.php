@@ -22,9 +22,9 @@ final class Unresolvable
     }
 
     /**
-     * @param object|string|mixed $plugin
+     * @param $plugin
      * @return mixed
-     * @throws self
+     * @throws \Throwable
      */
     static function plugin($plugin)
     {
