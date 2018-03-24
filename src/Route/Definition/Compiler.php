@@ -46,8 +46,8 @@ class Compiler
                     continue;
                 }
 
-                $default = isset($defaults[$part[Dash::NAME]]) ? $defaults[$part[Dash::NAME]] : null;
-                $path    = isset($params[$part[Dash::NAME]])   ? $params[$part[Dash::NAME]]   : null;
+                $default = $defaults[$part[Dash::NAME]] ?? null;
+                $path    = $params[$part[Dash::NAME]]   ?? null;
 
                 if (!$path) {
                     if ($current['is_optional']) {
