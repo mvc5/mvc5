@@ -25,7 +25,7 @@ trait Uri
     /**
      * @return string|null
      */
-    function fragment()
+    function fragment() : ?string
     {
         return $this[Arg::FRAGMENT];
     }
@@ -33,7 +33,7 @@ trait Uri
     /**
      * @return string|null
      */
-    function host()
+    function host() : ?string
     {
         return $this[Arg::HOST];
     }
@@ -41,7 +41,7 @@ trait Uri
     /**
      * @return string|null
      */
-    function password()
+    function password() : ?string
     {
         return $this[Arg::PASS];
     }
@@ -49,7 +49,7 @@ trait Uri
     /**
      * @return string|null
      */
-    function path()
+    function path() : ?string
     {
         return $this[Arg::PATH];
     }
@@ -57,7 +57,7 @@ trait Uri
     /**
      * @return int|null
      */
-    function port()
+    function port() : ?int
     {
         return $this[Arg::PORT];
     }
@@ -73,7 +73,7 @@ trait Uri
     /**
      * @return string|null
      */
-    function scheme()
+    function scheme() : ?string
     {
         return $this[Arg::SCHEME];
     }
@@ -81,7 +81,7 @@ trait Uri
     /**
      * @return string|null
      */
-    function user()
+    function user() : ?string
     {
         return $this[Arg::USER];
     }
@@ -106,6 +106,22 @@ trait Uri
 
         return ($scheme ? $scheme . ':' : '') . ($scheme || $host ? '//' : '') .
             ($host ? ($user ? $user . '@' : '') . $host . ($port ? ':' . $port : '') : '') .
-                $path . ($query ? '?'. $query : '') . ($fragment ? '#' . $fragment : '');
+                $path . ($query ? '?'. (is_array($query) ? query($query) : $query) : '') . ($fragment ? '#' . $fragment : '');
     }
+}
+
+/**
+ * @param array $query
+ * @param string $parent
+ * @param array $args
+ * @return string
+ */
+function query(array $query, string $parent = '', array $args = []) : string
+{
+    foreach($query as $key => $value) {
+        $key = $parent ? $parent . '[' . $key . ']' : $key;
+        $args[] = is_array($value) ? query($value, $key) : (isset($value) ? $key . '=' . $value : $key);
+    }
+
+    return implode('&', $args);
 }
