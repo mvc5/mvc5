@@ -18,7 +18,7 @@ trait ErrorModel
     /**
      * @return int|null
      */
-    function code()
+    function code() : ?int
     {
         return $this[Arg::ERROR][Arg::CODE];
     }
@@ -34,7 +34,7 @@ trait ErrorModel
     /**
      * @return string|null
      */
-    function message()
+    function message() : ?string
     {
         return $this[Arg::ERROR][Arg::MESSAGE];
     }

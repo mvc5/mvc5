@@ -6,6 +6,8 @@
 namespace Mvc5\Request\Config;
 
 use Mvc5\Arg;
+use Mvc5\Http\Error;
+use Mvc5\Route\Route;
 
 trait Request
 {
@@ -35,7 +37,7 @@ trait Request
     /**
      * @return string|null
      */
-    function clientAddress()
+    function clientAddress() : ?string
     {
         return $this[Arg::CLIENT_ADDRESS];
     }
@@ -76,15 +78,15 @@ trait Request
     }
 
     /**
-     * @return \Mvc5\Http\Error|null
+     * @return Error|null
      */
-    function error()
+    function error() : ?Error
     {
         return $this[Arg::ERROR];
     }
 
     /**
-     * @return array
+     * @return array|mixed
      */
     function files()
     {
@@ -103,7 +105,7 @@ trait Request
     /**
      * @return string|null
      */
-    function host()
+    function host() : ?string
     {
         return $this->get(Arg::URI)[Arg::HOST] ?? null;
     }
@@ -135,7 +137,7 @@ trait Request
     /**
      * @return string|null
      */
-    function name()
+    function name() : ?string
     {
         return $this[Arg::NAME];
     }
@@ -161,7 +163,7 @@ trait Request
     /**
      * @return string|null
      */
-    function path()
+    function path() : ?string
     {
         return $this->get(Arg::URI)[Arg::PATH] ?? null;
     }
@@ -169,7 +171,7 @@ trait Request
     /**
      * @return int|null
      */
-    function port()
+    function port() : ?int
     {
         return $this->get(Arg::URI)[Arg::PORT] ?? null;
     }
@@ -193,9 +195,9 @@ trait Request
     }
 
     /**
-     * @return \Mvc5\Route\Route|null
+     * @return Route|null
      */
-    function route()
+    function route() : ?Route
     {
         return $this[Arg::ROUTE];
     }
@@ -203,7 +205,7 @@ trait Request
     /**
      * @return string|null
      */
-    function scheme()
+    function scheme() : ?string
     {
         return $this->get(Arg::URI)[Arg::SCHEME] ?? null;
     }
@@ -239,7 +241,7 @@ trait Request
     /**
      * @return string|null
      */
-    function userAgent()
+    function userAgent() : ?string
     {
         return $this[Arg::USER_AGENT];
     }

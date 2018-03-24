@@ -26,5 +26,5 @@ interface Filter
     /**
      * @return string|null
      */
-    function param();
+    function param() : ?string;
 }

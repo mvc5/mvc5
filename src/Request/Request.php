@@ -5,6 +5,8 @@
 
 namespace Mvc5\Request;
 
+use Mvc5\Http\Error;
+
 interface Request
     extends \Mvc5\Http\Request
 {
@@ -23,7 +25,7 @@ interface Request
     /**
      * @return string|null
      */
-    function clientAddress();
+    function clientAddress() : ?string;
 
     /**
      * @return callable|mixed
@@ -49,9 +51,9 @@ interface Request
     function data(string $name = null, $default = null);
 
     /**
-     * @return \Mvc5\Http\Error|null
+     * @return Error|null
      */
-    function error();
+    function error() : ?Error;
 
     /**
      * @return array|mixed
@@ -67,7 +69,7 @@ interface Request
     /**
      * @return string|null
      */
-    function host();
+    function host() : ?string;
 
     /**
      * @return bool
@@ -87,7 +89,7 @@ interface Request
     /**
      * @return string|null
      */
-    function name();
+    function name() : ?string;
 
     /**
      * @param string $name
@@ -104,12 +106,12 @@ interface Request
     /**
      * @return string|null
      */
-    function path();
+    function path() : ?string;
 
     /**
      * @return int|null
      */
-    function port();
+    function port() : ?int;
 
     /**
      * @param string|null $name
@@ -131,7 +133,7 @@ interface Request
     /**
      * @return string|null
      */
-    function scheme();
+    function scheme() : ?string;
 
     /**
      * @param string|null $name
@@ -155,7 +157,7 @@ interface Request
     /**
      * @return string|null
      */
-    function userAgent();
+    function userAgent() : ?string;
 
     /**
      * @param string $name

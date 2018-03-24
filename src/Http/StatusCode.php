@@ -80,7 +80,7 @@ final class StatusCode
      * @param int $status
      * @return string|null
      */
-    static function reasonPhrase(int $status)
+    static function reasonPhrase(int $status) : ?string
     {
         return static::$reasonPhrase[$status] ?? null;
     }

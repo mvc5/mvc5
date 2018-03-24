@@ -69,7 +69,7 @@ class Assemble
      * @param array $unreserved
      * @return string|null
      */
-    static function encode(string $value = null, array $unreserved = [])
+    static function encode(string $value = null, array $unreserved = []) : ?string
     {
         return $value ? strtr(rawurlencode($value), $unreserved ?: static::UNRESERVED) : $value;
     }
@@ -78,7 +78,7 @@ class Assemble
      * @param string|null $fragment
      * @return string|null
      */
-    static function fragment(string $fragment = null)
+    static function fragment(string $fragment = null) : ?string
     {
         return static::encode($fragment, static::FRAGMENT);
     }
@@ -87,7 +87,7 @@ class Assemble
      * @param string|null $host
      * @return string|null
      */
-    static function host(string $host = null)
+    static function host(string $host = null) : ?string
     {
         return static::encode(strtolower((string) $host));
     }
@@ -96,7 +96,7 @@ class Assemble
      * @param string|null $path
      * @return string|null
      */
-    static function path(string $path = null)
+    static function path(string $path = null) : ?string
     {
         return static::encode($path, static::PATH);
     }
@@ -106,7 +106,7 @@ class Assemble
      * @param string|null $prefix
      * @return string|null
      */
-    static function port(int $port = null, string $prefix = null)
+    static function port(int $port = null, string $prefix = null) : ?string
     {
         return $port && 80 != $port && 443 != $port ? $prefix . $port : null;
     }
@@ -115,7 +115,7 @@ class Assemble
      * @param array|string|null $query
      * @return string|null
      */
-    static function query($query)
+    static function query($query) : ?string
     {
         return is_array($query) ? strtr(
             http_build_query($query, '', Arg::QUERY_SEPARATOR, \PHP_QUERY_RFC3986), static::QUERY
@@ -126,7 +126,7 @@ class Assemble
      * @param string|null $scheme
      * @return string|null
      */
-    static function scheme(string $scheme = null)
+    static function scheme(string $scheme = null) : ?string
     {
         return $scheme ? strtolower($scheme) : $scheme;
     }
@@ -184,7 +184,7 @@ class Assemble
      * @param string|null $suffix
      * @return string|null
      */
-    static function user(string $user = null, string $password = null, string $suffix = null)
+    static function user(string $user = null, string $password = null, string $suffix = null) : ?string
     {
         return $user ? static::encode($user . ($password ? ':' . $password : '')) . $suffix : $user;
     }

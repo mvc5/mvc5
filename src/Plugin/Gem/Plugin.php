@@ -33,5 +33,5 @@ interface Plugin
     /**
      * @return string|null
      */
-    function param();
+    function param() : ?string;
 }

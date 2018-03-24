@@ -90,7 +90,7 @@ class Plugin
      * @param array $options
      * @return string|null
      */
-    protected function assemble($route, $query = null, string $fragment = null, array $options = [])
+    protected function assemble($route, $query = null, string $fragment = null, array $options = []) : ?string
     {
         return $route ? ($this->assembler)($route, $query, $fragment, $options) : null;
     }
@@ -102,7 +102,7 @@ class Plugin
      * @param array $options
      * @return string|null
      */
-    protected function create($route, $query = null, string $fragment = null, array $options = [])
+    protected function create($route, $query = null, string $fragment = null, array $options = []) : ?string
     {
         return $route instanceof Uri ? $this->uri($route) :
             $this->uri($this->route((array) $route, $this->options($query, $fragment, $options)));
@@ -114,7 +114,7 @@ class Plugin
      * @param array $options
      * @return Uri|null
      */
-    protected function generate(string $name, array $params, array $options)
+    protected function generate(string $name, array $params, array $options) : ?Uri
     {
         return $name[0] === Arg::SEPARATOR ? null : ($this->generator)($name, $this->params($name, $params), $options);
     }
@@ -155,7 +155,7 @@ class Plugin
      * @param Request|null $parent
      * @return Request|null
      */
-    protected function parent(Request $request = null, Request $parent = null)
+    protected function parent(Request $request = null, Request $parent = null) : ?Request
     {
         $parent && ($name = $parent[Arg::NAME]) &&
             $this->params[$name] = $parent[Arg::PARAMS];
@@ -178,7 +178,7 @@ class Plugin
      * @param array $options
      * @return Uri|null
      */
-    protected function route(array $route, array $options)
+    protected function route(array $route, array $options) : ?Uri
     {
         return $this->generate($this->name(array_shift($route)), $route, $options);
     }
@@ -187,7 +187,7 @@ class Plugin
      * @param array|Uri $uri
      * @return string|null
      */
-    protected function uri($uri)
+    protected function uri($uri) : ?string
     {
         return $uri ? $this->assemble($this->absolute($uri)) : null;
     }
@@ -197,9 +197,9 @@ class Plugin
      * @param array|string|null $query
      * @param string|null $fragment
      * @param array $options
-     * @return string
+     * @return string|null
      */
-    function __invoke($route = null, $query = null, string $fragment = null, array $options = [])
+    function __invoke($route = null, $query = null, string $fragment = null, array $options = []) : ?string
     {
         return $this->create($route, $query, $fragment, $options) ??
             $this->assemble($route, $query, $fragment, $this->absolute($options));

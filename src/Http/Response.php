@@ -23,15 +23,15 @@ interface Response
     /**
      * @return string|null
      */
-    function reason();
+    function reason() : ?string;
 
     /**
      * @return int|null
      */
-    function status();
+    function status() : ?int;
 
     /**
      * @return string|null
      */
-    function version();
+    function version() : ?string;
 }

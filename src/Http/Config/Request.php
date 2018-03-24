@@ -29,7 +29,7 @@ trait Request
     /**
      * @return string|null
      */
-    function method()
+    function method() : ?string
     {
         return $this[Arg::METHOD];
     }
@@ -45,7 +45,7 @@ trait Request
     /**
      * @return string|null
      */
-    function version()
+    function version() : ?string
     {
         return $this[Arg::VERSION];
     }

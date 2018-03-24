@@ -13,12 +13,12 @@ interface Error
     /**
      * @return int|null
      */
-    function code();
+    function code() : ?int;
 
     /**
      * @return string|null
      */
-    function description();
+    function description() : ?string;
 
     /**
      * @return array
@@ -28,10 +28,10 @@ interface Error
     /**
      * @return string|null
      */
-    function message();
+    function message() : ?string;
 
     /**
      * @return int|null
      */
-    function status();
+    function status() : ?int;
 }

@@ -23,7 +23,7 @@ interface Request
     /**
      * @return string|null
      */
-    function method();
+    function method() : ?string;
 
     /**
      * @return string|Uri|null
@@ -33,5 +33,5 @@ interface Request
     /**
      * @return string|null
      */
-    function version();
+    function version() : ?string;
 }

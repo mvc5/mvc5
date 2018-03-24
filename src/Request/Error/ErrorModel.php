@@ -13,7 +13,7 @@ interface ErrorModel
     /**
      * @return int|null
      */
-    function code();
+    function code() : ?int;
 
     /**
      * @return array
@@ -23,5 +23,5 @@ interface ErrorModel
     /**
      * @return string|null
      */
-    function message();
+    function message() : ?string;
 }

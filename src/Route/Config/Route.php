@@ -78,7 +78,7 @@ trait Route
     /**
      * @return string|null
      */
-    function name()
+    function name() : ?string
     {
         return $this[Arg::NAME];
     }
@@ -102,7 +102,7 @@ trait Route
     /**
      * @return int|null
      */
-    function port()
+    function port() : ?int
     {
         return $this[Arg::PORT];
     }
@@ -110,7 +110,7 @@ trait Route
     /**
      * @return string|null
      */
-    function regex()
+    function regex() : ?string
     {
         return $this[Arg::REGEX];
     }

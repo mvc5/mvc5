@@ -13,27 +13,27 @@ interface Uri
     /**
      * @return string|null
      */
-    function fragment();
+    function fragment() : ?string;
 
     /**
      * @return string|null
      */
-    function host();
+    function host() : ?string;
 
     /**
      * @return string|null
      */
-    function password();
+    function password() : ?string;
 
     /**
      * @return string|null
      */
-    function path();
+    function path() : ?string;
 
     /**
      * @return int|null
      */
-    function port();
+    function port() : ?int;
 
     /**
      * @return array|string|null
@@ -43,12 +43,12 @@ interface Uri
     /**
      * @return string|null
      */
-    function scheme();
+    function scheme() : ?string;
 
     /**
      * @return string|null
      */
-    function user();
+    function user() : ?string;
 
     /**
      * @return string

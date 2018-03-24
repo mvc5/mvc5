@@ -15,7 +15,7 @@ class Filter
     use Config\Config;
 
     /**
-     * @var array|\Traversable
+     * @var array|\Mvc5\Resolvable|\Traversable
      */
     protected $filter;
 
@@ -26,7 +26,7 @@ class Filter
 
     /**
      * @param string|mixed $config
-     * @param array|\Traversable $filter
+     * @param array|\Mvc5\Resolvable|\Traversable $filter
      * @param array $args
      * @param string|null $param
      */
@@ -39,7 +39,7 @@ class Filter
     }
 
     /**
-     * @return array|\Traversable
+     * @return array|\Mvc5\Resolvable|\Traversable
      */
     function filter()
     {
@@ -49,7 +49,7 @@ class Filter
     /**
      * @return string|null
      */
-    function param()
+    function param() : ?string
     {
         return $this->param;
     }

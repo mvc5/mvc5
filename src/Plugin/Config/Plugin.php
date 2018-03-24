@@ -50,7 +50,7 @@ trait Plugin
     /**
      * @return string|null
      */
-    function param()
+    function param() : ?string
     {
         return $this[Arg::PARAM];
     }

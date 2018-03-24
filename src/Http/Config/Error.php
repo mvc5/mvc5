@@ -12,7 +12,7 @@ trait Error
     /**
      * @return int|null
      */
-    function code()
+    function code() : ?int
     {
         return $this[Arg::CODE];
     }
@@ -20,7 +20,7 @@ trait Error
     /**
      * @return string|null
      */
-    function description()
+    function description() : ?string
     {
         return $this[Arg::DESCRIPTION];
     }
@@ -36,7 +36,7 @@ trait Error
     /**
      * @return string|null
      */
-    function message()
+    function message() : ?string
     {
         return $this[Arg::MESSAGE];
     }
@@ -44,7 +44,7 @@ trait Error
     /**
      * @return int|null
      */
-    function status()
+    function status() : ?int
     {
         return $this[Arg::STATUS];
     }

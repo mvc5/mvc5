@@ -49,7 +49,7 @@ class Host
      * @param Route $route
      * @return NotFound|null
      */
-    protected function notFound(Route $route)
+    protected function notFound(Route $route) : ?NotFound
     {
         return $this->optional($route, Arg::HOST) ? null : new NotFound;
     }

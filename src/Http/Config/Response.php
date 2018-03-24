@@ -29,7 +29,7 @@ trait Response
     /**
      * @return string|null
      */
-    function reason()
+    function reason() : ?string
     {
         return $this[Arg::REASON];
     }
@@ -37,7 +37,7 @@ trait Response
     /**
      * @return int|null
      */
-    function status()
+    function status() : ?int
     {
         return $this[Arg::STATUS];
     }
@@ -45,7 +45,7 @@ trait Response
     /**
      * @return string|null
      */
-    function version()
+    function version() : ?string
     {
         return $this[Arg::VERSION];
     }
