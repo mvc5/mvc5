@@ -18,7 +18,7 @@ trait Generator
      * @param \Throwable|null $previous
      * @param int $offset
      * @return mixed
-     * @throws \InvalidArgumentException
+     * @throws \DomainException
      */
     static function domain(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
