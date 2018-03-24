@@ -12,7 +12,7 @@ interface Cookies
 {
     /**
      * @param string $name
-     * @param string $value
+     * @param string|null $value
      * @param int|string|null $expire
      * @param string|null $path
      * @param string|null $domain
@@ -20,7 +20,7 @@ interface Cookies
      * @param bool|null $httponly
      * @return self|mixed
      */
-    function with($name, $value = '', $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
+    function with($name, $value = null, $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
 
     /**
      * @param string $name

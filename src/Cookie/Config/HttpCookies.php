@@ -67,7 +67,7 @@ trait HttpCookies
      * @param bool|null $secure
      * @param bool|null $httponly
      */
-    function remove($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+    function remove($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : void
     {
         $this->set($name, '', 946706400, $path, $domain, $secure, $httponly);
     }
@@ -82,7 +82,7 @@ trait HttpCookies
      * @param bool|null $httponly
      * @return mixed
      */
-    function set($name, $value = '', $expire = null,
+    function set($name, $value = null, $expire = null,
                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
     {
         $this->config[$name] = $this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly);
@@ -91,7 +91,7 @@ trait HttpCookies
 
     /**
      * @param string $name
-     * @param string $value
+     * @param string|null $value
      * @param int|string|null $expire
      * @param string|null $path
      * @param string|null $domain
@@ -99,7 +99,7 @@ trait HttpCookies
      * @param bool|null $httponly
      * @return self|mixed
      */
-    function with($name, $value = '', $expire = null,
+    function with($name, $value = null, $expire = null,
                   string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookies
     {
         $new = clone $this;
