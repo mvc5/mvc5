@@ -34,7 +34,7 @@ trait Middleware
      */
     protected function call($middleware, array $args = [])
     {
-        return $middleware ? $this->service->call($middleware, array_merge($args, [$this->delegate()])) : $this->end($args);
+        return $middleware ? $this->service->call($middleware, $this->params($args)) : $this->end($args);
     }
 
     /**
@@ -67,6 +67,16 @@ trait Middleware
         }
 
         return next($this->config);
+    }
+
+    /**
+     * @param array $args
+     * @return array
+     */
+    protected function params(array $args) : array
+    {
+        $args[] = $this->delegate();
+        return $args;
     }
 
     /**
