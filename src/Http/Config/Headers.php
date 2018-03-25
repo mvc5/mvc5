@@ -23,8 +23,8 @@ trait Headers
     }
 
     /**
-     * @param array|string|null $name
-     * @return mixed
+     * @param string $name
+     * @return array|string|null
      */
     function get($name)
     {
