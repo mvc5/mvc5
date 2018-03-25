@@ -23,10 +23,10 @@ trait Headers
     }
 
     /**
-     * @param string $name
+     * @param string|array $name
      * @return mixed
      */
-    function get($name) : ?string
+    function get($name)
     {
         return $this->config[strtolower($name)] ?? null;
     }
