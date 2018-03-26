@@ -23,21 +23,41 @@ trait Headers
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return array|string|null
      */
     function get($name)
     {
-        return $this->config[strtolower($name)] ?? null;
+        if (is_string($name)) {
+            return $this->config[strtolower($name)] ?? null;
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = $this->config[strtolower($key)] ?? null;
+        }
+
+        return $matched;
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return bool
      */
     function has($name) : bool
     {
-        return isset($this->config[strtolower($name)]);
+        if (is_string($name)) {
+            return isset($this->config[strtolower($name)]);
+        }
+
+        foreach($name as $key) {
+            if (!isset($this->config[strtolower($key)])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

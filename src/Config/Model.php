@@ -9,13 +9,13 @@ interface Model
     extends \ArrayAccess, \Countable, \Iterator
 {
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
     function get($name);
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return bool
      */
     function has($name) : bool;

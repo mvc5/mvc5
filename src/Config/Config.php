@@ -16,21 +16,41 @@ trait Config
     use PropertyAccess;
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
     function get($name)
     {
-        return is_array($this->config) ? ($this->config[$name] ?? null) : $this->config[$name];
+        if (is_string($name)) {
+            return is_array($this->config) ? ($this->config[$name] ?? null) : $this->config[$name];
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = $this->config[$key] ?? null;
+        }
+
+        return $matched;
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return bool
      */
     function has($name) : bool
     {
-        return isset($this->config[$name]);
+        if (is_string($name)) {
+            return isset($this->config[$name]);
+        }
+
+        foreach($name as $key) {
+            if (!isset($this->config[$key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

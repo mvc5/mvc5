@@ -64,21 +64,41 @@ trait Container
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
     function get($name)
     {
-        return $this->stored($name) ?? $this($name);
+        if (is_string($name)) {
+            return $this->stored($name) ?? $this($name);
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = $this->stored($key) ?? $this($key);
+        }
+
+        return $matched;
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return bool
      */
     function has($name) : bool
     {
-        return isset($this->container[$name]) || isset($this->services[$name]);
+        if (is_string($name)) {
+            return isset($this->container[$name]) || isset($this->services[$name]);
+        }
+
+        foreach($name as $key) {
+            if (!isset($this->container[$key]) && !isset($this->services[$key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

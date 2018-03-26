@@ -72,12 +72,22 @@ trait PHPSession
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return bool
      */
     function has($name) : bool
     {
-        return isset($_SESSION[$name]);
+        if (is_string($name)) {
+            return isset($_SESSION[$name]);
+        }
+
+        foreach($name as $key) {
+            if (!isset($_SESSION[$key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
