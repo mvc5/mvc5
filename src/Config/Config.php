@@ -22,7 +22,7 @@ trait Config
     function get($name)
     {
         if (is_string($name)) {
-            return is_array($this->config) ? ($this->config[$name] ?? null) : $this->config[$name];
+            return $this->config[$name] ?? null;
         }
 
         $matched = [];
