@@ -10,11 +10,12 @@ use Mvc5\Arg;
 trait Session
 {
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @return \Mvc5\Session\Session|mixed
      */
-    protected function session(string $name = null)
+    protected function session($name = null)
     {
-        return !($session = $this->plugin(Arg::SESSION)) || null === $name ? $session : ($session[$name] ?? null);
+        /** @var \Mvc5\Session\Session $session */
+        return !($session = $this->plugin(Arg::SESSION)) || null === $name ? $session : $session->get($name);
     }
 }

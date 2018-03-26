@@ -63,12 +63,22 @@ trait PHPSession
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
-    function &get($name)
+    function get($name)
     {
-        return $_SESSION[$name];
+        if (is_string($name)) {
+            return $_SESSION[$name] ?? null;
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = $_SESSION[$key] ?? null;
+        }
+
+        return $matched;
     }
 
     /**
@@ -130,7 +140,7 @@ trait PHPSession
      */
     function &offsetGet($name)
     {
-        return $this->get($name);
+        return $_SESSION[$name];
     }
 
     /**
@@ -240,6 +250,6 @@ trait PHPSession
      */
     function &__get($name)
     {
-        return $this->get($name);
+        return $this->offsetGet($name);
     }
 }
