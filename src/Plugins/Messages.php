@@ -12,27 +12,27 @@ trait Messages
 {
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    protected function danger($message, string $name = Arg::INDEX) : void
+    protected function danger($message, string $name = null) : void
     {
         $this->messages()->danger($message, $name);
     }
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    protected function info($message, string $name = Arg::INDEX) : void
+    protected function info($message, string $name = null) : void
     {
         $this->messages()->info($message, $name);
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return array
      */
-    protected function message(string $name = Arg::INDEX) : array
+    protected function message(string $name = null) : array
     {
         return $this->messages()->message($name);
     }
@@ -47,18 +47,18 @@ trait Messages
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    protected function success($message, string $name = Arg::INDEX) : void
+    protected function success($message, string $name = null) : void
     {
         $this->messages()->success($message, $name);
     }
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    protected function warning($message, string $name = Arg::INDEX) : void
+    protected function warning($message, string $name = null) : void
     {
         $this->messages()->warning($message, $name);
     }

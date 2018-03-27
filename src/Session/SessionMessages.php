@@ -5,7 +5,6 @@
 
 namespace Mvc5\Session;
 
-use Mvc5\Arg;
 use Mvc5\Config\Configuration;
 
 interface SessionMessages
@@ -13,31 +12,31 @@ interface SessionMessages
 {
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function danger($message, string $name = Arg::INDEX);
+    function danger($message, string $name = null);
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function info($message, string $name = Arg::INDEX);
+    function info($message, string $name = null);
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return array|null
      */
-    function message(string $name = Arg::INDEX);
+    function message(string $name = null);
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function success($message, string $name = Arg::INDEX);
+    function success($message, string $name = null);
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function warning($message, string $name = Arg::INDEX);
+    function warning($message, string $name = null);
 }

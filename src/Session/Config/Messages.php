@@ -39,29 +39,29 @@ trait Messages
 
     /**
      * @param array|string $message
-     * @param string $name
-     * @param string $type
+     * @param string|null $name
+     * @param string|null $type
      * @return array
      */
-    protected function add($message, string $name, string $type) : array
+    protected function add($message, string $name = null, string $type = null) : array
     {
-        return $this->set($name, [Arg::MESSAGE => $message, Arg::TYPE => $this->type($type)]);
+        return $this->set($name ?? Arg::INDEX, [Arg::MESSAGE => $message, Arg::TYPE => $this->type($type ?? Arg::INFO)]);
     }
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function danger($message, string $name = Arg::INDEX)
+    function danger($message, string $name = null)
     {
         $this->add($message, $name, Arg::DANGER);
     }
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function info($message, string $name = Arg::INDEX)
+    function info($message, string $name = null)
     {
         $this->add($message, $name, Arg::INFO);
     }
@@ -70,9 +70,9 @@ trait Messages
      * @param string $name
      * @return array|null
      */
-    function message(string $name = Arg::INDEX)
+    function message(string $name = null)
     {
-        ($message = $this->get($name))
+        ($message = $this->get($name ?? $name = Arg::INDEX))
             && $this->remove($name);
 
         return $message;
@@ -116,9 +116,9 @@ trait Messages
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function success($message, string $name = Arg::INDEX)
+    function success($message, string $name = null)
     {
         $this->add($message, $name, Arg::SUCCESS);
     }
@@ -127,7 +127,7 @@ trait Messages
      * @param string $type
      * @return string
      */
-    protected function type(string $type)
+    protected function type(string $type) : string
     {
         return $this->types[$type] ?? $type;
     }
@@ -142,9 +142,9 @@ trait Messages
 
     /**
      * @param array|string $message
-     * @param string $name
+     * @param string|null $name
      */
-    function warning($message, string $name = Arg::INDEX)
+    function warning($message, string $name = null)
     {
         $this->add($message, $name, Arg::WARNING);
     }
@@ -153,7 +153,7 @@ trait Messages
      * @param string $name
      * @return array|null
      */
-    function __invoke(string $name = Arg::INDEX)
+    function __invoke(string $name = null)
     {
         return $this->message($name);
     }
