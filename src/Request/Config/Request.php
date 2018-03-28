@@ -74,9 +74,7 @@ trait Request
      */
     function data($name = null, $default = null)
     {
-        $data = $this->get(Arg::DATA) ?: [];
-
-        return null === $name ? $data : match($data, $name, $default);
+        return null === $name ? ($this->get(Arg::DATA) ?: []) : match($this->get(Arg::DATA) ?: [], $name, $default);
     }
 
     /**
@@ -219,9 +217,7 @@ trait Request
      */
     function server($name = null, $default = null)
     {
-        $server = $this->get(Arg::SERVER);
-
-        return null === $name ? $server : match($server, $name, $default);
+        return null === $name ? $this->get(Arg::SERVER) : match($this->get(Arg::SERVER), $name, $default);
     }
 
     /**
@@ -231,9 +227,7 @@ trait Request
      */
     function session($name = null, $default = null)
     {
-        $session = $this->get(Arg::SESSION);
-
-        return null === $name ? $session : match($session, $name, $default);
+        return null === $name ? $this->get(Arg::SESSION) : match($this->get(Arg::SESSION), $name, $default);
     }
 
     /**
