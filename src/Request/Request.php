@@ -11,11 +11,11 @@ interface Request
     extends \Mvc5\Http\Request
 {
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $default
      * @return mixed
      */
-    function arg(string $name, $default = null);
+    function arg($name, $default = null);
 
     /**
      * @return array
@@ -33,10 +33,10 @@ interface Request
     function controller();
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return array|string|null
      */
-    function cookie(string $name);
+    function cookie($name);
 
     /**
      * @return array|\Mvc5\Cookie\Cookies
@@ -44,11 +44,11 @@ interface Request
     function cookies();
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @param mixed $default
      * @return array|mixed
      */
-    function data(string $name = null, $default = null);
+    function data($name = null, $default = null);
 
     /**
      * @return Error|null
@@ -61,10 +61,10 @@ interface Request
     function files();
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return array|string|null
      */
-    function header(string $name);
+    function header($name);
 
     /**
      * @return string|null
@@ -92,11 +92,11 @@ interface Request
     function name() : ?string;
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $default
      * @return mixed
      */
-    function param(string $name, $default = null);
+    function param($name, $default = null);
 
     /**
      * @return array
@@ -114,11 +114,11 @@ interface Request
     function port() : ?int;
 
     /**
-     * @param string|null $name
+     * @param array string|null $name
      * @param mixed $default
      * @return array|mixed
      */
-    function post(string $name = null, $default = null);
+    function post($name = null, $default = null);
 
     /**
      * @return array|string|null
@@ -136,18 +136,18 @@ interface Request
     function scheme() : ?string;
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @param mixed $default
      * @return array|mixed
      */
-    function server(string $name = null, $default = null);
+    function server($name = null, $default = null);
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @param mixed $default
      * @return array|\Mvc5\Session\Session|mixed
      */
-    function session(string $name = null, $default = null);
+    function session($name = null, $default = null);
 
     /**
      * @return string|mixed
@@ -160,11 +160,11 @@ interface Request
     function userAgent() : ?string;
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $default
      * @return mixed
      */
-    function var(string $name, $default = null);
+    function var($name, $default = null);
 
     /**
      * @return array

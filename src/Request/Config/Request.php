@@ -17,13 +17,13 @@ trait Request
     use \Mvc5\Http\Config\Request;
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $default
      * @return mixed
      */
-    function arg(string $name, $default = null)
+    function arg($name, $default = null)
     {
-        return $this->get(Arg::ARGS)[$name] ?? $default;
+        return match($this->args(), $name, $default);
     }
 
     /**
@@ -51,12 +51,12 @@ trait Request
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return array|string|null
      */
-    function cookie(string $name)
+    function cookie($name)
     {
-        return $this->get(Arg::COOKIES)[$name] ?? null;
+        return match($this->cookies(), $name);
     }
 
     /**
@@ -68,13 +68,15 @@ trait Request
     }
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @param mixed $default
      * @return mixed
      */
-    function data(string $name = null, $default = null)
+    function data($name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::DATA] ?: []) : ($this->get(Arg::DATA)[$name] ?? $default);
+        $data = $this->get(Arg::DATA) ?: [];
+
+        return null === $name ? $data : match($data, $name, $default);
     }
 
     /**
@@ -94,12 +96,12 @@ trait Request
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return array|string|null
      */
-    function header(string $name)
+    function header($name)
     {
-        return $this->get(Arg::HEADERS)[$name] ?? null;
+        return match($this->headers(), $name);
     }
 
     /**
@@ -143,13 +145,13 @@ trait Request
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $default
      * @return mixed
      */
-    function param(string $name, $default = null)
+    function param($name, $default = null)
     {
-        return $this->get(Arg::PARAMS)[$name] ?? $default;
+        return match($this->params(), $name, $default);
     }
 
     /**
@@ -177,11 +179,11 @@ trait Request
     }
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @param mixed $default
      * @return array|mixed
      */
-    function post(string $name = null, $default = null)
+    function post($name = null, $default = null)
     {
         return $this->data($name, $default);
     }
@@ -211,23 +213,27 @@ trait Request
     }
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @param mixed $default
      * @return array|mixed
      */
-    function server(string $name = null, $default = null)
+    function server($name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::SERVER] ?? []) : ($this->get(Arg::SERVER)[$name] ?? $default);
+        $server = $this->get(Arg::SERVER);
+
+        return null === $name ? $server : match($server, $name, $default);
     }
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @param mixed $default
      * @return \Mvc5\Session\Session|mixed
      */
-    function session(string $name = null, $default = null)
+    function session($name = null, $default = null)
     {
-        return null === $name ? ($this[Arg::SESSION] ?? []) : ($this->get(Arg::SESSION)[$name] ?? $default);
+        $session = $this->get(Arg::SESSION);
+
+        return null === $name ? $session : match($session, $name, $default);
     }
 
     /**
@@ -247,13 +253,23 @@ trait Request
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $default
      * @return mixed
      */
-    function var(string $name, $default = null)
+    function var($name, $default = null)
     {
-        return $this->param($name) ?? $this->arg($name) ?? $this->data($name, $default);
+        if (is_string($name)) {
+            return $this->param($name) ?? $this->arg($name) ?? $this->data($name, $default);
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = $this->param($key) ?? $this->arg($key) ?? $this->data($key);
+        }
+
+        return $matched;
     }
 
     /**
@@ -263,4 +279,25 @@ trait Request
     {
         return $this->params() + $this->args() + $this->data();
     }
+}
+
+/**
+ * @param array|\ArrayAccess $data
+ * @param array|string $name
+ * @param null $default
+ * @return array|null
+ */
+function match($data, $name, $default = null)
+{
+    if (is_string($name)) {
+        return $data[$name] ?? $default;
+    }
+
+    $matched = [];
+
+    foreach($name as $key) {
+        $matched[$key] = $data[$key] ?? null;
+    }
+
+    return $matched;
 }
