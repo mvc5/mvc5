@@ -63,7 +63,7 @@ trait Headers
     /**
      * @param array|string $name
      */
-    function remove($name)
+    function remove($name) : void
     {
         foreach(array_change_key_case((array) (is_string($name) ? strtolower($name) : $name)) as $key) {
             unset($this->config[$key]);

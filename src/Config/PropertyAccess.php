@@ -38,7 +38,7 @@ trait PropertyAccess
     /**
      * @param string $name
      */
-    function __unset($name)
+    function __unset($name) : void
     {
         $this->remove($name);
     }

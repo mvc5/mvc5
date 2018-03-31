@@ -120,7 +120,7 @@ trait Container
     /**
      * @param array|string $name
      */
-    function remove($name)
+    function remove($name) : void
     {
         foreach((array) $name as $key) {
             unset($this->container[$key]);

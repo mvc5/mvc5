@@ -38,7 +38,7 @@ trait Container
     /**
      *
      */
-    function clear()
+    function clear() : void
     {
         $this->resetSessionModel();
     }
@@ -46,7 +46,7 @@ trait Container
     /**
      *
      */
-    function close()
+    function close() : void
     {
         $this->session->close();
     }
@@ -98,7 +98,7 @@ trait Container
     /**
      *
      */
-    protected function resetSessionModel()
+    protected function resetSessionModel() : void
     {
         $this->session[$this->label] = $this->config = new Model;
     }

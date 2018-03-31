@@ -13,12 +13,12 @@ interface Session
     /**
      *
      */
-    function clear();
+    function clear() : void;
 
     /**
      *
      */
-    function close();
+    function close() : void;
 
     /**
      * @param bool|true $remove_session_cookie

@@ -25,7 +25,7 @@ class Callback
     /**
      *
      */
-    function emit()
+    function emit() : void
     {
        echo ($this->emitter)();
     }

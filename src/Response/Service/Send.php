@@ -15,7 +15,7 @@ trait Send
     /**
      * @param Response $response
      */
-    protected function body(Response $response)
+    protected function body(Response $response) : void
     {
         $this->emit($response->body());
     }
@@ -32,7 +32,7 @@ trait Send
     /**
      * @param \Closure|Emitter|string $body
      */
-    protected function emit($body)
+    protected function emit($body) : void
     {
         $body instanceof Emitter ? $body->emit() : ($body instanceof \Closure ? $body() : print($body));
     }
@@ -40,7 +40,7 @@ trait Send
     /**
      * @param Response $response
      */
-    protected function headers(Response $response)
+    protected function headers(Response $response) : void
     {
         if (headers_sent()) {
             return;

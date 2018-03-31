@@ -52,7 +52,7 @@ trait Messages
      * @param array|string $message
      * @param string|null $name
      */
-    function danger($message, string $name = null)
+    function danger($message, string $name = null) : void
     {
         $this->add($message, $name, Arg::DANGER);
     }
@@ -61,7 +61,7 @@ trait Messages
      * @param array|string $message
      * @param string|null $name
      */
-    function info($message, string $name = null)
+    function info($message, string $name = null) : void
     {
         $this->add($message, $name, Arg::INFO);
     }
@@ -81,7 +81,7 @@ trait Messages
     /**
      * @param array|string $name
      */
-    function remove($name)
+    function remove($name) : void
     {
         foreach((array) $name as $key) {
             unset($this->config[$key], $this->new[$key]);
@@ -91,7 +91,7 @@ trait Messages
     /**
      * @return string
      */
-    function serialize()
+    function serialize() : string
     {
         return serialize($this->new);
     }
@@ -118,7 +118,7 @@ trait Messages
      * @param array|string $message
      * @param string|null $name
      */
-    function success($message, string $name = null)
+    function success($message, string $name = null) : void
     {
         $this->add($message, $name, Arg::SUCCESS);
     }
@@ -135,7 +135,7 @@ trait Messages
     /**
      * @param string $serialized
      */
-    function unserialize($serialized)
+    function unserialize($serialized) : void
     {
         $this->config = unserialize($serialized);
     }
@@ -144,7 +144,7 @@ trait Messages
      * @param array|string $message
      * @param string|null $name
      */
-    function warning($message, string $name = null)
+    function warning($message, string $name = null) : void
     {
         $this->add($message, $name, Arg::WARNING);
     }
