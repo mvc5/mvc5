@@ -29,10 +29,10 @@ trait Messages
     }
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @return array
      */
-    protected function message(string $name = null) : array
+    protected function message($name = null)
     {
         return $this->messages()->message($name);
     }

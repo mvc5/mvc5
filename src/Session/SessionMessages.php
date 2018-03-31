@@ -23,10 +23,10 @@ interface SessionMessages
     function info($message, string $name = null) : void;
 
     /**
-     * @param string|null $name
+     * @param array|string|null $name
      * @return array|null
      */
-    function message(string $name = null);
+    function message($name = null);
 
     /**
      * @param array|string $message

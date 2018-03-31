@@ -67,15 +67,27 @@ trait Messages
     }
 
     /**
-     * @param string $name
+     * @param array|string|null $name
      * @return array|null
      */
-    function message(string $name = null)
+    function message($name = null)
     {
-        ($message = $this->get($name ?? $name = Arg::INDEX))
-            && $this->remove($name);
+        null === $name && $name = Arg::INDEX;
 
-        return $message;
+        if (is_string($name)) {
+            ($message = $this->get($name)) && $this->remove($name);
+            return $message;
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            ($message = $this->get($key)) && $this->remove($key);
+
+            $matched[$key] = $message;
+        }
+
+        return $matched;
     }
 
     /**
@@ -150,10 +162,10 @@ trait Messages
     }
 
     /**
-     * @param string $name
+     * @param array|string|null $name
      * @return array|null
      */
-    function __invoke(string $name = null)
+    function __invoke($name = null)
     {
         return $this->message($name);
     }
