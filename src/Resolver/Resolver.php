@@ -133,13 +133,13 @@ trait Resolver
 
     /**
      * @param mixed $value
-     * @param array|\Traversable $filters
+     * @param iterable $filters
      * @param array $args
      * @param string|null $param
      * @return mixed
      * @throws \Throwable
      */
-    protected function filter($value, $filters = [], array $args = [], string $param = null)
+    protected function filter($value, iterable $filters = [], array $args = [], string $param = null)
     {
         $result = $value;
 

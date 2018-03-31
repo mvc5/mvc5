@@ -142,12 +142,12 @@ trait Router
     }
 
     /**
-     * @param array|\Iterator $routes
+     * @param iterable $routes
      * @param Request $request
      * @param Route|null $parent
      * @return Request|mixed
      */
-    protected function traverse($routes, Request $request, Route $parent = null)
+    protected function traverse(iterable $routes, Request $request, Route $parent = null)
     {
         foreach($routes as $name => $route) {
             if ($match = $this->step($this->child($this->definition($route), $parent), $request, $name)) {

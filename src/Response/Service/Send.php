@@ -22,9 +22,9 @@ trait Send
 
     /**
      * @param Response $response
-     * @return array|\Traversable
+     * @return iterable
      */
-    protected function cookies(Response $response)
+    protected function cookies(Response $response) : iterable
     {
         return $response[Arg::COOKIES] ?? [];
     }
