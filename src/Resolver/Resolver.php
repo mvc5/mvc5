@@ -55,6 +55,7 @@ trait Resolver
      * @param callable|null $provider
      * @param bool|object|null $scope
      * @param bool $strict
+     * @throws \Throwable
      */
     function __construct($config = null, callable $provider = null, $scope = null, bool $strict = false)
     {
@@ -79,6 +80,7 @@ trait Resolver
     /**
      * @param array|mixed $args
      * @return array|mixed
+     * @throws \Throwable
      */
     protected function args($args)
     {
@@ -333,6 +335,7 @@ trait Resolver
      * @param string|null $name
      * @param array $config
      * @return Plugin
+     * @throws \Throwable
      */
     protected function merge(Plugin $parent, Plugin $child, string $name = null, array $config = []) : Plugin
     {
@@ -370,6 +373,7 @@ trait Resolver
     /**
      * @param string $parent
      * @return Plugin
+     * @throws \Throwable
      */
     protected function parent(string $parent) : Plugin
     {
@@ -490,6 +494,7 @@ trait Resolver
      * @param string|mixed $plugin
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     protected function resolver($plugin, array $args = [])
     {
@@ -560,6 +565,7 @@ trait Resolver
      * @param array $child
      * @param array $parent
      * @return array
+     * @throws \Throwable
      */
     protected function vars(array $child = [], array $parent = []) : array
     {
@@ -570,6 +576,7 @@ trait Resolver
      * @param mixed $plugin
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     function __call($plugin, array $args = [])
     {
