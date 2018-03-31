@@ -21,7 +21,7 @@ trait PHPSession
     /**
      *
      */
-    function clear()
+    function clear() : void
     {
         $_SESSION = [];
     }
@@ -29,7 +29,7 @@ trait PHPSession
     /**
      *
      */
-    function close()
+    function close() : void
     {
         session_write_close();
     }
@@ -112,7 +112,7 @@ trait PHPSession
     /**
      * @return string|null
      */
-    function key()
+    function key() : ?string
     {
         return key($_SESSION);
     }
@@ -129,7 +129,7 @@ trait PHPSession
     /**
      *
      */
-    function next()
+    function next() : void
     {
         next($_SESSION);
     }
@@ -155,7 +155,7 @@ trait PHPSession
     /**
      * @param array|string $name
      */
-    function remove($name)
+    function remove($name) : void
     {
         foreach((array) $name as $key) {
             unset($_SESSION[$key]);
@@ -175,7 +175,7 @@ trait PHPSession
     /**
      *
      */
-    function rewind()
+    function rewind() : void
     {
         reset($_SESSION);
     }

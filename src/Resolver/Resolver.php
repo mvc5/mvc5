@@ -498,7 +498,7 @@ trait Resolver
 
     /**
      * @param object $scope
-     * @return object
+     * @return bool|object|null
      */
     function scope($scope = null)
     {
@@ -532,7 +532,7 @@ trait Resolver
     /**
      * @return string
      */
-    function serialize()
+    function serialize() : string
     {
         return serialize([$this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict]);
     }
@@ -540,7 +540,7 @@ trait Resolver
     /**
      * @param string $serialized
      */
-    function unserialize($serialized)
+    function unserialize($serialized) : void
     {
         list(
             $this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict
