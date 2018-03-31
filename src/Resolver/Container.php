@@ -162,14 +162,24 @@ trait Container
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $plugin
      * @return mixed
      * @throws \Throwable
      */
-    function shared(string $name, $plugin = null)
+    function shared($name, $plugin = null)
     {
-        return $this->stored($name) ?? $this->set($name, $this->plugin($plugin ?? $name));
+        if (is_string($name)) {
+            return $this->stored($name) ?? $this->set($name, $this->plugin($plugin ?? $name));
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = $this->stored($key) ?? $this->set($key, $this->plugin($key));
+        }
+
+        return $matched;
     }
 
     /**

@@ -47,11 +47,11 @@ trait Facade
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $config
      * @return mixed
      */
-    protected static function shared(string $name, $config = null)
+    protected static function shared($name, $config = null)
     {
         return static::service()->shared($name, $config);
     }

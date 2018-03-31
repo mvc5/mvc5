@@ -44,11 +44,11 @@ trait Plugin
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $config
      * @return mixed
      */
-    protected function shared(string $name, $config = null)
+    protected function shared($name, $config = null)
     {
         return $this->service->shared($name, $config);
     }

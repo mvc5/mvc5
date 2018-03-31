@@ -30,11 +30,11 @@ interface Service
     function plugin($plugin, array $args = [], callable $callback = null);
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param mixed $config
      * @return mixed
      */
-    function shared(string $name, $config = null);
+    function shared($name, $config = null);
 
     /**
      * @param array|\Iterator|\Mvc5\Event\Event|object|string $event
