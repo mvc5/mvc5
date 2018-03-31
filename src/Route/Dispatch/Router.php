@@ -26,18 +26,18 @@ trait Router
     /**
      * @var array
      */
-    protected $route;
+    protected $routes;
 
     /**
      * @param callable $match
      * @param callable $generator
-     * @param array $route
+     * @param array $routes
      */
-    function __construct(callable $match, callable $generator, $route)
+    function __construct(callable $match, callable $generator, $routes)
     {
         $this->generator = $generator;
         $this->match = $match;
-        $this->route = $route;
+        $this->routes = $routes;
     }
 
     /**
@@ -65,7 +65,7 @@ trait Router
      */
     protected function dispatch(Request $request)
     {
-        return $this->result($request, $this->traverse($this->route, $request));
+        return $this->result($request, $this->traverse($this->routes, $request));
     }
 
     /**
