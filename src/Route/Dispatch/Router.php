@@ -24,16 +24,16 @@ trait Router
     protected $match;
 
     /**
-     * @var array
+     * @var iterable
      */
     protected $routes;
 
     /**
      * @param callable $match
      * @param callable $generator
-     * @param array $routes
+     * @param iterable $routes
      */
-    function __construct(callable $match, callable $generator, $routes)
+    function __construct(callable $match, callable $generator, iterable $routes)
     {
         $this->generator = $generator;
         $this->match = $match;
