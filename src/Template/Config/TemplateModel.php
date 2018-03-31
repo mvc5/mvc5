@@ -30,7 +30,7 @@ trait TemplateModel
     /**
      * @return string|null
      */
-    function template()
+    function template() : ?string
     {
         return $this[Arg::TEMPLATE_MODEL];
     }

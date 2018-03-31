@@ -11,7 +11,7 @@ interface TemplateModel
     /**
      * @return string|null
      */
-    function template();
+    function template() : ?string;
 
     /**
      * @return array

@@ -6,6 +6,7 @@
 namespace Mvc5\Request;
 
 use Mvc5\Http\Error;
+use Mvc5\Route\Route;
 
 interface Request
     extends \Mvc5\Http\Request
@@ -126,9 +127,9 @@ interface Request
     function query();
 
     /**
-     * @return \Mvc5\Route\Route|null
+     * @return Route|null
      */
-    function route();
+    function route() : ?Route;
 
     /**
      * @return string|null
