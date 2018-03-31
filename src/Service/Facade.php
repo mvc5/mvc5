@@ -19,10 +19,10 @@ trait Facade
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
-    protected static function param(string $name)
+    protected static function param($name)
     {
         return static::service()->param($name);
     }

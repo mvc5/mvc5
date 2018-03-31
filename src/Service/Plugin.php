@@ -24,10 +24,10 @@ trait Plugin
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
-    protected function param(string $name)
+    protected function param($name)
     {
         return $this->service->param($name);
     }

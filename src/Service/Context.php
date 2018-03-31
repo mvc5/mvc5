@@ -46,10 +46,10 @@ final class Context
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
-    static function param(string $name)
+    static function param($name)
     {
         return static::service()->param($name);
     }

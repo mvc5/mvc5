@@ -16,10 +16,10 @@ interface Service
     function call($plugin, array $args = [], callable $callback = null);
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
-    function param(string $name);
+    function param($name);
 
     /**
      * @param string|mixed $plugin

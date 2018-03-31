@@ -355,19 +355,22 @@ trait Resolver
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @return mixed
      */
-    function param(string $name)
+    function param($name)
     {
-        $name  = explode(Arg::CALL_SEPARATOR, $name);
-        $value = $this->config()[array_shift($name)];
-
-        foreach($name as $n) {
-            $value = $value[$n];
+        if (is_string($name)) {
+            return param($this->config(), $name);
         }
 
-        return $value;
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = $this->config()[$key] ?? null;
+        }
+
+        return $matched;
     }
 
     /**
@@ -629,4 +632,21 @@ trait Resolver
     {
         return $this->plugin($plugin, $args, $this->provider() ?? function(){});
     }
+}
+
+/**
+ * @param array|\ArrayAccess $config
+ * @param string $name
+ * @return mixed
+ */
+function param($config, string $name)
+{
+    $name = explode(Arg::CALL_SEPARATOR, $name);
+    $value = $config[array_shift($name)];
+
+    foreach($name as $n) {
+        $value = $value[$n];
+    }
+
+    return $value;
 }
