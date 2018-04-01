@@ -23,9 +23,9 @@ interface Route
     function child(string $name);
 
     /**
-     * @return array|\Iterator
+     * @return iterable
      */
-    function children();
+    function children() : iterable;
 
     /**
      * @return array

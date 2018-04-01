@@ -28,9 +28,9 @@ trait Route
     }
 
     /**
-     * @return array|\Iterator
+     * @return iterable
      */
-    function children()
+    function children() : iterable
     {
         return $this[Arg::CHILDREN] ?? [];
     }
