@@ -30,7 +30,7 @@ trait Messages
 
     /**
      * @param array|string|null $name
-     * @return array
+     * @return array|null
      */
     protected function message($name = null)
     {

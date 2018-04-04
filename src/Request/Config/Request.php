@@ -279,7 +279,7 @@ trait Request
  * @param array|\ArrayAccess $data
  * @param array|string $name
  * @param null $default
- * @return array|null
+ * @return mixed
  */
 function match($data, $name, $default = null)
 {
