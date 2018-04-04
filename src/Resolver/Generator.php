@@ -73,7 +73,7 @@ trait Generator
 
     /**
      * @param string $name
-     * @return array|\Iterator
+     * @return array|\Iterator|\Mvc5\Resolvable
      * @throws \Throwable
      */
     protected function listeners(string $name)
