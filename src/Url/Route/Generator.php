@@ -59,6 +59,7 @@ trait Generator
      * @param Route $parent
      * @param array|Route $route
      * @return Route|null
+     * @throws \Throwable
      */
     protected function child(Route $parent, $route) : ?Route
     {
@@ -77,6 +78,7 @@ trait Generator
     /**
      * @param string $name
      * @return Route|null
+     * @throws \Throwable
      */
     protected function construct(string $name) : ?Route
     {
@@ -88,6 +90,7 @@ trait Generator
      * @param array $path
      * @param Route|null $parent
      * @return Route|null
+     * @throws \Throwable
      */
     protected function generate(array $name, array $path = [], Route $parent = null) : ?Route
     {
@@ -98,6 +101,7 @@ trait Generator
      * @param array|string|null $host
      * @param array $params
      * @return string|null
+     * @throws \Throwable
      */
     protected function hostname($host, array &$params) : ?string
     {
@@ -108,6 +112,7 @@ trait Generator
      * @param string $name
      * @param Route|null $parent
      * @return Route|null
+     * @throws \Throwable
      */
     protected function match(string $name, Route $parent = null) : ?Route
     {
@@ -139,6 +144,7 @@ trait Generator
      * @param array $name
      * @param array $path
      * @return Route|null
+     * @throws \Throwable
      */
     protected function next(Route $route, array $name, array $path) : ?Route
     {
@@ -150,6 +156,7 @@ trait Generator
      * @param array $params
      * @param array $options
      * @return array
+     * @throws \Throwable
      */
     protected function options(Route $route, array $params, array $options) : array
     {
@@ -172,6 +179,7 @@ trait Generator
      * @param array $params
      * @param string $path
      * @return string
+     * @throws \Throwable
      */
     protected function path(array $segment, array $params, string $path = '') : string
     {
@@ -188,6 +196,7 @@ trait Generator
      * @param array $name
      * @param array $path
      * @return Route|null
+     * @throws \Throwable
      */
     protected function resolve($route, array $name, array $path) : ?Route
     {
@@ -197,6 +206,7 @@ trait Generator
     /**
      * @param array|Route $route
      * @return Route|null
+     * @throws \Throwable
      */
     protected function route($route) : ?Route
     {
@@ -208,6 +218,7 @@ trait Generator
      * @param array $params
      * @param array $options
      * @return Uri|null
+     * @throws \Throwable
      */
     protected function uri(Route $route = null, array $params = [], array $options = []) : ?Uri
     {
@@ -234,6 +245,7 @@ trait Generator
      * @param array $params
      * @param array $options
      * @return Uri|null
+     * @throws \Throwable
      */
     function __invoke(string $name, array $params = [], array $options = []) : ?Uri
     {

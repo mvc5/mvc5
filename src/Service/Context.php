@@ -16,6 +16,7 @@ final class Context
 
     /**
      * @param Service|null $service
+     * @throws \Throwable
      */
     function __construct(Service $service = null)
     {
@@ -25,6 +26,7 @@ final class Context
     /**
      * @param Service $service
      * @return callable|Manager|Service
+     * @throws \RuntimeException
      */
     static function bind(Service $service)
     {
@@ -39,6 +41,7 @@ final class Context
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     static function call($plugin, array $args = [], callable $callback = null)
     {
@@ -48,6 +51,7 @@ final class Context
     /**
      * @param array|string $name
      * @return mixed
+     * @throws \Throwable
      */
     static function param($name)
     {
@@ -59,6 +63,7 @@ final class Context
      * @param array $args
      * @param callable|null $callback
      * @return mixed
+     * @throws \Throwable
      */
     static function plugin($plugin, array $args = [], callable $callback = null)
     {
@@ -67,6 +72,7 @@ final class Context
 
     /**
      * @return callable|Manager|Service
+     * @throws \RuntimeException
      */
     static function service()
     {
@@ -77,6 +83,7 @@ final class Context
      * @param string $name
      * @param array $args
      * @return mixed
+     * @throws \Throwable
      */
     static function __callStatic(string $name, array $args)
     {
@@ -85,6 +92,7 @@ final class Context
 
     /**
      * @param Service $service
+     * @throws \Throwable
      */
     function __invoke(Service $service)
     {

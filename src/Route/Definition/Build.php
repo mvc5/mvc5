@@ -22,7 +22,7 @@ trait Build
      * @param array|Route $route
      * @param bool $compile
      * @return Route
-     * @throws \InvalidArgumentException
+     * @throws \Throwable
      */
     protected function build($route, bool $compile = true) : Route
     {
@@ -53,7 +53,7 @@ trait Build
      * @param Route $route
      * @param bool $compile
      * @return Route
-     * @throws \InvalidArgumentException
+     * @throws \Throwable
      */
     protected function definition(Route $route, bool $compile = true) : Route
     {
@@ -78,6 +78,7 @@ trait Build
      * @param Route $route
      * @param array|mixed $host
      * @return Route
+     * @throws \Throwable
      */
     protected function host(Route $route, $host) : Route
     {

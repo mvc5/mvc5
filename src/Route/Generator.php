@@ -40,7 +40,7 @@ class Generator
      * @param array|\ArrayAccess|Route $route
      * @param bool $compile
      * @return Route
-     * @throws \InvalidArgumentException
+     * @throws \Throwable
      */
     function __invoke($route, bool $compile = true) : Route
     {

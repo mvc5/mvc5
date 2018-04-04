@@ -22,6 +22,7 @@ class Context
      * @param Response $response
      * @param callable $next
      * @return Response|mixed
+     * @throws \Throwable
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
