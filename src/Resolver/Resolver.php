@@ -461,7 +461,7 @@ trait Resolver
     /**
      * @return callable|null
      */
-    protected function provider()
+    protected function provider() : ?callable
     {
         return $this->provider;
     }
