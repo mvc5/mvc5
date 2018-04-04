@@ -17,7 +17,7 @@ interface Response
 
     /**
      * @param array|string $name
-     * @param string $value
+     * @param string|null $value
      * @param int $expire
      * @param string|null $path
      * @param string|null $domain
@@ -25,7 +25,7 @@ interface Response
      * @param bool|null $httponly
      * @return self|mixed
      */
-    function withCookie($name, $value = '', $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
+    function withCookie($name, $value = null, $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
 
     /**
      * @param array|\Mvc5\Cookie\Cookies $cookies

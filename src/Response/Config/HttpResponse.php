@@ -55,7 +55,7 @@ trait HttpResponse
 
     /**
      * @param string $name
-     * @param string $value
+     * @param string|null $value
      * @param int|null $expire
      * @param string|null $path
      * @param string|null $domain
@@ -63,7 +63,7 @@ trait HttpResponse
      * @param bool|null $httponly
      * @return self|mixed
      */
-    function withCookie($name, $value = '', $expire = null,
+    function withCookie($name, $value = null, $expire = null,
                         string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Response
     {
         return $this->withCookies($this->cookies()->with($name, $value, $expire, $path, $domain, $secure, $httponly));
