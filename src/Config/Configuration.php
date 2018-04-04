@@ -11,7 +11,7 @@ interface Configuration
     /**
      * @param array|string $name
      */
-    function remove($name);
+    function remove($name) : void;
 
     /**
      * @param array|string $name
