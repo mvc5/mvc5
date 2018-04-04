@@ -9,5 +9,5 @@ interface Emitter
     /**
      *
      */
-    function emit();
+    function emit() : void;
 }

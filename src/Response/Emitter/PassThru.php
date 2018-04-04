@@ -23,11 +23,10 @@ class PassThru
     }
 
     /**
-     * @return int
+     *
      */
-    function emit()
+    function emit() : void
     {
-        passthru($this->command, $return_var);
-        return $return_var;
+        passthru($this->command);
     }
 }

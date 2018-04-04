@@ -37,10 +37,10 @@ class ReadFile
     }
 
     /**
-     * @return int|bool
+     *
      */
-    function emit()
+    function emit() : void
     {
-        return readfile($this->filename, $this->useIncludePath, $this->context);
+        readfile($this->filename, $this->useIncludePath, $this->context);
     }
 }
