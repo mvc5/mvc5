@@ -29,7 +29,7 @@ trait ReadOnly
      * @param string $name
      * @throws \Exception
      */
-    function offsetUnset($name)
+    function offsetUnset($name) : void
     {
         throw new \Exception('Invalid operation: object cannot be modified');
     }
@@ -48,7 +48,7 @@ trait ReadOnly
      * @param string $name
      * @throws \Exception
      */
-    function __unset($name)
+    function __unset($name) : void
     {
         throw new \Exception('Invalid operation: object cannot be modified');
     }
