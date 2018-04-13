@@ -15,11 +15,11 @@ class HttpMiddleware
     use Middleware;
 
     /**
-     * @param Request|mixed $request
-     * @param Response|mixed $response
+     * @param Request $request
+     * @param Response $response
      * @return Response|mixed
      */
-    function __invoke($request, $response)
+    function __invoke(Request $request, Response $response)
     {
         return $this->call($this->rewind(), [$request, $response]);
     }
