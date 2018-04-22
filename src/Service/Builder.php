@@ -82,11 +82,11 @@ final class Builder
     }
 
     /**
-     * @return bool|\ReflectionMethod
+     * @return \ReflectionMethod|null
      */
-    protected function constructor()
+    protected function constructor() : ?\ReflectionMethod
     {
-        return $this->constructor ?? $this->constructor = (parent::getConstructor() ?? false);
+        return ($this->constructor ?? $this->constructor = (parent::getConstructor() ?? false)) ?: null;
     }
 
     /**
