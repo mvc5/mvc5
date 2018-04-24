@@ -16,14 +16,26 @@ final class Builder
     protected static $class = [];
 
     /**
-     * @var \ReflectionMethod
+     * @var \ReflectionMethod|null
      */
     protected $constructor;
 
     /**
      * @var \ReflectionParameter[]
      */
-    protected $params;
+    protected $params = [];
+
+    /**
+     * @param object|string $argument
+     * @throws \ReflectionException
+     */
+    function __construct($argument)
+    {
+        parent::__construct($argument);
+
+        ($this->constructor = $this->getConstructor())
+            && $this->params = $this->constructor->getParameters();
+    }
 
     /**
      * @param string $name
@@ -36,7 +48,7 @@ final class Builder
     {
         $class = static::reflectionClass($name);
 
-        if (!$class->constructor()) {
+        if (null === $class->constructor()) {
             return $class->newInstanceWithoutConstructor();
         }
 
@@ -45,7 +57,7 @@ final class Builder
         }
 
         $matched = [];
-        $params  = $class->params();
+        $params = $class->params();
 
         foreach($params as $param) {
             if ($param->isVariadic()) {
@@ -84,26 +96,17 @@ final class Builder
     /**
      * @return \ReflectionMethod|null
      */
-    protected function constructor() : ?\ReflectionMethod
+    function constructor() : ?\ReflectionMethod
     {
-        return ($this->constructor ?? $this->constructor = (parent::getConstructor() ?? false)) ?: null;
-    }
-
-    /**
-     * @param \ReflectionMethod|null $method
-     * @return array|\ReflectionParameter[]
-     */
-    protected function constructorParams(\ReflectionMethod $method = null) : array
-    {
-        return $method ? $method->getParameters() : [];
+        return $this->constructor;
     }
 
     /**
      * @return \ReflectionParameter[]
      */
-    protected function params() : array
+    function params() : array
     {
-        return $this->params ?? $this->params = $this->constructorParams($this->constructor());
+        return $this->params;
     }
 
     /**
