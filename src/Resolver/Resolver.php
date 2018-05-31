@@ -51,7 +51,7 @@ trait Resolver
     protected $scope;
 
     /**
-     * @param array|\ArrayAccess $config
+     * @param array|\ArrayAccess|null $config
      * @param callable|null $provider
      * @param bool|object|null $scope
      * @param bool $strict
