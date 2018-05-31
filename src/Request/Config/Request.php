@@ -17,6 +17,14 @@ trait Request
     use \Mvc5\Http\Config\Request;
 
     /**
+     * @return bool
+     */
+    function acceptsJson() : bool
+    {
+        return (bool) $this[Arg::ACCEPTS_JSON];
+    }
+
+    /**
      * @param array|string $name
      * @param mixed $default
      * @return mixed

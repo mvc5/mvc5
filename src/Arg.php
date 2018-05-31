@@ -8,6 +8,7 @@ namespace Mvc5;
 interface Arg
 {
     const ABSOLUTE = 'absolute';
+    const ACCEPTS_JSON = 'accepts_json';
     const ACTION = 'action';
     const ARGS = 'args';
     const ARGV = 'argv';
@@ -35,11 +36,13 @@ interface Arg
     const DESCRIPTION = 'description';
     const DOMAIN = 'domain';
     const ERROR = 'error';
+    const ERROR_MODEL = 'error\model';
     const ERRORS = 'errors';
     const EVENT = 'event';
     const EVENTS = 'events';
     const EVENT_MODEL = 'event\model';
     const EXCEPTION = 'exception';
+    const EXCEPTION_LAYOUT = 'exception\layout';
     const EXCEPTION_RESPONSE = 'exception\response';
     const EXPIRE = 'expire';
     const FACTORY = 'factory';
@@ -51,6 +54,7 @@ interface Arg
     const HEADERS = 'headers';
     const HOST = 'host';
     const HTTP_OK = 200;
+    const HTTP_SERVER_ERROR = 500;
     const HTTP_MIDDLEWARE = 'http\middleware';
     const HTTP_ONLY = 'httponly';
     const INDEX = '#';
@@ -91,6 +95,8 @@ interface Arg
     const RESPONSE = 'response';
     const RESPONSE_DISPATCH = 'response\dispatch';
     const RESPONSE_JSON = 'response\json';
+    const RESPONSE_JSON_ERROR = 'response\json\error';
+    const RESPONSE_JSON_EXCEPTION = 'response\json\exception';
     const RESPONSE_REDIRECT = 'response\redirect';
     const ROUTE = 'route';
     const ROUTE_GENERATOR = 'route\generator';
@@ -119,6 +125,7 @@ interface Arg
     const TEMPLATE_MODEL = '__template';
     const THROW_EXCEPTION = 'throw_exception';
     const TOKENS = 'tokens';
+    const TRACE = 'trace';
     const TYPE = 'type';
     const URI = 'uri';
     const URL = 'url';

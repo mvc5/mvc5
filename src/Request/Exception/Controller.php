@@ -6,30 +6,42 @@
 namespace Mvc5\Request\Exception;
 
 use Mvc5\Arg;
-use Mvc5\Template\TemplateModel;
 use Mvc5\Http\Request;
+use Mvc5\Http\Response;
+use Mvc5\Plugins\Service;
+use Mvc5\View\ViewLayout;
 
 class Controller
 {
     /**
-     * @var TemplateModel
+     *
      */
-    protected $model;
+    use Service;
 
     /**
-     * @param TemplateModel $model
+     * @param \Throwable $exception
+     * @return Response
      */
-    function __construct(TemplateModel $model)
+    protected function json(\Throwable $exception) : Response
     {
-        $this->model = $model;
+        return $this->plugin(Arg::RESPONSE_JSON_EXCEPTION, [Arg::EXCEPTION => $exception]);
+    }
+
+    /**
+     * @param \Throwable $exception
+     * @return ViewLayout
+     */
+    protected function layout(\Throwable $exception) : ViewLayout
+    {
+        return $this->plugin(Arg::EXCEPTION_LAYOUT, [Arg::EXCEPTION => $exception]);
     }
 
     /**
      * @param Request $request
-     * @return TemplateModel
+     * @return mixed
      */
-    function __invoke(Request $request) : TemplateModel
+    function __invoke(Request $request)
     {
-        return $this->model->with(Arg::EXCEPTION, $request[Arg::EXCEPTION]);
+        return $request[Arg::ACCEPTS_JSON] ? $this->json($request[Arg::EXCEPTION]) : $this->layout($request[Arg::EXCEPTION]);
     }
 }

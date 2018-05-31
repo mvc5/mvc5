@@ -8,7 +8,7 @@ namespace Mvc5\Http;
 use Mvc5\Config\Model;
 
 interface Error
-    extends Model
+    extends \JsonSerializable, Model
 {
     /**
      * @return int|null

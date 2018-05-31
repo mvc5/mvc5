@@ -12,6 +12,11 @@ interface Request
     extends \Mvc5\Http\Request
 {
     /**
+     * @return bool
+     */
+    function acceptsJson() : bool;
+
+    /**
      * @param array|string $name
      * @param mixed $default
      * @return mixed

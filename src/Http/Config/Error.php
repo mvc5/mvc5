@@ -34,6 +34,17 @@ trait Error
     }
 
     /**
+     * @return array
+     */
+    function jsonSerialize() : array
+    {
+        return (null !== $this->code() ? [Arg::CODE => $this->code()] : [])
+            + (null !== $this->message() ? [Arg::MESSAGE => $this->message()] : [])
+            + (null !== $this->description() ? [Arg::DESCRIPTION => $this->description()] : [])
+            + ($this->errors() ? [Arg::ERRORS => $this->errors()] : []);
+    }
+
+    /**
      * @return string|null
      */
     function message() : ?string

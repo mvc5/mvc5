@@ -5,6 +5,8 @@
 
 namespace Mvc5\Response;
 
+use Mvc5\Exception;
+
 class JsonResponse
     extends HttpResponse
 {
@@ -20,8 +22,18 @@ class JsonResponse
      */
     function __construct($data, int $status = 200, array $headers = [])
     {
-        parent::__construct(
-            json_encode($data, static::ENCODE_OPTIONS), $status, $headers + ['Content-Type' => 'application/json']
+        parent::__construct($this->result(json_encode($data, static::ENCODE_OPTIONS)),
+            $status, $headers + ['Content-Type' => 'application/json']
         );
+    }
+
+    /**
+     * @param $result
+     * @return string
+     */
+    protected function result($result) : string
+    {
+        return JSON_ERROR_NONE === json_last_error() ? $result :
+            Exception::invalidArgument('JSON Encode Error: ' . json_last_error_msg());
     }
 }
