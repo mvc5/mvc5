@@ -30,7 +30,7 @@ return [
     'factory'              => new Plugin(null, [new Link]),
     'http\middleware'      => [Mvc5\Http\HttpMiddleware::class, 'service' => new Link, 'config' => new Param('middleware.web')],
     'layout'               => [Mvc5\ViewLayout::class, 'template' => 'layout'],
-    'log'                  => Mvc5\Log\Logger::class,
+    'log'                  => [Mvc5\Log\Logger::class, 'throw_exception' => new Param('debug')],
     'log\error'            => Mvc5\Log\ErrorLog::class,
     'log\exception'        => Mvc5\Log\ThrowException::class,
     'middleware'           => [Mvc5\Middleware::class, 'service' => new Link],
