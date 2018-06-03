@@ -19,14 +19,14 @@ before_script:
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover build/logs/coverage.clover
+  - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 script:
   - php -d opcache.enable=1 -d opcache.enable_cli=1 -d error_reporting=-1 build/public/index.php >/dev/null
   - php -d opcache.enable=0 -d opcache.enable_cli=0 -d error_reporting=-1 build/public/index.php >/dev/null
   - php -n build/public/index.php >/dev/null
-  - build/vendor/bin/phpunit --testsuite="Mvc5 Test Suite" --configuration build/phpunit.xml --coverage-clover build/logs/clover.xml
+  - build/vendor/bin/phpunit --testsuite "Mvc5 Test Suite" --configuration build/phpunit.xml --coverage-clover build/logs/clover.xml
 
 notifications:
   email: false
