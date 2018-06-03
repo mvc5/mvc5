@@ -1,5 +1,9 @@
 sudo: false
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=91a269c5223b953a05b77fb6ac0c41c308f3caffcdff350af60f804960242991
+
 language: php
 
 php:
@@ -9,20 +13,20 @@ php:
 before_script:
   - composer selfupdate
   - composer create-project mvc5/mvc5-application build --stability dev --keep-vcs
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 after_script:
-  - composer require codeclimate/php-test-reporter
-  - CODECLIMATE_REPO_TOKEN="91a269c5223b953a05b77fb6ac0c41c308f3caffcdff350af60f804960242991" vendor/bin/test-reporter --coverage-report build/logs/clover.xml --stdout > build/logs/codeclimate.json
-  - "curl -X POST -d @build/logs/codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover build/logs/coverage.clover
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 script:
-  - php -d opcache.enable=1 -d opcache.enable_cli=1 build/public/index.php >/dev/null
-  - php -d opcache.enable=0 -d opcache.enable_cli=0 build/public/index.php >/dev/null
+  - php -d opcache.enable=1 -d opcache.enable_cli=1 -d error_reporting=-1 build/public/index.php >/dev/null
+  - php -d opcache.enable=0 -d opcache.enable_cli=0 -d error_reporting=-1 build/public/index.php >/dev/null
   - php -n build/public/index.php >/dev/null
-  - build/vendor/bin/phpunit --configuration build/phpunit.xml --coverage-clover build/logs/clover.xml
-  - build/vendor/bin/phpunit --configuration build/phpunit.xml --coverage-clover build/logs/coverage.clover
+  - build/vendor/bin/phpunit --testsuite="Mvc5 Test Suite" --configuration build/phpunit.xml --coverage-clover build/logs/clover.xml
 
 notifications:
   email: false
