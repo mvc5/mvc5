@@ -103,11 +103,21 @@ trait Request
 
     /**
      * @param array|string $name
-     * @return array|string|null
+     * @return array|string
      */
     function header($name)
     {
-        return match($this->headers(), $name);
+        if (is_string($name)) {
+            return implode(', ', (array) ($this->headers()[$name] ?? ''));
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = implode(', ', (array) ($this->headers()[$key] ?? ''));
+        }
+
+        return $matched;
     }
 
     /**

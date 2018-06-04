@@ -68,7 +68,7 @@ interface Request
 
     /**
      * @param array|string $name
-     * @return array|string|null
+     * @return array|string
      */
     function header($name);
 
