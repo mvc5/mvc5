@@ -17,6 +17,12 @@ interface Response
 
     /**
      * @param array|string $name
+     * @return array|string
+     */
+    function header($name);
+
+    /**
+     * @param array|string $name
      * @param string|null $value
      * @param int $expire
      * @param string|null $path

@@ -54,6 +54,25 @@ trait HttpResponse
     }
 
     /**
+     * @param array|string $name
+     * @return array|string
+     */
+    function header($name)
+    {
+        if (is_string($name)) {
+            return implode(', ', (array) ($this->headers()[$name] ?? ''));
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = implode(', ', (array) ($this->headers()[$key] ?? ''));
+        }
+
+        return $matched;
+    }
+
+    /**
      * @param string $name
      * @param string|null $value
      * @param int|null $expire
