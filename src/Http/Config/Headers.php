@@ -23,6 +23,14 @@ trait Headers
     }
 
     /**
+     * @return array
+     */
+    function all() : array
+    {
+        return $this->config;
+    }
+
+    /**
      * @param array|string $name
      * @return array|string|null
      */
