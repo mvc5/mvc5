@@ -20,11 +20,6 @@ trait HttpResponse
     use \Mvc5\Http\Config\Response;
 
     /**
-     * @var array
-     */
-    protected $config = [];
-
-    /**
      * @param mixed $body
      * @param int|null $status
      * @param array|Headers $headers
