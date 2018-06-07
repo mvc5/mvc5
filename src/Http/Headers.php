@@ -14,4 +14,10 @@ interface Headers
      * @return array
      */
     function all() : array;
+
+    /**
+     * @param string|string[] $name
+     * @return string|string[]
+     */
+    function header($name);
 }

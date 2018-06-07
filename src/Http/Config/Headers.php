@@ -69,6 +69,25 @@ trait Headers
     }
 
     /**
+     * @param string|string[] $name
+     * @return string|string[]
+     */
+    function header($name)
+    {
+        if (is_string($name)) {
+            return implode(', ', (array) ($this->config[strtolower($name)] ?? ''));
+        }
+
+        $matched = [];
+
+        foreach($name as $key) {
+            $matched[$key] = implode(', ', (array) ($this->config[strtolower($key)] ?? ''));
+        }
+
+        return $matched;
+    }
+
+    /**
      * @param array|string $name
      */
     function remove($name) : void

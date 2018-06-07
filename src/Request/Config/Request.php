@@ -102,22 +102,12 @@ trait Request
     }
 
     /**
-     * @param array|string $name
-     * @return array|string
+     * @param string|string[] $name
+     * @return string|string[]
      */
     function header($name)
     {
-        if (is_string($name)) {
-            return implode(', ', (array) ($this->headers()[$name] ?? ''));
-        }
-
-        $matched = [];
-
-        foreach($name as $key) {
-            $matched[$key] = implode(', ', (array) ($this->headers()[$key] ?? ''));
-        }
-
-        return $matched;
+        return $this->headers()->header($name);
     }
 
     /**
