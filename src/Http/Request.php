@@ -26,9 +26,9 @@ interface Request
     function method() : ?string;
 
     /**
-     * @return string|Uri|null
+     * @return Uri|null
      */
-    function uri();
+    function uri() : ?Uri;
 
     /**
      * @return string|null

@@ -26,6 +26,9 @@ trait Request
         is_array($config[Arg::HEADERS]) &&
             $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);
 
+        isset($config[Arg::URI]) && !($config[Arg::URI] instanceof Http\Uri) &&
+            $config[Arg::URI] = new Http\HttpUri($config[Arg::URI]);
+
         $this->config = $config;
     }
 
@@ -54,9 +57,9 @@ trait Request
     }
 
     /**
-     * @return string|Http\Uri|null
+     * @return Http\Uri|null
      */
-    function uri()
+    function uri() : ?Http\Uri
     {
         return $this[Arg::URI];
     }
