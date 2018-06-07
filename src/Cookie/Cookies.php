@@ -11,6 +11,11 @@ interface Cookies
     extends Model
 {
     /**
+     * @return array
+     */
+    function all() : array;
+
+    /**
      * @param string $name
      * @param string|null $value
      * @param int|string|null $expire

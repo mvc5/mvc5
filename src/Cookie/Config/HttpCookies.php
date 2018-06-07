@@ -37,6 +37,14 @@ trait HttpCookies
     }
 
     /**
+     * @return array
+     */
+    function all() : array
+    {
+        return $this->config;
+    }
+
+    /**
      * @param string $name
      * @param string $value
      * @param int|string|null $expire
