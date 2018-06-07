@@ -16,9 +16,9 @@ interface Response
     function body();
 
     /**
-     * @return array|Headers
+     * @return Headers
      */
-    function headers();
+    function headers() : Headers;
 
     /**
      * @return string|null

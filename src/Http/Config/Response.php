@@ -11,6 +11,25 @@ use Mvc5\Http;
 trait Response
 {
     /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
+     * @param array $config
+     */
+    function __construct($config = [])
+    {
+        !isset($config[Arg::HEADERS]) &&
+            $config[Arg::HEADERS] = new Http\HttpHeaders;
+
+        is_array($config[Arg::HEADERS]) &&
+            $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);
+
+        $this->config = $config;
+    }
+
+    /**
      * @return mixed
      */
     function body()
@@ -19,9 +38,9 @@ trait Response
     }
 
     /**
-     * @return array|Http\Headers
+     * @return Http\Headers
      */
-    function headers()
+    function headers() : Http\Headers
     {
         return $this[Arg::HEADERS];
     }
