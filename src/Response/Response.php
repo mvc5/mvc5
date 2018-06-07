@@ -13,7 +13,7 @@ interface Response
     /**
      * @return Cookies
      */
-    function cookies();
+    function cookies() : Cookies;
 
     /**
      * @param array|string $name

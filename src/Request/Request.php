@@ -5,6 +5,7 @@
 
 namespace Mvc5\Request;
 
+use Mvc5\Cookie\Cookies;
 use Mvc5\Http\Error;
 use Mvc5\Route\Route;
 
@@ -45,9 +46,9 @@ interface Request
     function cookie($name);
 
     /**
-     * @return array|\Mvc5\Cookie\Cookies
+     * @return Cookies
      */
-    function cookies();
+    function cookies() : Cookies;
 
     /**
      * @param array|string|null $name

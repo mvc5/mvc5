@@ -6,7 +6,9 @@
 namespace Mvc5\Request\Config;
 
 use Mvc5\Arg;
-use Mvc5\Http\Error;
+use Mvc5\Cookie\Cookies;
+use Mvc5\Cookie\HttpCookies;
+use Mvc5\Http;
 use Mvc5\Route\Route;
 
 trait Request
@@ -14,7 +16,30 @@ trait Request
     /**
      *
      */
-    use \Mvc5\Http\Config\Request;
+    use Http\Config\Request;
+
+    /**
+     * @param array $config
+     */
+    function __construct($config = [])
+    {
+        !isset($config[Arg::COOKIES]) &&
+            $config[Arg::COOKIES] = new HttpCookies;
+
+        is_array($config[Arg::COOKIES]) &&
+            $config[Arg::COOKIES] = new HttpCookies($config[Arg::COOKIES]);
+
+        !isset($config[Arg::HEADERS]) &&
+            $config[Arg::HEADERS] = new Http\HttpHeaders;
+
+        is_array($config[Arg::HEADERS]) &&
+            $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);
+
+        isset($config[Arg::URI]) && !($config[Arg::URI] instanceof Http\Uri) &&
+            $config[Arg::URI] = new Http\HttpUri($config[Arg::URI]);
+
+        $this->config = $config;
+    }
 
     /**
      * @return bool
@@ -68,11 +93,11 @@ trait Request
     }
 
     /**
-     * @return array|\Mvc5\Cookie\Cookies
+     * @return Cookies
      */
-    function cookies()
+    function cookies() : Cookies
     {
-        return $this[Arg::COOKIES] ?? [];
+        return $this[Arg::COOKIES];
     }
 
     /**
@@ -86,9 +111,9 @@ trait Request
     }
 
     /**
-     * @return Error|null
+     * @return Http\Error|null
      */
-    function error() : ?Error
+    function error() : ?Http\Error
     {
         return $this[Arg::ERROR];
     }
