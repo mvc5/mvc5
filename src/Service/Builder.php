@@ -7,6 +7,12 @@ namespace Mvc5\Service;
 
 use Mvc5\Exception;
 
+use function array_key_exists;
+use function array_merge;
+use function array_values;
+use function is_string;
+use function key;
+
 final class Builder
     extends \ReflectionClass
 {

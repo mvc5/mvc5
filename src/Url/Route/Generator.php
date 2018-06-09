@@ -12,6 +12,9 @@ use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compiler;
 use Mvc5\Route\Route;
 
+use function array_shift;
+use function is_array;
+
 trait Generator
 {
     /**

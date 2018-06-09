@@ -7,6 +7,8 @@ namespace Mvc5\Plugin;
 
 use Mvc5\Arg;
 
+use function array_merge;
+
 final class Expect
     implements Gem\Expect
 {

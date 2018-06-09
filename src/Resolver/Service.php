@@ -10,6 +10,12 @@ use Mvc5\Event\Event;
 use Mvc5\Resolvable;
 use Mvc5\Signal;
 
+use function array_shift;
+use function explode;
+use function is_array;
+use function is_string;
+use function substr;
+
 trait Service
 {
     /**

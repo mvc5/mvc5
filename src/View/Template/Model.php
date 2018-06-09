@@ -9,6 +9,8 @@ use Mvc5\Arg;
 use Mvc5\Template\TemplateModel;
 use Mvc5\View\ViewModel;
 
+use function is_string;
+
 trait Model
 {
     /**

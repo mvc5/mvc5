@@ -7,6 +7,10 @@ namespace Mvc5\Session\Config;
 
 use Mvc5\Arg;
 
+use function is_string;
+use function serialize;
+use function unserialize;
+
 trait Messages
 {
     /**

@@ -8,6 +8,8 @@ namespace Mvc5\Route\Match\Plugin;
 use Mvc5\Arg;
 use Mvc5\Route\Route;
 
+use function in_array;
+
 trait Optional
 {
     /**

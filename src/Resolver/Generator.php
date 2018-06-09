@@ -8,6 +8,9 @@ namespace Mvc5\Resolver;
 use Mvc5\Event\Event;
 use Mvc5\Event\Generator as EventGenerator;
 
+use function is_string;
+use function get_class;
+
 trait Generator
 {
     /**

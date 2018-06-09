@@ -9,6 +9,9 @@ use Mvc5\Service\Builder;
 use Mvc5\Service\Container;
 use Mvc5\Service\Manager;
 
+use function array_shift;
+use function class_exists;
+
 trait Build
 {
     /**

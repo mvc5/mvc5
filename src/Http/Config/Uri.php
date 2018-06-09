@@ -7,6 +7,10 @@ namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
 
+use function implode;
+use function is_array;
+use function parse_url;
+
 trait Uri
 {
     /**

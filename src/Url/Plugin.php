@@ -9,6 +9,9 @@ use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Uri;
 
+use function array_shift;
+use function strrpos;
+
 class Plugin
 {
     /**

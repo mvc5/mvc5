@@ -10,6 +10,9 @@ use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
+use function is_string;
+use function preg_match;
+
 class Host
 {
     /**

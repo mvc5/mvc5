@@ -8,6 +8,12 @@ namespace Mvc5\View\Engine;
 use Mvc5\Template\TemplateModel;
 use Mvc5\View\ViewEngine;
 
+use function extract;
+use function ob_end_clean;
+use function ob_get_clean;
+use function ob_get_level;
+use function ob_start;
+
 class PhpEngine
     implements ViewEngine
 {

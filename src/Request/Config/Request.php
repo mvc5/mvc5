@@ -11,6 +11,9 @@ use Mvc5\Cookie\HttpCookies;
 use Mvc5\Http;
 use Mvc5\Route\Route;
 
+use function is_array;
+use function is_string;
+
 trait Request
 {
     /**

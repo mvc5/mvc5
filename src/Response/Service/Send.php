@@ -10,6 +10,11 @@ use Mvc5\Cookie\PHPCookies;
 use Mvc5\Http\Response;
 use Mvc5\Response\Emitter;
 
+use function header;
+use function headers_sent;
+use function implode;
+use function sprintf;
+
 trait Send
 {
     /**

@@ -5,6 +5,13 @@
 
 namespace Mvc5\Exception;
 
+use function http_response_code;
+use function ini_get;
+use function in_array;
+use function ob_end_clean;
+use function ob_get_level;
+use function php_sapi_name;
+
 class ErrorException
     extends \ErrorException
     implements Throwable

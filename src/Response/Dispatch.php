@@ -11,6 +11,8 @@ use Mvc5\Event\EventModel;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 
+use function array_filter;
+
 class Dispatch
     implements Event
 {

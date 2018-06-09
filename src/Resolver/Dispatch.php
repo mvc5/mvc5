@@ -10,6 +10,8 @@ use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 use Mvc5\Resolvable;
 
+use function is_string;
+
 class Dispatch
     implements Event
 {

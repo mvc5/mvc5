@@ -9,6 +9,9 @@ use Mvc5\Arg;
 use Mvc5\Template\TemplateLayout;
 use Mvc5\Template\TemplateModel;
 
+use function constant;
+use function defined;
+
 trait View
 {
     /**

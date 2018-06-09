@@ -5,6 +5,10 @@
 
 namespace Mvc5\Service;
 
+use function end;
+use function next;
+use function reset;
+
 trait Middleware
 {
     /**

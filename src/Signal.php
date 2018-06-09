@@ -5,6 +5,15 @@
 
 namespace Mvc5;
 
+use function array_key_exists;
+use function array_merge;
+use function array_values;
+use function explode;
+use function get_class;
+use function is_array;
+use function is_string;
+use function key;
+
 final class Signal
 {
     /**

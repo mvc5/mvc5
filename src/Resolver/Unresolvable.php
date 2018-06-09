@@ -7,6 +7,10 @@ namespace Mvc5\Resolver;
 
 use Mvc5\Exception\RuntimeException;
 
+use function gettype;
+use function is_object;
+use function is_string;
+
 final class Unresolvable
     extends RuntimeException
 {

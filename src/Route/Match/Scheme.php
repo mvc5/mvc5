@@ -10,6 +10,8 @@ use Mvc5\Http\Error\BadRequest;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
+use function in_array;
+
 class Scheme
 {
     /**

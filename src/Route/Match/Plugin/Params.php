@@ -5,6 +5,8 @@
 
 namespace Mvc5\Route\Match\Plugin;
 
+use function is_string;
+
 trait Params
 {
     /**

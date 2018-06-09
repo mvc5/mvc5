@@ -11,6 +11,12 @@ use Mvc5\Service\Plugin;
 use Mvc5\Template\Config\TemplateModel;
 use Mvc5\View;
 
+use function array_filter;
+use function constant;
+use function defined;
+use function is_array;
+use function is_string;
+
 trait ViewModel
 {
     /**

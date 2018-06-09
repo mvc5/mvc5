@@ -8,6 +8,8 @@ namespace Mvc5\Event;
 use Mvc5\Arg;
 use Mvc5\Signal;
 
+use function is_string;
+
 trait EventModel
 {
     /**

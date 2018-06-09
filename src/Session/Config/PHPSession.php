@@ -10,6 +10,22 @@ use Mvc5\Config\ArrayAccess;
 use Mvc5\Config\PropertyAccess;
 use Mvc5\Session\Session;
 
+use function count;
+use function current;
+use function is_string;
+use function key;
+use function next;
+use function reset;
+use function session_destroy;
+use function session_get_cookie_params;
+use function session_id;
+use function session_name;
+use function session_regenerate_id;
+use function session_start;
+use function session_status;
+use function session_write_close;
+use function setcookie;
+
 trait PHPSession
 {
     /**

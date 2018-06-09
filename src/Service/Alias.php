@@ -5,6 +5,8 @@
 
 namespace Mvc5\Service;
 
+use function class_alias;
+
 final class Alias
 {
     /**

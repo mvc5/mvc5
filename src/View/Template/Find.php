@@ -7,6 +7,8 @@ namespace Mvc5\View\Template;
 
 use Mvc5\Arg;
 
+use function strpos;
+
 trait Find
 {
     /**

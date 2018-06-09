@@ -10,6 +10,12 @@ use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
+use function array_values;
+use function array_keys;
+use function class_exists;
+use function str_replace;
+use function ucwords;
+
 class Controller
 {
     /**

@@ -8,6 +8,8 @@ namespace Mvc5\Cookie\Config;
 use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 
+use function setcookie;
+
 trait PHPCookies
 {
     /**

@@ -9,6 +9,8 @@ use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
+use function array_merge;
+
 class Merge
 {
     /**

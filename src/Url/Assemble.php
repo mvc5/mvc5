@@ -8,6 +8,11 @@ namespace Mvc5\Url;
 use Mvc5\Arg;
 use Mvc5\Http\Uri;
 
+use function http_build_query;
+use function is_array;
+use function rawurlencode;
+use function strtr;
+
 class Assemble
 {
     /**

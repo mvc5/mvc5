@@ -9,6 +9,9 @@ use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 
+use function array_filter;
+use function is_bool;
+
 class Logger
     implements Event
 {

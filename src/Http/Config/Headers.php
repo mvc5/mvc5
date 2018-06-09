@@ -7,6 +7,11 @@ namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
 
+use function array_change_key_case;
+use function implode;
+use function is_string;
+use function strtolower;
+
 trait Headers
 {
     /**

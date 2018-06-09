@@ -5,6 +5,13 @@
 
 namespace Mvc5\Resolver;
 
+use function count;
+use function current;
+use function is_string;
+use function key;
+use function next;
+use function reset;
+
 trait Container
 {
     /**

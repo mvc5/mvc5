@@ -10,6 +10,8 @@ use Mvc5\Exception;
 use Mvc5\Route\Config;
 use Mvc5\Route\Route;
 
+use function is_array;
+
 trait Build
 {
     /**

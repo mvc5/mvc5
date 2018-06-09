@@ -5,6 +5,10 @@
 
 namespace Mvc5;
 
+use function array_filter;
+use function is_string;
+use function key;
+
 class Event
     implements Event\Event
 {

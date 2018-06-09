@@ -8,6 +8,9 @@ namespace Mvc5\Route\Definition;
 use Mvc5\Arg;
 use Mvc5\Exception;
 
+use function array_pop;
+use function sprintf;
+
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
  * under the Simplified BSD License (http://opensource.org/licenses/BSD-2-Clause).

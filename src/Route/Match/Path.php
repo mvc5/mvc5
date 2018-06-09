@@ -9,6 +9,9 @@ use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
+use function preg_match;
+use function strlen;
+
 class Path
 {
     /**

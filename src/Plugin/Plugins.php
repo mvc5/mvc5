@@ -7,6 +7,8 @@ namespace Mvc5\Plugin;
 
 use Mvc5\Arg;
 
+use function is_array;
+
 class Plugins
     extends Plugin
 {

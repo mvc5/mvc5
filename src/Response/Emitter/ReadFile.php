@@ -6,6 +6,8 @@ namespace Mvc5\Response\Emitter;
 
 use Mvc5\Response\Emitter;
 
+use function readfile;
+
 class ReadFile
     implements Emitter
 {

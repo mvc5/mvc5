@@ -8,6 +8,9 @@ namespace Mvc5\View;
 use Mvc5\Arg;
 use Mvc5\ViewModel as _ViewModel;
 
+use function constant;
+use function defined;
+
 trait Model
 {
     /**

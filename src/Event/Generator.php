@@ -7,6 +7,12 @@ namespace Mvc5\Event;
 
 use Mvc5\Signal;
 
+use function current;
+use function is_array;
+use function key;
+use function next;
+use function reset;
+
 trait Generator
 {
     /**

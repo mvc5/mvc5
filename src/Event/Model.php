@@ -5,6 +5,9 @@
 
 namespace Mvc5\Event;
 
+use function constant;
+use function defined;
+
 trait Model
 {
     /**
