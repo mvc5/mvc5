@@ -11,6 +11,7 @@ use Mvc5\Event\EventModel;
 use Mvc5\Resolvable;
 
 use function is_string;
+use function key;
 
 class Dispatch
     implements Event

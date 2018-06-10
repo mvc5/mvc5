@@ -11,6 +11,7 @@ use Mvc5\Http\Uri;
 
 use function array_shift;
 use function strrpos;
+use function substr;
 
 class Plugin
 {

@@ -8,8 +8,8 @@ namespace Mvc5\Route\Definition;
 use Mvc5\Exception;
 
 use function preg_match;
-use function substr;
 use function strlen;
+use function substr;
 
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)

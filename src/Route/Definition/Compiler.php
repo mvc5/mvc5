@@ -9,6 +9,7 @@ use Mvc5\Arg;
 use Mvc5\Exception;
 
 use function array_pop;
+use function rtrim;
 use function sprintf;
 
 /**

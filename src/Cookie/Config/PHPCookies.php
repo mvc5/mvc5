@@ -8,7 +8,10 @@ namespace Mvc5\Cookie\Config;
 use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 
+use function is_string;
+use function key;
 use function setcookie;
+use function strtotime;
 
 trait PHPCookies
 {

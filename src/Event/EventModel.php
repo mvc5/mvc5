@@ -9,6 +9,7 @@ use Mvc5\Arg;
 use Mvc5\Signal;
 
 use function is_string;
+use function key;
 
 trait EventModel
 {

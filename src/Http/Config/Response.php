@@ -8,6 +8,8 @@ namespace Mvc5\Http\Config;
 use Mvc5\Arg;
 use Mvc5\Http;
 
+use function is_array;
+
 trait Response
 {
     /**
