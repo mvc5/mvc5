@@ -30,9 +30,9 @@ use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
 
-use function is_array;
 use function array_merge;
 use function explode;
+use function is_array;
 use function is_string;
 use function is_object;
 use function key;
