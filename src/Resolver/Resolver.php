@@ -456,7 +456,7 @@ trait Resolver
 
         if (!$parent instanceof Plugin) {
             return $this->hydrate(
-                $plugin, $name === $parent ? $this->make($name, $args) : $this->plugin($this->resolve($parent), $args)
+                $plugin, $name === $parent ? $this->make($name, $args) : $this->provision($this->resolve($parent), $args)
             );
         }
 
@@ -473,6 +473,19 @@ trait Resolver
     protected function provider() : ?callable
     {
         return $this->provider;
+    }
+
+    /**
+     * @param $plugin
+     * @param array $args
+     * @return mixed
+     * @throws \ReflectionException
+     * @throws \Throwable
+     */
+    protected function provision($plugin, array $args)
+    {
+        return $plugin instanceof \Closure && (new \ReflectionFunction($plugin))->getClosureThis() ?
+            $this->invoke($plugin, $args) : $this->plugin($plugin, $args);
     }
 
     /**
