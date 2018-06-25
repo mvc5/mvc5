@@ -31,12 +31,14 @@ use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
 
 use function array_merge;
+use function array_shift;
 use function explode;
 use function is_array;
 use function is_string;
 use function is_object;
 use function key;
 use function serialize;
+use function substr;
 use function unserialize;
 
 trait Resolver

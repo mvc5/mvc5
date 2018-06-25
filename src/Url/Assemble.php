@@ -12,6 +12,7 @@ use function http_build_query;
 use function is_array;
 use function rawurlencode;
 use function strtr;
+use function strtolower;
 
 class Assemble
 {

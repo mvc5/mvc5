@@ -7,6 +7,7 @@ namespace Mvc5\Resolver;
 
 use Mvc5\Exception\RuntimeException;
 
+use function get_class;
 use function gettype;
 use function is_object;
 use function is_string;
