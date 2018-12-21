@@ -101,6 +101,7 @@ interface Arg
     const ROUTE = 'route';
     const ROUTE_GENERATOR = 'route\generator';
     const ROUTE_MATCH = 'route\match';
+    const SAMESITE = 'samesite';
     const SCHEME = 'scheme';
     const SECURE = 'secure';
     const SEPARATOR = '/';

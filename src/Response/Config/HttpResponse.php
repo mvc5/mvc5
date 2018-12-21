@@ -60,17 +60,12 @@ trait HttpResponse
     /**
      * @param string $name
      * @param string|null $value
-     * @param int|null $expire
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
+     * @param array $options
      * @return self|mixed
      */
-    function withCookie($name, $value = null, $expire = null,
-                        string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Response
+    function withCookie($name, $value = null, array $options = []) : Response
     {
-        return $this->withCookies($this->cookies()->with($name, $value, $expire, $path, $domain, $secure, $httponly));
+        return $this->withCookies($this->cookies()->with($name, $value, $options));
     }
 
     /**

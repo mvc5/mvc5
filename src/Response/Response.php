@@ -24,14 +24,10 @@ interface Response
     /**
      * @param array|string $name
      * @param string|null $value
-     * @param int $expire
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
+     * @param array $options
      * @return self|mixed
      */
-    function withCookie($name, $value = null, $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
+    function withCookie($name, $value = null, array $options = []);
 
     /**
      * @param array|\Mvc5\Cookie\Cookies $cookies

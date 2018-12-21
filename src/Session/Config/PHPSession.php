@@ -8,6 +8,7 @@ namespace Mvc5\Session\Config;
 use Mvc5\Arg;
 use Mvc5\Config\ArrayAccess;
 use Mvc5\Config\PropertyAccess;
+use Mvc5\Cookie\PHPCookies;
 use Mvc5\Session\Session;
 
 use function count;
@@ -24,7 +25,6 @@ use function session_regenerate_id;
 use function session_start;
 use function session_status;
 use function session_write_close;
-use function setcookie;
 
 trait PHPSession
 {
@@ -73,7 +73,7 @@ trait PHPSession
     function destroy(bool $remove_session_cookie = true) : bool
     {
         $remove_session_cookie &&
-            $this->removeSessionCookie($this->name(), session_get_cookie_params());
+            PHPCookies::send([Arg::NAME => $this->name(), Arg::VALUE => '', Arg::EXPIRE => 946706400] + session_get_cookie_params());
 
         return session_destroy();
     }
@@ -176,16 +176,6 @@ trait PHPSession
         foreach((array) $name as $key) {
             unset($_SESSION[$key]);
         }
-    }
-
-    /**
-     * @param string $name
-     * @param array $params
-     * @return bool
-     */
-    protected function removeSessionCookie(string $name, array $params = []) : bool
-    {
-        return setcookie($name, '', 946706400, $params[Arg::PATH], $params[Arg::DOMAIN], $params[Arg::SECURE]);
     }
 
     /**

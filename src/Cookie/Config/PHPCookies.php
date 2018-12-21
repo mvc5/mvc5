@@ -8,10 +8,11 @@ namespace Mvc5\Cookie\Config;
 use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 
+use function array_values;
 use function is_string;
 use function key;
 use function setcookie;
-use function strtotime;
+use function version_compare;
 
 trait PHPCookies
 {
@@ -31,95 +32,63 @@ trait PHPCookies
     }
 
     /**
-     * @param string $name
-     * @param string $value
-     * @param int|string|null $expire
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
-     * @return array
-     */
-    protected static function args($name, $value = '', $expire = null, string $path = null,
-                                   string $domain = null, bool $secure = null, bool $httponly = null) : array
-    {
-        return [
-            (string) $name, (string) $value, (int) (is_string($expire) ? strtotime($expire) : $expire),
-            $path ?? '/', (string) $domain, (bool) $secure, $httponly ?? true
-        ];
-    }
-
-    /**
      * @param array $cookie
-     * @return array
-     */
-    protected static function named(array $cookie) : array
-    {
-        return static::args(
-            $cookie[Arg::NAME],
-            $cookie[Arg::VALUE],
-            $cookie[Arg::EXPIRE] ?? null,
-            $cookie[Arg::PATH] ?? null,
-            $cookie[Arg::DOMAIN] ?? null,
-            $cookie[Arg::SECURE] ?? null,
-            $cookie[Arg::HTTP_ONLY] ?? null
-        );
-    }
-
-    /**
-     * @param array $cookie
+     * @param array $defaults
      * @return bool
      */
-    static function send(array $cookie) : bool
+    static function send(array $cookie, array $defaults = []) : bool
     {
-        return setcookie(...(is_string(key($cookie)) ? static::named($cookie) : static::args(...$cookie)));
+        return send(is_string(key($cookie)) ? $cookie : cookie(...$cookie), $defaults);
     }
 
     /**
      * @param string $name
      * @param string $value
-     * @param int|string|null $expire
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
+     * @param array $options
      * @return mixed
      */
-    function set($name, $value = '', $expire = null,
-                 string $path = null, string $domain = null, bool $secure = null, bool $httponly = null)
+    function set($name, $value = '', array $options = [])
     {
-        $this->send($this->cookie($name, $value, $expire, $path, $domain, $secure, $httponly));
+        $this->send(
+            is_array($name) ? $name : [Arg::NAME => (string) $name, Arg::VALUE => (string) $value] + $options,
+            $this->defaults
+        );
+
         return $value;
     }
 
     /**
      * @param string $name
      * @param string|null $value
-     * @param int|string|null $expire
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
+     * @param array $options
      * @return self|mixed
      */
-    function with($name, $value = null, $expire = null,
-                  string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookies
+    function with($name, $value = null, array $options = []) : Cookies
     {
-        $this->set($name, $value, $expire, $path, $domain, $secure, $httponly);
+        $this->set($name, $value, $options);
         return $this;
     }
 
     /**
      * @param string $name
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
+     * @param array $options
      * @return self|mixed
      */
-    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null) : Cookies
+    function without($name, array $options = []) : Cookies
     {
-        $this->remove($name, $path, $domain, $secure, $httponly);
+        $this->remove($name, $options);
         return $this;
     }
+}
+
+/**
+ * @param array $cookie
+ * @param array $defaults
+ * @return bool
+ */
+function send(array $cookie, array $defaults = []) : bool
+{
+    return version_compare(\PHP_VERSION, '7.3', '<') ?
+        setcookie((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], ...array_values(options($cookie, $defaults, false)))
+        : setcookie((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], options($cookie, $defaults));
 }

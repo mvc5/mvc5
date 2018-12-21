@@ -18,22 +18,15 @@ interface Cookies
     /**
      * @param string $name
      * @param string|null $value
-     * @param int|string|null $expire
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
+     * @param array $options
      * @return self|mixed
      */
-    function with($name, $value = null, $expire = null, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
+    function with($name, $value = null, array $options = []);
 
     /**
      * @param string $name
-     * @param string|null $path
-     * @param string|null $domain
-     * @param bool|null $secure
-     * @param bool|null $httponly
+     * @param array $options
      * @return self|mixed
      */
-    function without($name, string $path = null, string $domain = null, bool $secure = null, bool $httponly = null);
+    function without($name, array $options = []);
 }

@@ -8,5 +8,6 @@ return [
     'path'     => '/',
     'domain'   => '',
     'secure'   => false,
-    'httponly' => true
+    'httponly' => true,
+    'samesite' => 'Strict'
 ];
