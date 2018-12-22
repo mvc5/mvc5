@@ -12,7 +12,8 @@ use function array_values;
 use function is_string;
 use function key;
 use function setcookie;
-use function version_compare;
+use function setrawcookie;
+use function strtotime;
 
 trait PHPCookies
 {
@@ -22,13 +23,18 @@ trait PHPCookies
     use HttpCookies;
 
     /**
+     * @var array
+     */
+    protected $defaults = [];
+
+    /**
      * @param array|null $cookies
      * @param array $defaults
      */
     function __construct(array $cookies = null, array $defaults = [])
     {
         $this->config = $cookies ?? $_COOKIE;
-        $this->defaults = $defaults + $this->defaults;
+        $this->defaults = $defaults;
     }
 
     /**
@@ -84,13 +90,72 @@ trait PHPCookies
 }
 
 /**
+ * @param int|string $expires
+ * @return int
+ */
+function expires($expires) : int
+{
+    return (int) (is_string($expires) ? strtotime($expires) : $expires);
+}
+
+/**
+ * @param array $options
+ * @param array $defaults
+ * @param bool $samesite
+ * @return array
+ */
+function options(array $options, array $defaults = [], bool $samesite = true) : array
+{
+    return [
+            Arg::EXPIRES => (int) expires($options[Arg::EXPIRES] ?? $defaults[Arg::EXPIRES] ?? 0),
+            Arg::PATH => (string) ($options[Arg::PATH] ?? $defaults[Arg::PATH] ?? '/'),
+            Arg::DOMAIN => (string) ($options[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
+            Arg::SECURE => (bool) ($options[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
+            Arg::HTTP_ONLY => (bool) ($options[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
+        ] + ($samesite ? [Arg::SAMESITE => (string) ($options[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? '')] : []);
+}
+
+/**
+ * @param string $name
+ * @param string $value
+ * @param array $options
+ * @param array $cookie
+ * @return bool
+ */
+function emit(string $name, string $value, array $options, array $cookie) : bool
+{
+    if (isset($options[Arg::SAMESITE])) {
+        return ($cookie[Arg::RAW] ?? false) ? setrawcookie($name, $value, $options) :
+            setcookie($name, $value, $options);
+    }
+
+    return ($cookie[Arg::RAW] ?? false) ?  setrawcookie($name, $value, ...array_values($options)) :
+        setcookie($name, $value, ...array_values($options));
+}
+
+/**
+ * @return bool
+ */
+function php73() : bool
+{
+    return version_compare(\PHP_VERSION, '7.3', '>=');
+}
+
+/**
+ * @param array $cookie
+ * @return array
+ */
+function raw(array $cookie) : array
+{
+    return isset($cookie[Arg::RAW]) ? [Arg::RAW => $cookie[Arg::RAW]] : [];
+}
+
+/**
  * @param array $cookie
  * @param array $defaults
  * @return bool
  */
 function send(array $cookie, array $defaults = []) : bool
 {
-    return version_compare(\PHP_VERSION, '7.3', '<') ?
-        setcookie((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], ...array_values(options($cookie, $defaults, false)))
-        : setcookie((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], options($cookie, $defaults));
+    return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], options($cookie, $defaults, php73()), $cookie);
 }

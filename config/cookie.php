@@ -4,7 +4,7 @@
  */
 
 return [
-    'expire'   => 0,
+    'expires'   => 0,
     'path'     => '/',
     'domain'   => '',
     'secure'   => false,

@@ -11,7 +11,6 @@ use Mvc5\Cookie\Cookies;
 use function is_array;
 use function is_string;
 use function key;
-use function strtotime;
 
 trait HttpCookies
 {
@@ -21,25 +20,11 @@ trait HttpCookies
     protected $config = [];
 
     /**
-     * @var array
-     */
-    protected $defaults = [
-        Arg::EXPIRE    => 0,
-        Arg::PATH      => '/',
-        Arg::DOMAIN    => '',
-        Arg::SECURE    => false,
-        Arg::HTTP_ONLY => true,
-        Arg::SAMESITE  => ''
-    ];
-
-    /**
      * @param array $cookies
-     * @param array $defaults
      */
-    function __construct(array $cookies = [], array $defaults = [])
+    function __construct(array $cookies = [])
     {
         $this->config = $cookies;
-        $this->defaults = $defaults + $this->defaults;
     }
 
     /**
@@ -56,8 +41,8 @@ trait HttpCookies
      */
     function remove($name, array $options = []) : void
     {
-        !is_array($name) ? $this->set($name, '', [Arg::EXPIRE => 946706400] + $options) : $this->set(
-            [Arg::VALUE => '', Arg::EXPIRE => 946706400] + (is_string(key($name)) ? $name : cookie(...$name))
+        !is_array($name) ? $this->set($name, '', [Arg::EXPIRES => 946706400] + $options) : $this->set(
+            [Arg::VALUE => '', Arg::EXPIRES => 946706400] + (is_string(key($name)) ? $name : cookie(...$name))
         );
     }
 
@@ -108,21 +93,21 @@ trait HttpCookies
 /**
  * @param string $name
  * @param string $value
- * @param null $expire
+ * @param int|string|null $expires
  * @param string|null $path
  * @param string|null $domain
  * @param bool|null $secure
  * @param bool|null $httponly
- * @param string $samesite
+ * @param string|null $samesite
  * @return array
  */
-function cookie(string $name, string $value, $expire = null,
-                string $path = null, string $domain = null, bool $secure = null, bool $httponly = null, string $samesite = '') : array
+function cookie(string $name, string $value, $expires = null, string $path = null, string $domain = null,
+                bool $secure = null, bool $httponly = null, string $samesite = null) : array
 {
     return [
         Arg::NAME => $name,
         Arg::VALUE => $value,
-        Arg::EXPIRE => $expire,
+        Arg::EXPIRES => $expires,
         Arg::PATH => $path,
         Arg::DOMAIN => $domain,
         Arg::SECURE => $secure,
@@ -132,36 +117,10 @@ function cookie(string $name, string $value, $expire = null,
 }
 
 /**
- * @param int|string $expire
- * @return int
- */
-function expire($expire) : int
-{
-    return (int) (is_string($expire) ? strtotime($expire) : $expire);
-}
-
-/**
  * @param $name
  * @return string
  */
 function name($name) : string
 {
     return (string) (is_array($name) ? (is_string(key($name)) ? $name[Arg::NAME] : $name[0]) : $name);
-}
-
-/**
- * @param array $options
- * @param array $defaults
- * @param bool $samesite
- * @return array
- */
-function options(array $options, array $defaults = [], bool $samesite = true) : array
-{
-    return [
-        Arg::EXPIRE => (int) expire($options[Arg::EXPIRE] ?? $defaults[Arg::EXPIRE] ?? 0),
-        Arg::PATH => (string) ($options[Arg::PATH] ?? $defaults[Arg::PATH] ?? '/'),
-        Arg::DOMAIN => (string) ($options[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
-        Arg::SECURE => (bool) ($options[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
-        Arg::HTTP_ONLY => (bool) ($options[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
-    ] + ($samesite ? [Arg::SAMESITE => (string) ($options[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? '')] : []);
 }

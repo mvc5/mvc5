@@ -73,7 +73,7 @@ trait PHPSession
     function destroy(bool $remove_session_cookie = true) : bool
     {
         $remove_session_cookie && PHPCookies::send(
-            [Arg::NAME => $this->name(), Arg::VALUE => '', Arg::EXPIRE => 946706400] + session_get_cookie_params()
+            [Arg::NAME => $this->name(), Arg::VALUE => '', Arg::EXPIRES => 946706400] + session_get_cookie_params()
         );
 
         return session_destroy();

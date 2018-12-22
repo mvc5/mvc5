@@ -44,7 +44,7 @@ interface Arg
     const EXCEPTION = 'exception';
     const EXCEPTION_LAYOUT = 'exception\layout';
     const EXCEPTION_RESPONSE = 'exception\response';
-    const EXPIRE = 'expire';
+    const EXPIRES = 'expires';
     const FACTORY = 'factory';
     const FILE = 'file';
     const FILES = 'files';
@@ -88,6 +88,7 @@ interface Arg
     const PROPERTY = '$';
     const QUERY = 'query';
     const QUERY_SEPARATOR = '&';
+    const RAW = 'raw';
     const REASON = 'reason';
     const REGEX = 'regex';
     const RENDER = 'render';
