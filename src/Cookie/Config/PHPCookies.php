@@ -49,10 +49,12 @@ trait PHPCookies
      */
     function set($name, $value = '', array $options = [])
     {
-        $this->send(
-            is_array($name) ? $name : [Arg::NAME => (string) $name, Arg::VALUE => (string) $value] + $options,
-            $this->defaults
-        );
+        if (is_array($name)) {
+            $this->send($name, $this->defaults);
+            return $name;
+        }
+
+        $this->send([Arg::NAME => (string) $name, Arg::VALUE => (string) $value] + $options, $this->defaults);
 
         return $value;
     }
