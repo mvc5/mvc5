@@ -93,18 +93,16 @@ trait PHPCookies
  * @param string $name
  * @param string $value
  * @param array $options
- * @param array $cookie
+ * @param bool $raw
  * @return bool
  */
-function emit(string $name, string $value, array $options, array $cookie) : bool
+function emit(string $name, string $value, array $options, bool $raw = false) : bool
 {
     if (isset($options[Arg::SAMESITE])) {
-        return ($cookie[Arg::RAW] ?? false) ? setrawcookie($name, $value, $options) :
-            setcookie($name, $value, $options);
+        return $raw ? setrawcookie($name, $value, $options) : setcookie($name, $value, $options);
     }
 
-    return ($cookie[Arg::RAW] ?? false) ?  setrawcookie($name, $value, ...array_values($options)) :
-        setcookie($name, $value, ...array_values($options));
+    return $raw ? setrawcookie($name, $value, ...array_values($options)) : setcookie($name, $value, ...array_values($options));
 }
 
 /**
@@ -117,20 +115,20 @@ function expires($expires) : int
 }
 
 /**
- * @param array $options
+ * @param array $cookie
  * @param array $defaults
  * @param bool $samesite
  * @return array
  */
-function options(array $options, array $defaults = [], bool $samesite = true) : array
+function options(array $cookie, array $defaults = [], bool $samesite = true) : array
 {
     return [
-            Arg::EXPIRES => (int) expires($options[Arg::EXPIRES] ?? $defaults[Arg::EXPIRES] ?? 0),
-            Arg::PATH => (string) ($options[Arg::PATH] ?? $defaults[Arg::PATH] ?? '/'),
-            Arg::DOMAIN => (string) ($options[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
-            Arg::SECURE => (bool) ($options[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
-            Arg::HTTP_ONLY => (bool) ($options[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
-        ] + ($samesite ? [Arg::SAMESITE => (string) ($options[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? '')] : []);
+        Arg::EXPIRES => (int) expires($cookie[Arg::EXPIRES] ?? $defaults[Arg::EXPIRES] ?? 0),
+        Arg::PATH => (string) ($cookie[Arg::PATH] ?? $defaults[Arg::PATH] ?? '/'),
+        Arg::DOMAIN => (string) ($cookie[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
+        Arg::SECURE => (bool) ($cookie[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
+        Arg::HTTP_ONLY => (bool) ($cookie[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
+    ] + ($samesite ? [Arg::SAMESITE => (string) ($cookie[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? '')] : []);
 }
 
 /**
@@ -148,5 +146,5 @@ function php73() : bool
  */
 function send(array $cookie, array $defaults = []) : bool
 {
-    return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], options($cookie, $defaults, php73()), $cookie);
+    return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], options($cookie, $defaults, php73()), $cookie[Arg::RAW] ?? false);
 }
