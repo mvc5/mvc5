@@ -58,7 +58,7 @@ trait HttpResponse
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param string|null $value
      * @param array $options
      * @return self|mixed

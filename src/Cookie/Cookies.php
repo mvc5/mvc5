@@ -16,7 +16,7 @@ interface Cookies
     function all() : array;
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param string|null $value
      * @param array $options
      * @return self|mixed
@@ -24,7 +24,7 @@ interface Cookies
     function with($name, $value = null, array $options = []);
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param array $options
      * @return self|mixed
      */
