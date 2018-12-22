@@ -46,7 +46,7 @@ return [
     'response\json\error'  => Mvc5\Response\JsonErrorResponse::class,
     'response\json\exception' => [Mvc5\Response\JsonExceptionResponse::class, 'trace' => new Param('debug')],
     'response\redirect'    => Mvc5\Response\RedirectResponse::class,
-    'response\send'        => Mvc5\Response\Send::class,
+    'response\send'        => [Mvc5\Response\Send::class, 'cookie_defaults' => new Param('cookie')],
     'response\status'      => Mvc5\Response\Status::class,
     'response\version'     => Mvc5\Response\Version::class,
     'route\dispatch'       => [Mvc5\Route\Dispatch::class, new Plugin('route\match'), new Plugin('route\generator'), new Param('routes')],

@@ -18,6 +18,19 @@ use function sprintf;
 trait Send
 {
     /**
+     * @var array
+     */
+    protected $cookie_defaults = [];
+
+    /**
+     * @param array $cookie_defaults
+     */
+    function __construct(array $cookie_defaults = [])
+    {
+        $this->cookie_defaults = $cookie_defaults;
+    }
+
+    /**
      * @param Response $response
      */
     protected function body(Response $response) : void
@@ -56,7 +69,7 @@ trait Send
         }
 
         foreach($this->cookies($response) as $cookie) {
-            PHPCookies::send($cookie);
+            PHPCookies::send($cookie, $this->cookie_defaults);
         }
 
         $statusLine = sprintf('HTTP/%s %s %s', $response->version(), $response->status(), $response->reason());
