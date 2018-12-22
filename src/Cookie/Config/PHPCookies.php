@@ -143,15 +143,6 @@ function php73() : bool
 
 /**
  * @param array $cookie
- * @return array
- */
-function raw(array $cookie) : array
-{
-    return isset($cookie[Arg::RAW]) ? [Arg::RAW => $cookie[Arg::RAW]] : [];
-}
-
-/**
- * @param array $cookie
  * @param array $defaults
  * @return bool
  */
