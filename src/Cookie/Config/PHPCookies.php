@@ -90,6 +90,24 @@ trait PHPCookies
 }
 
 /**
+ * @param string $name
+ * @param string $value
+ * @param array $options
+ * @param array $cookie
+ * @return bool
+ */
+function emit(string $name, string $value, array $options, array $cookie) : bool
+{
+    if (isset($options[Arg::SAMESITE])) {
+        return ($cookie[Arg::RAW] ?? false) ? setrawcookie($name, $value, $options) :
+            setcookie($name, $value, $options);
+    }
+
+    return ($cookie[Arg::RAW] ?? false) ?  setrawcookie($name, $value, ...array_values($options)) :
+        setcookie($name, $value, ...array_values($options));
+}
+
+/**
  * @param int|string $expires
  * @return int
  */
@@ -113,24 +131,6 @@ function options(array $options, array $defaults = [], bool $samesite = true) : 
             Arg::SECURE => (bool) ($options[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
             Arg::HTTP_ONLY => (bool) ($options[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
         ] + ($samesite ? [Arg::SAMESITE => (string) ($options[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? '')] : []);
-}
-
-/**
- * @param string $name
- * @param string $value
- * @param array $options
- * @param array $cookie
- * @return bool
- */
-function emit(string $name, string $value, array $options, array $cookie) : bool
-{
-    if (isset($options[Arg::SAMESITE])) {
-        return ($cookie[Arg::RAW] ?? false) ? setrawcookie($name, $value, $options) :
-            setcookie($name, $value, $options);
-    }
-
-    return ($cookie[Arg::RAW] ?? false) ?  setrawcookie($name, $value, ...array_values($options)) :
-        setcookie($name, $value, ...array_values($options));
 }
 
 /**
