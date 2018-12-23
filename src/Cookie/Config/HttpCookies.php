@@ -117,10 +117,10 @@ function cookie(string $name, string $value = null, $expires = null, string $pat
 }
 
 /**
- * @param $name
+ * @param array $cookie
  * @return string
  */
-function name($name) : string
+function name(array $cookie) : string
 {
-    return (string) (is_array($name) ? (is_string(key($name)) ? $name[Arg::NAME] : $name[0]) : $name);
+    return (string) (is_string(key($cookie)) ? $cookie[Arg::NAME] : $cookie[0]);
 }
