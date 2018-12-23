@@ -69,6 +69,16 @@ trait HttpResponse
     }
 
     /**
+     * @param array|string $name
+     * @param array $options
+     * @return self|mixed
+     */
+    function withoutCookie($name, array $options = []) : Response
+    {
+        return $this->withCookies($this->cookies()->without($name, $options));
+    }
+
+    /**
      * @param array|Cookies $cookies
      * @return self|mixed
      */

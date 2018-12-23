@@ -30,6 +30,13 @@ interface Response
     function withCookie($name, $value = null, array $options = []);
 
     /**
+     * @param array|string $name
+     * @param array $options
+     * @return self|mixed
+     */
+    function withoutCookie($name, array $options = []);
+
+    /**
      * @param array|\Mvc5\Cookie\Cookies $cookies
      * @return self|mixed
      */
