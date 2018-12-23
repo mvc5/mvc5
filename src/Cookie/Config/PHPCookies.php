@@ -9,6 +9,7 @@ use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 
 use function array_values;
+use function is_array;
 use function is_string;
 use function key;
 use function setcookie;
@@ -35,6 +36,20 @@ trait PHPCookies
     {
         $this->config = $cookies ?? $_COOKIE;
         $this->defaults = $defaults;
+    }
+
+    /**
+     * @param array|string $cookie
+     * @param array $options
+     * @return bool
+     */
+    static function delete($cookie, array $options = []) : bool
+    {
+        is_string($cookie) &&
+            $cookie = [Arg::NAME => $cookie] + $options;
+
+        return static::send([Arg::VALUE => '', Arg::EXPIRES => 946706400] +
+            (is_string(key($cookie)) ? $cookie : cookie(...$cookie)));
     }
 
     /**
@@ -136,7 +151,7 @@ function options(array $cookie, array $defaults = [], bool $samesite = true) : a
  */
 function php73() : bool
 {
-    return version_compare(\PHP_VERSION, '7.3', '>=');
+    return \version_compare(\PHP_VERSION, '7.3', '>=');
 }
 
 /**
@@ -146,5 +161,6 @@ function php73() : bool
  */
 function send(array $cookie, array $defaults = []) : bool
 {
-    return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE], options($cookie, $defaults, php73()), $cookie[Arg::RAW] ?? false);
+    return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE],
+        options($cookie, $defaults, php73()), $cookie[Arg::RAW] ?? false);
 }

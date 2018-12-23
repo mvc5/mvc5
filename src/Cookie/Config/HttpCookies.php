@@ -101,7 +101,7 @@ trait HttpCookies
  * @param string|null $samesite
  * @return array
  */
-function cookie(string $name, string $value, $expires = null, string $path = null, string $domain = null,
+function cookie(string $name, string $value = null, $expires = null, string $path = null, string $domain = null,
                 bool $secure = null, bool $httponly = null, string $samesite = null) : array
 {
     return [
