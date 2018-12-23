@@ -55,7 +55,10 @@ trait HttpCookies
     function set($name, $value = null, array $options = [])
     {
         if (is_array($name)) {
-            $this->config[name($name)] = is_string(key($name)) ? $name : cookie(...$name);
+            $cookie = is_string(key($name)) ? $name : cookie(...$name);
+
+            $this->config[$cookie[Arg::NAME]] = $cookie;
+
             return $name;
         }
 
@@ -114,13 +117,4 @@ function cookie(string $name, string $value = null, $expires = null, string $pat
         Arg::HTTP_ONLY => $httponly,
         Arg::SAMESITE => $samesite
     ];
-}
-
-/**
- * @param array $cookie
- * @return string
- */
-function name(array $cookie) : string
-{
-    return (string) (is_string(key($cookie)) ? $cookie[Arg::NAME] : $cookie[0]);
 }
