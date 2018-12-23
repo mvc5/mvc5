@@ -9,5 +9,5 @@ return [
     'domain'   => '',
     'secure'   => false,
     'httponly' => true,
-    'samesite' => 'strict'
+    'samesite' => 'lax'
 ];

@@ -63,7 +63,7 @@ trait PHPCookies
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param string $value
      * @param array $options
      * @return mixed
@@ -81,7 +81,7 @@ trait PHPCookies
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param string|null $value
      * @param array $options
      * @return self|mixed
@@ -93,7 +93,7 @@ trait PHPCookies
     }
 
     /**
-     * @param string $name
+     * @param array|string $name
      * @param array $options
      * @return self|mixed
      */
@@ -143,7 +143,7 @@ function options(array $cookie, array $defaults = [], bool $samesite = true) : a
         Arg::DOMAIN => (string) ($cookie[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
         Arg::SECURE => (bool) ($cookie[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
         Arg::HTTP_ONLY => (bool) ($cookie[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
-    ] + ($samesite ? [Arg::SAMESITE => (string) ($cookie[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? '')] : []);
+    ] + ($samesite ? [Arg::SAMESITE => (string) ($cookie[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? 'lax')] : []);
 }
 
 /**
