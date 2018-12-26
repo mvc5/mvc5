@@ -56,6 +56,7 @@ return [
     'route\match\host'     => Mvc5\Route\Match\Host::class,
     'route\match\merge'    => Mvc5\Route\Match\Merge::class,
     'route\match\method'   => Mvc5\Route\Match\Method::class,
+    'route\match\csrf\token' => Mvc5\Route\Match\CSRFToken::class,
     'route\match\middleware' => [Mvc5\Route\Match\Middleware::class, new Link],
     'route\match\path'     => Mvc5\Route\Match\Path::class,
     'route\match\scheme'   => Mvc5\Route\Match\Scheme::class,

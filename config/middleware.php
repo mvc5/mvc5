@@ -10,6 +10,7 @@ return [
         'route\match\host',
         'route\match\path',
         'route\match\method',
+        'route\match\csrf\token',
         'route\match\action',
         'route\match\controller',
         'route\match\middleware',
