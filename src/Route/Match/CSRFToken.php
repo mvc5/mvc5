@@ -15,12 +15,12 @@ class CSRFToken
     /**
      * @var bool
      */
-    protected $enable = false;
+    protected $enable = true;
 
     /**
      * @param bool $enable
      */
-    function __construct(bool $enable = false)
+    function __construct(bool $enable = true)
     {
         $this->enable = $enable;
     }
