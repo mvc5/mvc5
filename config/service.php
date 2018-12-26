@@ -8,6 +8,7 @@ use Mvc5\Plugin\Config;
 use Mvc5\Plugin\GlobalVar;
 use Mvc5\Plugin\Hydrator;
 use Mvc5\Plugin\Invoke;
+use Mvc5\Plugin\Invokable;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -19,6 +20,7 @@ return [
     'config'               => new Config,
     'cookie'               => new Shared('cookie', [Mvc5\Cookie\PHPCookies::class, new GlobalVar('_COOKIE'), new Param('cookie')]),
     'controller\action'    => [Mvc5\Controller\Action::class, new Link],
+    'csrf_token'           => new Shared('csrf_token', new Invokable(new Plugin('session->csrf_token'))),
     'error\controller'     => [Mvc5\Request\Error\Controller::class, new Link],
     'error\model'          => [Mvc5\Request\Error\ViewModel::class, 'template' => 'error'],
     'event\model'          => Mvc5\Event::class,
