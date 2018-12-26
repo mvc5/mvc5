@@ -7,8 +7,8 @@ use Mvc5\Plugin\Args;
 use Mvc5\Plugin\Config;
 use Mvc5\Plugin\GlobalVar;
 use Mvc5\Plugin\Hydrator;
-use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Invokable;
+use Mvc5\Plugin\Invoke;
 use Mvc5\Plugin\Link;
 use Mvc5\Plugin\Param;
 use Mvc5\Plugin\Plugin;
@@ -69,9 +69,10 @@ return [
     'session'              => new Shared('session', 'session\global'),
     'session\container'    => new Plugin(Mvc5\Session\Container::class, ['session' => new Plugin('session')], ['start' => []]),
     'session\global'       => new Hydrator(Mvc5\Session\PHPSession::class, [
-        'start' => new Param('session'), ['$session', new Plugin(Mvc5\Session\CSRFToken\Generate::class)]
+        'start' => new Param('session'), ['$session', new Plugin('session\token\generator')]
     ]),
     'session\messages'     => new Shared('session\messages', new Session('session\messages', Mvc5\Session\Messages::class)),
+    'session\token\generator' => Mvc5\Session\CSRFToken\Generate::class,
     'template\render'      => [Mvc5\View\Render::class, new Link, new Plugin('view\engine'),
         new Args(['paths' => new Param('templates'), 'directory' => new Param('view')])
     ],
