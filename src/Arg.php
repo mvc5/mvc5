@@ -30,6 +30,7 @@ interface Arg
     const CONTROLLER = 'controller';
     const CONTROLLER_RESPONSE = 'controller\response';
     const COOKIES = 'cookies';
+    const CSRF_TOKEN = 'csrf_token';
     const DATA = 'data';
     const DANGER = 'danger';
     const DEFAULTS = 'defaults';
