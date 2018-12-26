@@ -26,12 +26,12 @@ class CSRFToken
     }
 
     /**
-     * @param string $method
+     * @param Request $request
      * @return bool
      */
-    protected function allowed(string $method) : bool
+    protected function allow(Request $request) : bool
     {
-        return in_array($method, ['GET', 'HEAD', 'OPTIONS', 'TRACE']);
+        return in_array((string) $request->method(), ['GET', 'HEAD', 'OPTIONS', 'TRACE']);
     }
 
     /**
@@ -40,7 +40,7 @@ class CSRFToken
      */
     protected function match(Request $request) : bool
     {
-        return hash_equals($this->param($request), (string) $request[Arg::SESSION][Arg::CSRF_TOKEN]);
+        return hash_equals((string) $request[Arg::SESSION][Arg::CSRF_TOKEN], $this->param($request));
     }
 
     /**
@@ -60,7 +60,7 @@ class CSRFToken
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return !($route[ARG::CSRF_TOKEN] ?? $this->enable) || $this->allowed($request->method()) || $this->match($request) ?
+        return !($route[ARG::CSRF_TOKEN] ?? $this->enable) || $this->allow($request) || $this->match($request) ?
             $next($route, $request) : new Forbidden;
     }
 }
