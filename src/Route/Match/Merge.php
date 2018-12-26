@@ -27,6 +27,9 @@ class Merge
         ($middleware = $parent[Arg::MIDDLEWARE]) &&
             $config[Arg::MIDDLEWARE] = array_merge($middleware, $route[Arg::MIDDLEWARE] ?? []);
 
+        !isset($route[Arg::CSRF_TOKEN]) && isset($parent[Arg::CSRF_TOKEN]) &&
+            $config[Arg::CSRF_TOKEN] = $parent[Arg::CSRF_TOKEN];
+
         return $config ? $route->with($config) : $route;
     }
 
