@@ -10,6 +10,9 @@ use Mvc5\Http\Error\Forbidden;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
+use function hash_equals;
+use function in_array;
+
 class CSRFToken
 {
     /**
