@@ -130,20 +130,20 @@ function expires($expires) : int
 }
 
 /**
- * @param array $cookie
+ * @param array $options
  * @param array $defaults
  * @param bool $samesite
  * @return array
  */
-function options(array $cookie, array $defaults = [], bool $samesite = true) : array
+function options(array $options, array $defaults = [], bool $samesite = true) : array
 {
     return [
-        Arg::EXPIRES => (int) expires($cookie[Arg::EXPIRES] ?? $defaults[Arg::EXPIRES] ?? 0),
-        Arg::PATH => (string) ($cookie[Arg::PATH] ?? $defaults[Arg::PATH] ?? '/'),
-        Arg::DOMAIN => (string) ($cookie[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
-        Arg::SECURE => (bool) ($cookie[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
-        Arg::HTTP_ONLY => (bool) ($cookie[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
-    ] + ($samesite ? [Arg::SAMESITE => (string) ($cookie[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? 'lax')] : []);
+        Arg::EXPIRES => (int) expires($options[Arg::EXPIRES] ?? $defaults[Arg::EXPIRES] ?? 0),
+        Arg::PATH => (string) ($options[Arg::PATH] ?? $defaults[Arg::PATH] ?? '/'),
+        Arg::DOMAIN => (string) ($options[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
+        Arg::SECURE => (bool) ($options[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
+        Arg::HTTP_ONLY => (bool) ($options[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
+    ] + ($samesite ? [Arg::SAMESITE => (string) ($options[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? 'lax')] : []);
 }
 
 /**
@@ -162,5 +162,5 @@ function php73() : bool
 function send(array $cookie, array $defaults = []) : bool
 {
     return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE],
-        options($cookie, $defaults, php73()), $cookie[Arg::RAW] ?? false);
+        options($cookie[Arg::OPTIONS] ?? $cookie, $defaults, php73()), $cookie[Arg::RAW] ?? false);
 }
