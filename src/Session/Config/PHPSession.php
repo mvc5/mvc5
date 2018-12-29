@@ -5,7 +5,6 @@
 
 namespace Mvc5\Session\Config;
 
-use Mvc5\Arg;
 use Mvc5\Config\ArrayAccess;
 use Mvc5\Config\PropertyAccess;
 use Mvc5\Cookie\PHPCookies;
