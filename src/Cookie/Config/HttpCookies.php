@@ -100,7 +100,7 @@ trait HttpCookies
 function cookie(array $cookie) : array
 {
     return is_string(key($cookie)) ? $cookie : [
-        Arg::NAME => $cookie[0] ?? null,
+        Arg::NAME => $cookie[0],
         Arg::VALUE => $cookie[1] ?? null,
         Arg::EXPIRES => $cookie[2] ?? null,
         Arg::PATH => $cookie[3] ?? null,
