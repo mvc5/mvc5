@@ -11,7 +11,6 @@ use Mvc5\Cookie\Cookies;
 use function array_values;
 use function is_array;
 use function is_string;
-use function key;
 use function setcookie;
 use function setrawcookie;
 use function strtotime;
@@ -45,11 +44,7 @@ trait PHPCookies
      */
     static function delete($cookie, array $options = []) : bool
     {
-        is_string($cookie) &&
-            $cookie = [Arg::NAME => $cookie] + $options;
-
-        return static::send([Arg::VALUE => '', Arg::EXPIRES => 946706400] +
-            (is_string(key($cookie)) ? $cookie : cookie(...$cookie)));
+        return static::send(expire(cookie(is_string($cookie) ? [Arg::NAME => $cookie] + $options : $cookie)));
     }
 
     /**
@@ -59,7 +54,7 @@ trait PHPCookies
      */
     static function send(array $cookie, array $defaults = []) : bool
     {
-        return send(is_string(key($cookie)) ? $cookie : cookie(...$cookie), $defaults);
+        return send(cookie($cookie), $defaults);
     }
 
     /**
@@ -130,20 +125,20 @@ function expires($expires) : int
 }
 
 /**
- * @param array $options
- * @param array $defaults
+ * @param array $option
+ * @param array $default
  * @param bool $samesite
  * @return array
  */
-function options(array $options, array $defaults = [], bool $samesite = true) : array
+function options(array $option, array $default = [], bool $samesite = true) : array
 {
     return [
-        Arg::EXPIRES => (int) expires($options[Arg::EXPIRES] ?? $defaults[Arg::EXPIRES] ?? 0),
-        Arg::PATH => (string) ($options[Arg::PATH] ?? $defaults[Arg::PATH] ?? '/'),
-        Arg::DOMAIN => (string) ($options[Arg::DOMAIN] ?? $defaults[Arg::DOMAIN] ?? ''),
-        Arg::SECURE => (bool) ($options[Arg::SECURE] ?? $defaults[Arg::SECURE] ?? false),
-        Arg::HTTP_ONLY => (bool) ($options[Arg::HTTP_ONLY] ?? $defaults[Arg::HTTP_ONLY] ?? true)
-    ] + ($samesite ? [Arg::SAMESITE => (string) ($options[Arg::SAMESITE] ?? $defaults[Arg::SAMESITE] ?? 'lax')] : []);
+        Arg::EXPIRES => (int) expires($option[Arg::EXPIRES] ?? $default[Arg::EXPIRES] ?? 0),
+        Arg::PATH => (string) ($option[Arg::PATH] ?? $default[Arg::PATH] ?? '/'),
+        Arg::DOMAIN => (string) ($option[Arg::DOMAIN] ?? $default[Arg::DOMAIN] ?? ''),
+        Arg::SECURE => (bool) ($option[Arg::SECURE] ?? $default[Arg::SECURE] ?? false),
+        Arg::HTTP_ONLY => (bool) ($option[Arg::HTTP_ONLY] ?? $default[Arg::HTTP_ONLY] ?? true)
+    ] + ($samesite ? [Arg::SAMESITE => (string) ($option[Arg::SAMESITE] ?? $default[Arg::SAMESITE] ?? 'lax')] : []);
 }
 
 /**

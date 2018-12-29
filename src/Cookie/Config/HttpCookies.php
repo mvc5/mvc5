@@ -12,6 +12,8 @@ use function is_array;
 use function is_string;
 use function key;
 
+const EXPIRE_TIME = 946706400;
+
 trait HttpCookies
 {
     /**
@@ -41,9 +43,7 @@ trait HttpCookies
      */
     function remove($name, array $options = []) : void
     {
-        !is_array($name) ? $this->set($name, '', [Arg::EXPIRES => 946706400] + $options) : $this->set(
-            [Arg::VALUE => '', Arg::EXPIRES => 946706400] + (is_string(key($name)) ? $name : cookie(...$name))
-        );
+        $this->set(expire(cookie(is_string($name) ? [Arg::NAME => $name] + $options : $name)));
     }
 
     /**
@@ -55,7 +55,7 @@ trait HttpCookies
     function set($name, $value = null, array $options = [])
     {
         if (is_array($name)) {
-            $cookie = is_string(key($name)) ? $name : cookie(...$name);
+            $cookie = cookie($name);
 
             $this->config[$cookie[Arg::NAME]] = $cookie;
 
@@ -94,27 +94,32 @@ trait HttpCookies
 }
 
 /**
- * @param string $name
- * @param string $value
- * @param int|string|null $expires
- * @param string|null $path
- * @param string|null $domain
- * @param bool|null $secure
- * @param bool|null $httponly
- * @param string|null $samesite
+ * @param array $cookie
  * @return array
  */
-function cookie(string $name, string $value = null, $expires = null, string $path = null, string $domain = null,
-                bool $secure = null, bool $httponly = null, string $samesite = null) : array
+function cookie(array $cookie) : array
 {
-    return [
-        Arg::NAME => $name,
-        Arg::VALUE => $value,
-        Arg::EXPIRES => $expires,
-        Arg::PATH => $path,
-        Arg::DOMAIN => $domain,
-        Arg::SECURE => $secure,
-        Arg::HTTP_ONLY => $httponly,
-        Arg::SAMESITE => $samesite
+    return is_string(key($cookie)) ? $cookie : [
+        Arg::NAME => $cookie[0] ?? null,
+        Arg::VALUE => $cookie[1] ?? null,
+        Arg::EXPIRES => $cookie[2] ?? null,
+        Arg::PATH => $cookie[3] ?? null,
+        Arg::DOMAIN => $cookie[4] ?? null,
+        Arg::SECURE => $cookie[5] ?? null,
+        Arg::HTTP_ONLY => $cookie[6] ?? null,
+        Arg::SAMESITE => $cookie[7] ?? null
     ];
+}
+
+/**
+ * @param array $cookie
+ * @return array
+ */
+function expire(array $cookie) : array
+{
+    $cookie[Arg::VALUE] = '';
+
+    isset($cookie[Arg::OPTIONS]) ? $cookie[Arg::OPTIONS][Arg::EXPIRES] = EXPIRE_TIME : $cookie[Arg::EXPIRES] = EXPIRE_TIME;
+
+    return $cookie;
 }
