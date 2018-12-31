@@ -47,6 +47,14 @@ trait Request
     /**
      * @return bool
      */
+    function authenticated() : bool
+    {
+        return (bool) $this[Arg::AUTHENTICATED];
+    }
+
+    /**
+     * @return bool
+     */
     function acceptsJson() : bool
     {
         return (bool) $this[Arg::ACCEPTS_JSON];

@@ -15,6 +15,11 @@ interface Request
     /**
      * @return bool
      */
+    function authenticated() : bool;
+
+    /**
+     * @return bool
+     */
     function acceptsJson() : bool;
 
     /**
