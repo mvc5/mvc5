@@ -13,6 +13,7 @@ interface Arg
     const ARGS = 'args';
     const ARGV = 'argv';
     const ATTRIBUTES = 'attributes';
+    const AUTHENTICATED = 'authenticated';
     const BODY = 'body';
     const CALL = '@';
     const CALLS = 'calls';
@@ -133,6 +134,7 @@ interface Arg
     const URI = 'uri';
     const URL = 'url';
     const USER = 'user';
+    const USERNAME = 'username';
     const USER_AGENT = 'user_agent';
     const VALUE = 'value';
     const VARS = 'vars';

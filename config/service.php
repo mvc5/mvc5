@@ -79,6 +79,7 @@ return [
     'url'                  => new Shared('url\plugin'),
     'url\generator'        => [Mvc5\Url\Generator::class, new Param('routes')],
     'url\plugin'           => [Mvc5\Url\Plugin::class, new Shared('request'), new Plugin('url\generator')],
+    'user'                 => new Shared('user', new Session('user', Mvc5\User\Model::class)),
     'view\engine'          => Mvc5\View\Engine\PhpEngine::class,
     'view\layout'          => [Mvc5\Template\Layout\Assign::class, new Plugin('layout')],
     'view\model'           => Mvc5\ViewModel::class,
