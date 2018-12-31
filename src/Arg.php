@@ -13,6 +13,7 @@ interface Arg
     const ARGS = 'args';
     const ARGV = 'argv';
     const ATTRIBUTES = 'attributes';
+    const AUTHENTICATE = 'authenticate';
     const AUTHENTICATED = 'authenticated';
     const BODY = 'body';
     const CALL = '@';
@@ -92,6 +93,7 @@ interface Arg
     const QUERY_SEPARATOR = '&';
     const RAW = 'raw';
     const REASON = 'reason';
+    const REDIRECT_URL = 'redirect_url';
     const REGEX = 'regex';
     const RENDER = 'render';
     const REQUEST = 'request';

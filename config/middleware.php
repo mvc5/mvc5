@@ -14,7 +14,8 @@ return [
         'route\match\action',
         'route\match\controller',
         'route\match\middleware',
-        'route\match\wildcard'
+        'route\match\wildcard',
+        'route\match\authenticate'
     ],
     'web' => [
         //'web\context',

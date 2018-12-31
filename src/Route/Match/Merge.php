@@ -30,6 +30,9 @@ class Merge
         !isset($route[Arg::CSRF_TOKEN]) && isset($parent[Arg::CSRF_TOKEN]) &&
             $config[Arg::CSRF_TOKEN] = $parent[Arg::CSRF_TOKEN];
 
+        !isset($route[Arg::AUTHENTICATE]) && isset($parent[Arg::AUTHENTICATE]) &&
+            $config[Arg::AUTHENTICATE] = $parent[Arg::AUTHENTICATE];
+
         return $config ? $route->with($config) : $route;
     }
 

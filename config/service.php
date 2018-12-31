@@ -55,6 +55,7 @@ return [
     'route\generator'      => Mvc5\Route\Generator::class,
     'route\match'          => [Mvc5\Middleware::class, new Link, new Param('middleware.route\match')],
     'route\match\action'   => Mvc5\Route\Match\Action::class,
+    'route\match\authenticate' => Mvc5\Route\Match\Authenticate::class,
     'route\match\host'     => Mvc5\Route\Match\Host::class,
     'route\match\merge'    => Mvc5\Route\Match\Merge::class,
     'route\match\method'   => Mvc5\Route\Match\Method::class,

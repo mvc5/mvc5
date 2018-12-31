@@ -154,6 +154,7 @@ include __DIR__ . '/src/Route/Generator.php';
 include __DIR__ . '/src/Route/Match/Plugin/Optional.php';
 include __DIR__ . '/src/Route/Match/Plugin/Params.php';
 include __DIR__ . '/src/Route/Match/Action.php';
+include __DIR__ . '/src/Route/Match/Authenticate.php';
 include __DIR__ . '/src/Route/Match/Controller.php';
 include __DIR__ . '/src/Route/Match/CSRFToken.php';
 include __DIR__ . '/src/Route/Match/Host.php';
