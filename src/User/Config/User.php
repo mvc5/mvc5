@@ -6,15 +6,9 @@
 namespace Mvc5\User\Config;
 
 use Mvc5\Arg;
-use Mvc5\Config\ReadOnly;
 
 trait User
 {
-    /**
-     *
-     */
-    use ReadOnly;
-
     /**
      * @return bool
      */
