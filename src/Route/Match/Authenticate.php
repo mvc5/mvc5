@@ -5,7 +5,7 @@ namespace Mvc5\Route\Match;
 use Mvc5\Arg;
 use Mvc5\Http\Error\Unauthorized;
 use Mvc5\Http\Request;
-use Mvc5\Response\RedirectResponse;
+use Mvc5\Http\HttpRedirect;
 use Mvc5\Route\Route;
 
 class Authenticate
@@ -25,16 +25,22 @@ class Authenticate
 
     /**
      * @param Request $request
-     * @return Unauthorized|RedirectResponse
+     * @return bool
      */
-    protected function unauthorized(Request $request)
+    protected function login(Request $request) : bool
     {
-        if ('GET' === $request[Arg::METHOD] && !$request[Arg::ACCEPTS_JSON]) {
-            $request[Arg::SESSION][Arg::REDIRECT_URL] = $request[Arg::URI];
-            return new RedirectResponse($this->url);
-        }
+        return 'GET' === $request[Arg::METHOD] && !$request[Arg::ACCEPTS_JSON];
+    }
 
-        return new Unauthorized;
+    /**
+     * @param Request $request
+     * @return HttpRedirect
+     */
+    protected function redirect(Request $request) : HttpRedirect
+    {
+        $request[Arg::SESSION][Arg::REDIRECT_URL] = $request[Arg::URI];
+
+        return new HttpRedirect($this->url);
     }
 
     /**
@@ -46,6 +52,6 @@ class Authenticate
     function __invoke(Route $route, Request $request, callable $next)
     {
         return !($route[Arg::AUTHENTICATE] ?? false) || ($request[Arg::AUTHENTICATED] ?? false) ?
-            $next($route, $request) : $this->unauthorized($request);
+            $next($route, $request) : ($this->login($request) ? $this->redirect($request) : new Unauthorized);
     }
 }

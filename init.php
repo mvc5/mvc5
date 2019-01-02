@@ -72,6 +72,7 @@ include __DIR__ . '/src/Http/HttpHeaders.php';
 include __DIR__ . '/src/Http/HttpMiddleware.php';
 include __DIR__ . '/src/Http/HttpRequest.php';
 include __DIR__ . '/src/Http/HttpResponse.php';
+include __DIR__ . '/src/Http/HttpRedirect.php';
 include __DIR__ . '/src/Http/HttpUri.php';
 include __DIR__ . '/src/Http/StatusCode.php';
 include __DIR__ . '/src/Http/Error/BadRequest.php';
