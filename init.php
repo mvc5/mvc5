@@ -184,6 +184,7 @@ include __DIR__ . '/src/Session/Config/Container.php';
 include __DIR__ . '/src/Session/Config/Messages.php';
 include __DIR__ . '/src/Session/Config/PHPSession.php';
 include __DIR__ . '/src/Session/CSRFToken/Generate.php';
+include __DIR__ . '/src/Session/Login/Redirect.php';
 include __DIR__ . '/src/Session/Session.php';
 include __DIR__ . '/src/Session/SessionContainer.php';
 include __DIR__ . '/src/Session/Container.php';
