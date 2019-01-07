@@ -171,19 +171,20 @@ trait Container
     /**
      * @param array|string $name
      * @param mixed $plugin
+     * @param array $args
      * @return mixed
      * @throws \Throwable
      */
-    function shared($name, $plugin = null)
+    function shared($name, $plugin = null, array $args = [])
     {
         if (is_string($name)) {
-            return $this->stored($name) ?? $this->set($name, $this->plugin($plugin ?? $name));
+            return $this->stored($name) ?? $this->set($name, $this->plugin($plugin ?? $name, $args));
         }
 
         $matched = [];
 
         foreach($name as $key) {
-            $matched[$key] = $this->stored($key) ?? $this->set($key, $this->plugin($key));
+            $matched[$key] = $this->stored($key) ?? $this->set($key, $this->plugin($key, $args));
         }
 
         return $matched;

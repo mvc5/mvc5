@@ -213,7 +213,7 @@ trait Resolver
         }
 
         if ($gem instanceof Shared) {
-            return $this->shared($gem->name(), $gem->config());
+            return $this->shared($gem->name(), $gem->config(), $args);
         }
 
         if ($gem instanceof Param) {
