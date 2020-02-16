@@ -43,7 +43,7 @@ class CSRFToken
      */
     protected function match(Request $request) : bool
     {
-        return hash_equals((string) $request[Arg::SESSION][Arg::CSRF_TOKEN], $this->param($request));
+        return hash_equals((string) ($request[Arg::SESSION][Arg::CSRF_TOKEN] ?? ''), $this->param($request));
     }
 
     /**
