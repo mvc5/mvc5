@@ -101,15 +101,15 @@ final class Builder
     }
 
     /**
-     * @return \ReflectionMethod|null
+     * @return ReflectionMethod|null
      */
-    function constructor() : ?\ReflectionMethod
+    function constructor() : ?ReflectionMethod
     {
         return $this->constructor;
     }
 
     /**
-     * @return \ReflectionParameter[]
+     * @return ReflectionParameter[]
      */
     function params() : array
     {
