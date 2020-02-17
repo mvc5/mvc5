@@ -8,7 +8,6 @@ namespace Mvc5\Plugin;
 use Mvc5\Arg;
 use Mvc5\Resolvable;
 
-use function array_merge;
 
 final class Expect
     implements Gem\Expect
@@ -82,7 +81,7 @@ final class Expect
      */
     protected function params(\Throwable $exception, array $args) : array
     {
-        return $this->args ? array_merge([$exception], $args) : [$exception];
+        return $this->args ? [$exception, ...$args] : [$exception];
     }
 
     /**

@@ -10,7 +10,6 @@ use ReflectionMethod;
 use ReflectionParameter;
 
 use function array_key_exists;
-use function array_merge;
 use function array_values;
 use function is_string;
 use function key;
@@ -69,7 +68,7 @@ final class Builder
 
         foreach($params as $param) {
             if ($param->isVariadic()) {
-                $matched = array_merge($matched, array_values($args));
+                $matched = [...$matched, ...array_values($args)];
                 break;
             }
 

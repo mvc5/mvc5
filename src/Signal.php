@@ -6,7 +6,6 @@
 namespace Mvc5;
 
 use function array_key_exists;
-use function array_merge;
 use function array_values;
 use function explode;
 use function get_class;
@@ -51,9 +50,9 @@ final class Signal
 
         foreach($params as $param) {
             if ($param->isVariadic()) {
-                $matched = array_merge(
-                    $matched, Arg::ARGV === $param->name ? [new Plugin\SignalArgs($args)] : array_values($args)
-                );
+                $matched = [
+                    ...$matched, ...(Arg::ARGV === $param->name ? [new Plugin\SignalArgs($args)] : array_values($args))
+                ];
                 break;
             }
 

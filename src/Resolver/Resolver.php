@@ -30,7 +30,6 @@ use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
 
-use function array_merge;
 use function array_shift;
 use function explode;
 use function is_array;
@@ -116,7 +115,7 @@ trait Resolver
     protected function arguments(array $child, array $parent) : array
     {
         return !$parent ? $child : (
-            !$child ? $parent : (is_string(key($child)) ? $child + $parent : array_merge($child, $parent))
+            !$child ? $parent : (is_string(key($child)) ? $child + $parent : [...$child, ...$parent])
         );
     }
 
@@ -156,7 +155,7 @@ trait Resolver
 
         foreach($filters as $filter) {
             $value = $this->invoke(
-                $this->callable($filter), $param ? [$param => $result] + $args : array_merge([$result], $args)
+                $this->callable($filter), $param ? [$param => $result] + $args : [$result, ...$args]
             );
 
             if (false === $value) {
@@ -351,7 +350,7 @@ trait Resolver
             $config[Arg::ARGS] = is_string(key($child->args())) ? $child->args() + $parent->args() : $child->args();
 
         $child->calls() &&
-            $config[Arg::CALLS] = $child->merge() ? array_merge($parent->calls(), $child->calls()) : $child->calls();
+            $config[Arg::CALLS] = $child->merge() ? [...$parent->calls(), ...$child->calls()] : $child->calls();
 
         $child->param() &&
             $config[Arg::PARAM] = $child->param();
