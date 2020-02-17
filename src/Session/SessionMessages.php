@@ -8,7 +8,7 @@ namespace Mvc5\Session;
 use Mvc5\Config\Configuration;
 
 interface SessionMessages
-    extends Configuration, \Serializable
+    extends Configuration
 {
     /**
      * @param array|string $message

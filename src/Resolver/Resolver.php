@@ -37,9 +37,7 @@ use function is_array;
 use function is_string;
 use function is_object;
 use function key;
-use function serialize;
 use function substr;
-use function unserialize;
 
 trait Resolver
 {
@@ -562,24 +560,6 @@ trait Resolver
     }
 
     /**
-     * @return string
-     */
-    function serialize() : string
-    {
-        return serialize([$this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict]);
-    }
-
-    /**
-     * @param string $serialized
-     */
-    function unserialize($serialized) : void
-    {
-        list(
-            $this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict
-        ) = unserialize($serialized);
-    }
-
-    /**
      * @param array $args
      * @return array
      */
@@ -655,6 +635,22 @@ trait Resolver
     function __invoke($plugin, array $args = [])
     {
         return $this->plugin($plugin, $args, $this->provider() ?? function(){});
+    }
+
+    /**
+     * @return array
+     */
+    function __serialize() : array
+    {
+        return [$this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict];
+    }
+
+    /**
+     * @param array $data
+     */
+    function __unserialize(array $data) : void
+    {
+        list($this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict) = $data;
     }
 }
 

@@ -105,14 +105,6 @@ trait Messages
     }
 
     /**
-     * @return string
-     */
-    function serialize() : string
-    {
-        return serialize($this->new);
-    }
-
-    /**
      * @param array|string $name
      * @param array $value
      * @return array
@@ -149,14 +141,6 @@ trait Messages
     }
 
     /**
-     * @param string $serialized
-     */
-    function unserialize($serialized) : void
-    {
-        $this->config = unserialize($serialized);
-    }
-
-    /**
      * @param array|string $message
      * @param string|null $name
      */
@@ -172,5 +156,21 @@ trait Messages
     function __invoke($name = null)
     {
         return $this->message($name);
+    }
+
+    /**
+     * @return array
+     */
+    function __serialize() : array
+    {
+        return $this->new;
+    }
+
+    /**
+     * @param array $data
+     */
+    function __unserialize(array $data) : void
+    {
+        $this->config = $data;
     }
 }
