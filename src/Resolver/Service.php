@@ -45,9 +45,7 @@ trait Service
     protected function callable($plugin) : callable
     {
         if (is_string($plugin)) {
-            return function(...$argv) use($plugin) {
-                return $this->call($plugin, $this->variadic($argv));
-            };
+            return fn(...$argv) => $this->call($plugin, $this->variadic($argv));
         }
 
         if (is_array($plugin)) {

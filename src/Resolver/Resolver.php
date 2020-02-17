@@ -243,17 +243,13 @@ trait Resolver
         }
 
         if ($gem instanceof Invoke) {
-            return function(...$argv) use ($gem) {
-                return $this->resolve($this->call(
-                    $this->resolve($gem->config()), $this->vars($this->variadic($argv), $gem->args())
-                ));
-            };
+            return fn(...$argv) => $this->resolve($this->call(
+                $this->resolve($gem->config()), $this->vars($this->variadic($argv), $gem->args())
+            ));
         }
 
         if ($gem instanceof Invokable) {
-            return function(...$argv) use ($gem) {
-                return $this->resolve($gem->config(), $this->vars($this->variadic($argv), $gem->args()));
-            };
+            return fn(...$argv) => $this->resolve($gem->config(), $this->vars($this->variadic($argv), $gem->args()));
         }
 
         if ($gem instanceof FileInclude) {

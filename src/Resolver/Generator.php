@@ -69,9 +69,7 @@ trait Generator
      */
     protected function listener($plugin)
     {
-        return !$plugin instanceof Event ? $plugin : function(...$argv) use ($plugin) {
-            return $this->event($plugin, $this->variadic($argv));
-        };
+        return !$plugin instanceof Event ? $plugin : fn(...$argv) => $this->event($plugin, $this->variadic($argv));
     }
 
     /**

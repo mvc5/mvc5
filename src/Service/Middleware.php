@@ -46,9 +46,7 @@ trait Middleware
      */
     protected function delegate() : \Closure
     {
-        return function(...$args) {
-            return $this->call($this->next(), $args);
-        };
+        return fn(...$args) => $this->call($this->next(), $args);
     }
 
     /**
