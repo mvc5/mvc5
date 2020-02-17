@@ -20,8 +20,7 @@ trait Request
      */
     function __construct($config = [])
     {
-        !isset($config[Arg::HEADERS]) &&
-            $config[Arg::HEADERS] = new Http\HttpHeaders;
+        $config[Arg::HEADERS] ??= new Http\HttpHeaders;
 
         is_array($config[Arg::HEADERS]) &&
             $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);

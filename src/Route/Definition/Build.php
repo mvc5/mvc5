@@ -88,11 +88,9 @@ trait Build
             return $route;
         }
 
-        !isset($host[Arg::TOKENS]) &&
-            $host[Arg::TOKENS] = $this->tokens($host[Arg::NAME], $host[Arg::CONSTRAINTS] ?? []);
+        $host[Arg::TOKENS] ??= $this->tokens($host[Arg::NAME], $host[Arg::CONSTRAINTS] ?? []);
 
-        !isset($host[Arg::REGEX]) &&
-            $host[Arg::REGEX] = $this->regex($host[Arg::TOKENS]);
+        $host[Arg::REGEX] ??= $this->regex($host[Arg::TOKENS]);
 
         return $route->with(Arg::HOST, $host);
     }

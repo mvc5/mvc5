@@ -27,8 +27,7 @@ trait HttpResponse
      */
     function __construct($body = null, int $status = null, $headers = [], array $config = [])
     {
-        !isset($config[Arg::COOKIES]) &&
-            $config[Arg::COOKIES] = new HttpCookies;
+        $config[Arg::COOKIES] ??= new HttpCookies;
 
         !($config[Arg::COOKIES] instanceof Cookies) &&
             $config[Arg::COOKIES] = new HttpCookies($config[Arg::COOKIES]);
