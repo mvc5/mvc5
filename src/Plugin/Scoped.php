@@ -16,7 +16,7 @@ class Scoped
     /**
      * @var bool|true
      */
-    protected $scoped;
+    protected bool $scoped = true;
 
     /**
      * @param callable $callable
