@@ -10,7 +10,7 @@ trait Name
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @param string $name
