@@ -24,7 +24,7 @@ trait Tokens
     /**
      * @var array
      */
-    protected $expressions = [
+    protected array $expressions = [
         'a' => '[a-zA-Z0-9]++',
         'i' => '[0-9]++',
         'n' => '[a-zA-Z][a-zA-Z0-9]++',

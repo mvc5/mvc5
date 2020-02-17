@@ -18,7 +18,7 @@ class Plugin
     /**
      * @var bool|false
      */
-    protected $absolute = false;
+    protected bool $absolute = false;
 
     /**
      * @var callable
@@ -31,14 +31,14 @@ class Plugin
     protected $generator;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * @var array
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * @var array|Uri

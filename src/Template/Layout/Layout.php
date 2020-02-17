@@ -13,7 +13,7 @@ trait Layout
     /**
      * @var TemplateLayout
      */
-    protected $layout;
+    protected TemplateLayout $layout;
 
     /**
      * @param TemplateLayout $layout

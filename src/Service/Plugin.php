@@ -10,7 +10,7 @@ trait Plugin
     /**
      * @var Service
      */
-    protected $service;
+    protected ?Service $service = null;
 
     /**
      * @param callable|mixed $plugin

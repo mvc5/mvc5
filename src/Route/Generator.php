@@ -15,7 +15,7 @@ class Generator
     /**
      * @var string
      */
-    protected $class = Config::class;
+    protected string $class = Config::class;
 
     /**
      * @param string|null $class

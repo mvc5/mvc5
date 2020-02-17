@@ -14,7 +14,7 @@ trait Middleware
     /**
      * @var Service
      */
-    protected $service;
+    protected Service $service;
 
     /**
      * @var array|\Iterator

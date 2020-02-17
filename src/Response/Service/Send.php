@@ -20,7 +20,7 @@ trait Send
     /**
      * @var array
      */
-    protected $cookie_defaults = [];
+    protected array $cookie_defaults = [];
 
     /**
      * @param array $cookie_defaults

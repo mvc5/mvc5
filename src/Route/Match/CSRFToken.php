@@ -18,7 +18,7 @@ class CSRFToken
     /**
      * @var bool
      */
-    protected $enable = true;
+    protected bool $enable = true;
 
     /**
      * @param bool $enable

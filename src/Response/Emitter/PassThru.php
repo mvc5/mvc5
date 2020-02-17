@@ -14,7 +14,7 @@ class PassThru
     /**
      * @var string
      */
-    protected $command;
+    protected string $command;
 
     /**
      * @param string $command

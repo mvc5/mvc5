@@ -18,12 +18,12 @@ trait Container
     /**
      * @var string
      */
-    protected $label;
+    protected string $label;
 
     /**
      * @var Session
      */
-    protected $session;
+    protected Session $session;
 
     /**
      * @param Session $session

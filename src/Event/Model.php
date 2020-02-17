@@ -11,14 +11,14 @@ use function defined;
 trait Model
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $event;
+    protected ?string $event = null;
 
     /**
-     * @var bool
+     * @var bool|false
      */
-    protected $stopped = false;
+    protected bool $stopped = false;
 
     /**
      * @return string

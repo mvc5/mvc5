@@ -16,7 +16,7 @@ class Render
     /**
      * @var View
      */
-    protected $view;
+    protected View $view;
 
     /**
      * @param View $view

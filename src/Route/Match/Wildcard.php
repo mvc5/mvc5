@@ -17,7 +17,7 @@ class Wildcard
     /**
      * @var array
      */
-    protected $options = [
+    protected array $options = [
         Arg::WILDCARD => 'wildcard'
     ];
 

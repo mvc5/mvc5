@@ -28,7 +28,7 @@ class Logger
     /**
      * @var bool|false
      */
-    protected $throw_exception = false;
+    protected bool $throw_exception = false;
 
     /**
      * @var \Exception|mixed

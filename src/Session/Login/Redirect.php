@@ -12,12 +12,12 @@ class Redirect
     /**
      * @var Response
      */
-    protected $response;
+    protected Response $response;
 
     /**
      * @var Session
      */
-    protected $session;
+    protected Session $session;
 
     /**
      * @param Session $session

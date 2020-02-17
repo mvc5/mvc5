@@ -28,7 +28,7 @@ trait Router
     /**
      * @var iterable
      */
-    protected $routes;
+    protected iterable $routes;
 
     /**
      * @param callable $match

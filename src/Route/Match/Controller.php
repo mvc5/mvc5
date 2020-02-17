@@ -26,7 +26,7 @@ class Controller
     /**
      * @var array
      */
-    protected $options = [
+    protected array $options = [
         Arg::ACTION     => 'action',
         Arg::CONTROLLER => 'controller',
         Arg::PREFIX     => '',

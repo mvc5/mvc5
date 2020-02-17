@@ -18,14 +18,14 @@ trait Exception
     protected $controller;
 
     /**
-     * @var Error|mixed
+     * @var Error
      */
-    protected $error;
+    protected Error $error;
 
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @param string $name

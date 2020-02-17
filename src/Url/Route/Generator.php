@@ -26,7 +26,7 @@ trait Generator
     /**
      * @var array
      */
-    protected $generated = [];
+    protected array $generated = [];
 
     /**
      * @var array|\ArrayAccess
@@ -36,7 +36,7 @@ trait Generator
     /**
      * @var Uri
      */
-    protected $uri;
+    protected Uri $uri;
 
     /**
      * @param array|\ArrayAccess $route

@@ -22,7 +22,7 @@ class Filter
     /**
      * @var string|null
      */
-    protected $param;
+    protected ?string $param = null;
 
     /**
      * @param string|mixed $config

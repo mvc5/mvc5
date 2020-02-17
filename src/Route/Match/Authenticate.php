@@ -12,7 +12,7 @@ class Authenticate
     /**
      * @var string|null
      */
-    protected $controller = 'login\redirect';
+    protected ?string $controller = 'login\redirect';
 
     /**
      * @param string|null $controller

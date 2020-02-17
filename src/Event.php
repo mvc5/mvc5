@@ -26,7 +26,7 @@ class Event
      * @param string|null $event
      * @param mixed $model
      */
-    function __construct($event = null, $model = null)
+    function __construct(string $event = null, $model = null)
     {
         $this->event = $event;
         $this->model = $model;

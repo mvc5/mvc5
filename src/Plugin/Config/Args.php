@@ -10,7 +10,7 @@ trait Args
     /**
      * @var array
      */
-    protected $args = [];
+    protected array $args = [];
 
     /**
      * @param array $args

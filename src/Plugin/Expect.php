@@ -6,6 +6,7 @@
 namespace Mvc5\Plugin;
 
 use Mvc5\Arg;
+use Mvc5\Resolvable;
 
 use function array_merge;
 
@@ -15,7 +16,7 @@ final class Expect
     /**
      * @var bool
      */
-    protected $args = false;
+    protected bool $args = false;
 
     /**
      * @var mixed|null
@@ -25,15 +26,15 @@ final class Expect
     /**
      * @var bool
      */
-    protected $named = false;
+    protected bool $named = false;
 
     /**
-     * @var \Mvc5\Resolvable
+     * @var Resolvable|mixed
      */
     protected $plugin;
 
     /**
-     * @param \Mvc5\Resolvable|mixed $plugin
+     * @param Resolvable|mixed $plugin
      * @param mixed|null $exception
      * @param bool|false $named
      * @param bool|false $args

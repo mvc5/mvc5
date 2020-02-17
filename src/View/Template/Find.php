@@ -19,12 +19,12 @@ trait Find
     /**
      * @var string|null
      */
-    protected $directory;
+    protected ?string $directory = null;
 
     /**
      * @var string|null
      */
-    protected $extension = Arg::VIEW_EXTENSION;
+    protected string $extension = Arg::VIEW_EXTENSION;
 
     /**
      * @param string $name

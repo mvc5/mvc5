@@ -14,7 +14,7 @@ trait Container
     /**
      * @var Model
      */
-    protected $container;
+    protected Model $container;
 
     /**
      * @param Model $container

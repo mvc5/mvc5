@@ -19,12 +19,12 @@ class ReadFile
     /**
      * @var string
      */
-    protected $filename;
+    protected string $filename;
 
     /**
-     * @var bool|false
+     * @var bool
      */
-    protected $useIncludePath;
+    protected bool $useIncludePath = false;
 
     /**
      * @param string $filename

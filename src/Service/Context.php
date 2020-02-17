@@ -12,7 +12,7 @@ final class Context
     /**
      * @var Service
      */
-    protected static $service;
+    protected static Service $service;
 
     /**
      * @param Service|null $service

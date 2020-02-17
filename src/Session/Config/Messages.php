@@ -21,12 +21,12 @@ trait Messages
     /**
      * @var array
      */
-    protected $new = [];
+    protected array $new = [];
 
     /**
      * @var array
      */
-    protected $types = [
+    protected array $types = [
         Arg::DANGER  => Arg::DANGER,
         Arg::INFO    => Arg::INFO,
         Arg::SUCCESS => Arg::SUCCESS,

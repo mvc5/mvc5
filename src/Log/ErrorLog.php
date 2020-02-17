@@ -12,17 +12,17 @@ class ErrorLog
     /**
      * @var string
      */
-    protected $destination = '';
+    protected string $destination = '';
 
     /**
      * @var string
      */
-    protected $extra_headers = '';
+    protected string $extra_headers = '';
 
     /**
      * @var int
      */
-    protected $message_type = 0;
+    protected int $message_type = 0;
 
     /**
      * @param int $message_type

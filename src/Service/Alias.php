@@ -12,7 +12,7 @@ final class Alias
     /**
      * @var array
      */
-    protected $alias = [];
+    protected array $alias = [];
 
     /**
      * @param array $alias

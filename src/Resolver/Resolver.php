@@ -57,7 +57,7 @@ trait Resolver
     protected $provider;
 
     /**
-     * @var object
+     * @var bool|object|null
      */
     protected $scope;
 

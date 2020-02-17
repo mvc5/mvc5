@@ -6,6 +6,8 @@
 namespace Mvc5\Service;
 
 use Mvc5\Exception;
+use ReflectionMethod;
+use ReflectionParameter;
 
 use function array_key_exists;
 use function array_merge;
@@ -19,17 +21,17 @@ final class Builder
     /**
      * @var array|self[]
      */
-    protected static $class = [];
+    protected static array $class = [];
 
     /**
-     * @var \ReflectionMethod|null
+     * @var ReflectionMethod|null
      */
-    protected $constructor;
+    protected ?ReflectionMethod $constructor = null;
 
     /**
-     * @var \ReflectionParameter[]
+     * @var ReflectionParameter[]
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * @param object|string $argument

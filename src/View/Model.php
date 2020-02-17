@@ -6,7 +6,6 @@
 namespace Mvc5\View;
 
 use Mvc5\Arg;
-use Mvc5\ViewModel as _ViewModel;
 
 use function constant;
 use function defined;
@@ -14,9 +13,9 @@ use function defined;
 trait Model
 {
     /**
-     * @var _ViewModel|mixed
+     * @var ViewModel|null
      */
-    protected $model;
+    protected ?ViewModel $model = null;
 
     /**
      * @param array $vars
@@ -31,7 +30,7 @@ trait Model
 
         return $this->model ? $this->model->with($vars) : (
             (defined('static::VIEW_MODEL') && $model = constant('static::VIEW_MODEL'))
-                ? new $model($vars) : new _ViewModel($vars)
+                ? new $model($vars) : new \Mvc5\ViewModel($vars)
         );
     }
 

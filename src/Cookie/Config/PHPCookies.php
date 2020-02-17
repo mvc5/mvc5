@@ -25,7 +25,7 @@ trait PHPCookies
     /**
      * @var array
      */
-    protected $defaults = [];
+    protected array $defaults = [];
 
     /**
      * @param array|null $cookies

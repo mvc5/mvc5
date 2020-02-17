@@ -17,7 +17,7 @@ trait Build
     /**
      * @var bool
      */
-    protected $strict = false;
+    protected bool $strict = false;
 
     /**
      * @param array $name

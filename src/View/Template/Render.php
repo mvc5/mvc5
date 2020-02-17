@@ -6,6 +6,7 @@
 namespace Mvc5\View\Template;
 
 use Mvc5\Template\TemplateModel;
+use Mvc5\View\ViewEngine;
 
 trait Render
 {
@@ -15,9 +16,9 @@ trait Render
     use Traverse;
 
     /**
-     * @var \Mvc5\View\ViewEngine
+     * @var ViewEngine
      */
-    protected $engine;
+    protected ViewEngine $engine;
 
     /**
      * @param array|string|TemplateModel $template

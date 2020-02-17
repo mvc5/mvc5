@@ -16,7 +16,7 @@ class Middleware
     /**
      * @var string
      */
-    protected $placeholder;
+    protected string $placeholder;
 
     /**
      * @var callable
