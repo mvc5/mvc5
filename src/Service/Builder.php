@@ -123,6 +123,6 @@ final class Builder
      */
     static function reflectionClass(string $name) : self
     {
-        return static::$class[$name] ?? (static::$class[$name] = new self($name));
+        return static::$class[$name] ??= new self($name);
     }
 }
