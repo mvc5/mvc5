@@ -17,5 +17,5 @@ interface TemplateLayout
      * @param TemplateModel|mixed $model
      * @return self|mixed
      */
-    function withModel($model);
+    function withModel($model) : TemplateLayout;
 }

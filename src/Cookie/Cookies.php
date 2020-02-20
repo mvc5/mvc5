@@ -21,12 +21,12 @@ interface Cookies
      * @param array $options
      * @return self|mixed
      */
-    function with($name, $value = null, array $options = []);
+    function with($name, $value = null, array $options = []) : Cookies;
 
     /**
      * @param array|string $name
      * @param array $options
      * @return self|mixed
      */
-    function without($name, array $options = []);
+    function without($name, array $options = []) : Cookies;
 }

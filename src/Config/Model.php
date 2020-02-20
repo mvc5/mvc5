@@ -25,11 +25,11 @@ interface Model
      * @param mixed $value
      * @return self|mixed
      */
-    function with($name, $value = null);
+    function with($name, $value = null) : Model;
 
     /**
      * @param array|string $name
      * @return self|mixed
      */
-    function without($name);
+    function without($name) : Model;
 }
