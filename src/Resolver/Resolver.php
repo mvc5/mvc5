@@ -30,6 +30,7 @@ use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
 
+use function array_merge;
 use function array_shift;
 use function explode;
 use function is_array;
