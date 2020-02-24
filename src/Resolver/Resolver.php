@@ -350,7 +350,7 @@ trait Resolver
             $config[Arg::ARGS] = is_string(key($child->args())) ? $child->args() + $parent->args() : $child->args();
 
         $child->calls() &&
-            $config[Arg::CALLS] = $child->merge() ? [...$parent->calls(), ...$child->calls()] : $child->calls();
+            $config[Arg::CALLS] = $child->merge() ? array_merge($parent->calls(), $child->calls()) : $child->calls();
 
         $child->param() &&
             $config[Arg::PARAM] = $child->param();
