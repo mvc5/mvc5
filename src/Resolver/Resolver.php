@@ -125,7 +125,7 @@ trait Resolver
      * @param bool $scoped
      * @return \Closure
      */
-    protected function bind(\Closure $callback, $object, $scoped) : \Closure
+    protected function bind(\Closure $callback, $object, bool $scoped) : \Closure
     {
         return \Closure::bind($callback, $object, $scoped ? $object : null);
     }
