@@ -11,8 +11,9 @@ trait Config
      *
      */
     use Base;
-    use ArrayAccess;
+    use Count;
     use Iterator;
+    use ArrayAccess;
     use PropertyAccess;
 
     /**

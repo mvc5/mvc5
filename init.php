@@ -7,6 +7,7 @@ include __DIR__ . '/src/Signal.php';
 include __DIR__ . '/src/Resolvable.php';
 include __DIR__ . '/src/Config/Base.php';
 include __DIR__ . '/src/Config/ArrayAccess.php';
+include __DIR__ . '/src/Config/Count.php';
 include __DIR__ . '/src/Config/Iterator.php';
 include __DIR__ . '/src/Config/PropertyAccess.php';
 include __DIR__ . '/src/Config/Config.php';

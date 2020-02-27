@@ -5,7 +5,6 @@
 
 namespace Mvc5\Config;
 
-use function count;
 use function current;
 use function key;
 use function next;
@@ -13,14 +12,6 @@ use function reset;
 
 trait Iterator
 {
-    /**
-     * @return int
-     */
-    function count() : int
-    {
-        return count($this->config);
-    }
-
     /**
      * @return mixed
      */
