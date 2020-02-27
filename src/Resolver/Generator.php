@@ -63,8 +63,8 @@ trait Generator
      */
     protected function iterator($event, array $args = []) : Iterator
     {
-        return is_array($event) ? new Mvc5Iterator($event) : ($event instanceof Iterator ? $event
-            : $this->listeners($this->eventName($event), $args));
+        return iterator($event, fn($event) => $event instanceof Iterator ? $event :
+            $this->listeners($this->eventName($event), $args));
     }
 
     /**
@@ -108,10 +108,11 @@ trait Generator
 }
 
 /**
- * @param $queue
+ * @param $iterable
+ * @param callable|null $resolver
  * @return Iterator
  */
-function iterator($queue) : Iterator
+function iterator($iterable, callable $resolver = null) : Iterator
 {
-    return is_array($queue) ? new Mvc5Iterator($queue) : $queue;
+    return is_array($iterable) ? new Mvc5Iterator($iterable) : ($resolver ? $resolver($iterable) : $iterable);
 }
