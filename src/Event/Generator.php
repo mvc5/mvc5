@@ -5,13 +5,9 @@
 
 namespace Mvc5\Event;
 
+use Iterator;
 use Mvc5\Signal;
-
-use function current;
-use function is_array;
-use function key;
-use function next;
-use function reset;
+use Throwable;
 
 trait Generator
 {
@@ -22,119 +18,86 @@ trait Generator
     protected abstract function callable($listener) : callable;
 
     /**
-     * @param array|Event|\Iterator|object|string $event
+     * @param array|Event|Iterator|object|string $event
      * @param callable $listener
      * @param array $args
      * @param callable|null $callback
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function emit($event, callable $listener, array $args = [], callable $callback = null)
     {
-        return $event instanceof Event ? $event($listener, $args, $callback) : $this->signal($listener, $args, $callback);
+        return $event instanceof Event ? $event($listener, $args, $callback) : Signal::emit($listener, $args, $callback);
     }
 
     /**
-     * @param array|Event|\Iterator|object|string $event
+     * @param array|Event|Iterator|object|string $event
      * @param array $args
      * @param callable|null $callback
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function generate($event, array $args = [], callable $callback = null)
     {
-        return $this->iterate(null, $event, $this->start($this->queue($event, $args)), $args, $callback);
-    }
-
-    /**
-     * @param array|\Iterator $queue
-     * @return mixed
-     */
-    protected function item($queue)
-    {
-        return $queue instanceof \Iterator ? $queue->current() : current($queue);
+        return $this->iterate(null, $event, rewind($this->iterator($event, $args)), $args, $callback);
     }
 
     /**
      * @param mixed $result
-     * @param array|Event|\Iterator|object|string $event
-     * @param array|\Iterator $queue
+     * @param array|Event|Iterator|object|string $event
+     * @param Iterator $iterator
      * @param array $args
      * @param callable|null $callback
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
-    protected function iterate($result, $event, $queue, array $args, callable $callback = null)
+    protected function iterate($result, $event, Iterator $iterator, array $args, callable $callback = null)
     {
-        return $this->stopped($event, $queue) ? $result : $this->iterate(
-            $this->result($event, $this->item($queue), $args, $callback), $event, $this->step($queue), $args, $callback
+        return stopped($event, $iterator) ? $result : $this->iterate(
+            $this->result($event, $iterator->current(), $args, $callback), $event, next($iterator), $args, $callback
         );
     }
 
     /**
-     * @param array|Event|\Iterator|object|string $event
-     * @param array $args
-     * @return array|\Iterator
-     * @throws \Throwable
-     */
-    protected function queue($event, array $args = [])
-    {
-        return is_array($event) || $event instanceof \Iterator ? $event : $this->iterator($event, $args);
-    }
-
-    /**
-     * @param array|Event|\Iterator|object|string $event
+     * @param array|Event|Iterator|object|string $event
      * @param mixed $current
      * @param array $args
      * @param callable|null $callback
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function result($event, $current, array $args = [], callable $callback = null)
     {
         return $this->emit($event, $this->callable($current), $args, $callback);
     }
+}
 
-    /**
-     * @param callable $callable
-     * @param array $args
-     * @param callable|null $callback
-     * @return mixed
-     * @throws \Throwable
-     */
-    protected function signal(callable $callable, array $args = [], callable $callback = null)
-    {
-        return Signal::emit($callable, $args, $callback);
-    }
+/**
+ * @param Iterator $iterator
+ * @return Iterator
+ */
+function next(Iterator $iterator) : Iterator
+{
+    $iterator->next();
+    return $iterator;
+}
 
-    /**
-     * @param array|\Iterator $queue
-     * @return array|\Iterator
-     */
-    protected function start($queue)
-    {
-        $queue instanceof \Iterator ? $queue->rewind() : reset($queue);
-        return $queue;
-    }
+/**
+ * @param Iterator $iterator
+ * @return array|Iterator
+ */
+function rewind(Iterator $iterator) : Iterator
+{
+    $iterator->rewind();
+    return $iterator;
+}
 
-    /**
-     * @param array|\Iterator $queue
-     * @return array|\Iterator
-     */
-    protected function step($queue)
-    {
-        $queue instanceof \Iterator ? $queue->next() : next($queue);
-        return $queue;
-    }
-
-    /**
-     * @param Event|mixed $event
-     * @param array|\Iterator $queue
-     * @return bool
-     */
-    protected function stopped($event, $queue) : bool
-    {
-        return ($event instanceof Event && $event->stopped()) ||
-            ($queue instanceof \Iterator ? !$queue->valid() : null === key($queue));
-    }
+/**
+ * @param Event|mixed $event
+ * @param Iterator $iterator
+ * @return bool
+ */
+function stopped($event, Iterator $iterator) : bool
+{
+    return ($event instanceof Event && $event->stopped()) || !$iterator->valid();
 }
