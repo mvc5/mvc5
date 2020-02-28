@@ -5,6 +5,8 @@
 
 namespace Mvc5\View;
 
+use ArrayAccess;
+use ArrayObject;
 use Mvc5\Arg;
 use Mvc5\Service\Service;
 use Mvc5\ViewModel;
@@ -32,6 +34,7 @@ class Render
         $this->directory = $options['directory'] ?? null;
         $this->extension = $options['extension'] ?? Arg::VIEW_EXTENSION;
         $this->model = $options['model'] ?? ViewModel::class;
-        $this->paths = $options['paths'] ?? [];
+        $this->paths = (fn($paths) => $paths instanceof ArrayAccess ? $paths :
+            new ArrayObject($paths))($options['paths'] ?? null);
     }
 }
