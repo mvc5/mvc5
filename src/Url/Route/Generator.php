@@ -5,12 +5,15 @@
 
 namespace Mvc5\Url\Route;
 
+use ArrayAccess;
+use ArrayObject;
 use Mvc5\Arg;
 use Mvc5\Http\HttpUri;
 use Mvc5\Http\Uri;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compiler;
 use Mvc5\Route\Route;
+use Throwable;
 
 use function array_shift;
 use function explode;
@@ -29,9 +32,9 @@ trait Generator
     protected array $generated = [];
 
     /**
-     * @var array|\ArrayAccess
+     * @var ArrayAccess
      */
-    protected $route;
+    protected ArrayAccess $route;
 
     /**
      * @var Uri
@@ -39,12 +42,12 @@ trait Generator
     protected Uri $uri;
 
     /**
-     * @param array|\ArrayAccess $route
+     * @param array|ArrayAccess $route
      * @param Uri|null $uri
      */
     function __construct($route, Uri $uri = null)
     {
-        $this->route = $route;
+        $this->route = is_array($route) ? new ArrayObject($route) : $route;
         $this->uri = $uri ?? new HttpUri;
     }
 
@@ -63,7 +66,7 @@ trait Generator
      * @param Route $parent
      * @param array|Route $route
      * @return Route|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function child(Route $parent, $route) : ?Route
     {
@@ -82,7 +85,7 @@ trait Generator
     /**
      * @param string $name
      * @return Route|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function construct(string $name) : ?Route
     {
@@ -94,7 +97,7 @@ trait Generator
      * @param array $path
      * @param Route|null $parent
      * @return Route|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function generate(array $name, array $path = [], Route $parent = null) : ?Route
     {
@@ -105,7 +108,7 @@ trait Generator
      * @param array|string|null $host
      * @param array $params
      * @return string|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function hostname($host, array &$params) : ?string
     {
@@ -116,7 +119,7 @@ trait Generator
      * @param string $name
      * @param Route|null $parent
      * @return Route|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function match(string $name, Route $parent = null) : ?Route
     {
@@ -148,7 +151,7 @@ trait Generator
      * @param array $name
      * @param array $path
      * @return Route|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function next(Route $route, array $name, array $path) : ?Route
     {
@@ -160,7 +163,7 @@ trait Generator
      * @param array $params
      * @param array $options
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function options(Route $route, array $params, array $options) : array
     {
@@ -183,7 +186,7 @@ trait Generator
      * @param array $params
      * @param string $path
      * @return string
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function path(array $segment, array $params, string $path = '') : string
     {
@@ -200,7 +203,7 @@ trait Generator
      * @param array $name
      * @param array $path
      * @return Route|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function resolve($route, array $name, array $path) : ?Route
     {
@@ -210,7 +213,7 @@ trait Generator
     /**
      * @param array|Route $route
      * @return Route|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function route($route) : ?Route
     {
@@ -222,7 +225,7 @@ trait Generator
      * @param array $params
      * @param array $options
      * @return Uri|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function uri(Route $route = null, array $params = [], array $options = []) : ?Uri
     {
@@ -249,7 +252,7 @@ trait Generator
      * @param array $params
      * @param array $options
      * @return Uri|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     function __invoke(string $name, array $params = [], array $options = []) : ?Uri
     {
