@@ -40,7 +40,7 @@ class Middleware
      */
     protected function middleware($controller, array $middleware = null)
     {
-        return $middleware ? ($this->service)(Arg::HTTP_MIDDLEWARE, [Arg::CONFIG => $this->stack($controller, $middleware)]) : null;
+        return $middleware ? ($this->service)(Arg::HTTP_MIDDLEWARE, [Arg::MIDDLEWARE => $this->stack($controller, $middleware)]) : null;
     }
 
     /**

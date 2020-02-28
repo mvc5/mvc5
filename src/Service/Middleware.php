@@ -5,9 +5,10 @@
 
 namespace Mvc5\Service;
 
+use Iterator;
+use Mvc5\Iterator as Mvc5Iterator;
+
 use function end;
-use function next;
-use function reset;
 
 trait Middleware
 {
@@ -17,28 +18,28 @@ trait Middleware
     protected Service $service;
 
     /**
-     * @var array|\Iterator
+     * @var Iterator
      */
-    protected $config;
+    protected Iterator $middleware;
 
     /**
      * @param Service $service
-     * @param array|\Iterator $config
+     * @param array|Iterator $middleware
      */
-    function __construct(Service $service, $config = [])
+    function __construct(Service $service, $middleware = [])
     {
         $this->service = $service;
-        $this->config = $config;
+        $this->middleware = is_array($middleware) ? new Mvc5Iterator($middleware) : $middleware;
     }
 
     /**
-     * @param callable|mixed $middleware
+     * @param callable|mixed $current
      * @param array $args
      * @return mixed
      */
-    protected function call($middleware, array $args = [])
+    protected function call($current, array $args = [])
     {
-        return $middleware ? $this->service->call($middleware, $this->params($args)) : $this->end($args);
+        return $current ? $this->service->call($current, $this->params($args)) : $this->end($args);
     }
 
     /**
@@ -63,12 +64,8 @@ trait Middleware
      */
     protected function next()
     {
-        if ($this->config instanceof \Iterator) {
-            $this->config->next();
-            return $this->config->current();
-        }
-
-        return next($this->config);
+        $this->middleware->next();
+        return $this->middleware->current();
     }
 
     /**
@@ -86,12 +83,8 @@ trait Middleware
      */
     protected function rewind()
     {
-        if ($this->config instanceof \Iterator) {
-            $this->config->rewind();
-            return $this->config->current();
-        }
-
-        return reset($this->config);
+        $this->middleware->rewind();
+        return $this->middleware->current();
     }
 
     /**
