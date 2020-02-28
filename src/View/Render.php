@@ -5,8 +5,6 @@
 
 namespace Mvc5\View;
 
-use ArrayAccess;
-use ArrayObject;
 use Mvc5\Arg;
 use Mvc5\Service\Service;
 use Mvc5\ViewModel;
