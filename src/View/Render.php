@@ -34,7 +34,6 @@ class Render
         $this->directory = $options['directory'] ?? null;
         $this->extension = $options['extension'] ?? Arg::VIEW_EXTENSION;
         $this->model = $options['model'] ?? ViewModel::class;
-        $this->paths = (fn($paths) => $paths instanceof ArrayAccess ? $paths :
-            new ArrayObject($paths))($options['paths'] ?? null);
+        $this->paths = (array) ($options['paths'] ?? null);
     }
 }

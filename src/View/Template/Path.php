@@ -5,14 +5,12 @@
 
 namespace Mvc5\View\Template;
 
-use ArrayAccess;
-
 trait Path
 {
     /**
-     * @var ArrayAccess
+     * @var array
      */
-    protected ArrayAccess $paths;
+    protected array $paths;
 
     /**
      * @param string $name
