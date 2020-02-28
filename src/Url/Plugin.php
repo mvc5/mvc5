@@ -5,9 +5,8 @@
 
 namespace Mvc5\Url;
 
-use ArrayAccess;
-use ArrayObject;
 use Mvc5\Arg;
+use Mvc5\Http\HttpUri;
 use Mvc5\Http\Request;
 use Mvc5\Http\Uri;
 
@@ -43,9 +42,9 @@ class Plugin
     protected array $params = [];
 
     /**
-     * @var ArrayAccess
+     * @var Uri
      */
-    protected ArrayAccess $uri;
+    protected Uri $uri;
 
     /**
      * @param Request $request
@@ -59,7 +58,7 @@ class Plugin
         $this->assembler = $assembler ?? new Assemble;
         $this->generator = $generator;
         $this->name = $request[Arg::NAME];
-        $this->uri = $request[Arg::URI] ?? new ArrayObject;
+        $this->uri = $request[Arg::URI] ?? new HttpUri;
 
         $this->params[$this->name] = (array) $request[Arg::PARAMS];
 
