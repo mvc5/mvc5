@@ -84,7 +84,7 @@ function next(Iterator $iterator) : Iterator
 
 /**
  * @param Iterator $iterator
- * @return array|Iterator
+ * @return Iterator
  */
 function rewind(Iterator $iterator) : Iterator
 {
