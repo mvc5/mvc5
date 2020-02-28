@@ -5,11 +5,10 @@
 
 namespace Mvc5\Url\Route;
 
-use ArrayAccess;
-use ArrayObject;
 use Mvc5\Arg;
 use Mvc5\Http\HttpUri;
 use Mvc5\Http\Uri;
+use Mvc5\Route\Config;
 use Mvc5\Route\Definition\Build;
 use Mvc5\Route\Definition\Compiler;
 use Mvc5\Route\Route;
@@ -32,9 +31,9 @@ trait Generator
     protected array $generated = [];
 
     /**
-     * @var ArrayAccess
+     * @var Route
      */
-    protected ArrayAccess $route;
+    protected Route $route;
 
     /**
      * @var Uri
@@ -42,12 +41,12 @@ trait Generator
     protected Uri $uri;
 
     /**
-     * @param array|ArrayAccess $route
+     * @param array|Route $route
      * @param Uri|null $uri
      */
     function __construct($route, Uri $uri = null)
     {
-        $this->route = is_array($route) ? new ArrayObject($route) : $route;
+        $this->route = is_array($route) ? new Config($route) : $route;
         $this->uri = $uri ?? new HttpUri;
     }
 
