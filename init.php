@@ -175,7 +175,7 @@ include __DIR__ . '/src/Url/Assemble.php';
 include __DIR__ . '/src/Url/Plugin.php';
 include __DIR__ . '/src/Url/Generator.php';
 include __DIR__ . '/src/Resolver/Build.php';
-include __DIR__ . '/src/Resolver/Container.php';
+include __DIR__ . '/src/Resolver/Base.php';
 include __DIR__ . '/src/Resolver/Dispatch.php';
 include __DIR__ . '/src/Resolver/Generator.php';
 include __DIR__ . '/src/Resolver/Service.php';

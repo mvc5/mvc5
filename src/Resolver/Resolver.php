@@ -44,8 +44,8 @@ trait Resolver
     /**
      *
      */
+    use Base;
     use Build;
-    use Container;
     use Generator;
     use Service;
 

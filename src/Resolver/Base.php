@@ -12,7 +12,7 @@ use function key;
 use function next;
 use function reset;
 
-trait Container
+trait Base
 {
     /**
      * @var array|\ArrayAccess
