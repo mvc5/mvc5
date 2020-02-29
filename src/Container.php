@@ -6,10 +6,7 @@
 namespace Mvc5;
 
 class Container
+    extends Model
     implements Service\Container
 {
-    /**
-     *
-     */
-    use Config\Config;
 }
