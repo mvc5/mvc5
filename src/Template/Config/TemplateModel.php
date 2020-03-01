@@ -19,7 +19,7 @@ trait TemplateModel
     /**
      * @var array
      */
-    protected $config = [];
+    protected array $config = [];
 
     /**
      * @param array|string $template

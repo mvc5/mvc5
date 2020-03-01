@@ -5,10 +5,10 @@
 
 namespace Mvc5\Session;
 
-use Mvc5;
+use Mvc5\ArrayObject;
 
 class Messages
-    extends Mvc5\Config
+    extends ArrayObject
     implements SessionMessages
 {
     /**

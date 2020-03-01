@@ -5,7 +5,8 @@
 
 namespace Mvc5\Session\Config;
 
-use Mvc5\Session\Model;
+use Mvc5\Config\Model;
+use Mvc5\Session\Model as SessionModel;
 use Mvc5\Session\Session;
 
 trait Container
@@ -13,7 +14,7 @@ trait Container
     /**
      * @var Model
      */
-    protected $config = [];
+    protected Model $config;
 
     /**
      * @var string
@@ -100,7 +101,7 @@ trait Container
      */
     protected function resetSessionModel() : void
     {
-        $this->session[$this->label] = $this->config = new Model;
+        $this->session[$this->label] = $this->config = new SessionModel;
     }
 
     /**

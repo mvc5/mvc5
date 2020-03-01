@@ -19,7 +19,7 @@ trait HttpCookies
     /**
      * @var array
      */
-    protected $config = [];
+    protected array $config = [];
 
     /**
      * @param array $cookies

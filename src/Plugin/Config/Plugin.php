@@ -6,6 +6,7 @@
 namespace Mvc5\Plugin\Config;
 
 use Mvc5\Arg;
+use Mvc5\Config\ArrayModel;
 use Mvc5\Config\ReadOnly;
 
 trait Plugin
@@ -13,6 +14,7 @@ trait Plugin
     /**
      *
      */
+    use ArrayModel;
     use ReadOnly;
 
     /**

@@ -6,6 +6,7 @@
 namespace Mvc5\Session\Config;
 
 use Mvc5\Config\ArrayAccess;
+use Mvc5\Config\Count;
 use Mvc5\Config\PropertyAccess;
 use Mvc5\Cookie\PHPCookies;
 use Mvc5\Session\Session;
@@ -31,6 +32,7 @@ trait PHPSession
      *
      */
     use ArrayAccess;
+    use Count;
     use PropertyAccess;
 
     /**

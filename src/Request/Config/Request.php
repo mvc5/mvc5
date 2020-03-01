@@ -6,6 +6,8 @@
 namespace Mvc5\Request\Config;
 
 use Mvc5\Arg;
+use Mvc5\ArrayObject;
+use Mvc5\Config\Model;
 use Mvc5\Cookie\Cookies;
 use Mvc5\Cookie\HttpCookies;
 use Mvc5\Http;
@@ -22,7 +24,7 @@ trait Request
     use Http\Config\Request;
 
     /**
-     * @param array $config
+     * @param array|Model $config
      */
     function __construct($config = [])
     {
@@ -39,7 +41,7 @@ trait Request
         isset($config[Arg::URI]) && !($config[Arg::URI] instanceof Http\Uri) &&
             $config[Arg::URI] = new Http\HttpUri($config[Arg::URI]);
 
-        $this->config = $config;
+        $this->config = $config instanceof Model ? $config: new ArrayObject((array) $config);
     }
 
     /**

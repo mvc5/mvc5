@@ -6,6 +6,7 @@
 namespace Mvc5\Response\Config;
 
 use Mvc5\Arg;
+use Mvc5\ArrayObject;
 use Mvc5\Cookie\Cookies;
 use Mvc5\Cookie\HttpCookies;
 use Mvc5\Http\Headers;
@@ -36,7 +37,7 @@ trait HttpResponse
         $config[Arg::STATUS] = $status;
         $config[Arg::BODY] = $body;
 
-        $this->config = $config;
+        $this->config = new ArrayObject($config);
     }
 
     /**

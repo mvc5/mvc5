@@ -6,7 +6,7 @@
 namespace Mvc5;
 
 class ViewModel
-    extends Model
+    extends ArrayModel
     implements View\ViewModel
 {
     /**

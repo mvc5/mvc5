@@ -14,7 +14,7 @@ trait Messages
     /**
      * @var array
      */
-    protected $config = [];
+    protected array $config = [];
 
     /**
      * @var array

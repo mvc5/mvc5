@@ -12,4 +12,5 @@ class Overload
      *
      */
     use Config\Overload;
+    use Config\OverloadObject;
 }

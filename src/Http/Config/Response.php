@@ -6,19 +6,21 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
+use Mvc5\ArrayObject;
 use Mvc5\Http;
+use Mvc5\Config\Model;
 
 use function is_array;
 
 trait Response
 {
     /**
-     * @var array
+     * @var Model
      */
-    protected $config = [];
+    protected Model $config;
 
     /**
-     * @param array $config
+     * @param array|Model $config
      */
     function __construct($config = [])
     {
@@ -27,7 +29,7 @@ trait Response
         is_array($config[Arg::HEADERS]) &&
             $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);
 
-        $this->config = $config;
+        $this->config = $config instanceof Model ? $config: new ArrayObject((array) $config);
     }
 
     /**

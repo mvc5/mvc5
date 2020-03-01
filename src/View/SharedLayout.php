@@ -5,11 +5,11 @@
 
 namespace Mvc5\View;
 
-use Mvc5\Overload;
+use Mvc5\ArrayOverload;
 use Mvc5\Service\Service;
 
 class SharedLayout
-    extends Overload
+    extends ArrayOverload
     implements ViewLayout
 {
     /**

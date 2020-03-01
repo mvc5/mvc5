@@ -5,10 +5,10 @@
 
 namespace Mvc5\Template;
 
-use Mvc5\Model;
+use Mvc5\ArrayModel;
 
 class Layout
-    extends Model
+    extends ArrayModel
     implements TemplateLayout
 {
     /**

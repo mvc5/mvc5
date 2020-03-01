@@ -5,10 +5,10 @@
 
 namespace Mvc5\Cookie;
 
-use Mvc5;
+use Mvc5\ArrayObject;
 
 final class PHPCookies
-    extends Mvc5\Config
+    extends ArrayObject
     implements Cookies
 {
     /**

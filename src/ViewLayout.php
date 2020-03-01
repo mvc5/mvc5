@@ -6,7 +6,7 @@
 namespace Mvc5;
 
 class ViewLayout
-    extends Model
+    extends ArrayModel
     implements View\ViewLayout
 {
     /**

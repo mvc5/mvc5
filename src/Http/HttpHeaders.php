@@ -5,10 +5,10 @@
 
 namespace Mvc5\Http;
 
-use Mvc5\Model;
+use Mvc5\ArrayModel;
 
 class HttpHeaders
-    extends Model
+    extends ArrayModel
     implements Headers
 {
     /**

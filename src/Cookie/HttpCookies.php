@@ -5,10 +5,10 @@
 
 namespace Mvc5\Cookie;
 
-use Mvc5\Model;
+use Mvc5\ArrayModel;
 
 class HttpCookies
-    extends Model
+    extends ArrayModel
     implements Cookies
 {
     /**

@@ -1,16 +1,13 @@
 <?php
-/**
- *
- */
 
 namespace Mvc5;
 
-class Model
+class ArrayModel
     implements Config\Immutable
 {
     /**
      *
      */
-    use Config\ModelObject;
+    use Config\ArrayModel;
     use Config\ReadOnly;
 }

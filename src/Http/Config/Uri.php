@@ -6,6 +6,8 @@
 namespace Mvc5\Http\Config;
 
 use Mvc5\Arg;
+use Mvc5\ArrayObject;
+use Mvc5\Config\Model;
 
 use function implode;
 use function is_array;
@@ -14,16 +16,17 @@ use function parse_url;
 trait Uri
 {
     /**
-     * @var array
+     * @var Model
      */
-    protected $config = [];
+    protected Model $config;
 
     /**
      * @param array|string|mixed $config
      */
     function __construct($config = [])
     {
-        $this->config = is_array($config) ? $config : (parse_url((string) $config) ?: []);
+        $this->config = $config instanceof Model ? $config : new ArrayObject(
+            is_array($config) ? $config : (parse_url((string) $config) ?: []));
     }
 
     /**

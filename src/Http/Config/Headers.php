@@ -17,7 +17,7 @@ trait Headers
     /**
      * @var array
      */
-    protected $config = [];
+    protected array $config = [];
 
     /**
      * @param array $headers

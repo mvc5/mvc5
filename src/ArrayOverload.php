@@ -1,16 +1,13 @@
 <?php
-/**
- *
- */
 
 namespace Mvc5;
 
-class Config
+class ArrayOverload
     implements Config\Configuration
 {
     /**
      *
      */
-    use Config\Config;
-    use Config\ModelObject;
+    use Config\ArrayModel;
+    use Config\Overload;
 }

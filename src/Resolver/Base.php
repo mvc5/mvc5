@@ -5,7 +5,6 @@
 
 namespace Mvc5\Resolver;
 
-use ArrayAccess;
 use Mvc5\Config\Model;
 use Mvc5\Config\Configuration;
 
@@ -14,9 +13,9 @@ use function is_string;
 trait Base
 {
     /**
-     * @var ArrayAccess
+     * @var Model
      */
-    protected $config = [];
+    protected Model $config;
 
     /**
      * @var Configuration
