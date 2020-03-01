@@ -139,7 +139,6 @@ include __DIR__ . '/src/Request/Exception/Controller.php';
 include __DIR__ . '/src/Request/Exception/Exception.php';
 include __DIR__ . '/src/Request/Exception/ExceptionLayout.php';
 include __DIR__ . '/src/Request/Exception/ViewLayout.php';
-include __DIR__ . '/src/Request/Service/Container.php';
 include __DIR__ . '/src/Request/Service/Share.php';
 include __DIR__ . '/src/Request/Error.php';
 include __DIR__ . '/src/Request/Exception.php';

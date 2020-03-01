@@ -5,16 +5,34 @@
 
 namespace Mvc5\Web;
 
+use ArrayAccess;
+use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
-use Mvc5\Request\Service\Container;
 
-class Service
+final class Service
 {
     /**
-     *
+     * @var ArrayAccess
      */
-    use Container;
+    protected ArrayAccess $container;
+
+    /**
+     * @param ArrayAccess $container
+     */
+    function __construct(ArrayAccess $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * @param Request $request
+     * @return Request
+     */
+    protected function share(Request $request) : Request
+    {
+        return $this->container[Arg::REQUEST] = $request;
+    }
 
     /**
      * @param Request $request
