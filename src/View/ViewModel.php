@@ -18,7 +18,7 @@ interface ViewModel
 
     /**
      * @param Service $service
-     * @return self|mixed
+     * @return ViewModel
      */
     function withService(Service $service) : ViewModel;
 

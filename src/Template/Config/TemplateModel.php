@@ -51,7 +51,7 @@ trait TemplateModel
 
     /**
      * @param string $template
-     * @return self|mixed
+     * @return Template\TemplateModel
      */
     function withTemplate(string $template) : Template\TemplateModel
     {

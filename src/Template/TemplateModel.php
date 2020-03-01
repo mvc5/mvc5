@@ -20,7 +20,7 @@ interface TemplateModel
 
     /**
      * @param string $template
-     * @return self|mixed
+     * @return TemplateModel
      */
     function withTemplate(string $template) : TemplateModel;
 }

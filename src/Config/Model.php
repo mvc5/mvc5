@@ -23,13 +23,13 @@ interface Model
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return self|mixed
+     * @return Model
      */
     function with($name, $value = null) : Model;
 
     /**
      * @param array|string $name
-     * @return self|mixed
+     * @return Model
      */
     function without($name) : Model;
 }

@@ -25,46 +25,46 @@ interface Response
      * @param array|string $name
      * @param string|null $value
      * @param array $options
-     * @return self|mixed
+     * @return Response
      */
     function withCookie($name, $value = null, array $options = []) : Response;
 
     /**
      * @param array|string $name
      * @param array $options
-     * @return self|mixed
+     * @return Response
      */
     function withoutCookie($name, array $options = []) : Response;
 
     /**
      * @param array|\Mvc5\Cookie\Cookies $cookies
-     * @return self|mixed
+     * @return Response
      */
     function withCookies($cookies) : Response;
 
     /**
      * @param string $name
      * @param array|string $value
-     * @return self|mixed
+     * @return Response
      */
     function withHeader($name, $value) : Response;
 
     /**
      * @param array|\Mvc5\Http\Headers $headers
-     * @return self|mixed
+     * @return Response
      */
     function withHeaders($headers) : Response;
 
     /**
      * @param int $status
      * @param string $reason
-     * @return self|mixed
+     * @return Response
      */
     function withStatus($status, $reason = '') : Response;
 
     /**
      * @param string $version
-     * @return self|mixed
+     * @return Response
      */
     function withVersion(string $version) : Response;
 }

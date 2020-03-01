@@ -61,7 +61,7 @@ trait HttpResponse
      * @param array|string $name
      * @param string|null $value
      * @param array $options
-     * @return self|mixed
+     * @return Response
      */
     function withCookie($name, $value = null, array $options = []) : Response
     {
@@ -71,7 +71,7 @@ trait HttpResponse
     /**
      * @param array|string $name
      * @param array $options
-     * @return self|mixed
+     * @return Response
      */
     function withoutCookie($name, array $options = []) : Response
     {
@@ -80,7 +80,7 @@ trait HttpResponse
 
     /**
      * @param array|Cookies $cookies
-     * @return self|mixed
+     * @return Response
      */
     function withCookies($cookies) : Response
     {
@@ -90,7 +90,7 @@ trait HttpResponse
     /**
      * @param string $name
      * @param string $value
-     * @return self|mixed
+     * @return Response
      */
     function withHeader($name, $value) : Response
     {
@@ -99,7 +99,7 @@ trait HttpResponse
 
     /**
      * @param array|Headers $headers
-     * @return self|mixed
+     * @return Response
      */
     function withHeaders($headers) : Response
     {
@@ -109,7 +109,7 @@ trait HttpResponse
     /**
      * @param int $status
      * @param string $reason
-     * @return self|mixed
+     * @return Response
      */
     function withStatus($status, $reason = '') : Response
     {
@@ -118,7 +118,7 @@ trait HttpResponse
 
     /**
      * @param string $version
-     * @return self|mixed
+     * @return Response
      */
     function withVersion(string $version) : Response
     {

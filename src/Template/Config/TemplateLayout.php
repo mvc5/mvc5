@@ -20,7 +20,7 @@ trait TemplateLayout
 
     /**
      * @param Template\TemplateModel|mixed $model
-     * @return self|mixed
+     * @return Template\TemplateLayout
      */
     function withModel($model) : Template\TemplateLayout
     {

@@ -50,7 +50,7 @@ trait ViewModel
 
     /**
      * @param Service $service
-     * @return self|mixed
+     * @return View\ViewModel
      */
     function withService(Service $service) : View\ViewModel
     {

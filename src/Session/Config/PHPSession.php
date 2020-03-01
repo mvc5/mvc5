@@ -233,7 +233,7 @@ trait PHPSession
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return self|mixed
+     * @return Session
      */
     function with($name, $value = null) : Session
     {
@@ -243,7 +243,7 @@ trait PHPSession
 
     /**
      * @param array|string $name
-     * @return self|mixed
+     * @return Session
      */
     function without($name) : Session
     {

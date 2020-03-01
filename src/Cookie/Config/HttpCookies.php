@@ -71,7 +71,7 @@ trait HttpCookies
      * @param array|string $name
      * @param string|null $value
      * @param array $options
-     * @return self|mixed
+     * @return Cookies
      */
     function with($name, $value = null, array $options = []) : Cookies
     {
@@ -83,7 +83,7 @@ trait HttpCookies
     /**
      * @param array|string $name
      * @param array $options
-     * @return self|mixed
+     * @return Cookies
      */
     function without($name, array $options = []) : Cookies
     {
