@@ -10,6 +10,11 @@ use Mvc5\ArrayOverloadObject;
 trait OverloadObject
 {
     /**
+     *
+     */
+    use ModelObject;
+
+    /**
      * @var Model
      */
     protected Model $config;

@@ -8,6 +8,7 @@ class ArrayObject
     /**
      *
      */
+    use Config\ArrayModel;
     use Config\Config;
 
     /**

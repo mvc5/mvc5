@@ -10,8 +10,6 @@ trait Config
     /**
      *
      */
-    use Count;
-    use Iterator;
     use ArrayAccess;
     use PropertyAccess;
 

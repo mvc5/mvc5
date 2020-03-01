@@ -10,6 +10,12 @@ use Mvc5\ArrayObject;
 trait ModelObject
 {
     /**
+     *
+     */
+    use Count;
+    use Iterator;
+
+    /**
      * @var Model
      */
     protected Model $config;

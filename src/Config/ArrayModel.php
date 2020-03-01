@@ -8,6 +8,12 @@ namespace Mvc5\Config;
 trait ArrayModel
 {
     /**
+     *
+     */
+    use ArrayIterator;
+    use Count;
+
+    /**
      * @var array
      */
     protected array $config = [];

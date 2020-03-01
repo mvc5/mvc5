@@ -10,19 +10,19 @@ use function key;
 use function next;
 use function reset;
 
-trait Iterator
+trait ArrayIterator
 {
     /**
-     * @var Model
+     * @var array
      */
-    protected Model $config;
+    protected array $config = [];
 
     /**
      * @return mixed
      */
     function current()
     {
-        return $this->config->current();
+        return current($this->config);
     }
 
     /**
@@ -30,7 +30,7 @@ trait Iterator
      */
     function key()
     {
-        return $this->config->key();
+        return key($this->config);
     }
 
     /**
@@ -38,7 +38,7 @@ trait Iterator
      */
     function next() : void
     {
-        $this->config->next();
+        next($this->config);
     }
 
     /**
@@ -46,7 +46,7 @@ trait Iterator
      */
     function rewind() : void
     {
-        $this->config->rewind();
+        reset($this->config);
     }
 
     /**
@@ -54,6 +54,6 @@ trait Iterator
      */
     function valid() : bool
     {
-        return $this->config->valid();
+        return null !== key($this->config);
     }
 }
