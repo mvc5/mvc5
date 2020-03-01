@@ -5,10 +5,8 @@
 
 namespace Mvc5\Request\Error;
 
-use Mvc5\View\ViewModel;
-
 interface ErrorModel
-    extends ViewModel
+    extends \Mvc5\View\ViewModel
 {
     /**
      * @return int|null
