@@ -57,7 +57,7 @@ trait Tokens
      * @param string $path
      * @param array $constraints
      * @return array
-     * @throws \RuntimeException
+     * @throws \RuntimeException|\Throwable
      */
     protected function tokens(string $path, array $constraints = []) : array
     {

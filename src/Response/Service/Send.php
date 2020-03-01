@@ -5,6 +5,7 @@
 
 namespace Mvc5\Response\Service;
 
+use Closure;
 use Mvc5\Arg;
 use Mvc5\Cookie\PHPCookies;
 use Mvc5\Http\Response;
@@ -48,11 +49,11 @@ trait Send
     }
 
     /**
-     * @param \Closure|Emitter|string $body
+     * @param Closure|Emitter|string $body
      */
     protected function emit($body) : void
     {
-        $body instanceof Emitter ? $body->emit() : ($body instanceof \Closure ? $body() : print($body));
+        $body instanceof Emitter ? $body->emit() : ($body instanceof Closure ? $body() : print($body));
     }
 
     /**

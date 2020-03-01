@@ -7,6 +7,7 @@ namespace Mvc5\View\Engine;
 
 use Mvc5\Template\TemplateModel;
 use Mvc5\View\ViewEngine;
+use Throwable;
 
 use function extract;
 use function ob_end_clean;
@@ -38,7 +39,7 @@ class PhpEngine
 
                 return ob_get_clean();
 
-            } catch(\Throwable $exception) {
+            } catch(Throwable $exception) {
                 while(ob_get_level() > $__ob_level__) {
                     ob_end_clean();
                 }

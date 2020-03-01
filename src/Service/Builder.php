@@ -6,6 +6,7 @@
 namespace Mvc5\Service;
 
 use Mvc5\Exception;
+use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
 
@@ -15,7 +16,7 @@ use function is_string;
 use function key;
 
 final class Builder
-    extends \ReflectionClass
+    extends ReflectionClass
 {
     /**
      * @var array|self[]
@@ -49,7 +50,7 @@ final class Builder
      * @param array $args
      * @param callable $callback
      * @return object
-     * @throws \ReflectionException|\RuntimeException
+     * @throws \ReflectionException|\RuntimeException|\Throwable
      */
     static function create(string $name, array $args, callable $callback)
     {

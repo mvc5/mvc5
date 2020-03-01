@@ -14,6 +14,7 @@ use function is_string;
 use function setcookie;
 use function setrawcookie;
 use function strtotime;
+use function version_compare;
 
 trait PHPCookies
 {
@@ -79,7 +80,7 @@ trait PHPCookies
      * @param array|string $name
      * @param string|null $value
      * @param array $options
-     * @return Cookies
+     * @return Cookies|mixed
      */
     function with($name, $value = null, array $options = []) : Cookies
     {
@@ -90,7 +91,7 @@ trait PHPCookies
     /**
      * @param array|string $name
      * @param array $options
-     * @return Cookies
+     * @return Cookies|mixed
      */
     function without($name, array $options = []) : Cookies
     {
@@ -146,7 +147,7 @@ function options(array $option, array $default = [], bool $samesite = true) : ar
  */
 function php73() : bool
 {
-    return \version_compare(\PHP_VERSION, '7.3', '>=');
+    return version_compare(\PHP_VERSION, '7.3', '>=');
 }
 
 /**

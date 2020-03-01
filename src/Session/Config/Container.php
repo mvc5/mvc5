@@ -131,7 +131,7 @@ trait Container
     /**
      * @param array|string $name
      * @param mixed $value
-     * @return Session
+     * @return Session|mixed
      */
     function with($name, $value = null) : Session
     {
@@ -141,7 +141,7 @@ trait Container
 
     /**
      * @param array|string $name
-     * @return Session
+     * @return Session|mixed
      */
     function without($name) : Session
     {

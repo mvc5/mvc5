@@ -24,7 +24,7 @@ class Compiler
      * @param array $defaults
      * @param callable|null $wildcard
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException|\Throwable
      */
     static function compile(array $tokens, array &$params, array $defaults = [], callable $wildcard = null) : string
     {
@@ -111,7 +111,7 @@ class Compiler
      * @param array|null $defaults
      * @param callable|null $wildcard
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException|\Throwable
      */
     function __invoke(array $tokens, array $params, array $defaults = null, callable $wildcard = null) : string
     {

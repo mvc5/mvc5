@@ -5,6 +5,7 @@
 
 namespace Mvc5\Service;
 
+use Closure;
 use Iterator;
 use Mvc5\Iterator as Mvc5Iterator;
 
@@ -43,9 +44,9 @@ trait Middleware
     }
 
     /**
-     * @return \Closure
+     * @return Closure
      */
-    protected function delegate() : \Closure
+    protected function delegate() : Closure
     {
         return fn(...$args) => $this->call($this->next(), $args);
     }

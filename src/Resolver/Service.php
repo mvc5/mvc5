@@ -5,6 +5,7 @@
 
 namespace Mvc5\Resolver;
 
+use Closure;
 use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Resolvable;
@@ -52,7 +53,7 @@ trait Service
             return is_string($plugin[0]) ? $plugin : [$this->resolve($plugin[0]), $plugin[1]];
         }
 
-        return $plugin instanceof \Closure ? $plugin : $this->listener($this->resolve($plugin));
+        return $plugin instanceof Closure ? $plugin : $this->listener($this->resolve($plugin));
     }
 
     /**

@@ -6,15 +6,16 @@
 namespace Mvc5\Response;
 
 use Mvc5\Arg;
+use Throwable;
 
 class JsonExceptionResponse
     extends JsonResponse
 {
     /**
-     * @param \Throwable $exception
+     * @param Throwable $exception
      * @param bool|false $trace
      */
-    function __construct(\Throwable $exception, bool $trace = false)
+    function __construct(Throwable $exception, bool $trace = false)
     {
         parent::__construct(
             $trace ? [

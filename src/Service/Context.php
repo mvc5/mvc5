@@ -26,7 +26,7 @@ final class Context
     /**
      * @param Service $service
      * @return callable|Manager|Service
-     * @throws \RuntimeException
+     * @throws \RuntimeException|\Throwable
      */
     static function bind(Service $service)
     {
@@ -72,7 +72,7 @@ final class Context
 
     /**
      * @return callable|Manager|Service
-     * @throws \RuntimeException
+     * @throws \RuntimeException|\Throwable
      */
     static function service()
     {

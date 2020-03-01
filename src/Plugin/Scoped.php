@@ -5,11 +5,13 @@
 
 namespace Mvc5\Plugin;
 
+use Closure;
+
 class Scoped
     implements Gem\Scoped
 {
     /**
-     * @var callable|\Closure
+     * @var callable|Closure
      */
     protected $callable;
 
@@ -29,9 +31,9 @@ class Scoped
     }
 
     /**
-     * @return \Closure
+     * @return Closure
      */
-    function closure() : \Closure
+    function closure() : Closure
     {
         return ($this->callable)();
     }

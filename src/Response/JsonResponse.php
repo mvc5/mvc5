@@ -23,6 +23,7 @@ class JsonResponse
      * @param $data
      * @param int $status
      * @param array $headers
+     * @throws \InvalidArgumentException|\Throwable
      */
     function __construct($data, int $status = 200, array $headers = [])
     {
@@ -34,6 +35,7 @@ class JsonResponse
     /**
      * @param $result
      * @return string
+     * @throws \InvalidArgumentException|\Throwable
      */
     protected function result($result) : string
     {

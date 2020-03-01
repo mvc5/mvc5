@@ -5,6 +5,7 @@
 
 namespace Mvc5\Resolver;
 
+use Closure;
 use Mvc5\Arg;
 use Mvc5\Container;
 use Mvc5\Model;
@@ -124,14 +125,14 @@ trait Resolver
     }
 
     /**
-     * @param \Closure $callback
+     * @param Closure $callback
      * @param object $object
      * @param bool $scoped
-     * @return \Closure
+     * @return Closure
      */
-    protected function bind(\Closure $callback, $object, bool $scoped) : \Closure
+    protected function bind(Closure $callback, $object, bool $scoped) : Closure
     {
-        return \Closure::bind($callback, $object, $scoped ? $object : null);
+        return Closure::bind($callback, $object, $scoped ? $object : null);
     }
 
     /**
@@ -413,7 +414,7 @@ trait Resolver
             return $this->pluginArray(array_shift($plugin), $args + $this->args($plugin), $callback, $previous);
         }
 
-        if ($plugin instanceof \Closure) {
+        if ($plugin instanceof Closure) {
             return $this->invoke($this->scoped($plugin), $args);
         }
 
@@ -483,7 +484,7 @@ trait Resolver
      */
     protected function provision($plugin, array $args)
     {
-        return $plugin instanceof \Closure && (new \ReflectionFunction($plugin))->getClosureThis() ?
+        return $plugin instanceof Closure && (new \ReflectionFunction($plugin))->getClosureThis() ?
             $this->invoke($plugin, $args) : $this->plugin($plugin, $args);
     }
 
@@ -535,11 +536,11 @@ trait Resolver
     }
 
     /**
-     * @param \Closure $callback
+     * @param Closure $callback
      * @param bool $scoped
-     * @return \Closure
+     * @return Closure
      */
-    protected function scoped(\Closure $callback, bool $scoped = false) : \Closure
+    protected function scoped(Closure $callback, bool $scoped = false) : Closure
     {
         return $this->scope ? $this->bind($callback, $this->scope === true ? $this : $this->scope, $scoped) : $callback;
     }

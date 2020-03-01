@@ -18,7 +18,7 @@ trait Generator
      * @param \Throwable|null $previous
      * @param int $offset
      * @return mixed
-     * @throws \DomainException
+     * @throws \DomainException|\Throwable
      */
     static function domain(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
@@ -34,7 +34,7 @@ trait Generator
      * @param \Throwable|null $previous
      * @param int $offset
      * @return mixed
-     * @throws \ErrorException
+     * @throws \ErrorException|\Throwable
      */
     static function errorException(
         string $message = '', int $code = 0, int $severity = E_ERROR,
@@ -51,7 +51,7 @@ trait Generator
      * @param \Throwable|null $previous
      * @param int $offset
      * @return mixed
-     * @throws \Exception
+     * @throws \Exception|\Throwable
      */
     static function exception(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
@@ -64,7 +64,7 @@ trait Generator
      * @param \Throwable|null $previous
      * @param int $offset
      * @return mixed
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException|\Throwable
      */
     static function invalidArgument(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
@@ -77,7 +77,7 @@ trait Generator
      * @param \Throwable|null $previous
      * @param int $offset
      * @return mixed
-     * @throws \RuntimeException
+     * @throws \RuntimeException|\Throwable
      */
     static function runtime(string $message = '', int $code = 0, \Throwable $previous = null, int $offset = 2)
     {
