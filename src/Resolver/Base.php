@@ -29,28 +29,12 @@ trait Base
     protected Model $services;
 
     /**
-    * @return array|\ArrayAccess
-     */
-    function config()
-    {
-        return $this->config;
-    }
-
-    /**
      * @param string $name
      * @return mixed
      */
     protected function configured(string $name)
     {
         return $this->services[$name] ?? null;
-    }
-
-    /**
-     * @return array|\ArrayAccess|\Iterator
-     */
-    function container()
-    {
-        return $this->container;
     }
 
     /**
@@ -137,14 +121,6 @@ trait Base
     function rewind() : void
     {
         $this->container->rewind();
-    }
-
-    /**
-     * @return array|\ArrayAccess|\Iterator
-     */
-    function services()
-    {
-        return $this->services;
     }
 
     /**

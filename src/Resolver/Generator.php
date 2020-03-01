@@ -49,14 +49,6 @@ trait Generator
     }
 
     /**
-     * @return array|\ArrayAccess
-     */
-    function events()
-    {
-        return $this->events;
-    }
-
-    /**
      * @param Event|object|string $event
      * @param array $args
      * @return Iterator
