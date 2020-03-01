@@ -5,29 +5,28 @@
 
 namespace Mvc5\Resolver;
 
-use function count;
-use function current;
+use ArrayAccess;
+use Mvc5\Config\Model;
+use Mvc5\Config\Configuration;
+
 use function is_string;
-use function key;
-use function next;
-use function reset;
 
 trait Base
 {
     /**
-     * @var array|\ArrayAccess
+     * @var ArrayAccess
      */
     protected $config = [];
 
     /**
-     * @var array|\ArrayAccess|\Iterator
+     * @var Configuration
      */
-    protected $container = [];
+    protected Configuration $container;
 
     /**
-     * @var array|\ArrayAccess
+     * @var Model
      */
-    protected $services = [];
+    protected Model $services;
 
     /**
     * @return array|\ArrayAccess
@@ -59,7 +58,7 @@ trait Base
      */
     function count() : int
     {
-        return count($this->container);
+        return $this->container->count();
     }
 
     /**
@@ -67,7 +66,7 @@ trait Base
      */
     function current()
     {
-        return $this->container instanceof \Iterator ? $this->container->current() : current($this->container);
+        return $this->container->current();
     }
 
     /**
@@ -113,7 +112,7 @@ trait Base
      */
     function key()
     {
-        return $this->container instanceof \Iterator ? $this->container->key() : key($this->container);
+        return $this->container->key();
     }
 
     /**
@@ -121,7 +120,7 @@ trait Base
      */
     function next() : void
     {
-        $this->container instanceof \Iterator ? $this->container->next() : next($this->container);
+        $this->container->next();
     }
 
     /**
@@ -129,9 +128,7 @@ trait Base
      */
     function remove($name) : void
     {
-        foreach((array) $name as $key) {
-            unset($this->container[$key]);
-        }
+        $this->container->remove($name);
     }
 
     /**
@@ -139,7 +136,7 @@ trait Base
      */
     function rewind() : void
     {
-        $this->container instanceof \Iterator ? $this->container->rewind() : reset($this->container);
+        $this->container->rewind();
     }
 
     /**
@@ -157,15 +154,7 @@ trait Base
      */
     function set($name, $value = null)
     {
-        if (is_string($name)) {
-            return $this->container[$name] = $value;
-        }
-
-        foreach($name as $key => $value) {
-            $this->container[$key] = $value;
-        }
-
-        return $name;
+        return $this->container->set($name, $value);
     }
 
     /**
@@ -204,7 +193,7 @@ trait Base
      */
     function valid() : bool
     {
-        return $this->container instanceof \Iterator ? $this->container->valid() : null !== key($this->container);
+        return $this->container->valid();
     }
 
     /**

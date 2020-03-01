@@ -6,6 +6,8 @@
 namespace Mvc5\Resolver;
 
 use Mvc5\Arg;
+use Mvc5\Container;
+use Mvc5\Model;
 use Mvc5\Plugin\Gem\Args;
 use Mvc5\Plugin\Gem\Call;
 use Mvc5\Plugin\Gem\Calls;
@@ -29,6 +31,7 @@ use Mvc5\Plugin\Gem\Shared;
 use Mvc5\Plugin\Gem\SignalArgs;
 use Mvc5\Plugin\Gem\Value;
 use Mvc5\Resolvable;
+use Throwable;
 
 use function array_merge;
 use function array_shift;
@@ -64,20 +67,20 @@ trait Resolver
      * @param callable|null $provider
      * @param bool|object|null $scope
      * @param bool $strict
-     * @throws \Throwable
+     * @throws Throwable
      */
     function __construct($config = null, callable $provider = null, $scope = null, bool $strict = false)
     {
-        $config && $this->config = $config;
+        $this->config = $config === null ? new Model : (is_array($config) ? new Model($config) : $config);
 
-        isset($config[Arg::CONTAINER])
-            && $this->container = $config[Arg::CONTAINER];
+        $this->container = ! isset($config[Arg::CONTAINER]) ? new Container :
+            (is_array($config[Arg::CONTAINER]) ? new Container($config[Arg::CONTAINER]) : $config[Arg::CONTAINER]);
 
-        isset($config[Arg::EVENTS])
-            && $this->events = $config[Arg::EVENTS];
+        $this->events = ! isset($config[Arg::EVENTS]) ? new Model :
+            (is_array($config[Arg::EVENTS]) ? new Model($config[Arg::EVENTS]) : $config[Arg::EVENTS]);
 
-        isset($config[Arg::SERVICES])
-            && $this->services = $config[Arg::SERVICES];
+        $this->services = ! isset($config[Arg::SERVICES]) ? new Model :
+            (is_array($config[Arg::SERVICES]) ? new Model($config[Arg::SERVICES]) : $config[Arg::SERVICES]);
 
         $provider && $this->provider = $this->resolve($provider);
 
@@ -89,7 +92,7 @@ trait Resolver
     /**
      * @param array|mixed $args
      * @return array|mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function args($args)
     {
@@ -135,7 +138,7 @@ trait Resolver
      * @param Child $child
      * @param array $args
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function child(Child $child, array $args = [])
     {
@@ -148,7 +151,7 @@ trait Resolver
      * @param array $args
      * @param string|null $param
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function filter($value, iterable $filters = [], array $args = [], string $param = null)
     {
@@ -177,7 +180,7 @@ trait Resolver
      * @param Filter $filter
      * @param array $args
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function filterable(Filter $filter, array $args = [])
     {
@@ -190,7 +193,7 @@ trait Resolver
      * @param Gem $gem
      * @param array $args
      * @return callable|mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function gem(Gem $gem, array $args = [])
     {
@@ -227,7 +230,7 @@ trait Resolver
         }
 
         if ($gem instanceof Config) {
-            return $this->config();
+            return $this->config;
         }
 
         if ($gem instanceof Link) {
@@ -279,7 +282,7 @@ trait Resolver
         if ($gem instanceof Expect) {
             try {
                 return $this->resolve($gem->plugin(), $args);
-            } catch(\Throwable $exception) {
+            } catch(Throwable $exception) {
                 return $this->resolve($gem->exception(), $gem->args($exception, $args));
             }
         }
@@ -291,7 +294,7 @@ trait Resolver
      * @param Plugin $plugin
      * @param object $service
      * @return object
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function hydrate(Plugin $plugin, $service)
     {
@@ -340,7 +343,7 @@ trait Resolver
      * @param string|null $name
      * @param array $config
      * @return Plugin
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function merge(Plugin $parent, Plugin $child, string $name = null, array $config = []) : Plugin
     {
@@ -366,13 +369,13 @@ trait Resolver
     function param($name)
     {
         if (is_string($name)) {
-            return param($this->config(), $name);
+            return param($this->config, $name);
         }
 
         $matched = [];
 
         foreach($name as $key) {
-            $matched[$key] = $this->config()[$key] ?? null;
+            $matched[$key] = $this->config[$key] ?? null;
         }
 
         return $matched;
@@ -381,7 +384,7 @@ trait Resolver
     /**
      * @param string $parent
      * @return Plugin
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function parent(string $parent) : Plugin
     {
@@ -394,7 +397,7 @@ trait Resolver
      * @param callable|null $callback
      * @param string|null $previous
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     function plugin($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
@@ -423,7 +426,7 @@ trait Resolver
      * @param callable|null $callback
      * @param string|null $previous
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function pluginArray($plugin, array $args = [], callable $callback = null, string $previous = null)
     {
@@ -435,7 +438,7 @@ trait Resolver
      * @param Plugin $plugin
      * @param array $args
      * @return callable|object|null
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function provide(Plugin $plugin, array $args = [])
     {
@@ -476,7 +479,7 @@ trait Resolver
      * @param array $args
      * @return mixed
      * @throws \ReflectionException
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function provision($plugin, array $args)
     {
@@ -490,7 +493,7 @@ trait Resolver
      * @param callable|null $callback
      * @param int $c
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function resolvable($plugin, array $args = [], callable $callback = null, int $c = 0)
     {
@@ -504,7 +507,7 @@ trait Resolver
      * @param Resolvable|mixed $plugin
      * @param array $args
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function resolve($plugin, array $args = [])
     {
@@ -515,7 +518,7 @@ trait Resolver
      * @param string|mixed $plugin
      * @param array $args
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function resolver($plugin, array $args = [])
     {
@@ -546,7 +549,7 @@ trait Resolver
      * @param array $args
      * @param callable|null $callback
      * @return callable|mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function solve($plugin, array $args = [], callable $callback = null)
     {
@@ -568,7 +571,7 @@ trait Resolver
      * @param array $child
      * @param array $parent
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function vars(array $child = [], array $parent = []) : array
     {
@@ -579,7 +582,7 @@ trait Resolver
      * @param mixed $plugin
      * @param array $args
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     function __call($plugin, array $args = [])
     {
@@ -591,32 +594,10 @@ trait Resolver
      */
     function __clone()
     {
-        is_object($this->config) &&
-            $this->config = clone $this->config;
-
-        if (is_object($this->container)) {
-            $this->container = clone $this->container;
-
-            if (isset($this->config[Arg::CONTAINER])) {
-                $this->config[Arg::CONTAINER] = $this->container;
-            }
-        }
-
-        if (is_object($this->events)) {
-            $this->events = clone $this->events;
-
-            if (isset($this->config[Arg::EVENTS])) {
-                $this->config[Arg::EVENTS] = $this->events;
-            }
-        }
-
-        if (is_object($this->services)) {
-            $this->services = clone $this->services;
-
-            if (isset($this->config[Arg::SERVICES])) {
-                $this->config[Arg::SERVICES] = $this->services;
-            }
-        }
+        $this->config = clone $this->config;
+        $this->container = clone $this->container;
+        $this->events = clone $this->events;
+        $this->services = clone $this->services;
 
         is_object($this->scope) &&
             $this->scope = clone $this->scope;
@@ -626,7 +607,7 @@ trait Resolver
      * @param mixed $plugin
      * @param array $args
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     function __invoke($plugin, array $args = [])
     {
@@ -638,7 +619,7 @@ trait Resolver
      */
     function __serialize() : array
     {
-        return [$this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict];
+        return [$this->config, $this->events, $this->services, new Container, $this->provider, $this->scope, $this->strict];
     }
 
     /**
@@ -646,7 +627,7 @@ trait Resolver
      */
     function __unserialize(array $data) : void
     {
-        list($this->config, $this->events, $this->provider, $this->scope, $this->services, $this->strict) = $data;
+        list($this->config, $this->events, $this->services, $this->container, $this->provider, $this->scope, $this->strict) = $data;
     }
 }
 

@@ -5,6 +5,7 @@
 
 namespace Mvc5\Resolver;
 
+use ArrayAccess;
 use Iterator;
 use Mvc5\Event\Event;
 use Mvc5\Event\Generator as EventGenerator;
@@ -22,9 +23,9 @@ trait Generator
     use EventGenerator;
 
     /**
-     * @var array|\ArrayAccess
+     * @var ArrayAccess
      */
-    protected $events = [];
+    protected ArrayAccess $events;
 
     /**
      * @param array|Iterator|object|string $event
