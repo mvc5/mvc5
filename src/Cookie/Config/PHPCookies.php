@@ -128,26 +128,18 @@ function expires($expires) : int
 /**
  * @param array $option
  * @param array $default
- * @param bool $samesite
  * @return array
  */
-function options(array $option, array $default = [], bool $samesite = true) : array
+function options(array $option, array $default = []) : array
 {
     return [
         Arg::EXPIRES => (int) expires($option[Arg::EXPIRES] ?? $default[Arg::EXPIRES] ?? 0),
         Arg::PATH => (string) ($option[Arg::PATH] ?? $default[Arg::PATH] ?? '/'),
         Arg::DOMAIN => (string) ($option[Arg::DOMAIN] ?? $default[Arg::DOMAIN] ?? ''),
         Arg::SECURE => (bool) ($option[Arg::SECURE] ?? $default[Arg::SECURE] ?? false),
-        Arg::HTTP_ONLY => (bool) ($option[Arg::HTTP_ONLY] ?? $default[Arg::HTTP_ONLY] ?? true)
-    ] + ($samesite ? [Arg::SAMESITE => (string) ($option[Arg::SAMESITE] ?? $default[Arg::SAMESITE] ?? 'lax')] : []);
-}
-
-/**
- * @return bool
- */
-function php73() : bool
-{
-    return version_compare(\PHP_VERSION, '7.3', '>=');
+        Arg::HTTP_ONLY => (bool) ($option[Arg::HTTP_ONLY] ?? $default[Arg::HTTP_ONLY] ?? true),
+        Arg::SAMESITE => (string) ($option[Arg::SAMESITE] ?? $default[Arg::SAMESITE] ?? 'lax')
+    ];
 }
 
 /**
@@ -158,5 +150,5 @@ function php73() : bool
 function send(array $cookie, array $defaults = []) : bool
 {
     return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE],
-        options($cookie[Arg::OPTIONS] ?? $cookie, $defaults, php73()), $cookie[Arg::RAW] ?? false);
+        options($cookie[Arg::OPTIONS] ?? $cookie, $defaults), $cookie[Arg::RAW] ?? false);
 }
