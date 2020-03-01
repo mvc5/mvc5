@@ -5,9 +5,9 @@
 
 namespace Mvc5\Service;
 
-use Mvc5\Config\Model;
+use Mvc5\Config\Configuration;
 
 interface Container
-    extends Model
+    extends Configuration
 {
 }
