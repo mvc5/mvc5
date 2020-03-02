@@ -44,7 +44,6 @@ include __DIR__ . '/src/Event/EventModel.php';
 include __DIR__ . '/src/ArrayModel.php';
 include __DIR__ . '/src/ArrayObject.php';
 include __DIR__ . '/src/ArrayOverload.php';
-include __DIR__ . '/src/ArrayOverloadObject.php';
 include __DIR__ . '/src/Config.php';
 include __DIR__ . '/src/Event.php';
 include __DIR__ . '/src/Model.php';

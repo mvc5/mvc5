@@ -5,7 +5,7 @@
 
 namespace Mvc5\Config;
 
-use Mvc5\ArrayOverloadObject;
+use Mvc5\ArrayOverload;
 
 trait OverloadObject
 {
@@ -24,6 +24,6 @@ trait OverloadObject
      */
     function __construct($config = [])
     {
-        $this->config = $config instanceof Model ? $config : new ArrayOverloadObject((array) $config);
+        $this->config = $config instanceof Model ? $config : new ArrayOverload((array) $config);
     }
 }
