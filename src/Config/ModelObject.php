@@ -5,8 +5,6 @@
 
 namespace Mvc5\Config;
 
-use Mvc5\ArrayObject;
-
 trait ModelObject
 {
     /**
@@ -25,6 +23,6 @@ trait ModelObject
      */
     function __construct($config = [])
     {
-        $this->config = $config instanceof Model ? $config : new ArrayObject((array) $config);
+        $this->config = $config instanceof Model ? $config : new \Mvc5\ArrayObject((array) $config);
     }
 }

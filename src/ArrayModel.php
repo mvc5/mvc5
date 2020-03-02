@@ -8,6 +8,6 @@ class ArrayModel
     /**
      *
      */
-    use Config\ArrayModel;
+    use Config\ArrayObject;
     use Config\ReadOnly;
 }

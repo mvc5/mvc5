@@ -11,6 +11,6 @@ class Overload
     /**
      *
      */
+    use Config\ModelOverload;
     use Config\Overload;
-    use Config\OverloadObject;
 }

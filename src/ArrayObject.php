@@ -8,19 +8,6 @@ class ArrayObject
     /**
      *
      */
-    use Config\ArrayModel;
+    use Config\ArrayObject;
     use Config\Config;
-
-    /**
-     * @var array
-     */
-    protected array $config = [];
-
-    /**
-     * @param array|mixed $config
-     */
-    function __construct($config = [])
-    {
-        $this->config = (array) $config;
-    }
 }

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Config;
 
-trait ArrayModel
+trait ArrayObject
 {
     /**
      *

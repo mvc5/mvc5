@@ -8,6 +8,6 @@ class ArrayOverload
     /**
      *
      */
-    use Config\ArrayModel;
+    use Config\ArrayObject;
     use Config\Overload;
 }

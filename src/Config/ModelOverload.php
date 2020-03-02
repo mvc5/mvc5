@@ -7,7 +7,7 @@ namespace Mvc5\Config;
 
 use Mvc5\ArrayOverload;
 
-trait OverloadObject
+trait ModelOverload
 {
     /**
      *
