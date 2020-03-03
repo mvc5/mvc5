@@ -19,10 +19,10 @@ trait ArrayObject
     protected array $config = [];
 
     /**
-     * @param array|mixed $config
+     * @param array $config
      */
-    function __construct($config = [])
+    function __construct(array $config = [])
     {
-        $this->config = (array) $config;
+        $this->config = $config;
     }
 }

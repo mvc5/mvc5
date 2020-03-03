@@ -5,11 +5,6 @@
 
 namespace Mvc5\Config;
 
-use function current;
-use function key;
-use function next;
-use function reset;
-
 trait Iterator
 {
     /**
