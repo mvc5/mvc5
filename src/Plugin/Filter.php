@@ -5,6 +5,10 @@
 
 namespace Mvc5\Plugin;
 
+use Mvc5\Resolvable;
+use Throwable;
+use Traversable;
+
 class Filter
     implements Gem\Filter
 {
@@ -15,9 +19,9 @@ class Filter
     use Config\Config;
 
     /**
-     * @var array|\Mvc5\Resolvable|\Traversable
+     * @var Resolvable
      */
-    protected $filter;
+    protected Resolvable $filter;
 
     /**
      * @var string|null
@@ -26,24 +30,17 @@ class Filter
 
     /**
      * @param string|mixed $config
-     * @param array|\Mvc5\Resolvable|\Traversable $filter
+     * @param array|Resolvable|Traversable $filter
      * @param array $args
      * @param string|null $param
+     * @throws Throwable
      */
     function __construct($config, $filter = [], array $args = [], string $param = null)
     {
         $this->args   = $args;
         $this->config = $config;
-        $this->filter = $filter;
+        $this->filter = $filter instanceof Resolvable ? $filter : new Value($filter);
         $this->param  = $param;
-    }
-
-    /**
-     * @return array|\Mvc5\Resolvable|\Traversable
-     */
-    function filter()
-    {
-        return $this->filter;
     }
 
     /**
@@ -52,5 +49,13 @@ class Filter
     function param() : ?string
     {
         return $this->param;
+    }
+
+    /**
+     * @return Resolvable
+     */
+    function plugin() : Resolvable
+    {
+        return $this->filter;
     }
 }

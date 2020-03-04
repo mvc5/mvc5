@@ -5,6 +5,8 @@
 
 namespace Mvc5\Plugin\Gem;
 
+use Mvc5\Resolvable;
+
 interface Filter
     extends Gem
 {
@@ -19,12 +21,12 @@ interface Filter
     function config();
 
     /**
-     * @return string|array
-     */
-    function filter();
-
-    /**
      * @return string|null
      */
     function param() : ?string;
+
+    /**
+     * @return Resolvable
+     */
+    function plugin() : Resolvable;
 }

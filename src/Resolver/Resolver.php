@@ -186,7 +186,7 @@ trait Resolver
     protected function filterable(Filter $filter, array $args = [])
     {
         return $this->filter(
-            $this->resolve($filter->config()), $this->resolve($filter->filter()), $args, $filter->param()
+            $this->resolve($filter->config()), $this->resolve($filter->plugin()), $args, $filter->param()
         );
     }
 
