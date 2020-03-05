@@ -5,10 +5,13 @@
 
 namespace Mvc5\Resolver;
 
+use ArrayAccess;
 use Closure;
 use Mvc5\Arg;
+use Mvc5\Config\Model;
+use Mvc5\Config\Configuration;
 use Mvc5\Container;
-use Mvc5\Model;
+use Mvc5\ArrayModel;
 use Mvc5\Plugin\Gem\Args;
 use Mvc5\Plugin\Gem\Call;
 use Mvc5\Plugin\Gem\Calls;
@@ -64,7 +67,7 @@ trait Resolver
     protected $scope;
 
     /**
-     * @param array|\ArrayAccess|null $config
+     * @param array|ArrayAccess|null $config
      * @param callable|null $provider
      * @param bool|object|null $scope
      * @param bool $strict
@@ -72,22 +75,22 @@ trait Resolver
      */
     function __construct($config = null, callable $provider = null, $scope = null, bool $strict = false)
     {
-        $this->config = $config === null ? new Model : (is_array($config) ? new Model($config) : $config);
+        $this->config = $config instanceof Model ? $config : new ArrayModel((array) $config);
 
         $this->container = ! isset($config[Arg::CONTAINER]) ? new Container :
-            (is_array($config[Arg::CONTAINER]) ? new Container($config[Arg::CONTAINER]) : $config[Arg::CONTAINER]);
+            ($config[Arg::CONTAINER] instanceof Configuration ? $config[Arg::CONTAINER] : new Container((array) $config[Arg::CONTAINER]));
 
-        $this->events = ! isset($config[Arg::EVENTS]) ? new Model :
-            (is_array($config[Arg::EVENTS]) ? new Model($config[Arg::EVENTS]) : $config[Arg::EVENTS]);
+        $this->events = ! isset($config[Arg::EVENTS]) ? new ArrayModel :
+            ($config[Arg::EVENTS] instanceof ArrayAccess ? $config[Arg::EVENTS] : new ArrayModel((array) $config[Arg::EVENTS]));
 
-        $this->services = ! isset($config[Arg::SERVICES]) ? new Model :
-            (is_array($config[Arg::SERVICES]) ? new Model($config[Arg::SERVICES]) : $config[Arg::SERVICES]);
+        $this->services = ! isset($config[Arg::SERVICES]) ? new ArrayModel :
+            ($config[Arg::SERVICES] instanceof Model ? $config[Arg::SERVICES] : new ArrayModel((array) $config[Arg::SERVICES]));
 
         $provider && $this->provider = $this->resolve($provider);
 
-        $scope && $this->scope = $this->resolve($scope);
+        $this->scope = $this->resolve($scope) ?? false;
 
-        $strict && $this->strict = $strict;
+        $this->strict = $strict;
     }
 
     /**
@@ -633,7 +636,7 @@ trait Resolver
 }
 
 /**
- * @param array|\ArrayAccess $config
+ * @param array|ArrayAccess $config
  * @param string $name
  * @return mixed
  */
