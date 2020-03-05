@@ -125,8 +125,8 @@ trait Config
 
         $scope = $this->config->scope;
 
-        if (! $scope instanceof self) {
-            return $this->config = clone $this->config;
+        if (! $scope) {
+            return null;
         }
 
         $this->config->scope = false;

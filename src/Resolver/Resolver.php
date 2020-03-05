@@ -41,6 +41,7 @@ use function array_merge;
 use function array_shift;
 use function explode;
 use function is_array;
+use function is_object;
 use function is_string;
 use function key;
 use function substr;
@@ -592,6 +593,9 @@ trait Resolver
         $this->container = clone $this->container;
         $this->events = clone $this->events;
         $this->services = clone $this->services;
+
+        is_object($this->scope) &&
+            $this->scope = clone $this->scope;
     }
 
     /**
