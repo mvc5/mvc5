@@ -42,7 +42,6 @@ use function array_shift;
 use function explode;
 use function is_array;
 use function is_string;
-use function is_object;
 use function key;
 use function substr;
 
@@ -530,15 +529,6 @@ trait Resolver
     }
 
     /**
-     * @param object $scope
-     * @return bool|object|null
-     */
-    function scope($scope = null)
-    {
-        return null !== $scope ? $this->scope = $scope : $this->scope;
-    }
-
-    /**
      * @param Closure $callback
      * @param bool $scoped
      * @return Closure
@@ -602,9 +592,6 @@ trait Resolver
         $this->container = clone $this->container;
         $this->events = clone $this->events;
         $this->services = clone $this->services;
-
-        is_object($this->scope) &&
-            $this->scope = clone $this->scope;
     }
 
     /**

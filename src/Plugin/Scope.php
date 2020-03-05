@@ -5,6 +5,7 @@
 
 namespace Mvc5\Plugin;
 
+use Mvc5\Service\Manager;
 use Mvc5\Service\Service;
 
 /**
@@ -15,26 +16,22 @@ class Scope
     extends Call
 {
     /**
+     * @param Manager $context
      * @param string $name
-     * @param array $args
      */
-    function __construct(string $name, array $args)
+    function __construct(Manager $context, string $name)
     {
-        parent::__construct([$this, 'scope'], [$name, new Link, new Args($args)]);
+        parent::__construct([$this, 'scope'], [$context, new Link, $name]);
     }
 
     /**
-     * @param string $name
+     * @param Manager $context
      * @param Service $service
-     * @param array $args
+     * @param string $name
      * @return callable|object|null
      */
-    function scope(string $name, Service $service, array $args)
+    function scope(Manager $context, Service $service, string $name)
     {
-        $plugin = $service->plugin($name, $args);
-
-        $args[0]->scope($plugin);
-
-        return $plugin;
+        return $context->plugin(new ScopedCall(fn() => fn() => $this->scope = $service->plugin($name, [$this, $service])));
     }
 }

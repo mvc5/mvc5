@@ -119,22 +119,23 @@ trait Config
             return null;
         }
 
-        if (!$this->config instanceof Scope) {
+        if (! $this->config instanceof Scope) {
             return $this->config = clone $this->config;
         }
 
-        $scope = $this->config->scope();
+        $scope = $this->config->scope;
 
-        if (!$scope instanceof self) {
+        if (! $scope instanceof self) {
             return $this->config = clone $this->config;
         }
 
-        $this->config->scope(false);
+        $this->config->scope = false;
 
         $clone = clone $this->config;
-        $clone->scope($this);
 
-        $this->config->scope($scope);
+        $clone->scope = $this;
+
+        $this->config->scope = $scope;
 
         return $this->config = $clone;
     }
