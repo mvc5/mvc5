@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 
 class App
     extends Config
-    implements Config\Scope, ContainerInterface, Service\Manager
+    implements Config\Scopable, ContainerInterface, Service\Manager
 {
     /**
      *

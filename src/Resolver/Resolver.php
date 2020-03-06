@@ -8,10 +8,11 @@ namespace Mvc5\Resolver;
 use ArrayAccess;
 use Closure;
 use Mvc5\Arg;
-use Mvc5\Config\Model;
-use Mvc5\Config\Configuration;
-use Mvc5\Container;
 use Mvc5\ArrayModel;
+use Mvc5\Config\Configuration;
+use Mvc5\Config\Model;
+use Mvc5\Config\Scope;
+use Mvc5\Container;
 use Mvc5\Plugin\Gem\Args;
 use Mvc5\Plugin\Gem\Call;
 use Mvc5\Plugin\Gem\Calls;
@@ -54,17 +55,13 @@ trait Resolver
     use Base;
     use Build;
     use Generator;
+    use Scope;
     use Service;
 
     /**
      * @var callable
      */
     protected $provider;
-
-    /**
-     * @var bool|object|null
-     */
-    protected $scope;
 
     /**
      * @param array|ArrayAccess|null $config

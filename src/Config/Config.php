@@ -115,28 +115,7 @@ trait Config
      */
     function __clone()
     {
-        if (!is_object($this->config)) {
-            return null;
-        }
-
-        if (! $this->config instanceof Scope) {
-            return $this->config = clone $this->config;
-        }
-
-        $scope = $this->config->scope;
-
-        if (! $scope) {
-            return null;
-        }
-
-        $this->config->scope = false;
-
-        $clone = clone $this->config;
-
-        $clone->scope = $this;
-
-        $this->config->scope = $scope;
-
-        return $this->config = $clone;
+        is_object($this->config) &&
+            ($this->config = $this->config instanceof Scopable ? $this->config->withScope($this) : clone $this->config);
     }
 }
