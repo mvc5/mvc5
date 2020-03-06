@@ -14,7 +14,6 @@ use function is_string;
 use function setcookie;
 use function setrawcookie;
 use function strtotime;
-use function version_compare;
 
 trait PHPCookies
 {
