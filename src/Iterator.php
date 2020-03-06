@@ -11,7 +11,5 @@ class Iterator
     /**
      *
      */
-    use Config\Count;
-    use Config\Iterator;
     use Config\ModelObject;
 }
