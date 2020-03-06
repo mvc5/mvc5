@@ -7,7 +7,7 @@ namespace Mvc5\Plugin;
 
 use Mvc5\Arg;
 use Mvc5\Resolvable;
-
+use Throwable;
 
 final class Expect
     implements Gem\Expect
@@ -18,9 +18,9 @@ final class Expect
     protected bool $args = false;
 
     /**
-     * @var mixed|null
+     * @var Resolvable
      */
-    protected $exception;
+    protected Resolvable $exception;
 
     /**
      * @var bool
@@ -28,66 +28,66 @@ final class Expect
     protected bool $named = false;
 
     /**
-     * @var Resolvable|mixed
+     * @var Resolvable
      */
-    protected $plugin;
+    protected Resolvable $plugin;
 
     /**
      * @param Resolvable|mixed $plugin
-     * @param mixed|null $exception
+     * @param Resolvable|mixed|null $exception
      * @param bool|false $named
      * @param bool|false $args
      */
     function __construct($plugin, $exception = null, bool $named = false, bool $args = false)
     {
         $this->args = $args;
-        $this->exception = $exception;
+        $this->exception = $exception instanceof Resolvable ? $exception : new Value($exception);
         $this->named = $named;
-        $this->plugin = $plugin;
+        $this->plugin = $plugin instanceof Resolvable ? $plugin : new Value($plugin);
     }
 
     /**
-     * @param \Throwable $exception
+     * @param Throwable $exception
      * @param array $args
      * @return array
      */
-    function args(\Throwable $exception, array $args = []) : array
+    function args(Throwable $exception, array $args = []) : array
     {
         return  $this->named ? $this->named($exception, $args) : $this->params($exception, $args);
     }
 
     /**
-     * @return \Mvc5\Resolvable|mixed
+     * @return Resolvable
      */
-    function exception()
+    function exception() : Resolvable
     {
         return $this->exception;
     }
 
     /**
-     * @param \Throwable $exception
+     * @param Throwable $exception
      * @param array $args
      * @return array
      */
-    protected function named(\Throwable $exception, array $args) : array
+    protected function named(Throwable $exception, array $args) : array
     {
         return [Arg::EXCEPTION => $exception] + ($this->args ? $args : []);
     }
 
     /**
-     * @param \Throwable $exception
+     * @param Throwable $exception
      * @param array $args
      * @return array
      */
-    protected function params(\Throwable $exception, array $args) : array
+    protected function params(Throwable $exception, array $args) : array
     {
         return $this->args ? [$exception, ...$args] : [$exception];
     }
 
     /**
-     * @return \Mvc5\Resolvable|mixed
+     * @return Resolvable
      */
-    function plugin()
+    function plugin() : Resolvable
     {
         return $this->plugin;
     }
