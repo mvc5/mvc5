@@ -11,6 +11,7 @@ use Mvc5\Arg;
 use Mvc5\ArrayModel;
 use Mvc5\Config\Configuration;
 use Mvc5\Config\Model;
+use Mvc5\Config\Scopable;
 use Mvc5\Config\Scope;
 use Mvc5\Container;
 use Mvc5\Plugin\Gem\Args;
@@ -592,7 +593,7 @@ trait Resolver
         $this->services = clone $this->services;
 
         is_object($this->scope) &&
-            $this->scope = clone $this->scope;
+            $this->scope = $this->scope instanceof Scopable ? $this->scope->withScope($this) : clone $this->scope;
     }
 
     /**
