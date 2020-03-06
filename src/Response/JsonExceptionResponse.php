@@ -14,6 +14,7 @@ class JsonExceptionResponse
     /**
      * @param Throwable $exception
      * @param bool|false $trace
+     * @throws Throwable
      */
     function __construct(Throwable $exception, bool $trace = false)
     {

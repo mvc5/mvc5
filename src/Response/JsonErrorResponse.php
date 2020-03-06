@@ -12,6 +12,7 @@ class JsonErrorResponse
 {
     /**
      * @param Error $error
+     * @throws \Throwable
      */
     function __construct(Error $error)
     {
