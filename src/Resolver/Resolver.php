@@ -86,9 +86,9 @@ trait Resolver
 
         $provider && $this->provider = $this->resolve($provider);
 
-        $this->scope = $this->resolve($scope) ?? false;
-
         $this->strict = $strict;
+
+        $this->scope = $this->resolve($scope) ?? false;
     }
 
     /**
