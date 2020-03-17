@@ -11,7 +11,7 @@ return [
     'cookie_domain'    => '',
     'cookie_secure'    => '', //HSTS
     'cookie_httponly'  => 1,
-    //'cookie_samesite'  => 'lax',
+    'cookie_samesite'  => 'lax',
     'use_strict_mode'  => 1,
     'use_cookies'      => 1,
     'use_only_cookies' => 1
