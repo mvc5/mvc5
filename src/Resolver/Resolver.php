@@ -84,7 +84,7 @@ trait Resolver
         $this->services = ! isset($config[Arg::SERVICES]) ? new ArrayModel :
             ($config[Arg::SERVICES] instanceof Model ? $config[Arg::SERVICES] : new ArrayModel((array) $config[Arg::SERVICES]));
 
-        $provider && $this->provider = $this->resolve($provider);
+        $this->provider = $provider;
 
         $this->strict = $strict;
 
