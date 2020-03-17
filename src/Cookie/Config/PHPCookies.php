@@ -8,7 +8,6 @@ namespace Mvc5\Cookie\Config;
 use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 
-use function array_values;
 use function is_array;
 use function is_string;
 use function setcookie;
@@ -108,11 +107,7 @@ trait PHPCookies
  */
 function emit(string $name, string $value, array $options, bool $raw = false) : bool
 {
-    if (isset($options[Arg::SAMESITE])) {
-        return $raw ? setrawcookie($name, $value, $options) : setcookie($name, $value, $options);
-    }
-
-    return $raw ? setrawcookie($name, $value, ...array_values($options)) : setcookie($name, $value, ...array_values($options));
+    return $raw ? setrawcookie($name, $value, $options) : setcookie($name, $value, $options);
 }
 
 /**
