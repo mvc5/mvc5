@@ -322,7 +322,7 @@ trait Request
 /**
  * @param array|\ArrayAccess $data
  * @param array|string $name
- * @param null $default
+ * @param mixed|null $default
  * @return mixed
  */
 function match($data, $name, $default = null)
