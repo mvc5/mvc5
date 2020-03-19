@@ -11,6 +11,11 @@ class Callback
     extends Scoped
 {
     /**
+     * @var Closure
+     */
+    protected $callable;
+
+    /**
      * @param Closure $closure
      */
     function __construct(Closure $closure)

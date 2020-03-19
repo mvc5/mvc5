@@ -11,7 +11,7 @@ class Scoped
     implements Gem\Scoped
 {
     /**
-     * @var callable|Closure
+     * @var callable
      */
     protected $callable;
 
