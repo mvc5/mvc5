@@ -25,4 +25,12 @@ trait ModelObject
     {
         $this->config = $config instanceof Model ? $config : new \Mvc5\ArrayObject((array) $config);
     }
+
+    /**
+     *
+     */
+    function __clone()
+    {
+        $this->config = $this->config instanceof Scopable ? $this->config->withScope($this) : clone $this->config;
+    }
 }

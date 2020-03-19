@@ -109,13 +109,4 @@ trait Config
         
         return $new;
     }
-
-    /**
-     *
-     */
-    function __clone()
-    {
-        is_object($this->config) &&
-            ($this->config = $this->config instanceof Scopable ? $this->config->withScope($this) : clone $this->config);
-    }
 }
