@@ -105,7 +105,7 @@ trait Messages
     /**
      * @param array|string $name
      * @param array $value
-     * @return array
+     * @return mixed
      */
     function set($name, $value = null)
     {
