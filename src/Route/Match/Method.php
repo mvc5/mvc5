@@ -21,12 +21,13 @@ class Method
 
     /**
      * @param Request $request
-     * @param array $method
+     * @param array $methods
      * @return bool
      */
-    protected function match(Request $request, array $method) : bool
+    protected function match(Request $request, array $methods) : bool
     {
-        return !$method || in_array($request->method(), $method);
+        return !$methods || in_array($request->method(), $methods) ||
+            (Arg::HTTP_HEAD === $request->method() && in_array(Arg::HTTP_GET, $methods));
     }
 
     /**

@@ -56,10 +56,12 @@ interface Arg
     const FRAGMENT = 'fragment';
     const HEADERS = 'headers';
     const HOST = 'host';
-    const HTTP_OK = 200;
-    const HTTP_SERVER_ERROR = 500;
+    const HTTP_GET = 'GET';
+    const HTTP_HEAD = 'HEAD';
     const HTTP_MIDDLEWARE = 'http\middleware';
+    const HTTP_OK = 200;
     const HTTP_ONLY = 'httponly';
+    const HTTP_SERVER_ERROR = 500;
     const INDEX = '#';
     const INFO = 'info';
     const ITEM = 'item';
