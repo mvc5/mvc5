@@ -20,14 +20,14 @@ trait Scope
     {
         $scope = $this->scope;
 
-        if (! is_object($scope) || (! $scope instanceof $context && $scope !== $this)) {
+        if (! is_object($scope) || ($scope !== $this && ! $scope instanceof $context)) {
             return clone $this;
         }
 
         $this->scope = null;
 
         $new = clone $this;
-        $new->scope = $scope instanceof $context ? $context : $new;
+        $new->scope = $scope === $this ? $new : $context;
 
         $this->scope = $scope;
 
