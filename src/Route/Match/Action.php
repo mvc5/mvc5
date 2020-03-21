@@ -13,13 +13,13 @@ class Action
 {
     /**
      * @param Route $route
-     * @param string|null $method
+     * @param string $method
      * @return mixed
      */
-    protected function action(Route $route, ?string $method)
+    protected function action(Route $route, string $method)
     {
-        return $method ? (Arg::HTTP_HEAD !== $method ? $route->action($method) :
-            $route->action(Arg::HTTP_HEAD) ?? $route->action(Arg::HTTP_GET)) : null;
+        return Arg::HTTP_HEAD !== $method ? $route->action($method) :
+            $route->action(Arg::HTTP_HEAD) ?? $route->action(Arg::HTTP_GET);
     }
 
     /**
