@@ -18,8 +18,8 @@ class Action
      */
     protected function action(Route $route, ?string $method)
     {
-        return !$method ? null : (Arg::HTTP_HEAD !== $method ? $route->action($method) :
-            $route->action($method) ?? $route->action(Arg::HTTP_GET));
+        return $method ? (Arg::HTTP_HEAD !== $method ? $route->action($method) :
+            $route->action(Arg::HTTP_HEAD) ?? $route->action(Arg::HTTP_GET)) : null;
     }
 
     /**
