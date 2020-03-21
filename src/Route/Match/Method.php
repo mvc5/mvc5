@@ -20,14 +20,14 @@ class Method
     use Plugin\Optional;
 
     /**
-     * @param Request $request
+     * @param string $method
      * @param array $methods
      * @return bool
      */
-    protected function match(Request $request, array $methods) : bool
+    protected function match(string $method, array $methods) : bool
     {
-        return !$methods || in_array($request->method(), $methods) ||
-            (Arg::HTTP_HEAD === $request->method() && in_array(Arg::HTTP_GET, $methods));
+        return !$methods || in_array($method, $methods) ||
+            (Arg::HTTP_HEAD === $method && in_array(Arg::HTTP_GET, $methods));
     }
 
     /**
@@ -38,7 +38,7 @@ class Method
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $this->match($request, (array) $route->method()) ? $next($route, $request) : (
+        return $this->match($request->method(), (array) $route->method()) ? $next($route, $request) : (
             $this->optional($route, Arg::METHOD) ? null : new MethodNotAllowed
         );
     }

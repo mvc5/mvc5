@@ -29,12 +29,12 @@ class CSRFToken
     }
 
     /**
-     * @param Request $request
+     * @param string $method
      * @return bool
      */
-    protected function allow(Request $request) : bool
+    protected function allow(string $method) : bool
     {
-        return in_array((string) $request->method(), ['GET', 'HEAD', 'OPTIONS', 'TRACE']);
+        return in_array($method, ['GET', 'HEAD', 'OPTIONS', 'TRACE']);
     }
 
     /**
@@ -63,7 +63,7 @@ class CSRFToken
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return !($route[ARG::CSRF_TOKEN] ?? $this->enable) || $this->allow($request) || $this->match($request) ?
+        return !($route[ARG::CSRF_TOKEN] ?? $this->enable) || $this->allow($request->method()) || $this->match($request) ?
             $next($route, $request) : new Forbidden;
     }
 }
