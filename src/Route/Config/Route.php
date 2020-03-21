@@ -10,12 +10,12 @@ use Mvc5\Arg;
 trait Route
 {
     /**
-     * @param string|null $name
+     * @param string $name
      * @return callable|mixed
      */
-    function action(string $name = null)
+    function action(string $name)
     {
-        return null === $name ? $this[Arg::ACTION] : ($this->get(Arg::ACTION)[$name] ?? null);
+        return $this->get(Arg::ACTION)[$name] ?? null;
     }
 
     /**

@@ -11,10 +11,10 @@ interface Route
     extends Model
 {
     /**
-     * @param string|null $name
+     * @param string $name
      * @return callable|mixed
      */
-    function action(string $name = null);
+    function action(string $name);
 
     /**
      * @param string $name
