@@ -23,6 +23,16 @@ class Action
     }
 
     /**
+     * @param Request $request
+     * @param $controller
+     * @return Request
+     */
+    protected function request(Request $request, $controller) : Request
+    {
+        return $controller ? $request->with(Arg::CONTROLLER, $controller) : $request;
+    }
+
+    /**
      * @param Route $route
      * @param Request $request
      * @param callable $next
@@ -30,9 +40,6 @@ class Action
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        ($controller = $this->action($route, $request->method())) &&
-            $request = $request->with(Arg::CONTROLLER, $controller);
-
-        return $next($route, $request);
+        return $next($route, $this->request($request, $this->action($route, $request->method())));
     }
 }

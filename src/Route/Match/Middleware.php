@@ -44,6 +44,16 @@ class Middleware
     }
 
     /**
+     * @param Request $request
+     * @param mixed $middleware
+     * @return Request
+     */
+    protected function request(Request $request, $middleware) : Request
+    {
+        return $middleware ? $request->with(Arg::CONTROLLER, $middleware) : $request;
+    }
+
+    /**
      * @param callable|mixed $controller
      * @param array $middleware
      * @return array
@@ -64,9 +74,6 @@ class Middleware
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        ($middleware = $this->middleware($request[Arg::CONTROLLER], $route[Arg::MIDDLEWARE])) &&
-            $request = $request->with(Arg::CONTROLLER, $middleware);
-
-        return $next($route, $request);
+        return $next($route, $this->request($request, $this->middleware($request[Arg::CONTROLLER], $route[Arg::MIDDLEWARE])));
     }
 }
