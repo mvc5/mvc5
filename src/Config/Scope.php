@@ -5,6 +5,8 @@
 
 namespace Mvc5\Config;
 
+use function is_object;
+
 trait Scope
 {
     /**
