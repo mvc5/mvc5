@@ -5,8 +5,9 @@
 
 namespace Mvc5\Response;
 
-use Mvc5\Arg;
 use Throwable;
+
+use const Mvc5\{ CODE, FILE, HTTP_SERVER_ERROR, LINE, MESSAGE, TRACE };
 
 class JsonExceptionResponse
     extends JsonResponse
@@ -20,13 +21,13 @@ class JsonExceptionResponse
     {
         parent::__construct(
             $trace ? [
-                Arg::CODE => $exception->getCode(),
-                Arg::MESSAGE => $exception->getMessage(),
-                Arg::LINE => $exception->getLine(),
-                Arg::FILE => $exception->getFile(),
-                Arg::TRACE => $exception->getTrace()
-            ] : [Arg::MESSAGE => ''],
-            Arg::HTTP_SERVER_ERROR
+                CODE => $exception->getCode(),
+                MESSAGE => $exception->getMessage(),
+                LINE => $exception->getLine(),
+                FILE => $exception->getFile(),
+                TRACE => $exception->getTrace()
+            ] : [MESSAGE => ''],
+            HTTP_SERVER_ERROR
         );
     }
 }

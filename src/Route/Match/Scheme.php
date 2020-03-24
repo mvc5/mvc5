@@ -5,12 +5,13 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\BadRequest;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function in_array;
+
+use const Mvc5\{ SCHEME, URI };
 
 class Scheme
 {
@@ -21,7 +22,7 @@ class Scheme
      */
     protected function match(Request $request, array $scheme) : bool
     {
-        return !$scheme || in_array($request[Arg::URI][Arg::SCHEME], $scheme);
+        return !$scheme || in_array($request[URI][SCHEME], $scheme);
     }
 
     /**

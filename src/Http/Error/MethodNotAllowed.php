@@ -5,8 +5,9 @@
 
 namespace Mvc5\Http\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpError;
+
+use const Mvc5\{ DESCRIPTION, ERRORS, MESSAGE, STATUS };
 
 class MethodNotAllowed
     extends HttpError
@@ -17,10 +18,10 @@ class MethodNotAllowed
     function __construct(array $config = [])
     {
         parent::__construct($config + [
-            Arg::DESCRIPTION => 'Unsupported resource request method.',
-            Arg::ERRORS => [],
-            Arg::MESSAGE => 'Method Not Allowed',
-            Arg::STATUS => 405
+            DESCRIPTION => 'Unsupported resource request method.',
+            ERRORS => [],
+            MESSAGE => 'Method Not Allowed',
+            STATUS => 405
         ]);
     }
 }

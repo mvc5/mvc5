@@ -5,9 +5,10 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
+
+use const Mvc5\{ CONTROLLER, HTTP_GET, HTTP_HEAD };
 
 class Action
 {
@@ -18,8 +19,7 @@ class Action
      */
     protected function action(Route $route, string $method)
     {
-        return Arg::HTTP_HEAD !== $method ? $route->action($method) :
-            $route->action(Arg::HTTP_HEAD) ?? $route->action(Arg::HTTP_GET);
+        return HTTP_HEAD !== $method ? $route->action($method) : $route->action(HTTP_HEAD) ?? $route->action(HTTP_GET);
     }
 
     /**
@@ -29,7 +29,7 @@ class Action
      */
     protected function request(Request $request, $controller) : Request
     {
-        return $controller ? $request->with(Arg::CONTROLLER, $controller) : $request;
+        return $controller ? $request->with(CONTROLLER, $controller) : $request;
     }
 
     /**

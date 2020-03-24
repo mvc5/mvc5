@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\SERVICE;
 
 class Service
     extends Plugin
@@ -17,6 +17,6 @@ class Service
      */
     function __construct(string $name, array $args = [], array $calls = [])
     {
-        parent::__construct($name, $args, $calls + [Arg::SERVICE => new Link]);
+        parent::__construct($name, $args, $calls + [SERVICE => new Link]);
     }
 }

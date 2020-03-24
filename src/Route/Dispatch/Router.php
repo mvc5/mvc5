@@ -5,13 +5,14 @@
 
 namespace Mvc5\Route\Dispatch;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function is_string;
+
+use const Mvc5\{ CHILDREN, ERROR, NAME, MATCHED, PARENT, ROUTE, SEPARATOR };
 
 trait Router
 {
@@ -49,7 +50,7 @@ trait Router
      */
     protected function child(Route $route, Route $parent = null) : Route
     {
-        return $route->with(Arg::PARENT, $parent);
+        return $route->with(PARENT, $parent);
     }
 
     /**
@@ -97,7 +98,7 @@ trait Router
      */
     protected function name(string $name, string $parent = null) : string
     {
-        return !$parent ? $name : $parent . Arg::SEPARATOR . $name;
+        return !$parent ? $name : $parent . SEPARATOR . $name;
     }
 
     /**
@@ -107,7 +108,7 @@ trait Router
      */
     protected function result(Request $request, $result)
     {
-        return $result instanceof Error ? $request->with(Arg::ERROR, $result) : $result;
+        return $result instanceof Error ? $request->with(ERROR, $result) : $result;
     }
 
     /**
@@ -126,8 +127,8 @@ trait Router
      */
     protected function solve($request)
     {
-        return !$request instanceof Request || true === $request[Arg::MATCHED] ? $request :
-            $this->traverse($request[Arg::ROUTE][Arg::CHILDREN] ?? [], $request, $request[Arg::ROUTE]);
+        return !$request instanceof Request || true === $request[MATCHED] ? $request :
+            $this->traverse($request[ROUTE][CHILDREN] ?? [], $request, $request[ROUTE]);
     }
 
     /**
@@ -139,7 +140,7 @@ trait Router
     protected function step(Route $route, Request $request, $name)
     {
         return $this->route(
-            $route->with(Arg::NAME, $this->name($this->key($route, $name), $request[Arg::NAME])), $request
+            $route->with(NAME, $this->name($this->key($route, $name), $request[NAME])), $request
         );
     }
 

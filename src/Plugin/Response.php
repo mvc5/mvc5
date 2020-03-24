@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\{ EVENT, REQUEST, RESPONSE, RESPONSE_DISPATCH };
 
 class Response
     extends Plugin
@@ -17,7 +17,7 @@ class Response
      */
     function __construct(string $event, array $args = [], array $calls = [])
     {
-        parent::__construct(Arg::RESPONSE_DISPATCH, $this->eventArgs($event, $args), $calls);
+        parent::__construct(RESPONSE_DISPATCH, $this->eventArgs($event, $args), $calls);
     }
 
     /**
@@ -27,8 +27,8 @@ class Response
      */
     protected function eventArgs(string $event, array $args) : array
     {
-        return [Arg::EVENT => $event] + $args + [
-            Arg::REQUEST => new Plugin('request'), Arg::RESPONSE => new Plugin('response')
+        return [EVENT => $event] + $args + [
+            REQUEST => new Plugin('request'), RESPONSE => new Plugin('response')
         ];
     }
 }

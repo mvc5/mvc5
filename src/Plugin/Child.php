@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\{ ARGS, NAME, PARENT };
 
 class Child
     implements Gem\Child
@@ -23,9 +23,9 @@ class Child
     function __construct(string $name = null, string $parent = null, array $args = [])
     {
         $this->config = [
-            Arg::ARGS   => $args,
-            Arg::NAME   => $name,
-            Arg::PARENT => $parent
+            ARGS   => $args,
+            NAME   => $name,
+            PARENT => $parent
         ];
     }
 }

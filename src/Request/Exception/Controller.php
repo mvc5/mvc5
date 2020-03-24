@@ -5,12 +5,13 @@
 
 namespace Mvc5\Request\Exception;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Plugins\Service;
 use Mvc5\View\ViewLayout;
 use Throwable;
+
+use const Mvc5\{ ACCEPTS_JSON, EXCEPTION, EXCEPTION_LAYOUT, RESPONSE_JSON_EXCEPTION };
 
 class Controller
 {
@@ -25,7 +26,7 @@ class Controller
      */
     protected function json(Throwable $exception) : Response
     {
-        return $this->plugin(Arg::RESPONSE_JSON_EXCEPTION, [Arg::EXCEPTION => $exception]);
+        return $this->plugin(RESPONSE_JSON_EXCEPTION, [EXCEPTION => $exception]);
     }
 
     /**
@@ -34,7 +35,7 @@ class Controller
      */
     protected function layout(Throwable $exception) : ViewLayout
     {
-        return $this->plugin(Arg::EXCEPTION_LAYOUT, [Arg::EXCEPTION => $exception]);
+        return $this->plugin(EXCEPTION_LAYOUT, [EXCEPTION => $exception]);
     }
 
     /**
@@ -43,6 +44,6 @@ class Controller
      */
     function __invoke(Request $request)
     {
-        return $request[Arg::ACCEPTS_JSON] ? $this->json($request[Arg::EXCEPTION]) : $this->layout($request[Arg::EXCEPTION]);
+        return $request[ACCEPTS_JSON] ? $this->json($request[EXCEPTION]) : $this->layout($request[EXCEPTION]);
     }
 }

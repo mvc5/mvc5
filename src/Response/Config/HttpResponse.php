@@ -5,13 +5,14 @@
 
 namespace Mvc5\Response\Config;
 
-use Mvc5\Arg;
 use Mvc5\ArrayObject;
 use Mvc5\Cookie\Cookies;
 use Mvc5\Cookie\HttpCookies;
 use Mvc5\Http\Headers;
 use Mvc5\Http\HttpHeaders;
 use Mvc5\Response\Response;
+
+use const Mvc5\{ BODY, COOKIES, HEADERS, REASON, STATUS, VERSION };
 
 trait HttpResponse
 {
@@ -28,14 +29,14 @@ trait HttpResponse
      */
     function __construct($body = null, int $status = null, $headers = [], array $config = [])
     {
-        $config[Arg::COOKIES] ??= new HttpCookies;
+        $config[COOKIES] ??= new HttpCookies;
 
-        !($config[Arg::COOKIES] instanceof Cookies) &&
-            $config[Arg::COOKIES] = new HttpCookies($config[Arg::COOKIES]);
+        !($config[COOKIES] instanceof Cookies) &&
+            $config[COOKIES] = new HttpCookies($config[COOKIES]);
 
-        $config[Arg::HEADERS] = $headers instanceof Headers ? $headers : new HttpHeaders($headers);
-        $config[Arg::STATUS] = $status;
-        $config[Arg::BODY] = $body;
+        $config[HEADERS] = $headers instanceof Headers ? $headers : new HttpHeaders($headers);
+        $config[STATUS] = $status;
+        $config[BODY] = $body;
 
         $this->config = new ArrayObject($config);
     }
@@ -45,7 +46,7 @@ trait HttpResponse
      */
     function cookies() : Cookies
     {
-        return $this[Arg::COOKIES];
+        return $this[COOKIES];
     }
 
     /**
@@ -84,7 +85,7 @@ trait HttpResponse
      */
     function withCookies($cookies) : Response
     {
-        return $this->with(Arg::COOKIES, $cookies instanceof Cookies ? $cookies : new HttpCookies($cookies));
+        return $this->with(COOKIES, $cookies instanceof Cookies ? $cookies : new HttpCookies($cookies));
     }
 
     /**
@@ -94,7 +95,7 @@ trait HttpResponse
      */
     function withHeader($name, $value) : Response
     {
-        return $this->with(Arg::HEADERS, $this->headers()->with((string) $name, $value));
+        return $this->with(HEADERS, $this->headers()->with((string) $name, $value));
     }
 
     /**
@@ -103,7 +104,7 @@ trait HttpResponse
      */
     function withHeaders($headers) : Response
     {
-        return $this->with(Arg::HEADERS, $headers instanceof Headers ? $headers : new HttpHeaders($headers));
+        return $this->with(HEADERS, $headers instanceof Headers ? $headers : new HttpHeaders($headers));
     }
 
     /**
@@ -113,7 +114,7 @@ trait HttpResponse
      */
     function withStatus($status, $reason = '') : Response
     {
-        return $this->with([Arg::STATUS => (int) $status, Arg::REASON => (string) $reason]);
+        return $this->with([STATUS => (int) $status, REASON => (string) $reason]);
     }
 
     /**
@@ -122,6 +123,6 @@ trait HttpResponse
      */
     function withVersion(string $version) : Response
     {
-        return $this->with(Arg::VERSION, $version);
+        return $this->with(VERSION, $version);
     }
 }

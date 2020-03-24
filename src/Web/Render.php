@@ -5,11 +5,12 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Template\TemplateModel;
 use Mvc5\View\View;
+
+use const Mvc5\BODY;
 
 class Render
 {
@@ -33,7 +34,7 @@ class Render
     protected function response(Response $response) : Response
     {
         return $response->body() instanceof TemplateModel ?
-            $response->with(Arg::BODY, $this->view->render($response->body())) : $response;
+            $response->with(BODY, $this->view->render($response->body())) : $response;
     }
 
     /**

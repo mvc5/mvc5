@@ -5,13 +5,14 @@
 
 namespace Mvc5\Http\Config;
 
-use Mvc5\Arg;
 use Mvc5\ArrayObject;
 use Mvc5\Config\Model;
 
 use function implode;
 use function is_array;
 use function parse_url;
+
+use const Mvc5\{ FRAGMENT, HOST, PASS, PATH, PORT, QUERY, SCHEME, USER };
 
 trait Uri
 {
@@ -34,7 +35,7 @@ trait Uri
      */
     function fragment() : ?string
     {
-        return $this[Arg::FRAGMENT];
+        return $this[FRAGMENT];
     }
 
     /**
@@ -42,7 +43,7 @@ trait Uri
      */
     function host() : ?string
     {
-        return $this[Arg::HOST];
+        return $this[HOST];
     }
 
     /**
@@ -50,7 +51,7 @@ trait Uri
      */
     function password() : ?string
     {
-        return $this[Arg::PASS];
+        return $this[PASS];
     }
 
     /**
@@ -58,7 +59,7 @@ trait Uri
      */
     function path() : ?string
     {
-        return $this[Arg::PATH];
+        return $this[PATH];
     }
 
     /**
@@ -66,7 +67,7 @@ trait Uri
      */
     function port() : ?int
     {
-        return $this[Arg::PORT];
+        return $this[PORT];
     }
 
     /**
@@ -74,7 +75,7 @@ trait Uri
      */
     function query()
     {
-        return $this[Arg::QUERY];
+        return $this[QUERY];
     }
 
     /**
@@ -82,7 +83,7 @@ trait Uri
      */
     function scheme() : ?string
     {
-        return $this[Arg::SCHEME];
+        return $this[SCHEME];
     }
 
     /**
@@ -90,7 +91,7 @@ trait Uri
      */
     function user() : ?string
     {
-        return $this[Arg::USER];
+        return $this[USER];
     }
 
     /**

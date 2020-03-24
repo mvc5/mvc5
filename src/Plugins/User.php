@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
+use const Mvc5\USER;
 
 trait User
 {
@@ -14,6 +14,6 @@ trait User
      */
     protected function user()
     {
-        return $this->plugin(Arg::USER);
+        return $this->plugin(USER);
     }
 }

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
+use const Mvc5\CONFIG;
 
 trait Config
 {
@@ -14,6 +14,6 @@ trait Config
      */
     protected function config()
     {
-        return $this->plugin(Arg::CONFIG);
+        return $this->plugin(CONFIG);
     }
 }

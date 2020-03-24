@@ -5,10 +5,11 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Plugins\Service;
+
+use const Mvc5\{ BODY, CONTROLLER, REQUEST, RESPONSE };
 
 class Controller
 {
@@ -35,14 +36,14 @@ class Controller
      */
     function __invoke(Request $request, Response $response, callable $next)
     {
-        $result = $this->action($request[Arg::CONTROLLER], [Arg::REQUEST => $request, Arg::RESPONSE => $response]);
+        $result = $this->action($request[CONTROLLER], [REQUEST => $request, RESPONSE => $response]);
 
         if ($result instanceof Response) {
             return $next($request, $result);
         }
 
         null !== $result
-            && $response = $response->with(Arg::BODY, $result);
+            && $response = $response->with(BODY, $result);
 
         return $next($request, $response);
     }

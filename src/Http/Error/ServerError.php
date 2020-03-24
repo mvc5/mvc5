@@ -5,8 +5,9 @@
 
 namespace Mvc5\Http\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpError;
+
+use const Mvc5\{ DESCRIPTION, ERRORS, MESSAGE, STATUS };
 
 class ServerError
     extends HttpError
@@ -17,10 +18,10 @@ class ServerError
     function __construct(array $config = [])
     {
         parent::__construct($config + [
-            Arg::DESCRIPTION => 'The server encountered an unexpected condition which prevented it from fulfilling the request.',
-            Arg::ERRORS => [],
-            Arg::MESSAGE => 'Internal Server Error',
-            Arg::STATUS => 500
+            DESCRIPTION => 'The server encountered an unexpected condition which prevented it from fulfilling the request.',
+            ERRORS => [],
+            MESSAGE => 'Internal Server Error',
+            STATUS => 500
         ]);
     }
 }

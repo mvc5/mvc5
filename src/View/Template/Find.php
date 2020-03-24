@@ -5,9 +5,10 @@
 
 namespace Mvc5\View\Template;
 
-use Mvc5\Arg;
-
 use function strpos;
+
+use const DIRECTORY_SEPARATOR;
+use const Mvc5\VIEW_EXTENSION;
 
 trait Find
 {
@@ -24,7 +25,7 @@ trait Find
     /**
      * @var string|null
      */
-    protected string $extension = Arg::VIEW_EXTENSION;
+    protected string $extension = VIEW_EXTENSION;
 
     /**
      * @param string $name

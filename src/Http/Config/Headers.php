@@ -5,12 +5,12 @@
 
 namespace Mvc5\Http\Config;
 
-use Mvc5\Arg;
-
 use function array_change_key_case;
 use function implode;
 use function is_string;
 use function strtolower;
+
+use const Mvc5\HOST;
 
 trait Headers
 {
@@ -111,8 +111,8 @@ trait Headers
     {
         $headers = array_change_key_case(is_string($name) ? [$name => $value] : (array) $name);
 
-        $this->config = !isset($headers[Arg::HOST]) ? $headers + $this->config :
-            [Arg::HOST => $headers[Arg::HOST]] + $headers + $this->config;
+        $this->config = !isset($headers[HOST]) ? $headers + $this->config :
+            [HOST => $headers[HOST]] + $headers + $this->config;
 
         return is_string($name) ? $value : $name;
     }

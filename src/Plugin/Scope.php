@@ -5,10 +5,11 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
 use Mvc5\App;
 use Mvc5\Service\Manager;
 use Mvc5\Service\Service;
+
+use const Mvc5\SERVICES;
 
 /**
  * Creates a model with a scopable plugins container and sets the model as the scope of the anonymous functions.
@@ -23,7 +24,7 @@ class Scope
     function __construct(array $plugins, string $name)
     {
         parent::__construct([$this, 'scope'], [
-            new Plugin(App::class, [[Arg::SERVICES => $plugins], null, true, true]), new Link, $name]);
+            new Plugin(App::class, [[SERVICES => $plugins], null, true, true]), new Link, $name]);
     }
 
     /**

@@ -5,7 +5,6 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
@@ -15,6 +14,8 @@ use function array_values;
 use function class_exists;
 use function str_replace;
 use function ucwords;
+
+use const Mvc5\{ ACTION, CONTROLLER, MIDDLEWARE, PARAMS, PREFIX, SEPARATORS, SPLIT, STRICT, SUFFIX };
 
 class Controller
 {
@@ -27,13 +28,13 @@ class Controller
      * @var array
      */
     protected array $options = [
-        Arg::ACTION     => 'action',
-        Arg::CONTROLLER => 'controller',
-        Arg::PREFIX     => '',
-        Arg::SEPARATORS => ['/' => '\\'],
-        Arg::SPLIT      => '\\',
-        Arg::STRICT     => false,
-        Arg::SUFFIX     => '\Controller'
+        ACTION     => 'action',
+        CONTROLLER => 'controller',
+        PREFIX     => '',
+        SEPARATORS => ['/' => '\\'],
+        SPLIT      => '\\',
+        STRICT     => false,
+        SUFFIX     => '\Controller'
     ];
 
     /**
@@ -53,7 +54,7 @@ class Controller
      */
     protected function action(array $params, array $options) : string
     {
-        return $params[$options[Arg::ACTION]] ?? '';
+        return $params[$options[ACTION]] ?? '';
     }
 
     /**
@@ -63,7 +64,7 @@ class Controller
      */
     protected function controller(array $params, array $options) : string
     {
-        return $params[$options[Arg::CONTROLLER]] ?? '';
+        return $params[$options[CONTROLLER]] ?? '';
     }
 
     /**
@@ -73,7 +74,7 @@ class Controller
      */
     protected function format(string $name, array $options) : string
     {
-        return $options[Arg::STRICT] ? $this->replace($name, $options) : $this->uppercase($name, $options);
+        return $options[STRICT] ? $this->replace($name, $options) : $this->uppercase($name, $options);
     }
 
     /**
@@ -114,8 +115,8 @@ class Controller
      */
     protected function name(string $action = null, string $controller = null, array $options = []) : string
     {
-        return $options[Arg::PREFIX] . $controller
-            . ($action ? $options[Arg::SPLIT] . $action : '') . $options[Arg::SUFFIX];
+        return $options[PREFIX] . $controller
+            . ($action ? $options[SPLIT] . $action : '') . $options[SUFFIX];
     }
 
     /**
@@ -143,7 +144,7 @@ class Controller
      */
     protected function replacement(array $options) : array
     {
-        return array_values($options[Arg::SEPARATORS]);
+        return array_values($options[SEPARATORS]);
     }
 
     /**
@@ -152,7 +153,7 @@ class Controller
      */
     protected function separator(array $options) : array
     {
-        return array_keys($options[Arg::SEPARATORS]);
+        return array_keys($options[SEPARATORS]);
     }
 
     /**
@@ -162,7 +163,7 @@ class Controller
      */
     protected function uppercase(string $name, array $options) : string
     {
-        foreach($options[Arg::SEPARATORS] as $separator => $replacement) {
+        foreach($options[SEPARATORS] as $separator => $replacement) {
             $name = str_replace(' ', $replacement, ucwords(str_replace($separator, ' ', $name)));
         }
 
@@ -187,16 +188,16 @@ class Controller
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        if ($request[Arg::CONTROLLER]) {
+        if ($request[CONTROLLER]) {
             return $next($route, $request);
         }
 
         $options    = $this->options($route);
-        $params     = $request[Arg::PARAMS] ?? [];
+        $params     = $request[PARAMS] ?? [];
         $action     = $this->action($params, $options);
         $controller = $this->controller($params, $options);
 
-        if (!$controller && !empty($route[Arg::MIDDLEWARE])) {
+        if (!$controller && !empty($route[MIDDLEWARE])) {
             return $next($route, $request);
         }
 
@@ -214,6 +215,6 @@ class Controller
             return new NotFound;
         }
 
-        return $next($route, $request->with(Arg::CONTROLLER, $controller));
+        return $next($route, $request->with(CONTROLLER, $controller));
     }
 }

@@ -5,9 +5,9 @@
 
 namespace Mvc5\Session\Config;
 
-use Mvc5\Arg;
-
 use function is_string;
+
+use const Mvc5\{ DANGER, INDEX, INFO, MESSAGE, SUCCESS, TYPE, WARNING };
 
 trait Messages
 {
@@ -25,10 +25,10 @@ trait Messages
      * @var array
      */
     protected array $types = [
-        Arg::DANGER  => Arg::DANGER,
-        Arg::INFO    => Arg::INFO,
-        Arg::SUCCESS => Arg::SUCCESS,
-        Arg::WARNING => Arg::WARNING
+        DANGER  => DANGER,
+        INFO    => INFO,
+        SUCCESS => SUCCESS,
+        WARNING => WARNING
     ];
 
     /**
@@ -47,7 +47,7 @@ trait Messages
      */
     protected function add($message, string $name = null, string $type = null) : array
     {
-        return $this->set($name ?? Arg::INDEX, [Arg::MESSAGE => $message, Arg::TYPE => $this->type($type ?? Arg::INFO)]);
+        return $this->set($name ?? INDEX, [MESSAGE => $message, TYPE => $this->type($type ?? INFO)]);
     }
 
     /**
@@ -56,7 +56,7 @@ trait Messages
      */
     function danger($message, string $name = null) : void
     {
-        $this->add($message, $name, Arg::DANGER);
+        $this->add($message, $name, DANGER);
     }
 
     /**
@@ -65,7 +65,7 @@ trait Messages
      */
     function info($message, string $name = null) : void
     {
-        $this->add($message, $name, Arg::INFO);
+        $this->add($message, $name, INFO);
     }
 
     /**
@@ -74,7 +74,7 @@ trait Messages
      */
     function message($name = null)
     {
-        null === $name && $name = Arg::INDEX;
+        null === $name && $name = INDEX;
 
         if (is_string($name)) {
             ($message = $this->get($name)) && $this->remove($name);
@@ -126,7 +126,7 @@ trait Messages
      */
     function success($message, string $name = null) : void
     {
-        $this->add($message, $name, Arg::SUCCESS);
+        $this->add($message, $name, SUCCESS);
     }
 
     /**
@@ -144,7 +144,7 @@ trait Messages
      */
     function warning($message, string $name = null) : void
     {
-        $this->add($message, $name, Arg::WARNING);
+        $this->add($message, $name, WARNING);
     }
 
     /**

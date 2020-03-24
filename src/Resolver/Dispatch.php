@@ -5,13 +5,14 @@
 
 namespace Mvc5\Resolver;
 
-use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 use Mvc5\Resolvable;
 
 use function is_string;
 use function key;
+
+use const Mvc5\SERVICE_RESOLVER;
 
 class Dispatch
     implements Event
@@ -24,7 +25,7 @@ class Dispatch
     /**
      *
      */
-    const EVENT = Arg::SERVICE_RESOLVER;
+    const EVENT = SERVICE_RESOLVER;
 
     /**
      * @param callable $callable

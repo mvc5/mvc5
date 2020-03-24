@@ -5,11 +5,12 @@
 
 namespace Mvc5\Response\Service;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Http\StatusCode;
+
+use const Mvc5\{ ERROR, HTTP_OK, REASON, STATUS };
 
 trait Status
 {
@@ -21,8 +22,8 @@ trait Status
     protected function error(Error $error, Response $response) : Response
     {
         return $response->with([
-            Arg::STATUS => $error->status(),
-            Arg::REASON => StatusCode::reasonPhrase($error->status())
+            STATUS => $error->status(),
+            REASON => StatusCode::reasonPhrase($error->status())
         ]);
     }
 
@@ -33,16 +34,16 @@ trait Status
      */
     protected function status(Request $request, Response $response) : Response
     {
-        if ($request[Arg::ERROR]) {
-            return $this->error($request[Arg::ERROR], $response);
+        if ($request[ERROR]) {
+            return $this->error($request[ERROR], $response);
         }
 
         !$response->status() &&
-            $response = $response->with(Arg::STATUS, Arg::HTTP_OK);
+            $response = $response->with(STATUS, HTTP_OK);
 
         /** @var Response $response */
         !$response->reason() &&
-            $response = $response->with(Arg::REASON, StatusCode::reasonPhrase($response->status()));
+            $response = $response->with(REASON, StatusCode::reasonPhrase($response->status()));
 
         return $response;
     }

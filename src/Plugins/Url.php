@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
+use const Mvc5\URL;
 
 trait Url
 {
@@ -18,6 +18,6 @@ trait Url
      */
     protected function url($route = null, $query = null, string $fragment = null, array $options = []) : ?string
     {
-        return $this->call(Arg::URL, [$route, $query, $fragment, $options]);
+        return $this->call(URL, [$route, $query, $fragment, $options]);
     }
 }

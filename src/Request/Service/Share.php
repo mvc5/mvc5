@@ -6,8 +6,9 @@
 namespace Mvc5\Request\Service;
 
 use ArrayAccess;
-use Mvc5\Arg;
 use Mvc5\Http\Request;
+
+use const Mvc5\REQUEST;
 
 final class Share
 {
@@ -30,6 +31,6 @@ final class Share
      */
     function __invoke(Request $request) : Request
     {
-        return $this->container[Arg::REQUEST] = $request;
+        return $this->container[REQUEST] = $request;
     }
 }

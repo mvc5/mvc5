@@ -6,7 +6,6 @@
 namespace Mvc5\Resolver;
 
 use Closure;
-use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Resolvable;
 use Mvc5\Signal;
@@ -16,6 +15,8 @@ use function explode;
 use function is_array;
 use function is_string;
 use function substr;
+
+use const Mvc5\{ CALL, CALL_SEPARATOR, EVENT, EVENT_MODEL };
 
 trait Service
 {
@@ -29,7 +30,7 @@ trait Service
     function call($plugin, array $args = [], callable $callback = null)
     {
         if (is_string($plugin)) {
-            return $this->transmit(explode(Arg::CALL_SEPARATOR, $plugin), $args, $callback);
+            return $this->transmit(explode(CALL_SEPARATOR, $plugin), $args, $callback);
         }
 
         if ($plugin instanceof Event) {
@@ -63,7 +64,7 @@ trait Service
      */
     protected function fallback(string $name)
     {
-        return $this(Arg::EVENT_MODEL, [Arg::EVENT => $name]) ?? Unresolvable::plugin($name);
+        return $this(EVENT_MODEL, [EVENT => $name]) ?? Unresolvable::plugin($name);
     }
 
     /**
@@ -73,7 +74,7 @@ trait Service
      */
     protected function invokable(string $plugin)
     {
-        return Arg::CALL === $plugin[0] ? substr($plugin, 1) :
+        return CALL === $plugin[0] ? substr($plugin, 1) :
             $this->listener($this->plugin($plugin, [], $this) ?? $this->fallback($plugin));
     }
 

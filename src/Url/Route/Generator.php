@@ -5,7 +5,6 @@
 
 namespace Mvc5\Url\Route;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpUri;
 use Mvc5\Http\Uri;
 use Mvc5\Route\Config;
@@ -17,6 +16,8 @@ use Throwable;
 use function array_shift;
 use function explode;
 use function is_array;
+
+use const Mvc5\{ DEFAULTS, HOST, PATH, PORT, SCHEME, SEPARATOR, TOKENS };
 
 trait Generator
 {
@@ -88,7 +89,7 @@ trait Generator
      */
     protected function construct(string $name) : ?Route
     {
-        return $this->generated[$name] ?? $this->generated[$name] = $this->generate(explode(Arg::SEPARATOR, $name));
+        return $this->generated[$name] ?? $this->generated[$name] = $this->generate(explode(SEPARATOR, $name));
     }
 
     /**
@@ -111,7 +112,7 @@ trait Generator
      */
     protected function hostname($host, array &$params) : ?string
     {
-        return !is_array($host) ? $host : Compiler::compile($host[Arg::TOKENS], $params, $host[Arg::DEFAULTS] ?? []);
+        return !is_array($host) ? $host : Compiler::compile($host[TOKENS], $params, $host[DEFAULTS] ?? []);
     }
 
     /**
@@ -134,13 +135,13 @@ trait Generator
     protected function merge(Route $parent, Route $child, array $config = []) : Route
     {
         !$child->scheme()
-            && $config[Arg::SCHEME] = $parent->scheme();
+            && $config[SCHEME] = $parent->scheme();
 
         !$child->host()
-            && $config[Arg::HOST] = $parent->host();
+            && $config[HOST] = $parent->host();
 
         !$child->port()
-            && $config[Arg::PORT] = $parent->port();
+            && $config[PORT] = $parent->port();
 
         return $config ? $child->with($config) : $child;
     }
@@ -154,7 +155,7 @@ trait Generator
      */
     protected function next(Route $route, array $name, array $path) : ?Route
     {
-        return $name ? $this->generate($name, $path, $route) : $route->with(Arg::PATH, $path);
+        return $name ? $this->generate($name, $path, $route) : $route->with(PATH, $path);
     }
 
     /**
@@ -166,16 +167,16 @@ trait Generator
      */
     protected function options(Route $route, array $params, array $options) : array
     {
-        !isset($options[Arg::SCHEME])
-            && $options[Arg::SCHEME] = $route->scheme();
+        !isset($options[SCHEME])
+            && $options[SCHEME] = $route->scheme();
 
-        !isset($options[Arg::HOST])
-            && $options[Arg::HOST] = $this->hostname($route->host(), $params);
+        !isset($options[HOST])
+            && $options[HOST] = $this->hostname($route->host(), $params);
 
-        !isset($options[Arg::PORT])
-            && $options[Arg::PORT] = $route->port();
+        !isset($options[PORT])
+            && $options[PORT] = $route->port();
 
-        $options[Arg::PATH] = $this->path($route->path(), $params);
+        $options[PATH] = $this->path($route->path(), $params);
 
         return $options;
     }
@@ -239,7 +240,7 @@ trait Generator
     {
         return !$route->wildcard() ? null : function(string $path, array $params = []) {
             foreach($params as $key => $value) {
-                null !== $value && $path .= Arg::SEPARATOR . $key . Arg::SEPARATOR . $value;
+                null !== $value && $path .= SEPARATOR . $key . SEPARATOR . $value;
             }
 
             return $path;

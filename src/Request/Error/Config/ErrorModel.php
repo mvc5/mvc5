@@ -5,8 +5,9 @@
 
 namespace Mvc5\Request\Error\Config;
 
-use Mvc5\Arg;
 use Mvc5\View\Config\ViewModel;
+
+use const Mvc5\{ CODE, ERROR, ERRORS, MESSAGE };
 
 trait ErrorModel
 {
@@ -20,7 +21,7 @@ trait ErrorModel
      */
     function code() : ?int
     {
-        return $this[Arg::ERROR][Arg::CODE];
+        return $this[ERROR][CODE];
     }
 
     /**
@@ -28,7 +29,7 @@ trait ErrorModel
      */
     function errors() : array
     {
-        return $this[Arg::ERROR][Arg::ERRORS] ?? [];
+        return $this[ERROR][ERRORS] ?? [];
     }
 
     /**
@@ -36,6 +37,6 @@ trait ErrorModel
      */
     function message() : ?string
     {
-        return $this[Arg::ERROR][Arg::MESSAGE];
+        return $this[ERROR][MESSAGE];
     }
 }

@@ -5,12 +5,13 @@
 
 namespace Mvc5\Route\Definition;
 
-use Mvc5\Arg;
 use Mvc5\Exception;
 
 use function array_pop;
 use function rtrim;
 use function sprintf;
+
+use const Mvc5\{ SEPARATOR };
 
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
@@ -102,7 +103,7 @@ class Compiler
             }
         }
 
-        return $wildcard && $params ? $wildcard(rtrim($current['path'], Arg::SEPARATOR), $params) : $current['path'];
+        return $wildcard && $params ? $wildcard(rtrim($current['path'], SEPARATOR), $params) : $current['path'];
     }
 
     /**

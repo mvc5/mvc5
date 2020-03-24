@@ -5,9 +5,10 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
+
+use const Mvc5\{ AUTHENTICATE, CSRF_TOKEN, MIDDLEWARE, OPTIONS, PARENT };
 
 class Merge
 {
@@ -20,16 +21,16 @@ class Merge
     protected function merge(Route $route, Route $parent, array $config = []) : Route
     {
         ($options = $parent->options()) &&
-            $config[Arg::OPTIONS] = $route->options() + $options;
+            $config[OPTIONS] = $route->options() + $options;
 
-        ($middleware = $parent[Arg::MIDDLEWARE]) &&
-            $config[Arg::MIDDLEWARE] = [...$middleware, ...($route[Arg::MIDDLEWARE] ?? [])];
+        ($middleware = $parent[MIDDLEWARE]) &&
+            $config[MIDDLEWARE] = [...$middleware, ...($route[MIDDLEWARE] ?? [])];
 
-        !isset($route[Arg::CSRF_TOKEN]) && isset($parent[Arg::CSRF_TOKEN]) &&
-            $config[Arg::CSRF_TOKEN] = $parent[Arg::CSRF_TOKEN];
+        !isset($route[CSRF_TOKEN]) && isset($parent[CSRF_TOKEN]) &&
+            $config[CSRF_TOKEN] = $parent[CSRF_TOKEN];
 
-        !isset($route[Arg::AUTHENTICATE]) && isset($parent[Arg::AUTHENTICATE]) &&
-            $config[Arg::AUTHENTICATE] = $parent[Arg::AUTHENTICATE];
+        !isset($route[AUTHENTICATE]) && isset($parent[AUTHENTICATE]) &&
+            $config[AUTHENTICATE] = $parent[AUTHENTICATE];
 
         return $config ? $route->with($config) : $route;
     }
@@ -42,6 +43,6 @@ class Merge
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $next($route[Arg::PARENT] ? $this->merge($route, $route[Arg::PARENT]) : $route, $request);
+        return $next($route[PARENT] ? $this->merge($route, $route[PARENT]) : $route, $request);
     }
 }

@@ -5,12 +5,13 @@
 
 namespace Mvc5\Log;
 
-use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 
 use function array_filter;
 use function is_bool;
+
+use const Mvc5\{ EVENT, MESSAGE, THROW_EXCEPTION };
 
 class Logger
     implements Event
@@ -49,9 +50,9 @@ class Logger
     protected function args() : array
     {
         return array_filter([
-            Arg::EVENT           => $this,
-            Arg::MESSAGE         => $this->message,
-            Arg::THROW_EXCEPTION => $this->throw_exception
+            EVENT           => $this,
+            MESSAGE         => $this->message,
+            THROW_EXCEPTION => $this->throw_exception
         ]);
     }
 

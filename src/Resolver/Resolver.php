@@ -7,7 +7,6 @@ namespace Mvc5\Resolver;
 
 use ArrayAccess;
 use Closure;
-use Mvc5\Arg;
 use Mvc5\ArrayModel;
 use Mvc5\Config\Configuration;
 use Mvc5\Config\Model;
@@ -48,6 +47,9 @@ use function is_string;
 use function key;
 use function substr;
 
+use const Mvc5\{ ARGS, CALL_SEPARATOR, CALLS, CONTAINER, EVENTS, INDEX, MAX_RECURSION, NAME, PARAM,
+    PROPERTY, SERVICE_RESOLVER, SERVICE_SEPARATOR, SERVICES };
+
 trait Resolver
 {
     /**
@@ -75,14 +77,14 @@ trait Resolver
     {
         $this->config = $config instanceof Model ? $config : new ArrayModel((array) $config);
 
-        $this->container = ! isset($config[Arg::CONTAINER]) ? new Container :
-            ($config[Arg::CONTAINER] instanceof Configuration ? $config[Arg::CONTAINER] : new Container((array) $config[Arg::CONTAINER]));
+        $this->container = ! isset($config[CONTAINER]) ? new Container :
+            ($config[CONTAINER] instanceof Configuration ? $config[CONTAINER] : new Container((array) $config[CONTAINER]));
 
-        $this->events = ! isset($config[Arg::EVENTS]) ? new ArrayModel :
-            ($config[Arg::EVENTS] instanceof ArrayAccess ? $config[Arg::EVENTS] : new ArrayModel((array) $config[Arg::EVENTS]));
+        $this->events = ! isset($config[EVENTS]) ? new ArrayModel :
+            ($config[EVENTS] instanceof ArrayAccess ? $config[EVENTS] : new ArrayModel((array) $config[EVENTS]));
 
-        $this->services = ! isset($config[Arg::SERVICES]) ? new ArrayModel :
-            ($config[Arg::SERVICES] instanceof Model ? $config[Arg::SERVICES] : new ArrayModel((array) $config[Arg::SERVICES]));
+        $this->services = ! isset($config[SERVICES]) ? new ArrayModel :
+            ($config[SERVICES] instanceof Model ? $config[SERVICES] : new ArrayModel((array) $config[SERVICES]));
 
         $this->provider = $provider;
 
@@ -302,12 +304,12 @@ trait Resolver
     {
         foreach($plugin->calls() as $method => $args) {
             if (is_string($method)) {
-                if (Arg::INDEX == $method[0]) {
+                if (INDEX == $method[0]) {
                     $service[substr($method, 1)] = $this->resolve($args);
                     continue;
                 }
 
-                if (Arg::PROPERTY == $method[0]) {
+                if (PROPERTY == $method[0]) {
                     $service->{substr($method, 1)} = $this->resolve($args);
                     continue;
                 }
@@ -320,7 +322,7 @@ trait Resolver
                 $method = array_shift($args);
                 $param  = $plugin->param();
 
-                if (is_string($method) && Arg::PROPERTY == $method[0]) {
+                if (is_string($method) && PROPERTY == $method[0]) {
                     $param  = substr($method, 1);
                     $method = array_shift($args);
                 }
@@ -350,16 +352,16 @@ trait Resolver
     protected function merge(Plugin $parent, Plugin $child, string $name = null, array $config = []) : Plugin
     {
         !$parent->name() &&
-            $config[Arg::NAME] = $name ?? $this->resolve($child->name());
+            $config[NAME] = $name ?? $this->resolve($child->name());
 
         $child->args() &&
-            $config[Arg::ARGS] = is_string(key($child->args())) ? $child->args() + $parent->args() : $child->args();
+            $config[ARGS] = is_string(key($child->args())) ? $child->args() + $parent->args() : $child->args();
 
         $child->calls() &&
-            $config[Arg::CALLS] = $child->merge() ? array_merge($parent->calls(), $child->calls()) : $child->calls();
+            $config[CALLS] = $child->merge() ? array_merge($parent->calls(), $child->calls()) : $child->calls();
 
         $child->param() &&
-            $config[Arg::PARAM] = $child->param();
+            $config[PARAM] = $child->param();
 
         return $config ? $parent->with($config) : $parent;
     }
@@ -408,7 +410,7 @@ trait Resolver
         }
 
         if (is_string($plugin)) {
-            return $this->build(explode(Arg::SERVICE_SEPARATOR, $plugin), $args, $callback);
+            return $this->build(explode(SERVICE_SEPARATOR, $plugin), $args, $callback);
         }
 
         if (is_array($plugin)) {
@@ -452,7 +454,7 @@ trait Resolver
         !$args && $args = $this->args($plugin->args());
 
         if (!$parent) {
-            return $this->hydrate($plugin, $this->combine(explode(Arg::SERVICE_SEPARATOR, $name), $args));
+            return $this->hydrate($plugin, $this->combine(explode(SERVICE_SEPARATOR, $name), $args));
         }
 
         if (!$parent instanceof Plugin) {
@@ -500,7 +502,7 @@ trait Resolver
     protected function resolvable($plugin, array $args = [], callable $callback = null, int $c = 0)
     {
         return !$plugin instanceof Resolvable ? $plugin : (
-            $c > Arg::MAX_RECURSION ? Unresolvable::plugin($plugin) :
+            $c > MAX_RECURSION ? Unresolvable::plugin($plugin) :
                 $this->resolvable($this->solve($plugin, $args, $callback), $args, $callback, ++$c)
         );
     }
@@ -524,7 +526,7 @@ trait Resolver
      */
     protected function resolver($plugin, array $args = [])
     {
-        return $this->call($this->provider() ?? Arg::SERVICE_RESOLVER, [$plugin, $args]);
+        return $this->call($this->provider() ?? SERVICE_RESOLVER, [$plugin, $args]);
     }
 
     /**
@@ -631,7 +633,7 @@ trait Resolver
  */
 function param($config, string $name)
 {
-    $name = explode(Arg::CALL_SEPARATOR, $name);
+    $name = explode(CALL_SEPARATOR, $name);
     $value = $config[array_shift($name)];
 
     foreach($name as $n) {

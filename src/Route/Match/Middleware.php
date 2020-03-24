@@ -5,11 +5,12 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function array_search;
+
+use const Mvc5\{ CONTROLLER, HTTP_MIDDLEWARE, MIDDLEWARE  };
 
 class Middleware
 {
@@ -27,7 +28,7 @@ class Middleware
      * @param callable $service
      * @param string $placeholder
      */
-    function __construct(callable $service, string $placeholder = Arg::CONTROLLER)
+    function __construct(callable $service, string $placeholder = CONTROLLER)
     {
         $this->placeholder = $placeholder;
         $this->service = $service;
@@ -40,7 +41,7 @@ class Middleware
      */
     protected function middleware($controller, array $middleware = null)
     {
-        return $middleware ? ($this->service)(Arg::HTTP_MIDDLEWARE, [Arg::MIDDLEWARE => $this->stack($controller, $middleware)]) : null;
+        return $middleware ? ($this->service)(HTTP_MIDDLEWARE, [MIDDLEWARE => $this->stack($controller, $middleware)]) : null;
     }
 
     /**
@@ -50,7 +51,7 @@ class Middleware
      */
     protected function request(Request $request, $middleware) : Request
     {
-        return $middleware ? $request->with(Arg::CONTROLLER, $middleware) : $request;
+        return $middleware ? $request->with(CONTROLLER, $middleware) : $request;
     }
 
     /**
@@ -74,6 +75,6 @@ class Middleware
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $next($route, $this->request($request, $this->middleware($request[Arg::CONTROLLER], $route[Arg::MIDDLEWARE])));
+        return $next($route, $this->request($request, $this->middleware($request[CONTROLLER], $route[MIDDLEWARE])));
     }
 }

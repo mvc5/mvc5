@@ -51,7 +51,7 @@ final class Signal
         foreach($params as $param) {
             if ($param->isVariadic()) {
                 $matched = [
-                    ...$matched, ...(Arg::ARGV === $param->name ? [new Plugin\SignalArgs($args)] : array_values($args))
+                    ...$matched, ...(ARGV === $param->name ? [new Plugin\SignalArgs($args)] : array_values($args))
                 ];
                 break;
             }
@@ -62,7 +62,7 @@ final class Signal
                 continue;
             }
 
-            if (Arg::ARGV === $param->name) {
+            if (ARGV === $param->name) {
                 $matched[] = $args;
                 break;
             }

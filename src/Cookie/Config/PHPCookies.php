@@ -5,7 +5,6 @@
 
 namespace Mvc5\Cookie\Config;
 
-use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 
 use function is_array;
@@ -13,6 +12,8 @@ use function is_string;
 use function setcookie;
 use function setrawcookie;
 use function strtotime;
+
+use const Mvc5\{ DOMAIN, EXPIRES, HTTP_ONLY, NAME, OPTIONS, PATH, RAW, SAMESITE, SECURE, VALUE };
 
 trait PHPCookies
 {
@@ -43,7 +44,7 @@ trait PHPCookies
      */
     static function delete($cookie, array $options = []) : bool
     {
-        return static::send(expire(cookie(is_string($cookie) ? [Arg::NAME => $cookie] + $options : $cookie)));
+        return static::send(expire(cookie(is_string($cookie) ? [NAME => $cookie] + $options : $cookie)));
     }
 
     /**
@@ -69,7 +70,7 @@ trait PHPCookies
             return $name;
         }
 
-        $this->send([Arg::NAME => (string) $name, Arg::VALUE => (string) $value] + $options, $this->defaults);
+        $this->send([NAME => (string) $name, VALUE => (string) $value] + $options, $this->defaults);
 
         return $value;
     }
@@ -127,12 +128,12 @@ function expires($expires) : int
 function options(array $option, array $default = []) : array
 {
     return [
-        Arg::EXPIRES => (int) expires($option[Arg::EXPIRES] ?? $default[Arg::EXPIRES] ?? 0),
-        Arg::PATH => (string) ($option[Arg::PATH] ?? $default[Arg::PATH] ?? '/'),
-        Arg::DOMAIN => (string) ($option[Arg::DOMAIN] ?? $default[Arg::DOMAIN] ?? ''),
-        Arg::SECURE => (bool) ($option[Arg::SECURE] ?? $default[Arg::SECURE] ?? false),
-        Arg::HTTP_ONLY => (bool) ($option[Arg::HTTP_ONLY] ?? $default[Arg::HTTP_ONLY] ?? true),
-        Arg::SAMESITE => (string) ($option[Arg::SAMESITE] ?? $default[Arg::SAMESITE] ?? 'lax')
+        EXPIRES => (int) expires($option[EXPIRES] ?? $default[EXPIRES] ?? 0),
+        PATH => (string) ($option[PATH] ?? $default[PATH] ?? '/'),
+        DOMAIN => (string) ($option[DOMAIN] ?? $default[DOMAIN] ?? ''),
+        SECURE => (bool) ($option[SECURE] ?? $default[SECURE] ?? false),
+        HTTP_ONLY => (bool) ($option[HTTP_ONLY] ?? $default[HTTP_ONLY] ?? true),
+        SAMESITE => (string) ($option[SAMESITE] ?? $default[SAMESITE] ?? 'lax')
     ];
 }
 
@@ -143,6 +144,6 @@ function options(array $option, array $default = []) : array
  */
 function send(array $cookie, array $defaults = []) : bool
 {
-    return emit((string) $cookie[Arg::NAME], (string) $cookie[Arg::VALUE],
-        options($cookie[Arg::OPTIONS] ?? $cookie, $defaults), $cookie[Arg::RAW] ?? false);
+    return emit((string) $cookie[NAME], (string) $cookie[VALUE],
+        options($cookie[OPTIONS] ?? $cookie, $defaults), $cookie[RAW] ?? false);
 }

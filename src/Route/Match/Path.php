@@ -5,12 +5,13 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function preg_match;
 use function strlen;
+
+use const Mvc5\{ CONTROLLER, MATCHED, NAME, PARAMS, PARENT, PATH, ROUTE, URI };
 
 class Path
 {
@@ -37,12 +38,12 @@ class Path
         $matched = !isset($path[$offset]);
 
         $request = $request->with([
-            Arg::CONTROLLER => $route->controller(),
-            Arg::MATCHED => $matched ?: $offset,
-            Arg::NAME => $route->name(),
-            Arg::PARAMS => $this->params($match, $route->defaults() + (array) $request[Arg::PARAMS]),
-            Arg::PARENT => $request,
-            Arg::ROUTE => $route
+            CONTROLLER => $route->controller(),
+            MATCHED => $matched ?: $offset,
+            NAME => $route->name(),
+            PARAMS => $this->params($match, $route->defaults() + (array) $request[PARAMS]),
+            PARENT => $request,
+            ROUTE => $route
         ]);
 
         return $matched ? $next($route, $request) : ($route->children() ? $request : null);
@@ -56,6 +57,6 @@ class Path
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return $this->match($route, $request, $request[Arg::URI][Arg::PATH], (int) $request[Arg::MATCHED], $next);
+        return $this->match($route, $request, $request[URI][PATH], (int) $request[MATCHED], $next);
     }
 }

@@ -5,10 +5,11 @@
 
 namespace Mvc5\Request\Exception;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error;
 use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\Request;
+
+use const Mvc5\{ CONTROLLER, EXCEPTION, NAME, ERROR };
 
 trait Exception
 {
@@ -47,10 +48,10 @@ trait Exception
     function __invoke(Request $request, \Throwable $exception) : Request
     {
         return $request->with([
-            Arg::CONTROLLER => $this->controller,
-            Arg::EXCEPTION => $exception,
-            Arg::NAME => $this->name,
-            Arg::ERROR => $this->error
+            CONTROLLER => $this->controller,
+            EXCEPTION => $exception,
+            NAME => $this->name,
+            ERROR => $this->error
         ]);
     }
 }

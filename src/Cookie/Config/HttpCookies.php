@@ -5,12 +5,13 @@
 
 namespace Mvc5\Cookie\Config;
 
-use Mvc5\Arg;
 use Mvc5\Cookie\Cookies;
 
 use function is_array;
 use function is_string;
 use function key;
+
+use const Mvc5\{ DOMAIN, EXPIRES, HTTP_ONLY, NAME, OPTIONS, PATH, SAMESITE, SECURE, VALUE };
 
 const EXPIRE_TIME = 946706400;
 
@@ -43,7 +44,7 @@ trait HttpCookies
      */
     function remove($name, array $options = []) : void
     {
-        $this->set(expire(cookie(is_string($name) ? [Arg::NAME => $name] + $options : $name)));
+        $this->set(expire(cookie(is_string($name) ? [NAME => $name] + $options : $name)));
     }
 
     /**
@@ -57,12 +58,12 @@ trait HttpCookies
         if (is_array($name)) {
             $cookie = cookie($name);
 
-            $this->config[$cookie[Arg::NAME]] = $cookie;
+            $this->config[$cookie[NAME]] = $cookie;
 
             return $name;
         }
 
-        $this->config[$name] = [Arg::NAME => (string) $name, Arg::VALUE => (string) $value] + $options;
+        $this->config[$name] = [NAME => (string) $name, VALUE => (string) $value] + $options;
 
         return $value;
     }
@@ -100,14 +101,14 @@ trait HttpCookies
 function cookie(array $cookie) : array
 {
     return is_string(key($cookie)) ? $cookie : [
-        Arg::NAME => $cookie[0],
-        Arg::VALUE => $cookie[1] ?? null,
-        Arg::EXPIRES => $cookie[2] ?? null,
-        Arg::PATH => $cookie[3] ?? null,
-        Arg::DOMAIN => $cookie[4] ?? null,
-        Arg::SECURE => $cookie[5] ?? null,
-        Arg::HTTP_ONLY => $cookie[6] ?? null,
-        Arg::SAMESITE => $cookie[7] ?? null
+        NAME => $cookie[0],
+        VALUE => $cookie[1] ?? null,
+        EXPIRES => $cookie[2] ?? null,
+        PATH => $cookie[3] ?? null,
+        DOMAIN => $cookie[4] ?? null,
+        SECURE => $cookie[5] ?? null,
+        HTTP_ONLY => $cookie[6] ?? null,
+        SAMESITE => $cookie[7] ?? null
     ];
 }
 
@@ -117,9 +118,9 @@ function cookie(array $cookie) : array
  */
 function expire(array $cookie) : array
 {
-    $cookie[Arg::VALUE] = '';
+    $cookie[VALUE] = '';
 
-    isset($cookie[Arg::OPTIONS]) ? $cookie[Arg::OPTIONS][Arg::EXPIRES] = EXPIRE_TIME : $cookie[Arg::EXPIRES] = EXPIRE_TIME;
+    isset($cookie[OPTIONS]) ? $cookie[OPTIONS][EXPIRES] = EXPIRE_TIME : $cookie[EXPIRES] = EXPIRE_TIME;
 
     return $cookie;
 }

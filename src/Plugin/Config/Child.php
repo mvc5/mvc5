@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin\Config;
 
-use Mvc5\Arg;
+use const Mvc5\PARENT;
 
 trait Child
 {
@@ -19,6 +19,6 @@ trait Child
      */
     function parent()
     {
-        return $this[Arg::PARENT];
+        return $this[PARENT];
     }
 }

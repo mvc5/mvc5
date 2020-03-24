@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\SESSION;
 
 class Session
     extends Register
@@ -16,6 +16,6 @@ class Session
      */
     function __construct(string $name, $plugin = null)
     {
-        parent::__construct($name, Arg::SESSION, $plugin);
+        parent::__construct($name, SESSION, $plugin);
     }
 }

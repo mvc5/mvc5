@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\{ ARGS, CALLS, CONTROLLER, MERGE, NAME, PARENT };
 
 class Controller
     implements Gem\Child
@@ -23,11 +23,11 @@ class Controller
     function __construct(string $name = null, array $args = [], array $calls = [])
     {
         $this->config = [
-            Arg::ARGS   => $args,
-            Arg::CALLS  => $calls,
-            Arg::MERGE  => true,
-            Arg::NAME   => $name,
-            Arg::PARENT => Arg::CONTROLLER
+            ARGS   => $args,
+            CALLS  => $calls,
+            MERGE  => true,
+            NAME   => $name,
+            PARENT => CONTROLLER
         ];
     }
 }

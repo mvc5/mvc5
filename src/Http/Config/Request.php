@@ -5,10 +5,11 @@
 
 namespace Mvc5\Http\Config;
 
-use Mvc5\Arg;
 use Mvc5\ArrayObject;
 use Mvc5\Config\Model;
 use Mvc5\Http;
+
+use const Mvc5\{ BODY, HEADERS, METHOD, URI, VERSION };
 
 trait Request
 {
@@ -22,13 +23,13 @@ trait Request
      */
     function __construct($config = [])
     {
-        $config[Arg::HEADERS] ??= new Http\HttpHeaders;
+        $config[HEADERS] ??= new Http\HttpHeaders;
 
-        is_array($config[Arg::HEADERS]) &&
-            $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);
+        is_array($config[HEADERS]) &&
+            $config[HEADERS] = new Http\HttpHeaders($config[HEADERS]);
 
-        isset($config[Arg::URI]) && !($config[Arg::URI] instanceof Http\Uri) &&
-            $config[Arg::URI] = new Http\HttpUri($config[Arg::URI]);
+        isset($config[URI]) && !($config[URI] instanceof Http\Uri) &&
+            $config[URI] = new Http\HttpUri($config[URI]);
 
         $this->config = $config instanceof Model ? $config: new ArrayObject((array) $config);
     }
@@ -38,7 +39,7 @@ trait Request
      */
     function body()
     {
-        return $this[Arg::BODY];
+        return $this[BODY];
     }
 
     /**
@@ -46,7 +47,7 @@ trait Request
      */
     function headers() : Http\Headers
     {
-        return $this[Arg::HEADERS];
+        return $this[HEADERS];
     }
 
     /**
@@ -54,7 +55,7 @@ trait Request
      */
     function method() : ?string
     {
-        return $this[Arg::METHOD];
+        return $this[METHOD];
     }
 
     /**
@@ -62,7 +63,7 @@ trait Request
      */
     function uri() : ?Http\Uri
     {
-        return $this[Arg::URI];
+        return $this[URI];
     }
 
     /**
@@ -70,6 +71,6 @@ trait Request
      */
     function version() : ?string
     {
-        return $this[Arg::VERSION];
+        return $this[VERSION];
     }
 }

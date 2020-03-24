@@ -5,10 +5,10 @@
 
 namespace Mvc5\View;
 
-use Mvc5\Arg;
-
 use function constant;
 use function defined;
+
+use const Mvc5\TEMPLATE_MODEL;
 
 trait Model
 {
@@ -26,7 +26,7 @@ trait Model
     {
         !$template && defined('static::TEMPLATE') && $template = constant('static::TEMPLATE');
 
-        $template && $vars[Arg::TEMPLATE_MODEL] = $template;
+        $template && $vars[TEMPLATE_MODEL] = $template;
 
         return $this->model ? $this->model->with($vars) : (
             (defined('static::VIEW_MODEL') && $model = constant('static::VIEW_MODEL'))

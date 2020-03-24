@@ -5,7 +5,6 @@
 
 namespace Mvc5\Request\Config;
 
-use Mvc5\Arg;
 use Mvc5\ArrayObject;
 use Mvc5\Config\Model;
 use Mvc5\Cookie\Cookies;
@@ -15,6 +14,9 @@ use Mvc5\Route\Route;
 
 use function is_array;
 use function is_string;
+
+use const Mvc5\{ ACCEPTS_JSON, ARGS, AUTHENTICATED, CLIENT_ADDRESS, COOKIES, CONTROLLER, DATA, ERROR, FILES,
+    HEADERS, HOST, NAME, PARAMS, PATH, PORT, QUERY, ROUTE, SCHEME, SERVER, SESSION, URI, USER, USER_AGENT };
 
 trait Request
 {
@@ -28,18 +30,18 @@ trait Request
      */
     function __construct($config = [])
     {
-        $config[Arg::COOKIES] ??= new HttpCookies;
+        $config[COOKIES] ??= new HttpCookies;
 
-        is_array($config[Arg::COOKIES]) &&
-            $config[Arg::COOKIES] = new HttpCookies($config[Arg::COOKIES]);
+        is_array($config[COOKIES]) &&
+            $config[COOKIES] = new HttpCookies($config[COOKIES]);
 
-        $config[Arg::HEADERS] ??= new Http\HttpHeaders;
+        $config[HEADERS] ??= new Http\HttpHeaders;
 
-        is_array($config[Arg::HEADERS]) &&
-            $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);
+        is_array($config[HEADERS]) &&
+            $config[HEADERS] = new Http\HttpHeaders($config[HEADERS]);
 
-        isset($config[Arg::URI]) && !($config[Arg::URI] instanceof Http\Uri) &&
-            $config[Arg::URI] = new Http\HttpUri($config[Arg::URI]);
+        isset($config[URI]) && !($config[URI] instanceof Http\Uri) &&
+            $config[URI] = new Http\HttpUri($config[URI]);
 
         $this->config = $config instanceof Model ? $config: new ArrayObject((array) $config);
     }
@@ -49,7 +51,7 @@ trait Request
      */
     function authenticated() : bool
     {
-        return (bool) $this[Arg::AUTHENTICATED];
+        return (bool) $this[AUTHENTICATED];
     }
 
     /**
@@ -57,7 +59,7 @@ trait Request
      */
     function acceptsJson() : bool
     {
-        return (bool) $this[Arg::ACCEPTS_JSON];
+        return (bool) $this[ACCEPTS_JSON];
     }
 
     /**
@@ -75,7 +77,7 @@ trait Request
      */
     function args() : array
     {
-        return $this[Arg::ARGS] ?? [];
+        return $this[ARGS] ?? [];
     }
 
     /**
@@ -83,7 +85,7 @@ trait Request
      */
     function clientAddress() : ?string
     {
-        return $this[Arg::CLIENT_ADDRESS];
+        return $this[CLIENT_ADDRESS];
     }
 
     /**
@@ -91,7 +93,7 @@ trait Request
      */
     function controller()
     {
-        return $this[Arg::CONTROLLER];
+        return $this[CONTROLLER];
     }
 
     /**
@@ -108,7 +110,7 @@ trait Request
      */
     function cookies() : Cookies
     {
-        return $this[Arg::COOKIES];
+        return $this[COOKIES];
     }
 
     /**
@@ -118,7 +120,7 @@ trait Request
      */
     function data($name = null, $default = null)
     {
-        return null === $name ? ($this->get(Arg::DATA) ?: []) : match($this->get(Arg::DATA) ?: [], $name, $default);
+        return null === $name ? ($this->get(DATA) ?: []) : match($this->get(DATA) ?: [], $name, $default);
     }
 
     /**
@@ -126,7 +128,7 @@ trait Request
      */
     function error() : ?Http\Error
     {
-        return $this[Arg::ERROR];
+        return $this[ERROR];
     }
 
     /**
@@ -134,7 +136,7 @@ trait Request
      */
     function files()
     {
-        return $this[Arg::FILES] ?? [];
+        return $this[FILES] ?? [];
     }
 
     /**
@@ -151,7 +153,7 @@ trait Request
      */
     function host() : ?string
     {
-        return $this->get(Arg::URI)[Arg::HOST] ?? null;
+        return $this->get(URI)[HOST] ?? null;
     }
 
     /**
@@ -183,7 +185,7 @@ trait Request
      */
     function name() : ?string
     {
-        return $this[Arg::NAME];
+        return $this[NAME];
     }
 
     /**
@@ -201,7 +203,7 @@ trait Request
      */
     function params() : array
     {
-        return $this[Arg::PARAMS] ?? [];
+        return $this[PARAMS] ?? [];
     }
 
     /**
@@ -209,7 +211,7 @@ trait Request
      */
     function path() : ?string
     {
-        return $this->get(Arg::URI)[Arg::PATH] ?? null;
+        return $this->get(URI)[PATH] ?? null;
     }
 
     /**
@@ -217,7 +219,7 @@ trait Request
      */
     function port() : ?int
     {
-        return $this->get(Arg::URI)[Arg::PORT] ?? null;
+        return $this->get(URI)[PORT] ?? null;
     }
 
     /**
@@ -235,7 +237,7 @@ trait Request
      */
     function query()
     {
-        return $this->get(Arg::URI)[Arg::QUERY] ?? null;
+        return $this->get(URI)[QUERY] ?? null;
     }
 
     /**
@@ -243,7 +245,7 @@ trait Request
      */
     function route() : ?Route
     {
-        return $this[Arg::ROUTE];
+        return $this[ROUTE];
     }
 
     /**
@@ -251,7 +253,7 @@ trait Request
      */
     function scheme() : ?string
     {
-        return $this->get(Arg::URI)[Arg::SCHEME] ?? null;
+        return $this->get(URI)[SCHEME] ?? null;
     }
 
     /**
@@ -261,7 +263,7 @@ trait Request
      */
     function server($name = null, $default = null)
     {
-        return null === $name ? $this->get(Arg::SERVER) : match($this->get(Arg::SERVER), $name, $default);
+        return null === $name ? $this->get(SERVER) : match($this->get(SERVER), $name, $default);
     }
 
     /**
@@ -271,7 +273,7 @@ trait Request
      */
     function session($name = null, $default = null)
     {
-        return null === $name ? $this->get(Arg::SESSION) : match($this->get(Arg::SESSION), $name, $default);
+        return null === $name ? $this->get(SESSION) : match($this->get(SESSION), $name, $default);
     }
 
     /**
@@ -279,7 +281,7 @@ trait Request
      */
     function user()
     {
-        return $this[Arg::USER];
+        return $this[USER];
     }
 
     /**
@@ -287,7 +289,7 @@ trait Request
      */
     function userAgent() : ?string
     {
-        return $this[Arg::USER_AGENT];
+        return $this[USER_AGENT];
     }
 
     /**

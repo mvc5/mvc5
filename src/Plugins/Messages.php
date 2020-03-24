@@ -5,8 +5,9 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
 use Mvc5\Session\SessionMessages;
+
+use const Mvc5\SESSION_MESSAGES;
 
 trait Messages
 {
@@ -42,7 +43,7 @@ trait Messages
      */
     protected function messages() : SessionMessages
     {
-        return $this->plugin(Arg::SESSION_MESSAGES);
+        return $this->plugin(SESSION_MESSAGES);
     }
 
     /**

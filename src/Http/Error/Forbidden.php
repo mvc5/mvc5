@@ -5,8 +5,9 @@
 
 namespace Mvc5\Http\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpError;
+
+use const Mvc5\{ DESCRIPTION, ERRORS, MESSAGE, STATUS };
 
 class Forbidden
     extends HttpError
@@ -17,10 +18,10 @@ class Forbidden
     function __construct(array $config = [])
     {
         parent::__construct($config + [
-                Arg::DESCRIPTION => 'The server understood the request, but is refusing to fulfill it.',
-                Arg::ERRORS => [],
-                Arg::MESSAGE => 'Forbidden',
-                Arg::STATUS => 403
+                DESCRIPTION => 'The server understood the request, but is refusing to fulfill it.',
+                ERRORS => [],
+                MESSAGE => 'Forbidden',
+                STATUS => 403
             ]);
     }
 }

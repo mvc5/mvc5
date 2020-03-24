@@ -5,7 +5,7 @@
 
 namespace Mvc5\Http;
 
-use Mvc5\Arg;
+use const Mvc5\{ HEADERS, STATUS };
 
 class HttpRedirect
     extends HttpResponse
@@ -17,6 +17,6 @@ class HttpRedirect
      */
     function __construct(string $url, int $status = 302, array $headers = [])
     {
-        parent::__construct([Arg::HEADERS => ['location' => $url] + $headers, Arg::STATUS => $status]);
+        parent::__construct([HEADERS => ['location' => $url] + $headers, STATUS => $status]);
     }
 }

@@ -38,8 +38,8 @@ class Event
     protected function args() : array
     {
         return array_filter([
-            Arg::EVENT => $this,
-            Arg::MODEL => $this->model
+            EVENT => $this,
+            MODEL => $this->model
         ]);
     }
 

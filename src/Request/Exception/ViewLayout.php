@@ -5,8 +5,9 @@
 
 namespace Mvc5\Request\Exception;
 
-use Mvc5\Arg;
 use Throwable;
+
+use const Mvc5\EXCEPTION;
 
 class ViewLayout
     extends \Mvc5\ViewLayout
@@ -28,6 +29,6 @@ class ViewLayout
      */
     function __construct(Throwable $exception, string $template = null)
     {
-        parent::__construct($template, [Arg::EXCEPTION => $exception]);
+        parent::__construct($template, [EXCEPTION => $exception]);
     }
 }

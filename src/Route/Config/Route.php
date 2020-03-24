@@ -5,7 +5,8 @@
 
 namespace Mvc5\Route\Config;
 
-use Mvc5\Arg;
+use const Mvc5\{ ACTION, CHILDREN, CONSTRAINTS, CONTROLLER, DEFAULTS,
+    HOST, METHOD, NAME, OPTIONS, PATH, PORT, REGEX, SCHEME, TOKENS, WILDCARD };
 
 trait Route
 {
@@ -15,7 +16,7 @@ trait Route
      */
     function action(string $name)
     {
-        return $this->get(Arg::ACTION)[$name] ?? null;
+        return $this->get(ACTION)[$name] ?? null;
     }
 
     /**
@@ -24,7 +25,7 @@ trait Route
      */
     function child(string $name)
     {
-        return $this->get(Arg::CHILDREN)[$name] ?? null;
+        return $this->get(CHILDREN)[$name] ?? null;
     }
 
     /**
@@ -32,7 +33,7 @@ trait Route
      */
     function children() : iterable
     {
-        return $this[Arg::CHILDREN] ?? [];
+        return $this[CHILDREN] ?? [];
     }
 
     /**
@@ -40,7 +41,7 @@ trait Route
      */
     function constraints() : array
     {
-        return $this[Arg::CONSTRAINTS] ?? [];
+        return $this[CONSTRAINTS] ?? [];
     }
 
     /**
@@ -48,7 +49,7 @@ trait Route
      */
     function controller()
     {
-        return $this[Arg::CONTROLLER];
+        return $this[CONTROLLER];
     }
 
     /**
@@ -56,7 +57,7 @@ trait Route
      */
     function defaults() : array
     {
-        return $this[Arg::DEFAULTS] ?? [];
+        return $this[DEFAULTS] ?? [];
     }
 
     /**
@@ -64,7 +65,7 @@ trait Route
      */
     function host()
     {
-        return $this[Arg::HOST];
+        return $this[HOST];
     }
 
     /**
@@ -72,7 +73,7 @@ trait Route
      */
     function method()
     {
-        return $this[Arg::METHOD];
+        return $this[METHOD];
     }
 
     /**
@@ -80,7 +81,7 @@ trait Route
      */
     function name() : ?string
     {
-        return $this[Arg::NAME];
+        return $this[NAME];
     }
 
     /**
@@ -88,7 +89,7 @@ trait Route
      */
     function options() : array
     {
-        return $this[Arg::OPTIONS] ?? [];
+        return $this[OPTIONS] ?? [];
     }
 
     /**
@@ -96,7 +97,7 @@ trait Route
      */
     function path()
     {
-        return $this[Arg::PATH];
+        return $this[PATH];
     }
 
     /**
@@ -104,7 +105,7 @@ trait Route
      */
     function port() : ?int
     {
-        return $this[Arg::PORT];
+        return $this[PORT];
     }
 
     /**
@@ -112,7 +113,7 @@ trait Route
      */
     function regex() : ?string
     {
-        return $this[Arg::REGEX];
+        return $this[REGEX];
     }
 
     /**
@@ -120,7 +121,7 @@ trait Route
      */
     function scheme()
     {
-        return $this[Arg::SCHEME];
+        return $this[SCHEME];
     }
 
     /**
@@ -128,7 +129,7 @@ trait Route
      */
     function tokens() : array
     {
-        return $this[Arg::TOKENS] ?? [];
+        return $this[TOKENS] ?? [];
     }
 
     /**
@@ -136,6 +137,6 @@ trait Route
      */
     function wildcard() : bool
     {
-        return (bool) $this[Arg::WILDCARD];
+        return (bool) $this[WILDCARD];
     }
 }

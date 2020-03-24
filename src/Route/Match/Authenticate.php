@@ -2,10 +2,11 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\Unauthorized;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
+
+use const Mvc5\{ AUTHENTICATE, AUTHENTICATED, ACCEPTS_JSON, CONTROLLER, METHOD };
 
 class Authenticate
 {
@@ -28,7 +29,7 @@ class Authenticate
      */
     protected function controller(Request $request) : Request
     {
-        return $request->with(Arg::CONTROLLER, $this->controller);
+        return $request->with(CONTROLLER, $this->controller);
     }
 
     /**
@@ -37,7 +38,7 @@ class Authenticate
      */
     protected function redirect(Request $request) : bool
     {
-        return 'GET' === $request[Arg::METHOD] && !$request[Arg::ACCEPTS_JSON];
+        return 'GET' === $request[METHOD] && !$request[ACCEPTS_JSON];
     }
 
     /**
@@ -48,7 +49,7 @@ class Authenticate
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return !($route[Arg::AUTHENTICATE] ?? false) || ($request[Arg::AUTHENTICATED] ?? false) ?
+        return !($route[AUTHENTICATE] ?? false) || ($request[AUTHENTICATED] ?? false) ?
             $next($route, $request) : ($this->redirect($request) ? $this->controller($request) : new Unauthorized);
     }
 }

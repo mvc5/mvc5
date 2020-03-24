@@ -5,7 +5,6 @@
 
 namespace Mvc5\Url;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpUri;
 use Mvc5\Http\Request;
 use Mvc5\Http\Uri;
@@ -13,6 +12,8 @@ use Mvc5\Http\Uri;
 use function array_shift;
 use function strrpos;
 use function substr;
+
+use const Mvc5\{ ABSOLUTE, FRAGMENT, HOST, NAME, PARAMS, PARENT, PORT, QUERY, SEPARATOR, SCHEME, URI };
 
 class Plugin
 {
@@ -57,12 +58,12 @@ class Plugin
         $this->absolute = $absolute;
         $this->assembler = $assembler ?? new Assemble;
         $this->generator = $generator;
-        $this->name = $request[Arg::NAME];
-        $this->uri = $request[Arg::URI] ?? new HttpUri;
+        $this->name = $request[NAME];
+        $this->uri = $request[URI] ?? new HttpUri;
 
-        $this->params[$this->name] = (array) $request[Arg::PARAMS];
+        $this->params[$this->name] = (array) $request[PARAMS];
 
-        $this->parent($request, $request[Arg::PARENT]);
+        $this->parent($request, $request[PARENT]);
     }
 
     /**
@@ -72,18 +73,18 @@ class Plugin
      */
     protected function absolute($uri, array $options = [])
     {
-        if (!$this->absolute && empty($uri[Arg::ABSOLUTE])) {
+        if (!$this->absolute && empty($uri[ABSOLUTE])) {
             return $uri;
         }
 
-        !isset($uri[Arg::SCHEME]) &&
-            $options[Arg::SCHEME] = $this->uri[Arg::SCHEME];
+        !isset($uri[SCHEME]) &&
+            $options[SCHEME] = $this->uri[SCHEME];
 
-        !isset($uri[Arg::PORT]) &&
-            $options[Arg::PORT] = $this->uri[Arg::PORT];
+        !isset($uri[PORT]) &&
+            $options[PORT] = $this->uri[PORT];
 
-        !isset($uri[Arg::HOST]) &&
-            $options[Arg::HOST] = $this->uri[Arg::HOST];
+        !isset($uri[HOST]) &&
+            $options[HOST] = $this->uri[HOST];
 
         return !$options ? $uri : ($uri instanceof Uri ? $uri->with($options) : $options + $uri);
     }
@@ -121,7 +122,7 @@ class Plugin
      */
     protected function generate(string $name, array $params, array $options) : ?Uri
     {
-        return $name[0] === Arg::SEPARATOR ? null : ($this->generator)($name, $this->params($name, $params), $options);
+        return $name[0] === SEPARATOR ? null : ($this->generator)($name, $this->params($name, $params), $options);
     }
 
     /**
@@ -132,7 +133,7 @@ class Plugin
     protected function match(int $pos, string $name) : array
     {
         return !$pos ? [] : $this->params[$name = substr($name, 0, $pos)] ??
-            $this->match((int) strrpos($name, Arg::SEPARATOR), $name);
+            $this->match((int) strrpos($name, SEPARATOR), $name);
     }
 
     /**
@@ -152,7 +153,7 @@ class Plugin
      */
     protected function options($query, string $fragment = null, array $options = []) : array
     {
-        return [Arg::FRAGMENT => $fragment, Arg::QUERY => $query] + $options;
+        return [FRAGMENT => $fragment, QUERY => $query] + $options;
     }
 
     /**
@@ -162,10 +163,10 @@ class Plugin
      */
     protected function parent(Request $request = null, Request $parent = null) : ?Request
     {
-        $parent && ($name = $parent[Arg::NAME]) &&
-            $this->params[$name] = $parent[Arg::PARAMS] ?? [];
+        $parent && ($name = $parent[NAME]) &&
+            $this->params[$name] = $parent[PARAMS] ?? [];
 
-        return $request && $request !== $parent ? $this->parent($parent, $parent[Arg::PARENT] ?? null) : null;
+        return $request && $request !== $parent ? $this->parent($parent, $parent[PARENT] ?? null) : null;
     }
 
     /**
@@ -175,7 +176,7 @@ class Plugin
      */
     protected function params(string $name, array $params) : array
     {
-        return $params + ($this->params[$name] ?? $this->match((int) strrpos($name, Arg::SEPARATOR), $name));
+        return $params + ($this->params[$name] ?? $this->match((int) strrpos($name, SEPARATOR), $name));
     }
 
     /**

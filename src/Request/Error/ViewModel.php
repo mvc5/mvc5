@@ -5,8 +5,9 @@
 
 namespace Mvc5\Request\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error;
+
+use const Mvc5\ERROR;
 
 class ViewModel
     extends \Mvc5\ViewModel
@@ -28,6 +29,6 @@ class ViewModel
      */
     function __construct(Error $error, string $template = null)
     {
-        parent::__construct($template, [Arg::ERROR => $error]);
+        parent::__construct($template, [ERROR => $error]);
     }
 }

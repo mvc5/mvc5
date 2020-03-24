@@ -5,8 +5,9 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
 use Mvc5\Service\Service;
+
+use const Mvc5\{ NAME, PLUGIN, SERVICE };
 
 class Register
     extends Call
@@ -19,7 +20,7 @@ class Register
     function __construct(string $name, $service, $plugin = null)
     {
         parent::__construct(
-            [$this, 'register'], [new Link, [Arg::NAME => $name, Arg::SERVICE => $service, Arg::PLUGIN => $plugin]]
+            [$this, 'register'], [new Link, [NAME => $name, SERVICE => $service, PLUGIN => $plugin]]
         );
     }
 
@@ -30,10 +31,10 @@ class Register
      */
     function register(Service $plugins, array $config)
     {
-        $service = $plugins->plugin($config[Arg::SERVICE]);
+        $service = $plugins->plugin($config[SERVICE]);
 
-        return $service[$config[Arg::NAME]] ?? (
-            isset($config[Arg::PLUGIN]) ? $service[$config[Arg::NAME]] = $plugins->plugin($config[Arg::PLUGIN]) : null
+        return $service[$config[NAME]] ?? (
+            isset($config[PLUGIN]) ? $service[$config[NAME]] = $plugins->plugin($config[PLUGIN]) : null
         );
     }
 }

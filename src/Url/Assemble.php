@@ -5,7 +5,6 @@
 
 namespace Mvc5\Url;
 
-use Mvc5\Arg;
 use Mvc5\Http\Uri;
 
 use function http_build_query;
@@ -13,6 +12,8 @@ use function is_array;
 use function rawurlencode;
 use function strtr;
 use function strtolower;
+
+use const Mvc5\{ HOST, QUERY_SEPARATOR, PASS, PORT, SCHEME, USER };
 
 class Assemble
 {
@@ -124,7 +125,7 @@ class Assemble
     static function query($query) : ?string
     {
         return is_array($query) ? strtr(
-            http_build_query($query, '', Arg::QUERY_SEPARATOR, \PHP_QUERY_RFC3986), static::QUERY
+            http_build_query($query, '', QUERY_SEPARATOR, \PHP_QUERY_RFC3986), static::QUERY
         ) : static::encode($query, static::QUERY_STRING);
     }
 
@@ -173,10 +174,10 @@ class Assemble
     static function url(string $path, $query = null, string $fragment = null, array $options = []) : string
     {
         return static::compile(
-            static::scheme($options[Arg::SCHEME] ?? null),
+            static::scheme($options[SCHEME] ?? null),
             static::authority(
-                $options[Arg::HOST] ?? null, $options[Arg::PORT] ?? null,
-                    $options[Arg::USER] ?? null, $options[Arg::PASS] ?? null
+                $options[HOST] ?? null, $options[PORT] ?? null,
+                    $options[USER] ?? null, $options[PASS] ?? null
             ),
             static::path($path),
             static::query($query),

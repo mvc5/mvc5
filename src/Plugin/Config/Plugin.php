@@ -5,9 +5,10 @@
 
 namespace Mvc5\Plugin\Config;
 
-use Mvc5\Arg;
 use Mvc5\Config\ArrayObject;
 use Mvc5\Config\ReadOnly;
+
+use const Mvc5\{ ARGS, CALLS, MERGE, NAME, PARAM };
 
 trait Plugin
 {
@@ -22,7 +23,7 @@ trait Plugin
      */
     function args() : array
     {
-        return $this[Arg::ARGS] ?? [];
+        return $this[ARGS] ?? [];
     }
 
     /**
@@ -30,7 +31,7 @@ trait Plugin
      */
     function calls() : array
     {
-        return $this[Arg::CALLS] ?? [];
+        return $this[CALLS] ?? [];
     }
 
     /**
@@ -38,7 +39,7 @@ trait Plugin
      */
     function merge() : bool
     {
-        return (bool) $this[Arg::MERGE];
+        return (bool) $this[MERGE];
     }
 
     /**
@@ -46,7 +47,7 @@ trait Plugin
      */
     function name()
     {
-        return $this[Arg::NAME];
+        return $this[NAME];
     }
 
     /**
@@ -54,6 +55,6 @@ trait Plugin
      */
     function param() : ?string
     {
-        return $this[Arg::PARAM];
+        return $this[PARAM];
     }
 }

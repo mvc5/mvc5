@@ -5,8 +5,9 @@
 
 namespace Mvc5\Request\Exception\Config;
 
-use Mvc5\Arg;
 use Mvc5\View\Config\ViewLayout;
+
+use const Mvc5\EXCEPTION;
 
 trait ExceptionLayout
 {
@@ -20,6 +21,6 @@ trait ExceptionLayout
      */
     function exception() : \Throwable
     {
-        return $this[Arg::EXCEPTION];
+        return $this[EXCEPTION];
     }
 }

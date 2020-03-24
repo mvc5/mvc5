@@ -5,8 +5,9 @@
 
 namespace Mvc5\Http\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\HttpError;
+
+use const Mvc5\{ DESCRIPTION, ERRORS, MESSAGE, STATUS };
 
 class Unauthorized
     extends HttpError
@@ -17,10 +18,10 @@ class Unauthorized
     function __construct(array $config = [])
     {
         parent::__construct($config + [
-                Arg::DESCRIPTION => '',
-                Arg::ERRORS => [],
-                Arg::MESSAGE => 'Unauthorized',
-                Arg::STATUS => 401
+                DESCRIPTION => '',
+                ERRORS => [],
+                MESSAGE => 'Unauthorized',
+                STATUS => 401
             ]);
     }
 }

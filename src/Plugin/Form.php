@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\FORM;
 
 class Form
     extends Child
@@ -15,6 +15,6 @@ class Form
      */
     function __construct(string $name)
     {
-        parent::__construct($name, Arg::FORM);
+        parent::__construct($name, FORM);
     }
 }

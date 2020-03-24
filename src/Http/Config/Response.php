@@ -5,12 +5,13 @@
 
 namespace Mvc5\Http\Config;
 
-use Mvc5\Arg;
 use Mvc5\ArrayObject;
 use Mvc5\Http;
 use Mvc5\Config\Model;
 
 use function is_array;
+
+use const Mvc5\{ BODY, HEADERS, REASON, STATUS, VERSION };
 
 trait Response
 {
@@ -24,10 +25,10 @@ trait Response
      */
     function __construct($config = [])
     {
-        $config[Arg::HEADERS] ??= new Http\HttpHeaders;
+        $config[HEADERS] ??= new Http\HttpHeaders;
 
-        is_array($config[Arg::HEADERS]) &&
-            $config[Arg::HEADERS] = new Http\HttpHeaders($config[Arg::HEADERS]);
+        is_array($config[HEADERS]) &&
+            $config[HEADERS] = new Http\HttpHeaders($config[HEADERS]);
 
         $this->config = $config instanceof Model ? $config: new ArrayObject((array) $config);
     }
@@ -37,7 +38,7 @@ trait Response
      */
     function body()
     {
-        return $this[Arg::BODY];
+        return $this[BODY];
     }
 
     /**
@@ -45,7 +46,7 @@ trait Response
      */
     function headers() : Http\Headers
     {
-        return $this[Arg::HEADERS];
+        return $this[HEADERS];
     }
 
     /**
@@ -53,7 +54,7 @@ trait Response
      */
     function reason() : ?string
     {
-        return $this[Arg::REASON];
+        return $this[REASON];
     }
 
     /**
@@ -61,7 +62,7 @@ trait Response
      */
     function status() : ?int
     {
-        return $this[Arg::STATUS];
+        return $this[STATUS];
     }
 
     /**
@@ -69,6 +70,6 @@ trait Response
      */
     function version() : ?string
     {
-        return $this[Arg::VERSION];
+        return $this[VERSION];
     }
 }

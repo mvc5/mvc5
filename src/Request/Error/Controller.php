@@ -5,11 +5,12 @@
 
 namespace Mvc5\Request\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Plugins\Service;
+
+use const Mvc5\{ ACCEPTS_JSON, ERROR, ERROR_MODEL, RESPONSE_JSON_ERROR };
 
 class Controller
 {
@@ -24,7 +25,7 @@ class Controller
      */
     protected function json(Error $error) : Response
     {
-        return $this->plugin(Arg::RESPONSE_JSON_ERROR, [Arg::ERROR => $error]);
+        return $this->plugin(RESPONSE_JSON_ERROR, [ERROR => $error]);
     }
 
     /**
@@ -33,7 +34,7 @@ class Controller
      */
     protected function model(Error $error) : ViewModel
     {
-        return $this->plugin(Arg::ERROR_MODEL, [Arg::ERROR => $error]);
+        return $this->plugin(ERROR_MODEL, [ERROR => $error]);
     }
 
     /**
@@ -42,6 +43,6 @@ class Controller
      */
     function __invoke(Request $request)
     {
-        return $request[Arg::ACCEPTS_JSON] ? $this->json($request[Arg::ERROR]) : $this->model($request[Arg::ERROR]);
+        return $request[ACCEPTS_JSON] ? $this->json($request[ERROR]) : $this->model($request[ERROR]);
     }
 }

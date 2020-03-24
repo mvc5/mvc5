@@ -5,12 +5,13 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\MethodNotAllowed;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function in_array;
+
+use const Mvc5\{ HTTP_GET, HTTP_HEAD, METHOD };
 
 class Method
 {
@@ -26,8 +27,7 @@ class Method
      */
     protected function match(string $method, array $methods) : bool
     {
-        return !$methods || in_array($method, $methods) ||
-            (Arg::HTTP_HEAD === $method && in_array(Arg::HTTP_GET, $methods));
+        return !$methods || in_array($method, $methods) || (HTTP_HEAD === $method && in_array(HTTP_GET, $methods));
     }
 
     /**
@@ -39,7 +39,7 @@ class Method
     function __invoke(Route $route, Request $request, callable $next)
     {
         return $this->match($request->method(), (array) $route->method()) ? $next($route, $request) : (
-            $this->optional($route, Arg::METHOD) ? null : new MethodNotAllowed
+            $this->optional($route, METHOD) ? null : new MethodNotAllowed
         );
     }
 }

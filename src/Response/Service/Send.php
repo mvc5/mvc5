@@ -6,7 +6,6 @@
 namespace Mvc5\Response\Service;
 
 use Closure;
-use Mvc5\Arg;
 use Mvc5\Cookie\PHPCookies;
 use Mvc5\Http\Response;
 use Mvc5\Response\Emitter;
@@ -15,6 +14,8 @@ use function header;
 use function headers_sent;
 use function implode;
 use function sprintf;
+
+use const Mvc5\COOKIES;
 
 trait Send
 {
@@ -45,7 +46,7 @@ trait Send
      */
     protected function cookies(Response $response) : iterable
     {
-        return $response[Arg::COOKIES] ?? [];
+        return $response[COOKIES] ?? [];
     }
 
     /**

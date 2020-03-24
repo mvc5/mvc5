@@ -5,7 +5,7 @@
 
 namespace Mvc5\Http\Config;
 
-use Mvc5\Arg;
+use const Mvc5\{ CODE, DESCRIPTION, ERRORS, MESSAGE, STATUS };
 
 trait Error
 {
@@ -14,7 +14,7 @@ trait Error
      */
     function code() : ?int
     {
-        return $this[Arg::CODE];
+        return $this[CODE];
     }
 
     /**
@@ -22,7 +22,7 @@ trait Error
      */
     function description() : ?string
     {
-        return $this[Arg::DESCRIPTION];
+        return $this[DESCRIPTION];
     }
 
     /**
@@ -30,7 +30,7 @@ trait Error
      */
     function errors() : array
     {
-        return $this[Arg::ERRORS] ?? [];
+        return $this[ERRORS] ?? [];
     }
 
     /**
@@ -38,10 +38,10 @@ trait Error
      */
     function jsonSerialize() : array
     {
-        return (null !== $this->code() ? [Arg::CODE => $this->code()] : [])
-            + (null !== $this->message() ? [Arg::MESSAGE => $this->message()] : [])
-            + (null !== $this->description() ? [Arg::DESCRIPTION => $this->description()] : [])
-            + ($this->errors() ? [Arg::ERRORS => $this->errors()] : []);
+        return (null !== $this->code() ? [CODE => $this->code()] : [])
+            + (null !== $this->message() ? [MESSAGE => $this->message()] : [])
+            + (null !== $this->description() ? [DESCRIPTION => $this->description()] : [])
+            + ($this->errors() ? [ERRORS => $this->errors()] : []);
     }
 
     /**
@@ -49,7 +49,7 @@ trait Error
      */
     function message() : ?string
     {
-        return $this[Arg::MESSAGE];
+        return $this[MESSAGE];
     }
 
     /**
@@ -57,6 +57,6 @@ trait Error
      */
     function status() : ?int
     {
-        return $this[Arg::STATUS];
+        return $this[STATUS];
     }
 }

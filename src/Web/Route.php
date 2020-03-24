@@ -5,10 +5,11 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Route\Dispatch\Router;
+
+use const Mvc5\BODY;
 
 class Route
 {
@@ -32,7 +33,7 @@ class Route
         }
 
         !$result instanceof Response &&
-            $result = $response->with(Arg::BODY, $result);
+            $result = $response->with(BODY, $result);
 
         return $next($request, $result);
     }

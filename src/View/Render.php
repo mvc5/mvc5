@@ -5,9 +5,10 @@
 
 namespace Mvc5\View;
 
-use Mvc5\Arg;
 use Mvc5\Service\Service;
 use Mvc5\ViewModel;
+
+use const Mvc5\VIEW_EXTENSION;
 
 class Render
     implements View
@@ -30,7 +31,7 @@ class Render
         $this->service = $service;
 
         $this->directory = $options['directory'] ?? null;
-        $this->extension = $options['extension'] ?? Arg::VIEW_EXTENSION;
+        $this->extension = $options['extension'] ?? VIEW_EXTENSION;
         $this->model = $options['model'] ?? ViewModel::class;
         $this->paths = (array) ($options['paths'] ?? null);
     }

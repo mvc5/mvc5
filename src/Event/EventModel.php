@@ -5,11 +5,12 @@
 
 namespace Mvc5\Event;
 
-use Mvc5\Arg;
 use Mvc5\Signal;
 
 use function is_string;
 use function key;
+
+use const Mvc5\EVENT;
 
 trait EventModel
 {
@@ -24,7 +25,7 @@ trait EventModel
     protected function args() : array
     {
         return [
-            Arg::EVENT => $this
+            EVENT => $this
         ];
     }
 

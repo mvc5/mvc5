@@ -5,12 +5,14 @@
 
 namespace Mvc5\View\Template;
 
-use Mvc5\Arg;
 use Mvc5\Service\Service;
 use Mvc5\Template\TemplateModel;
 use Mvc5\View\ViewModel;
 
 use function is_string;
+
+use const DIRECTORY_SEPARATOR;
+use const Mvc5\TEMPLATE_MODEL;
 
 trait Model
 {
@@ -45,7 +47,7 @@ trait Model
             && $model = $this->create($model);
 
         ($path = $model->template()) && ($file = $this->find($path)) && ($path !== $file)
-            && $vars[Arg::TEMPLATE_MODEL] = $file;
+            && $vars[TEMPLATE_MODEL] = $file;
 
         $vars && $model = $model->with($vars);
 

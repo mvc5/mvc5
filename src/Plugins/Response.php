@@ -5,8 +5,9 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
 use Mvc5\Http;
+
+use const Mvc5\{ RESPONSE, RESPONSE_JSON, RESPONSE_REDIRECT };
 
 trait Response
 {
@@ -18,7 +19,7 @@ trait Response
      */
     protected function json($data, int $status = 200, array $headers = []) : Http\Response
     {
-        return $this->plugin(Arg::RESPONSE_JSON, [$data, $status, $headers]);
+        return $this->plugin(RESPONSE_JSON, [$data, $status, $headers]);
     }
 
     /**
@@ -30,7 +31,7 @@ trait Response
      */
     protected function redirect($url, int $status = 302, array $headers = [], array $config = []) : Http\Response
     {
-        return $this->plugin(Arg::RESPONSE_REDIRECT, [$url, $status, $headers, $config]);
+        return $this->plugin(RESPONSE_REDIRECT, [$url, $status, $headers, $config]);
     }
 
     /**
@@ -42,6 +43,6 @@ trait Response
      */
     protected function response($body = null, int $status = null, $headers = [], array $config = []) : Http\Response
     {
-        return $this->plugin(Arg::RESPONSE, [$body, $status, $headers, $config]);
+        return $this->plugin(RESPONSE, [$body, $status, $headers, $config]);
     }
 }

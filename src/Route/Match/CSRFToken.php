@@ -5,13 +5,14 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\Forbidden;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function hash_equals;
 use function in_array;
+
+use const Mvc5\{ CSRF_TOKEN, DATA, HEADERS, SESSION };
 
 class CSRFToken
 {
@@ -43,7 +44,7 @@ class CSRFToken
      */
     protected function match(Request $request) : bool
     {
-        return hash_equals((string) ($request[Arg::SESSION][Arg::CSRF_TOKEN] ?? ''), $this->param($request));
+        return hash_equals((string) ($request[SESSION][CSRF_TOKEN] ?? ''), $this->param($request));
     }
 
     /**
@@ -52,7 +53,7 @@ class CSRFToken
      */
     protected function param(Request $request) : string
     {
-        return (string) ($request[Arg::DATA][Arg::CSRF_TOKEN] ?? $request[Arg::HEADERS]['X-CSRF-Token'] ?? '');
+        return (string) ($request[DATA][CSRF_TOKEN] ?? $request[HEADERS]['X-CSRF-Token'] ?? '');
     }
 
     /**
@@ -63,7 +64,7 @@ class CSRFToken
      */
     function __invoke(Route $route, Request $request, callable $next)
     {
-        return !($route[ARG::CSRF_TOKEN] ?? $this->enable) || $this->allow($request->method()) || $this->match($request) ?
+        return !($route[CSRF_TOKEN] ?? $this->enable) || $this->allow($request->method()) || $this->match($request) ?
             $next($route, $request) : new Forbidden;
     }
 }

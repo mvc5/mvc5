@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
+use const Mvc5\{ CONTEXT, LEVEL, LOG, MESSAGE, SEVERITY_CRITICAL };
 
 trait Log
 {
@@ -15,8 +15,8 @@ trait Log
      * @param int $level
      * @return mixed
      */
-    protected function log($message, array $context = [], int $level = Arg::SEVERITY_CRITICAL)
+    protected function log($message, array $context = [], int $level = SEVERITY_CRITICAL)
     {
-        return $this->call(Arg::LOG, [Arg::LEVEL => $level, Arg::MESSAGE => $message, Arg::CONTEXT => $context]);
+        return $this->call(LOG, [LEVEL => $level, MESSAGE => $message, CONTEXT => $context]);
     }
 }

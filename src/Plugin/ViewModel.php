@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\{ TEMPLATE, VARS };
 
 class ViewModel
     extends Plugin
@@ -17,6 +17,6 @@ class ViewModel
      */
     function __construct($template, array $vars = [], array $calls = [])
     {
-        parent::__construct(\Mvc5\ViewModel::class, [Arg::TEMPLATE => $template, Arg::VARS => $vars], $calls);
+        parent::__construct(\Mvc5\ViewModel::class, [TEMPLATE => $template, VARS => $vars], $calls);
     }
 }

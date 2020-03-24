@@ -5,13 +5,14 @@
 
 namespace Mvc5\Response;
 
-use Mvc5\Arg;
 use Mvc5\Event\Event;
 use Mvc5\Event\EventModel;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 
 use function array_filter;
+
+use const Mvc5\{ BODY, CONTROLLER, EVENT, MODEL, REQUEST, RESPONSE };
 
 class Dispatch
     implements Event
@@ -49,11 +50,11 @@ class Dispatch
     protected function args() : array
     {
         return array_filter([
-            Arg::CONTROLLER => $this->request[Arg::CONTROLLER],
-            Arg::EVENT      => $this,
-            Arg::MODEL      => $this->response[Arg::BODY],
-            Arg::REQUEST    => $this->request,
-            Arg::RESPONSE   => $this->response
+            CONTROLLER => $this->request[CONTROLLER],
+            EVENT      => $this,
+            MODEL      => $this->response[BODY],
+            REQUEST    => $this->request,
+            RESPONSE   => $this->response
         ]);
     }
 
@@ -77,7 +78,7 @@ class Dispatch
         }
 
         null !== $result &&
-            $this->response = $this->response->with(Arg::BODY, $result);
+            $this->response = $this->response->with(BODY, $result);
 
         return $result;
     }

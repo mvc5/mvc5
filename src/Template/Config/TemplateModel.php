@@ -5,7 +5,6 @@
 
 namespace Mvc5\Template\Config;
 
-use Mvc5\Arg;
 use Mvc5\Template;
 
 use function array_filter;
@@ -13,6 +12,8 @@ use function constant;
 use function defined;
 use function is_array;
 use function is_string;
+
+use const Mvc5\TEMPLATE_MODEL;
 
 trait TemplateModel
 {
@@ -28,7 +29,7 @@ trait TemplateModel
     function __construct($template = null, array $vars = [])
     {
         $this->config = (is_array($template) ? $template + $vars : $vars) + array_filter([
-            Arg::TEMPLATE_MODEL => is_string($template) ? $template :
+            TEMPLATE_MODEL => is_string($template) ? $template :
                 (defined('static::TEMPLATE') ? constant('static::TEMPLATE') : null)
         ]);
     }
@@ -38,7 +39,7 @@ trait TemplateModel
      */
     function template() : ?string
     {
-        return $this[Arg::TEMPLATE_MODEL];
+        return $this[TEMPLATE_MODEL];
     }
 
     /**
@@ -55,6 +56,6 @@ trait TemplateModel
      */
     function withTemplate(string $template) : Template\TemplateModel
     {
-        return $this->with(Arg::TEMPLATE_MODEL, $template);
+        return $this->with(TEMPLATE_MODEL, $template);
     }
 }

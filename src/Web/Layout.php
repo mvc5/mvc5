@@ -5,9 +5,10 @@
 
 namespace Mvc5\Web;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
+
+use const Mvc5\BODY;
 
 class Layout
 {
@@ -22,7 +23,7 @@ class Layout
      */
     protected function response(Response $response) : Response
     {
-        return $response->with(Arg::BODY,  $this->layout($this->layout, $response->body()));
+        return $response->with(BODY,  $this->layout($this->layout, $response->body()));
     }
 
     /**

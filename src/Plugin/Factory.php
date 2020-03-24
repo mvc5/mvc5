@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
+use const Mvc5\{ FACTORY, NAME, PARENT };
 
 class Factory
     implements Gem\Factory
@@ -21,8 +21,8 @@ class Factory
     function __construct(string $name = null)
     {
         $this->config = [
-            Arg::NAME   => $name,
-            Arg::PARENT => Arg::FACTORY
+            NAME   => $name,
+            PARENT => FACTORY
         ];
     }
 }

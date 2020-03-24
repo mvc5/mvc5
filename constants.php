@@ -3,9 +3,7 @@
  *
  */
 
-namespace Mvc5;
-
-interface Arg
+namespace Mvc5
 {
     const ABSOLUTE = 'absolute';
     const ACCEPTS_JSON = 'accepts_json';
@@ -29,6 +27,7 @@ interface Arg
     const CONTAINER = 'container';
     const CONTENT_TYPE = 'content_type';
     const CONTEXT = 'context';
+    const controller = 'controller';
     const CONTROLLER = 'controller';
     const CONTROLLER_RESPONSE = 'controller\response';
     const COOKIES = 'cookies';

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin\Config;
 
-use Mvc5\Arg;
+use const Mvc5\{ CALLS, ITEM, NAME, PARAM };
 
 trait Hydrator
 {
@@ -19,12 +19,12 @@ trait Hydrator
      * @param array $calls
      * @param string|null $param
      */
-    function __construct($name, array $calls, $param = Arg::ITEM)
+    function __construct($name, array $calls, $param = ITEM)
     {
         $this->config = [
-            Arg::CALLS => $calls,
-            Arg::NAME  => $name,
-            Arg::PARAM => $param
+            CALLS => $calls,
+            NAME  => $name,
+            PARAM => $param
         ];
     }
 }

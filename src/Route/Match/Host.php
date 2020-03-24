@@ -5,13 +5,14 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Error\NotFound;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function is_string;
 use function preg_match;
+
+use const Mvc5\{ DEFAULTS, HOST, PARAMS, REGEX, URI };
 
 class Host
 {
@@ -45,7 +46,7 @@ class Host
      */
     protected function name(Route $route, Request $request, string $host, callable $next)
     {
-        return $host === $request[Arg::URI][Arg::HOST] ? $next($route, $request) : $this->notFound($route);
+        return $host === $request[URI][HOST] ? $next($route, $request) : $this->notFound($route);
     }
 
     /**
@@ -54,7 +55,7 @@ class Host
      */
     protected function notFound(Route $route) : ?NotFound
     {
-        return $this->optional($route, Arg::HOST) ? null : new NotFound;
+        return $this->optional($route, HOST) ? null : new NotFound;
     }
 
     /**
@@ -66,11 +67,11 @@ class Host
      */
     protected function regex(Route $route, Request $request, array $host, callable $next)
     {
-        if (!preg_match('(\G' . $host[Arg::REGEX] . ')', (string) ($request[Arg::URI][Arg::HOST] ?? ''), $match)) {
+        if (!preg_match('(\G' . $host[REGEX] . ')', (string) ($request[URI][HOST] ?? ''), $match)) {
             return $this->notFound($route);
         }
 
-        $request = $request->with(Arg::PARAMS, $this->params($match, $host[Arg::DEFAULTS] ?? []));
+        $request = $request->with(PARAMS, $this->params($match, $host[DEFAULTS] ?? []));
 
         return $next($route, $request);
     }

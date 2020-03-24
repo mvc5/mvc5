@@ -2,10 +2,11 @@
 
 namespace Mvc5\Session\Login;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 use Mvc5\Session\Session;
+
+use const Mvc5\{ REDIRECT_URL, URI };
 
 class Redirect
 {
@@ -35,7 +36,7 @@ class Redirect
      */
     function __invoke(Request $request) : Response
     {
-        $this->session[Arg::REDIRECT_URL] = $request[Arg::URI];
+        $this->session[REDIRECT_URL] = $request[URI];
 
         return $this->response;
     }

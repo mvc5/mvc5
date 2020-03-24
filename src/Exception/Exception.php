@@ -5,7 +5,7 @@
 
 namespace Mvc5\Exception;
 
-use Mvc5\Arg;
+use const Mvc5\{ FILE, LINE };
 
 trait Exception
 {
@@ -50,9 +50,9 @@ trait Exception
     protected static function origin(\Throwable $exception, int $offset = 1, array $origin = []) : \Throwable
     {
         if (!$exception instanceof \Error) {
-            if (!empty($origin[Arg::FILE])) {
-                $exception->file = $origin[Arg::FILE];
-                $exception->line = $origin[Arg::LINE];
+            if (!empty($origin[FILE])) {
+                $exception->file = $origin[FILE];
+                $exception->line = $origin[LINE];
             }
             $offset && $exception->offset = $offset;
             return $exception;
@@ -60,9 +60,9 @@ trait Exception
 
         return (new class extends \Error {
             function __invoke(\Throwable $error, int $offset, array $origin) {
-                if (!empty($origin[Arg::FILE])) {
-                    $error->file = $origin[Arg::FILE];
-                    $error->line = $origin[Arg::LINE];
+                if (!empty($origin[FILE])) {
+                    $error->file = $origin[FILE];
+                    $error->line = $origin[LINE];
                 }
                 $offset && $error->offset = $offset;
                 return $error;

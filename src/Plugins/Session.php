@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
+use const Mvc5\SESSION;
 
 trait Session
 {
@@ -16,6 +16,6 @@ trait Session
     protected function session($name = null)
     {
         /** @var \Mvc5\Session\Session $session */
-        return !($session = $this->plugin(Arg::SESSION)) || null === $name ? $session : $session->get($name);
+        return !($session = $this->plugin(SESSION)) || null === $name ? $session : $session->get($name);
     }
 }

@@ -5,8 +5,9 @@
 
 namespace Mvc5\Request\Error;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
+
+use const Mvc5\{ CONTROLLER, ERROR, NAME };
 
 trait Error
 {
@@ -36,8 +37,8 @@ trait Error
      */
     protected function request(Request $request) : Request
     {
-        return !$request[Arg::ERROR] ? $request :
-            $request->with([Arg::CONTROLLER => $this->controller, Arg::NAME => $this->name]);
+        return !$request[ERROR] ? $request :
+            $request->with([CONTROLLER => $this->controller, NAME => $this->name]);
     }
 
     /**

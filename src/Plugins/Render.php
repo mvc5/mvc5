@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugins;
 
-use Mvc5\Arg;
+use const Mvc5\RENDER;
 
 trait Render
 {
@@ -16,6 +16,6 @@ trait Render
      */
     protected function render($template, array $vars = []) : string
     {
-        return $this->call(Arg::RENDER, [$template, $vars]);
+        return $this->call(RENDER, [$template, $vars]);
     }
 }

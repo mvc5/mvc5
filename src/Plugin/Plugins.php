@@ -5,9 +5,9 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
-
 use function is_array;
+
+use const Mvc5\SERVICES;
 
 class Plugins
     extends Plugin
@@ -37,6 +37,6 @@ class Plugins
      */
     protected function plugins($services, bool $provider) : Args
     {
-        return new Args([Arg::SERVICES => $provider || !is_array($services) ? $services : new Args($services)]);
+        return new Args([SERVICES => $provider || !is_array($services) ? $services : new Args($services)]);
     }
 }

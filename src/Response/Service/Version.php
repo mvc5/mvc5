@@ -5,9 +5,10 @@
 
 namespace Mvc5\Response\Service;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
+
+use const Mvc5\VERSION;
 
 trait Version
 {
@@ -18,7 +19,7 @@ trait Version
      */
     protected function version(Request $request, Response $response) : Response
     {
-        return $response->version() ? $response : $response->with(Arg::VERSION, $request->version());
+        return $response->version() ? $response : $response->with(VERSION, $request->version());
     }
 
     /**

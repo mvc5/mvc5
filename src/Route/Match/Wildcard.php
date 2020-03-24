@@ -5,12 +5,13 @@
 
 namespace Mvc5\Route\Match;
 
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
 use function count;
 use function explode;
+
+use const Mvc5\{ OPTIONS, PARAMS, SEPARATOR, WILDCARD };
 
 class Wildcard
 {
@@ -18,7 +19,7 @@ class Wildcard
      * @var array
      */
     protected array $options = [
-        Arg::WILDCARD => 'wildcard'
+        WILDCARD => 'wildcard'
     ];
 
     /**
@@ -46,7 +47,7 @@ class Wildcard
      */
     protected function options(Route $route) : array
     {
-        return $route[Arg::OPTIONS] ? $route[Arg::OPTIONS] + $this->options : $this->options;
+        return $route[OPTIONS] ? $route[OPTIONS] + $this->options : $this->options;
     }
 
     /**
@@ -55,7 +56,7 @@ class Wildcard
      */
     protected function params(Request $request) : array
     {
-        return $request->get(Arg::PARAMS) ?? [];
+        return $request->get(PARAMS) ?? [];
     }
 
     /**
@@ -65,7 +66,7 @@ class Wildcard
      */
     protected function parts(array $params, array $options) : array
     {
-        return isset($params[$options[Arg::WILDCARD]]) ? explode(Arg::SEPARATOR, $params[$options[Arg::WILDCARD]]) : [];
+        return isset($params[$options[WILDCARD]]) ? explode(SEPARATOR, $params[$options[WILDCARD]]) : [];
     }
 
     /**
@@ -75,7 +76,7 @@ class Wildcard
      */
     protected function remove(array $params, array $options) : array
     {
-        unset($params[$options[Arg::WILDCARD]]);
+        unset($params[$options[WILDCARD]]);
 
         return $params;
     }
@@ -87,7 +88,7 @@ class Wildcard
      */
     protected function request(Request $request, array $matched = []) : Request
     {
-        return $matched ? $request->with(Arg::PARAMS, $matched) : $request;
+        return $matched ? $request->with(PARAMS, $matched) : $request;
     }
 
     /**

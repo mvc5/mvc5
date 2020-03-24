@@ -5,8 +5,9 @@
 
 namespace Mvc5\Template\Config;
 
-use Mvc5\Arg;
 use Mvc5\Template;
+
+use const Mvc5\CHILD_MODEL;
 
 trait TemplateLayout
 {
@@ -15,7 +16,7 @@ trait TemplateLayout
      */
     function model()
     {
-        return $this[Arg::CHILD_MODEL];
+        return $this[CHILD_MODEL];
     }
 
     /**
@@ -24,6 +25,6 @@ trait TemplateLayout
      */
     function withModel($model) : Template\TemplateLayout
     {
-        return $this->with(Arg::CHILD_MODEL, $model);
+        return $this->with(CHILD_MODEL, $model);
     }
 }

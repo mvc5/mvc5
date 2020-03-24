@@ -5,12 +5,13 @@
 
 namespace Mvc5\Route\Definition;
 
-use Mvc5\Arg;
 use Mvc5\Exception;
 use Mvc5\Route\Config;
 use Mvc5\Route\Route;
 
 use function is_array;
+
+use const Mvc5\{ CLASS_NAME, CONSTRAINTS, HOST, NAME, PATH, REGEX, TOKENS };
 
 trait Build
 {
@@ -38,7 +39,7 @@ trait Build
     protected function create($route) : Route
     {
         return $route instanceof Route ? $route :
-            $this->createDefault($route, $route[Arg::CLASS_NAME] ?? Config::class);
+            $this->createDefault($route, $route[CLASS_NAME] ?? Config::class);
     }
 
     /**
@@ -60,18 +61,18 @@ trait Build
     protected function definition(Route $route, bool $compile = true) : Route
     {
         /** @var Route $route */
-        $route = $this->host($route, $route[Arg::HOST]);
+        $route = $this->host($route, $route[HOST]);
 
-        if (!isset($route[Arg::PATH])) {
-            return isset($route[Arg::REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
+        if (!isset($route[PATH])) {
+            return isset($route[REGEX]) ? $route : Exception::invalidArgument('Route path not specified');
         }
 
-        !isset($route[Arg::TOKENS]) && $route = $route->with(Arg::TOKENS, $this->tokens(
-            $route[Arg::PATH], $route[Arg::CONSTRAINTS] ?? []
+        !isset($route[TOKENS]) && $route = $route->with(TOKENS, $this->tokens(
+            $route[PATH], $route[CONSTRAINTS] ?? []
         ));
 
-        $compile && !isset($route[Arg::REGEX]) &&
-            $route = $route->with(Arg::REGEX, $this->regex($route[Arg::TOKENS]));
+        $compile && !isset($route[REGEX]) &&
+            $route = $route->with(REGEX, $this->regex($route[TOKENS]));
 
         return $route;
     }
@@ -88,10 +89,10 @@ trait Build
             return $route;
         }
 
-        $host[Arg::TOKENS] ??= $this->tokens($host[Arg::NAME], $host[Arg::CONSTRAINTS] ?? []);
+        $host[TOKENS] ??= $this->tokens($host[NAME], $host[CONSTRAINTS] ?? []);
 
-        $host[Arg::REGEX] ??= $this->regex($host[Arg::TOKENS]);
+        $host[REGEX] ??= $this->regex($host[TOKENS]);
 
-        return $route->with(Arg::HOST, $host);
+        return $route->with(HOST, $host);
     }
 }

@@ -5,7 +5,7 @@
 
 namespace Mvc5\User\Config;
 
-use Mvc5\Arg;
+use const Mvc5\{ AUTHENTICATED, USERNAME };
 
 trait User
 {
@@ -14,7 +14,7 @@ trait User
      */
     function authenticated() : bool
     {
-        return (bool) $this[Arg::AUTHENTICATED];
+        return (bool) $this[AUTHENTICATED];
     }
 
     /**
@@ -22,6 +22,6 @@ trait User
      */
     function username() : ?string
     {
-        return $this[Arg::USERNAME] ?? null;
+        return $this[USERNAME] ?? null;
     }
 }

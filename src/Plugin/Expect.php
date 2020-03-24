@@ -5,9 +5,10 @@
 
 namespace Mvc5\Plugin;
 
-use Mvc5\Arg;
 use Mvc5\Resolvable;
 use Throwable;
+
+use const Mvc5\EXCEPTION;
 
 final class Expect
     implements Gem\Expect
@@ -71,7 +72,7 @@ final class Expect
      */
     protected function named(Throwable $exception, array $args) : array
     {
-        return [Arg::EXCEPTION => $exception] + ($this->args ? $args : []);
+        return [EXCEPTION => $exception] + ($this->args ? $args : []);
     }
 
     /**

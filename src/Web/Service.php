@@ -6,9 +6,10 @@
 namespace Mvc5\Web;
 
 use ArrayAccess;
-use Mvc5\Arg;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
+
+use const Mvc5\REQUEST;
 
 final class Service
 {
@@ -31,7 +32,7 @@ final class Service
      */
     protected function share(Request $request) : Request
     {
-        return $this->container[Arg::REQUEST] = $request;
+        return $this->container[REQUEST] = $request;
     }
 
     /**

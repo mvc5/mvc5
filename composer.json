@@ -17,6 +17,9 @@
     "autoload": {
         "psr-4": {
             "Mvc5\\": "./src"
-        }
+        },
+        "files": [
+            "constants.php"
+        ]
     }
 }

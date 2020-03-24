@@ -2,7 +2,6 @@
 /**
  *
  */
-include __DIR__ . '/src/Arg.php';
 include __DIR__ . '/src/Signal.php';
 include __DIR__ . '/src/Resolvable.php';
 include __DIR__ . '/src/Config/Count.php';
