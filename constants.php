@@ -148,3 +148,11 @@ namespace Mvc5
     const WEB = 'web';
     const WILDCARD = 'wildcard';
 }
+
+namespace Mvc5\Route\Dash
+{
+    const CONSTRAINT = 2;
+    const LITERAL = 1;
+    const NAME = 1;
+    const TYPE = 0;
+}

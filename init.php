@@ -151,7 +151,6 @@ include __DIR__ . '/src/Request/Exception.php';
 include __DIR__ . '/src/Request/Request.php';
 include __DIR__ . '/src/Request/HttpRequest.php';
 include __DIR__ . '/src/Route/Config/Route.php';
-include __DIR__ . '/src/Route/Definition/Dash.php';
 include __DIR__ . '/src/Route/Definition/Regex.php';
 include __DIR__ . '/src/Route/Definition/Tokens.php';
 include __DIR__ . '/src/Route/Definition/Build.php';

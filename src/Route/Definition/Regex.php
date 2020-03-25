@@ -7,6 +7,8 @@ namespace Mvc5\Route\Definition;
 
 use function preg_quote;
 
+use const Mvc5\Route\Dash\{ CONSTRAINT, LITERAL, NAME, TYPE };
+
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
  * under the Simplified BSD License (http://opensource.org/licenses/BSD-2-Clause).
@@ -22,23 +24,23 @@ trait Regex
         $regex = '';
 
         foreach($tokens as $token) {
-            if ('literal' === $token[Dash::TYPE]) {
-                $regex .= preg_quote($token[Dash::LITERAL]);
+            if ('literal' === $token[TYPE]) {
+                $regex .= preg_quote($token[LITERAL]);
                 continue;
             }
 
-            if ('param' === $token[Dash::TYPE]) {
-                $regex .= $token[Dash::NAME] ?
-                    '(?P<' . $token[Dash::NAME] . '>' . $token[Dash::CONSTRAINT] . ')' : $token[Dash::CONSTRAINT];
+            if ('param' === $token[TYPE]) {
+                $regex .= $token[NAME] ?
+                    '(?P<' . $token[NAME] . '>' . $token[CONSTRAINT] . ')' : $token[CONSTRAINT];
                 continue;
             }
 
-            if ('optional-start' === $token[Dash::TYPE]) {
+            if ('optional-start' === $token[TYPE]) {
                 $regex .= '(?:';
                 continue;
             }
 
-            if ('optional-end' === $token[Dash::TYPE]) {
+            if ('optional-end' === $token[TYPE]) {
                 $regex .= ')?';
                 continue;
             }

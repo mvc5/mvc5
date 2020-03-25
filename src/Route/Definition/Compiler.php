@@ -12,6 +12,7 @@ use function rtrim;
 use function sprintf;
 
 use const Mvc5\{ SEPARATOR };
+use const Mvc5\Route\Dash\{ LITERAL, NAME, TYPE };
 
 /**
  * Portions copyright (c) 2013 Ben Scholzen 'DASPRiD'. (http://github.com/DASPRiD/Dash)
@@ -39,27 +40,27 @@ class Compiler
         $stack = [];
 
         foreach($tokens as $part) {
-            if ('literal' === $part[Dash::TYPE]) {
-                $current['path'] .= $part[Dash::LITERAL];
+            if ('literal' === $part[TYPE]) {
+                $current['path'] .= $part[LITERAL];
                 continue;
             }
 
-            if ('param' === $part[Dash::TYPE]) {
+            if ('param' === $part[TYPE]) {
                 $current['skippable'] = true;
 
-                if (!$part[Dash::NAME]) {
+                if (!$part[NAME]) {
                     continue;
                 }
 
-                $default = $defaults[$part[Dash::NAME]] ?? null;
-                $path    = $params[$part[Dash::NAME]]   ?? null;
+                $default = $defaults[$part[NAME]] ?? null;
+                $path    = $params[$part[NAME]]   ?? null;
 
                 if (!$path) {
                     if ($current['is_optional']) {
                         continue;
                     }
 
-                    !$default && Exception::invalidArgument(sprintf('Missing parameter "%s"', $part[Dash::NAME]));
+                    !$default && Exception::invalidArgument(sprintf('Missing parameter "%s"', $part[NAME]));
 
                     $path = $default;
                 }
@@ -69,12 +70,12 @@ class Compiler
 
                 $current['path'] .= $path;
 
-                unset($params[$part[Dash::NAME]]);
+                unset($params[$part[NAME]]);
 
                 continue;
             }
 
-            if ('optional-start' === $part[Dash::TYPE]) {
+            if ('optional-start' === $part[TYPE]) {
 
                 $stack[] = $current;
 
@@ -88,7 +89,7 @@ class Compiler
                 continue;
             }
 
-            if ('optional-end' === $part[Dash::TYPE]) {
+            if ('optional-end' === $part[TYPE]) {
 
                 $parent = array_pop($stack);
 
