@@ -30,6 +30,7 @@ namespace Mvc5
     const controller = 'controller';
     const CONTROLLER = 'controller';
     const CONTROLLER_RESPONSE = 'controller\response';
+    const COOKIE_EXPIRE_TIME = 946706400;
     const COOKIES = 'cookies';
     const CSRF_TOKEN = 'csrf_token';
     const DATA = 'data';

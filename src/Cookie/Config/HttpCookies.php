@@ -11,9 +11,7 @@ use function is_array;
 use function is_string;
 use function key;
 
-use const Mvc5\{ DOMAIN, EXPIRES, HTTP_ONLY, NAME, OPTIONS, PATH, SAMESITE, SECURE, VALUE };
-
-const EXPIRE_TIME = 946706400;
+use const Mvc5\{ COOKIE_EXPIRE_TIME, DOMAIN, EXPIRES, HTTP_ONLY, NAME, OPTIONS, PATH, SAMESITE, SECURE, VALUE };
 
 trait HttpCookies
 {
@@ -120,7 +118,7 @@ function expire(array $cookie) : array
 {
     $cookie[VALUE] = '';
 
-    isset($cookie[OPTIONS]) ? $cookie[OPTIONS][EXPIRES] = EXPIRE_TIME : $cookie[EXPIRES] = EXPIRE_TIME;
+    isset($cookie[OPTIONS]) ? $cookie[OPTIONS][EXPIRES] = COOKIE_EXPIRE_TIME : $cookie[EXPIRES] = COOKIE_EXPIRE_TIME;
 
     return $cookie;
 }
