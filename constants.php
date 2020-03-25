@@ -27,7 +27,6 @@ namespace Mvc5
     const CONTAINER = 'container';
     const CONTENT_TYPE = 'content_type';
     const CONTEXT = 'context';
-    const controller = 'controller';
     const CONTROLLER = 'controller';
     const CONTROLLER_RESPONSE = 'controller\response';
     const COOKIE_EXPIRE_TIME = 946706400;
