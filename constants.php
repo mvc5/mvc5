@@ -25,10 +25,8 @@ namespace Mvc5
     const CONFIG = 'config';
     const CONSTRAINTS = 'constraints';
     const CONTAINER = 'container';
-    const CONTENT_TYPE = 'content_type';
     const CONTEXT = 'context';
     const CONTROLLER = 'controller';
-    const CONTROLLER_RESPONSE = 'controller\response';
     const COOKIE_EXPIRE_TIME = 946706400;
     const COOKIES = 'cookies';
     const CSRF_TOKEN = 'csrf_token';
@@ -51,7 +49,6 @@ namespace Mvc5
     const FILE = 'file';
     const FILES = 'files';
     const FORM = 'form';
-    const FORMAT = 'format';
     const FRAGMENT = 'fragment';
     const HEADERS = 'headers';
     const HOST = 'host';
@@ -65,11 +62,9 @@ namespace Mvc5
     const INFO = 'info';
     const ITEM = 'item';
     const LAYOUT = 'layout';
-    const LENGTH = 'length';
     const LEVEL = 'level';
     const LINE = 'line';
     const LOG = 'log';
-    const MANAGER = 'manager';
     const MATCHED = 'matched';
     const MAX_RECURSION = 100;
     const MERGE = 'merge';
@@ -78,7 +73,6 @@ namespace Mvc5
     const MIDDLEWARE = 'middleware';
     const MODEL = 'model';
     const NAME = 'name';
-    const NEXT = 'next';
     const OPTIONAL = 'optional';
     const OPTIONS = 'options';
     const PARAM = 'param';
@@ -105,8 +99,6 @@ namespace Mvc5
     const RESPONSE_JSON_EXCEPTION = 'response\json\exception';
     const RESPONSE_REDIRECT = 'response\redirect';
     const ROUTE = 'route';
-    const ROUTE_GENERATOR = 'route\generator';
-    const ROUTE_MATCH = 'route\match';
     const SAMESITE = 'samesite';
     const SCHEME = 'scheme';
     const SECURE = 'secure';
@@ -120,13 +112,11 @@ namespace Mvc5
     const SESSION = 'session';
     const SESSION_MESSAGES = 'session\messages';
     const SEVERITY_CRITICAL = 2;
-    const SHARED = 'shared';
     const SPLIT = 'split';
     const STATUS = 'status';
     const STRICT = 'strict';
     const SUCCESS = 'success';
     const SUFFIX = 'suffix';
-    const STREAM = 'stream';
     const TARGET = 'target';
     const TEMPLATE = 'template';
     const TEMPLATE_MODEL = '__template';
