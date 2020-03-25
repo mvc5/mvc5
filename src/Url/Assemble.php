@@ -14,6 +14,7 @@ use function strtr;
 use function strtolower;
 
 use const Mvc5\{ HOST, QUERY_SEPARATOR, PASS, PORT, SCHEME, USER };
+use const PHP_QUERY_RFC3986;
 
 class Assemble
 {
@@ -125,7 +126,7 @@ class Assemble
     static function query($query) : ?string
     {
         return is_array($query) ? strtr(
-            http_build_query($query, '', QUERY_SEPARATOR, \PHP_QUERY_RFC3986), static::QUERY
+            http_build_query($query, '', QUERY_SEPARATOR, PHP_QUERY_RFC3986), static::QUERY
         ) : static::encode($query, static::QUERY_STRING);
     }
 

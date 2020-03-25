@@ -26,6 +26,8 @@ use function session_start;
 use function session_status;
 use function session_write_close;
 
+use const PHP_SESSION_ACTIVE;
+
 trait PHPSession
 {
     /**
