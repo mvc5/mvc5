@@ -167,14 +167,9 @@ trait Generator
      */
     protected function options(Route $route, array $params, array $options) : array
     {
-        !isset($options[SCHEME])
-            && $options[SCHEME] = $route->scheme();
-
-        !isset($options[HOST])
-            && $options[HOST] = $this->hostname($route->host(), $params);
-
-        !isset($options[PORT])
-            && $options[PORT] = $route->port();
+        $options[SCHEME] ??= $route->scheme();
+        $options[HOST] ??= $this->hostname($route->host(), $params);
+        $options[PORT] ??= $route->port();
 
         $options[PATH] = $this->path($route->path(), $params);
 
