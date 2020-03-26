@@ -9,7 +9,7 @@ use Mvc5\Http\Error;
 use Mvc5\Http\Error\ServerError;
 use Mvc5\Http\Request;
 
-use const Mvc5\{ CONTROLLER, EXCEPTION, NAME, ERROR };
+use const Mvc5\{ CONTROLLER, ERROR, EXCEPTION, NAME };
 
 trait Exception
 {
@@ -49,9 +49,9 @@ trait Exception
     {
         return $request->with([
             CONTROLLER => $this->controller,
+            ERROR => $this->error,
             EXCEPTION => $exception,
-            NAME => $this->name,
-            ERROR => $this->error
+            NAME => $this->name
         ]);
     }
 }

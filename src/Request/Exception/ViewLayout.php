@@ -21,7 +21,7 @@ class ViewLayout
     /**
      *
      */
-    const TEMPLATE = 'exception';
+    const TEMPLATE = EXCEPTION;
 
     /**
      * @param Throwable $exception

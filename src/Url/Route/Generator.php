@@ -5,6 +5,7 @@
 
 namespace Mvc5\Url\Route;
 
+use Closure;
 use Mvc5\Http\HttpUri;
 use Mvc5\Http\Uri;
 use Mvc5\Route\Config;
@@ -229,9 +230,9 @@ trait Generator
 
     /**
      * @param Route $route
-     * @return \Closure|null
+     * @return Closure|null
      */
-    protected function wildcard(Route $route) : ?\Closure
+    protected function wildcard(Route $route) : ?Closure
     {
         return !$route->wildcard() ? null : function(string $path, array $params = []) {
             foreach($params as $key => $value) {
