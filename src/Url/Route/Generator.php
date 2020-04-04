@@ -53,17 +53,6 @@ trait Generator
     }
 
     /**
-     * @param Route $route
-     * @param array $path
-     * @return array
-     */
-    protected function append(Route $route, array $path) : array
-    {
-        $path[] = $route;
-        return $path;
-    }
-
-    /**
      * @param Route $parent
      * @param array|Route $route
      * @return Route|null
@@ -203,7 +192,7 @@ trait Generator
      */
     protected function resolve($route, array $name, array $path) : ?Route
     {
-        return $route ? $this->next($route, $name, $this->append($route, $path)) : null;
+        return $route ? $this->next($route, $name, [...$path, $route]) : null;
     }
 
     /**

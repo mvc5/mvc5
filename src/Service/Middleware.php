@@ -40,7 +40,7 @@ trait Middleware
      */
     protected function call($current, array $args = [])
     {
-        return $current ? $this->service->call($current, $this->params($args)) : $this->end($args);
+        return $current ? $this->service->call($current, [...$args, $this->delegate()]) : $this->end($args);
     }
 
     /**
@@ -67,16 +67,6 @@ trait Middleware
     {
         $this->middleware->next();
         return $this->middleware->current();
-    }
-
-    /**
-     * @param array $args
-     * @return array
-     */
-    protected function params(array $args) : array
-    {
-        $args[] = $this->delegate();
-        return $args;
     }
 
     /**
