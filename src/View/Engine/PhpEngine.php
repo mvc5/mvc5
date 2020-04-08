@@ -10,7 +10,7 @@ use Mvc5\View\ViewEngine;
 
 use function Mvc5\Template\render;
 
-class PhpEngine
+final class PhpEngine
     implements ViewEngine
 {
     /**
