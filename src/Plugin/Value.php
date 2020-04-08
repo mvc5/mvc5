@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class Value
+final class Value
     implements Gem\Value
 {
     /**

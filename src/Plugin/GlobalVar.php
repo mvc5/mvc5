@@ -5,14 +5,27 @@
 
 namespace Mvc5\Plugin;
 
-class GlobalVar
-    extends Value
+final class GlobalVar
+    implements Gem\Value
 {
+    /**
+     * @var string
+     */
+    protected string $name;
+
+    /**
+     * @param string $name
+     */
+    function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
     /**
      * @return array|mixed
      */
     function config()
     {
-        return $GLOBALS[$this->config] ?? null;
+        return $GLOBALS[$this->name] ?? null;
     }
 }

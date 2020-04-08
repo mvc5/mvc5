@@ -6,13 +6,13 @@
 namespace Mvc5\Plugin;
 
 final class NullValue
-    extends Value
+    implements Gem\Value
 {
     /**
-     *
+     * @return null
      */
-    function __construct()
+    function config()
     {
-        parent::__construct(null);
+        return null;
     }
 }
