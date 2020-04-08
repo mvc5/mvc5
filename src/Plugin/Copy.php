@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class Copy
+final class Copy
     implements Gem\Copy
 {
     /**

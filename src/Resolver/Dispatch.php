@@ -14,7 +14,7 @@ use function key;
 
 use const Mvc5\SERVICE_RESOLVER;
 
-class Dispatch
+final class Dispatch
     implements Event
 {
     /**

@@ -12,7 +12,7 @@ use Mvc5\Plugins\Service;
 
 use const Mvc5\{ ACCEPTS_JSON, ERROR, ERROR_MODEL, RESPONSE_JSON_ERROR };
 
-class Controller
+final class Controller
 {
     /**
      *

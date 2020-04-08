@@ -10,7 +10,7 @@ use Mvc5\Http\Response;
 
 use const Mvc5\BODY;
 
-class Layout
+final class Layout
 {
     /**
      *

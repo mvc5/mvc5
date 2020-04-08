@@ -13,7 +13,7 @@ use function in_array;
 
 use const Mvc5\{ SCHEME, URI };
 
-class Scheme
+final class Scheme
 {
     /**
      * @param Request $request

@@ -16,7 +16,7 @@ use function strtolower;
 use const Mvc5\{ HOST, QUERY_SEPARATOR, PASS, PORT, SCHEME, USER };
 use const PHP_QUERY_RFC3986;
 
-class Assemble
+final class Assemble
 {
     /**
      *

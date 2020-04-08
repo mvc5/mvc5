@@ -7,7 +7,7 @@ namespace Mvc5\Plugin;
 
 use const Mvc5\{ FACTORY, NAME, PARENT };
 
-class Factory
+final class Factory
     implements Gem\Factory
 {
     /**

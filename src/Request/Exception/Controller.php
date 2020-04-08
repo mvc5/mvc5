@@ -13,7 +13,7 @@ use Throwable;
 
 use const Mvc5\{ ACCEPTS_JSON, EXCEPTION, EXCEPTION_LAYOUT, RESPONSE_JSON_EXCEPTION };
 
-class Controller
+final class Controller
 {
     /**
      *

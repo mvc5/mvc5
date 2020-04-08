@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class End
+final class End
     extends Call
 {
     /**

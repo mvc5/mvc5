@@ -11,7 +11,7 @@ use Mvc5\Route\Dispatch\Router;
 
 use const Mvc5\BODY;
 
-class Route
+final class Route
 {
     /**
      *

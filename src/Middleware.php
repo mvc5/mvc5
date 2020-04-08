@@ -5,7 +5,7 @@
 
 namespace Mvc5;
 
-class Middleware
+final class Middleware
 {
     /**
      *

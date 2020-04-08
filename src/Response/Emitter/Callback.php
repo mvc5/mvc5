@@ -6,7 +6,7 @@ namespace Mvc5\Response\Emitter;
 
 use Mvc5\Response\Emitter;
 
-class Callback
+final class Callback
     implements Emitter
 {
     /**

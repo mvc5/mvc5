@@ -13,7 +13,7 @@ use function strlen;
 
 use const Mvc5\{ CONTROLLER, MATCHED, NAME, PARAMS, PARENT, PATH, ROUTE, URI };
 
-class Path
+final class Path
 {
     /**
      *

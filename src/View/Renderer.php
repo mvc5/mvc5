@@ -5,7 +5,7 @@
 
 namespace Mvc5\View;
 
-class Renderer
+final class Renderer
 {
     /**
      * @var View

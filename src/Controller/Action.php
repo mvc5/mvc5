@@ -7,7 +7,7 @@ namespace Mvc5\Controller;
 
 use Mvc5\Plugins\Service;
 
-class Action
+final class Action
 {
     /**
      *

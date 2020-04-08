@@ -8,7 +8,7 @@ use Mvc5\Session\Session;
 
 use const Mvc5\{ REDIRECT_URL, URI };
 
-class Redirect
+final class Redirect
 {
     /**
      * @var Response

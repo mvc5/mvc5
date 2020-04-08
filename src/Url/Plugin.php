@@ -15,7 +15,7 @@ use function substr;
 
 use const Mvc5\{ ABSOLUTE, FRAGMENT, HOST, NAME, PARAMS, PARENT, PORT, QUERY, SEPARATOR, SCHEME, URI };
 
-class Plugin
+final class Plugin
 {
     /**
      * @var bool|false

@@ -14,7 +14,7 @@ use function in_array;
 
 use const Mvc5\{ CSRF_TOKEN, DATA, HEADERS, SESSION };
 
-class CSRFToken
+final class CSRFToken
 {
     /**
      * @var bool

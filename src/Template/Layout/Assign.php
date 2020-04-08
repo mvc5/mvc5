@@ -5,7 +5,7 @@
 
 namespace Mvc5\Template\Layout;
 
-class Assign
+final class Assign
 {
     /**
      *

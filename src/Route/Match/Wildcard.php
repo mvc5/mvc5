@@ -13,7 +13,7 @@ use function explode;
 
 use const Mvc5\{ OPTIONS, PARAMS, SEPARATOR, WILDCARD };
 
-class Wildcard
+final class Wildcard
 {
     /**
      * @var array

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Request;
 
-class Exception
+final class Exception
 {
     /**
      *

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Url;
 
-class Generator
+final class Generator
 {
     /**
      *

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Response;
 
-class Version
+final class Version
 {
     /**
      *

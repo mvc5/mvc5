@@ -7,7 +7,7 @@ namespace Mvc5\Log;
 
 use function error_log;
 
-class ErrorLog
+final class ErrorLog
 {
     /**
      * @var string

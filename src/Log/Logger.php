@@ -13,7 +13,7 @@ use function is_bool;
 
 use const Mvc5\{ EVENT, MESSAGE, THROW_EXCEPTION };
 
-class Logger
+final class Logger
     implements Event
 {
     /**

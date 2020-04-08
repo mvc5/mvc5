@@ -12,7 +12,7 @@ use function random_bytes;
 
 use const Mvc5\{ CSRF_TOKEN };
 
-class Generate
+final class Generate
 {
     /**
      * @param Session $session

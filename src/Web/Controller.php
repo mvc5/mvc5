@@ -11,7 +11,7 @@ use Mvc5\Plugins\Service;
 
 use const Mvc5\{ BODY, CONTROLLER, REQUEST, RESPONSE };
 
-class Controller
+final class Controller
 {
     /**
      *

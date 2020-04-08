@@ -10,7 +10,7 @@ use Mvc5\Route\Route;
 
 use const Mvc5\{ CONTROLLER, HTTP_GET, HTTP_HEAD };
 
-class Action
+final class Action
 {
     /**
      * @param Route $route

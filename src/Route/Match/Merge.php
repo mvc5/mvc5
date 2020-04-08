@@ -10,7 +10,7 @@ use Mvc5\Route\Route;
 
 use const Mvc5\{ AUTHENTICATE, CSRF_TOKEN, MIDDLEWARE, OPTIONS, PARENT };
 
-class Merge
+final class Merge
 {
     /**
      * @param Route $route

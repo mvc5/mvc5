@@ -5,7 +5,7 @@
 
 namespace Mvc5\Response;
 
-class Status
+final class Status
 {
     /**
      *

@@ -8,7 +8,7 @@ use Mvc5\Response\Emitter;
 
 use function passthru;
 
-class PassThru
+final class PassThru
     implements Emitter
 {
     /**

@@ -9,7 +9,7 @@ use Throwable;
 
 use const Mvc5\{ CODE, FILE, HTTP_SERVER_ERROR, LINE, MESSAGE, TRACE };
 
-class JsonExceptionResponse
+final class JsonExceptionResponse
     extends JsonResponse
 {
     /**

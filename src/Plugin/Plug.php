@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class Plug
+final class Plug
     implements Gem\Plug
 {
     /**

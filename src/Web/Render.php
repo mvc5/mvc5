@@ -12,7 +12,7 @@ use Mvc5\View\View;
 
 use const Mvc5\BODY;
 
-class Render
+final class Render
 {
     /**
      * @var View

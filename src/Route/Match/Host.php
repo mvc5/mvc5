@@ -14,7 +14,7 @@ use function preg_match;
 
 use const Mvc5\{ DEFAULTS, HOST, PARAMS, REGEX, URI };
 
-class Host
+final class Host
 {
     /**
      *

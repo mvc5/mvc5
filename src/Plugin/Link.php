@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class Link
+final class Link
     implements Gem\Link
 {
 }

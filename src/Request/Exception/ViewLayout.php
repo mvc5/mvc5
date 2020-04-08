@@ -9,7 +9,7 @@ use Throwable;
 
 use const Mvc5\EXCEPTION;
 
-class ViewLayout
+final class ViewLayout
     extends \Mvc5\ViewLayout
     implements ExceptionLayout
 {

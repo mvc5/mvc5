@@ -8,7 +8,7 @@ namespace Mvc5\Web;
 use Mvc5\Http\Request;
 use Mvc5\Http\Response;
 
-class Error
+final class Error
 {
     /**
      *

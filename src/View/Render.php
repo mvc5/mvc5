@@ -10,7 +10,7 @@ use Mvc5\ViewModel;
 
 use const Mvc5\VIEW_EXTENSION;
 
-class Render
+final class Render
     implements View
 {
     /**

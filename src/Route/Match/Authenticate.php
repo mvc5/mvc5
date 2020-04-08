@@ -8,7 +8,7 @@ use Mvc5\Route\Route;
 
 use const Mvc5\{ AUTHENTICATE, AUTHENTICATED, ACCEPTS_JSON, CONTROLLER, METHOD };
 
-class Authenticate
+final class Authenticate
 {
     /**
      * @var string|null

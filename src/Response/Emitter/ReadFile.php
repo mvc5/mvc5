@@ -8,7 +8,7 @@ use Mvc5\Response\Emitter;
 
 use function readfile;
 
-class ReadFile
+final class ReadFile
     implements Emitter
 {
     /**

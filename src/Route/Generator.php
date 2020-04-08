@@ -5,7 +5,7 @@
 
 namespace Mvc5\Route;
 
-class Generator
+final class Generator
 {
     /**
      *

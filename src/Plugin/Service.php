@@ -7,7 +7,7 @@ namespace Mvc5\Plugin;
 
 use const Mvc5\SERVICE;
 
-class Service
+final class Service
     extends Plugin
 {
     /**

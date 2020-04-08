@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class Param
+final class Param
     implements Gem\Param
 {
     /**

@@ -17,7 +17,7 @@ use function ucwords;
 
 use const Mvc5\{ ACTION, CONTROLLER, MIDDLEWARE, PARAMS, PREFIX, SEPARATORS, SPLIT, STRICT, SUFFIX };
 
-class Controller
+final class Controller
 {
     /**
      * @var callable|null

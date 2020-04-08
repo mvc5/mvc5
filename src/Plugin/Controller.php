@@ -7,7 +7,7 @@ namespace Mvc5\Plugin;
 
 use const Mvc5\{ ARGS, CALLS, CONTROLLER, MERGE, NAME, PARENT };
 
-class Controller
+final class Controller
     implements Gem\Child
 {
     /**

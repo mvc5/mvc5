@@ -7,7 +7,7 @@ namespace Mvc5\Plugin;
 
 use const Mvc5\{ EVENT, REQUEST, RESPONSE, RESPONSE_DISPATCH };
 
-class Response
+final class Response
     extends Plugin
 {
     /**

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class SignalArgs
+final class SignalArgs
     implements Gem\SignalArgs
 {
     /**

@@ -7,7 +7,7 @@ namespace Mvc5\Plugin;
 
 use const Mvc5\{ TEMPLATE, VARS };
 
-class ViewModel
+final class ViewModel
     extends Plugin
 {
     /**

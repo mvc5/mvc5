@@ -9,7 +9,7 @@ use Mvc5\Http\HttpError;
 
 use const Mvc5\{ DESCRIPTION, ERRORS, MESSAGE, STATUS };
 
-class MethodNotAllowed
+final class MethodNotAllowed
     extends HttpError
 {
     /**

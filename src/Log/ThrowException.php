@@ -8,7 +8,7 @@ namespace Mvc5\Log;
 use Mvc5\Exception;
 use Throwable;
 
-class ThrowException
+final class ThrowException
 {
     /**
      * @param Throwable|mixed $exception

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class FileInclude
+final class FileInclude
     implements Gem\FileInclude
 {
     /**

@@ -13,7 +13,7 @@ use function in_array;
 
 use const Mvc5\{ HTTP_GET, HTTP_HEAD, METHOD };
 
-class Method
+final class Method
 {
     /**
      *

@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class Config
+final class Config
     implements Gem\Config
 {
 }

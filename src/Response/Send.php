@@ -5,7 +5,7 @@
 
 namespace Mvc5\Response;
 
-class Send
+final class Send
 {
     /**
      *

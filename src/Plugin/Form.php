@@ -7,7 +7,7 @@ namespace Mvc5\Plugin;
 
 use const Mvc5\FORM;
 
-class Form
+final class Form
     extends Child
 {
     /**

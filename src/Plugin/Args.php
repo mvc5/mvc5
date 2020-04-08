@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class Args
+final class Args
     implements Gem\Args
 {
     /**

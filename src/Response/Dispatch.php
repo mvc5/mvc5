@@ -14,7 +14,7 @@ use function array_filter;
 
 use const Mvc5\{ BODY, CONTROLLER, EVENT, MODEL, REQUEST, RESPONSE };
 
-class Dispatch
+final class Dispatch
     implements Event
 {
     /**

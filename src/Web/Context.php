@@ -10,7 +10,7 @@ use Mvc5\Http\Response;
 use Mvc5\Plugins\Service;
 use Mvc5\Service\Context as ServiceContext;
 
-class Context
+final class Context
 {
     /**
      *

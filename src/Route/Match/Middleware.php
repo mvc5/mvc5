@@ -12,7 +12,7 @@ use function array_search;
 
 use const Mvc5\{ CONTROLLER, HTTP_MIDDLEWARE, MIDDLEWARE  };
 
-class Middleware
+final class Middleware
 {
     /**
      * @var string

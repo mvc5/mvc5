@@ -5,7 +5,7 @@
 
 namespace Mvc5\Plugin;
 
-class App
+final class App
     extends Plugin
 {
     /**

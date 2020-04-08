@@ -9,7 +9,7 @@ use Mvc5\Http\Error;
 
 use const Mvc5\ERROR;
 
-class ViewModel
+final class ViewModel
     extends \Mvc5\ViewModel
     implements ErrorModel
 {
