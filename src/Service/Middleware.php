@@ -40,7 +40,7 @@ trait Middleware
      */
     protected function call($current, array $args = [])
     {
-        return $current ? $this->service->call($current, [...$args, $this->delegate()]) : $this->end($args);
+        return $current ? $this->service->call($current, [...$args, $this->delegate()]) : ($args ? end($args) : null);
     }
 
     /**
@@ -49,15 +49,6 @@ trait Middleware
     protected function delegate() : Closure
     {
         return fn(...$args) => $this->call($this->next(), $args);
-    }
-
-    /**
-     * @param array $args
-     * @return mixed
-     */
-    protected function end(array $args)
-    {
-        return $args ? end($args) : null;
     }
 
     /**
