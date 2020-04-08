@@ -142,6 +142,34 @@ namespace Mvc5
 /**
  *
  */
+namespace Mvc5\Iterator
+{
+    use Iterator;
+
+    /**
+     * @param Iterator $iterator
+     * @return Iterator
+     */
+    function next(Iterator $iterator) : Iterator
+    {
+        $iterator->next();
+        return $iterator;
+    }
+
+    /**
+     * @param Iterator $iterator
+     * @return Iterator
+     */
+    function rewind(Iterator $iterator) : Iterator
+    {
+        $iterator->rewind();
+        return $iterator;
+    }
+}
+
+/**
+ *
+ */
 namespace Mvc5\Route\Dash
 {
     const CONSTRAINT = 2;

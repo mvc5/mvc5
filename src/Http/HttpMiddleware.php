@@ -7,6 +7,8 @@ namespace Mvc5\Http;
 
 use Mvc5\Service\Middleware;
 
+use function Mvc5\Iterator\{ rewind };
+
 class HttpMiddleware
 {
     /**
@@ -21,6 +23,6 @@ class HttpMiddleware
      */
     function __invoke(Request $request, Response $response)
     {
-        return $this->call($this->rewind(), [$request, $response]);
+        return $this->call(rewind($this->middleware)->current(), [$request, $response]);
     }
 }

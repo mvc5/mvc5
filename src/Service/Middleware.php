@@ -10,6 +10,7 @@ use Iterator;
 use Mvc5\Iterator as Mvc5Iterator;
 
 use function end;
+use function Mvc5\Iterator\{ next, rewind };
 
 trait Middleware
 {
@@ -48,25 +49,7 @@ trait Middleware
      */
     protected function delegate() : Closure
     {
-        return fn(...$args) => $this->call($this->next(), $args);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function next()
-    {
-        $this->middleware->next();
-        return $this->middleware->current();
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function rewind()
-    {
-        $this->middleware->rewind();
-        return $this->middleware->current();
+        return fn(...$args) => $this->call(next($this->middleware)->current(), $args);
     }
 
     /**
@@ -75,6 +58,6 @@ trait Middleware
      */
     function __invoke(...$args)
     {
-        return $this->call($this->rewind(), $args);
+        return $this->call(rewind($this->middleware)->current(), $args);
     }
 }

@@ -9,6 +9,8 @@ use Iterator;
 use Mvc5\Signal;
 use Throwable;
 
+use function Mvc5\Iterator\{ next, rewind };
+
 trait Generator
 {
     /**
@@ -16,19 +18,6 @@ trait Generator
      * @return callable
      */
     protected abstract function callable($listener) : callable;
-
-    /**
-     * @param array|Event|Iterator|object|string $event
-     * @param callable $listener
-     * @param array $args
-     * @param callable|null $callback
-     * @return mixed
-     * @throws Throwable
-     */
-    protected function emit($event, callable $listener, array $args = [], callable $callback = null)
-    {
-        return $event instanceof Event ? $event($listener, $args, $callback) : Signal::emit($listener, $args, $callback);
-    }
 
     /**
      * @param array|Event|Iterator|object|string $event
@@ -54,42 +43,22 @@ trait Generator
     protected function iterate($result, $event, Iterator $iterator, array $args, callable $callback = null)
     {
         return stopped($event, $iterator) ? $result : $this->iterate(
-            $this->result($event, $iterator->current(), $args, $callback), $event, next($iterator), $args, $callback
+            emit($event, $this->callable($iterator->current()), $args, $callback), $event, next($iterator), $args, $callback
         );
     }
-
-    /**
-     * @param array|Event|Iterator|object|string $event
-     * @param mixed $current
-     * @param array $args
-     * @param callable|null $callback
-     * @return mixed
-     * @throws Throwable
-     */
-    protected function result($event, $current, array $args = [], callable $callback = null)
-    {
-        return $this->emit($event, $this->callable($current), $args, $callback);
-    }
 }
 
 /**
- * @param Iterator $iterator
- * @return Iterator
+ * @param array|Event|Iterator|object|string $event
+ * @param callable $listener
+ * @param array $args
+ * @param callable|null $callback
+ * @return mixed
+ * @throws Throwable
  */
-function next(Iterator $iterator) : Iterator
+function emit($event, callable $listener, array $args = [], callable $callback = null)
 {
-    $iterator->next();
-    return $iterator;
-}
-
-/**
- * @param Iterator $iterator
- * @return Iterator
- */
-function rewind(Iterator $iterator) : Iterator
-{
-    $iterator->rewind();
-    return $iterator;
+    return $event instanceof Event ? $event($listener, $args, $callback) : Signal::emit($listener, $args, $callback);
 }
 
 /**
