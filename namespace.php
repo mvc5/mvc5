@@ -139,6 +139,9 @@ namespace Mvc5
     const WILDCARD = 'wildcard';
 }
 
+/**
+ *
+ */
 namespace Mvc5\Route\Dash
 {
     const CONSTRAINT = 2;
