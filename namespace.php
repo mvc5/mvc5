@@ -149,3 +149,48 @@ namespace Mvc5\Route\Dash
     const NAME = 1;
     const TYPE = 0;
 }
+
+/**
+ *
+ */
+namespace Mvc5\Template
+{
+    use Throwable;
+
+    use function extract;
+    use function ob_end_clean;
+    use function ob_get_clean;
+    use function ob_get_level;
+    use function ob_start;
+
+    /**
+     * @param TemplateModel $template
+     * @return string
+     */
+    function render(TemplateModel $template): string
+    {
+        return (function () {
+            /** @var TemplateModel $this */
+
+            extract($this->vars(), EXTR_SKIP);
+
+            $__ob_level__ = ob_get_level();
+
+            ob_start();
+
+            try {
+
+                include $this->template();
+
+                return ob_get_clean();
+
+            } catch (Throwable $exception) {
+                while (ob_get_level() > $__ob_level__) {
+                    ob_end_clean();
+                }
+
+                throw $exception;
+            }
+        })->call($template);
+    }
+}
