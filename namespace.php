@@ -54,6 +54,8 @@ namespace Mvc5
     const HOST = 'host';
     const HTTP_GET = 'GET';
     const HTTP_HEAD = 'HEAD';
+    const HTTP_OPTIONS = 'OPTIONS';
+    const HTTP_TRACE = 'TRACE';
     const HTTP_MIDDLEWARE = 'http\middleware';
     const HTTP_OK = 200;
     const HTTP_ONLY = 'httponly';

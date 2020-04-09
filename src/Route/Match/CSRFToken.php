@@ -12,7 +12,7 @@ use Mvc5\Route\Route;
 use function hash_equals;
 use function in_array;
 
-use const Mvc5\{ CSRF_TOKEN, DATA, HEADERS, SESSION };
+use const Mvc5\{ CSRF_TOKEN, DATA, HEADERS, HTTP_GET, HTTP_HEAD, HTTP_OPTIONS, HTTP_TRACE, SESSION };
 
 final class CSRFToken
 {
@@ -35,7 +35,7 @@ final class CSRFToken
      */
     protected function allow(string $method) : bool
     {
-        return in_array($method, ['GET', 'HEAD', 'OPTIONS', 'TRACE']);
+        return in_array($method, [HTTP_GET, HTTP_HEAD, HTTP_OPTIONS, HTTP_TRACE]);
     }
 
     /**

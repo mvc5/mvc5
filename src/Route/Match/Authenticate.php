@@ -6,7 +6,7 @@ use Mvc5\Http\Error\Unauthorized;
 use Mvc5\Http\Request;
 use Mvc5\Route\Route;
 
-use const Mvc5\{ AUTHENTICATE, AUTHENTICATED, ACCEPTS_JSON, CONTROLLER, METHOD };
+use const Mvc5\{ AUTHENTICATE, AUTHENTICATED, ACCEPTS_JSON, CONTROLLER, HTTP_GET, METHOD };
 
 final class Authenticate
 {
@@ -38,7 +38,7 @@ final class Authenticate
      */
     protected function redirect(Request $request) : bool
     {
-        return 'GET' === $request[METHOD] && !$request[ACCEPTS_JSON];
+        return HTTP_GET === $request[METHOD] && !$request[ACCEPTS_JSON];
     }
 
     /**
