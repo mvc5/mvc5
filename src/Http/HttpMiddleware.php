@@ -9,7 +9,7 @@ use Mvc5\Service\Middleware;
 
 use function Mvc5\Iterator\{ rewind };
 
-class HttpMiddleware
+final class HttpMiddleware
 {
     /**
      *
