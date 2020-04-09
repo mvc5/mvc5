@@ -21,6 +21,19 @@ trait Generator
 
     /**
      * @param array|Event|Iterator|object|string $event
+     * @param callable $listener
+     * @param array $args
+     * @param callable|null $callback
+     * @return mixed
+     * @throws Throwable
+     */
+    function emit($event, callable $listener, array $args = [], callable $callback = null)
+    {
+        return $event instanceof Event ? $event($listener, $args, $callback) : Signal::emit($listener, $args, $callback);
+    }
+
+    /**
+     * @param array|Event|Iterator|object|string $event
      * @param array $args
      * @param callable|null $callback
      * @return mixed
@@ -42,31 +55,26 @@ trait Generator
      */
     protected function iterate($result, $event, Iterator $iterator, array $args, callable $callback = null)
     {
-        return stopped($event, $iterator) ? $result : $this->iterate(
-            emit($event, $this->callable($iterator->current()), $args, $callback), $event, next($iterator), $args, $callback
+        return $this->stopped($event, $iterator) ? $result : $this->iterate(
+            $this->emit($event, $this->callable($iterator->current()), $args, $callback), $event, next($iterator), $args, $callback
         );
     }
-}
 
-/**
- * @param array|Event|Iterator|object|string $event
- * @param callable $listener
- * @param array $args
- * @param callable|null $callback
- * @return mixed
- * @throws Throwable
- */
-function emit($event, callable $listener, array $args = [], callable $callback = null)
-{
-    return $event instanceof Event ? $event($listener, $args, $callback) : Signal::emit($listener, $args, $callback);
-}
+    /**
+     * @param Event|object|string $event
+     * @param array $args
+     * @return Iterator
+     * @throws Throwable
+     */
+    abstract protected function iterator($event, array $args = []) : Iterator;
 
-/**
- * @param Event|mixed $event
- * @param Iterator $iterator
- * @return bool
- */
-function stopped($event, Iterator $iterator) : bool
-{
-    return ($event instanceof Event && $event->stopped()) || !$iterator->valid();
+    /**
+     * @param Event|mixed $event
+     * @param Iterator $iterator
+     * @return bool
+     */
+    function stopped($event, Iterator $iterator) : bool
+    {
+        return ($event instanceof Event && $event->stopped()) || !$iterator->valid();
+    }
 }
