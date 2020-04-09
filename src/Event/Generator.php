@@ -27,7 +27,7 @@ trait Generator
      * @return mixed
      * @throws Throwable
      */
-    function emit($event, callable $listener, array $args = [], callable $callback = null)
+    protected function emit($event, callable $listener, array $args = [], callable $callback = null)
     {
         return $event instanceof Event ? $event($listener, $args, $callback) : Signal::emit($listener, $args, $callback);
     }
@@ -73,7 +73,7 @@ trait Generator
      * @param Iterator $iterator
      * @return bool
      */
-    function stopped($event, Iterator $iterator) : bool
+    protected function stopped($event, Iterator $iterator) : bool
     {
         return ($event instanceof Event && $event->stopped()) || !$iterator->valid();
     }
