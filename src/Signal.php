@@ -78,8 +78,8 @@ final class Signal
                 continue;
             }
 
-            if ($callback && $hint = $param->getClass()) {
-                $matched[] = $callback($hint->name);
+            if ($callback && $hint = (string) $param->getType()) {
+                $matched[] = $callback($hint);
                 continue;
             }
 

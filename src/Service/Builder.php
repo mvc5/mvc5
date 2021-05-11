@@ -85,7 +85,7 @@ final class Builder
                 continue;
             }
 
-            if (null !== ($hint = $param->getClass()) && null !== $match = $callback($hint->name)) {
+            if (null !== ($hint = (string) $param->getType()) && null !== $match = $callback($hint)) {
                 $matched[] = $match;
                 continue;
             }
