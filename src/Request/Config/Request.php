@@ -5,6 +5,7 @@
 
 namespace Mvc5\Request\Config;
 
+use ArrayAccess;
 use Mvc5\ArrayObject;
 use Mvc5\Config\Model;
 use Mvc5\Cookie\Cookies;
@@ -69,7 +70,7 @@ trait Request
      */
     function arg($name, $default = null)
     {
-        return match($this->args(), $name, $default);
+        return get($this->args(), $name, $default);
     }
 
     /**
@@ -102,7 +103,7 @@ trait Request
      */
     function cookie($name)
     {
-        return match($this->cookies(), $name);
+        return get($this->cookies(), $name);
     }
 
     /**
@@ -120,7 +121,7 @@ trait Request
      */
     function data($name = null, $default = null)
     {
-        return null === $name ? ($this->get(DATA) ?: []) : match($this->get(DATA) ?: [], $name, $default);
+        return null === $name ? ($this->get(DATA) ?: []) : get($this->get(DATA) ?: [], $name, $default);
     }
 
     /**
@@ -195,7 +196,7 @@ trait Request
      */
     function param($name, $default = null)
     {
-        return match($this->params(), $name, $default);
+        return get($this->params(), $name, $default);
     }
 
     /**
@@ -263,7 +264,7 @@ trait Request
      */
     function server($name = null, $default = null)
     {
-        return null === $name ? $this->get(SERVER) : match($this->get(SERVER), $name, $default);
+        return null === $name ? $this->get(SERVER) : get($this->get(SERVER), $name, $default);
     }
 
     /**
@@ -273,7 +274,7 @@ trait Request
      */
     function session($name = null, $default = null)
     {
-        return null === $name ? $this->get(SESSION) : match($this->get(SESSION), $name, $default);
+        return null === $name ? $this->get(SESSION) : get($this->get(SESSION), $name, $default);
     }
 
     /**
@@ -322,12 +323,12 @@ trait Request
 }
 
 /**
- * @param array|\ArrayAccess $data
+ * @param array|ArrayAccess|null $data
  * @param array|string $name
  * @param mixed|null $default
  * @return mixed
  */
-function match($data, $name, $default = null)
+function get(array|ArrayAccess|null $data, array|string $name, mixed $default = null) : mixed
 {
     if (is_string($name)) {
         return $data[$name] ?? $default;
