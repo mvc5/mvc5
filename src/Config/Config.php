@@ -66,7 +66,7 @@ trait Config
      * @param mixed $value
      * @return mixed
      */
-    function set($name, $value = null)
+    function set($name, $value = null) : mixed
     {
         if (is_string($name)) {
             return $this->config[$name] = $value;
@@ -87,11 +87,11 @@ trait Config
     function with($name, $value = null) : Model
     {
         $new = clone $this;
-        
-        $new->config instanceof Immutable 
-                ? $new->config = $new->config->with($name, $value) 
+
+        $new->config instanceof Immutable
+                ? $new->config = $new->config->with($name, $value)
                     : $new->set($name, $value);
-        
+
         return $new;
     }
 
@@ -102,11 +102,11 @@ trait Config
     function without($name) : Model
     {
         $new = clone $this;
-        
-        $new->config instanceof Immutable 
-                ? $new->config = $new->config->without($name) 
+
+        $new->config instanceof Immutable
+                ? $new->config = $new->config->without($name)
                     : $new->remove($name);
-        
+
         return $new;
     }
 }

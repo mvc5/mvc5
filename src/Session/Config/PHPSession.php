@@ -64,7 +64,7 @@ trait PHPSession
     /**
      * @return mixed
      */
-    function current()
+    function current() : mixed
     {
         return current($_SESSION);
     }
@@ -157,7 +157,7 @@ trait PHPSession
      * @param string $name
      * @return mixed
      */
-    function &offsetGet($name)
+    function &offsetGet($name) : mixed
     {
         return $_SESSION[$name];
     }

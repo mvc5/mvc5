@@ -47,7 +47,7 @@ trait Base
     /**
      * @return mixed
      */
-    function current()
+    function current() : mixed
     {
         return $this->container->current();
     }
@@ -91,9 +91,9 @@ trait Base
     }
 
     /**
-     * @return int|string|null
+     * @return mixed
      */
-    function key()
+    function key() : mixed
     {
         return $this->container->key();
     }
@@ -127,7 +127,7 @@ trait Base
      * @param mixed $value
      * @return mixed
      */
-    function set($name, $value = null)
+    function set($name, $value = null) : mixed
     {
         return $this->container->set($name, $value);
     }

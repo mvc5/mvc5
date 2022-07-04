@@ -107,7 +107,7 @@ trait Headers
      * @param mixed $value
      * @return mixed
      */
-    function set($name, $value = null)
+    function set($name, $value = null) : mixed
     {
         $headers = array_change_key_case(is_string($name) ? [$name => $value] : (array) $name);
 

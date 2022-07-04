@@ -51,7 +51,7 @@ trait HttpCookies
      * @param array $options
      * @return mixed
      */
-    function set($name, $value = null, array $options = [])
+    function set($name, $value = null, array $options = []) : mixed
     {
         if (is_array($name)) {
             $cookie = cookie($name);

@@ -6,7 +6,7 @@
 namespace Mvc5\Plugin\Config;
 
 use Mvc5\Config\ArrayObject;
-use Mvc5\Config\ReadOnly;
+use Mvc5\Config\Readable;
 
 use const Mvc5\{ ARGS, CALLS, MERGE, NAME, PARAM };
 
@@ -16,7 +16,7 @@ trait Plugin
      *
      */
     use ArrayObject;
-    use ReadOnly;
+    use Readable;
 
     /**
      * @return array

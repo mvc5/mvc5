@@ -63,7 +63,7 @@ trait PHPCookies
      * @param array $options
      * @return mixed
      */
-    function set($name, $value = '', array $options = [])
+    function set($name, $value = '', array $options = []) : mixed
     {
         if (is_array($name)) {
             $this->send($name, $this->defaults);

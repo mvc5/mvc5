@@ -12,5 +12,5 @@ class Model
      *
      */
     use Config\ModelObject;
-    use Config\ReadOnly;
+    use Config\Readable;
 }

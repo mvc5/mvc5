@@ -20,7 +20,7 @@ trait ArrayAccess
      * @param string $name
      * @return mixed
      */
-    function offsetGet($name)
+    function offsetGet($name) : mixed
     {
         return $this->get($name);
     }
@@ -30,9 +30,9 @@ trait ArrayAccess
      * @param mixed $value
      * @return mixed
      */
-    function offsetSet($name, $value)
+    function offsetSet($name, $value) : void
     {
-        return $this->set($name, $value);
+        $this->set($name, $value);
     }
 
     /**

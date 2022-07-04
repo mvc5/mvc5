@@ -17,7 +17,7 @@ include __DIR__ . '/src/Config/ModelOverload.php';
 include __DIR__ . '/src/Config/Configuration.php';
 include __DIR__ . '/src/Config/Immutable.php';
 include __DIR__ . '/src/Config/Overload.php';
-include __DIR__ . '/src/Config/ReadOnly.php';
+include __DIR__ . '/src/Config/Readable.php';
 include __DIR__ . '/src/Config/Scopable.php';
 include __DIR__ . '/src/Config/Scope.php';
 include __DIR__ . '/src/Exception/Exception.php';

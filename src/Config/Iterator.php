@@ -15,15 +15,15 @@ trait Iterator
     /**
      * @return mixed
      */
-    function current()
+    function current() : mixed
     {
         return $this->config->current();
     }
 
     /**
-     * @return int|string|null
+     * @return mixed
      */
-    function key()
+    function key() : mixed
     {
         return $this->config->key();
     }

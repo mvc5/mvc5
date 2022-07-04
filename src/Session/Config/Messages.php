@@ -107,7 +107,7 @@ trait Messages
      * @param array $value
      * @return mixed
      */
-    function set($name, $value = null)
+    function set($name, $value = null) : mixed
     {
         if (is_string($name)) {
             return $this->config[$name] = $this->new[$name] = $value;

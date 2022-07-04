@@ -5,7 +5,7 @@
 
 namespace Mvc5\Config;
 
-trait ReadOnly
+trait Readable
 {
     /**
      *
@@ -20,7 +20,7 @@ trait ReadOnly
      * @param mixed $value
      * @throws \Exception
      */
-    function offsetSet($name, $value)
+    function offsetSet($name, $value) : void
     {
         throw new \Exception('Invalid operation: object cannot be modified');
     }

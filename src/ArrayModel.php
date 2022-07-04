@@ -12,5 +12,5 @@ class ArrayModel
      *
      */
     use Config\ArrayObject;
-    use Config\ReadOnly;
+    use Config\Readable;
 }

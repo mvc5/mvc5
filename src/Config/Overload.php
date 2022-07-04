@@ -16,7 +16,7 @@ trait Overload
      * @param string $name
      * @return mixed
      */
-    function &offsetGet($name)
+    function &offsetGet($name) : mixed
     {
         return $this->config[$name];
     }

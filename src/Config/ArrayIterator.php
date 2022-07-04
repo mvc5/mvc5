@@ -20,7 +20,7 @@ trait ArrayIterator
     /**
      * @return mixed
      */
-    function current()
+    function current() : mixed
     {
         return current($this->config);
     }
@@ -28,7 +28,7 @@ trait ArrayIterator
     /**
      * @return int|string|null
      */
-    function key()
+    function key() : int|string|null
     {
         return key($this->config);
     }
